@@ -1,0 +1,254 @@
+Input,Match type,Approved symbol,Approved name,HGNC ID,Location
+EGFR,Approved symbol,EGFR,epidermal growth factor receptor,HGNC:3236,7p11.2
+SRC,Approved symbol,SRC,"SRC proto-oncogene, non-receptor tyrosine kinase",HGNC:11283,20q11.23
+NOS3,Approved symbol,NOS3,nitric oxide synthase 3,HGNC:7876,7q36.1
+BTK,Approved symbol,BTK,Bruton tyrosine kinase,HGNC:1133,Xq22.1
+KPNA2,Approved symbol,KPNA2,karyopherin subunit alpha 2,HGNC:6395,17q24.2
+RAN,Approved symbol,RAN,"RAN, member RAS oncogene family",HGNC:9846,12q24.33
+GSK3B,Approved symbol,GSK3B,glycogen synthase kinase 3 beta,HGNC:4617,3q13.33
+RELA,Approved symbol,RELA,"RELA proto-oncogene, NF-kB subunit",HGNC:9955,11q13.1
+rpoD,Unmatched,,,,
+SOS1,Approved symbol,SOS1,SOS Ras/Rac guanine nucleotide exchange factor 1,HGNC:11187,2p22.1
+NOS1,Approved symbol,NOS1,nitric oxide synthase 1,HGNC:7872,12q24.22
+SRC1,Previous symbol,SRC,"SRC proto-oncogene, non-receptor tyrosine kinase",HGNC:11283,20q11.23
+apr,Alias symbol,PMAIP1,phorbol-12-myristate-13-acetate-induced protein 1,HGNC:9108,18q21.32
+LCK,Approved symbol,LCK,"LCK proto-oncogene, Src family tyrosine kinase",HGNC:6524,1p35.2
+KDR,Approved symbol,KDR,kinase insert domain receptor,HGNC:6307,4q12
+FYN,Approved symbol,FYN,"FYN proto-oncogene, Src family tyrosine kinase",HGNC:4037,6q21
+,,NOS3,,,
+PCSK9,Approved symbol,PCSK9,proprotein convertase subtilisin/kexin type 9,HGNC:20001,1p32.3
+INSR,Approved symbol,INSR,insulin receptor,HGNC:6091,19p13.2
+NEIL1,Approved symbol,NEIL1,nei like DNA glycosylase 1,HGNC:18448,15q24.2
+PDE4B,Approved symbol,PDE4B,phosphodiesterase 4B,HGNC:8781,1p31.3
+PDE5A,Approved symbol,PDE5A,phosphodiesterase 5A,HGNC:8784,4q26
+Dlg4,Approved symbol,DLG4,discs large MAGUK scaffold protein 4,HGNC:2903,17p13.1
+HCK,Approved symbol,HCK,"HCK proto-oncogene, Src family tyrosine kinase",HGNC:4840,20q11.21
+EP300,Approved symbol,EP300,E1A binding protein p300,HGNC:3373,22q13.2
+VCL,Approved symbol,VCL,vinculin,HGNC:12665,10q22.2
+ITK,Approved symbol,ITK,IL2 inducible T cell kinase,HGNC:6171,5q33.3
+AKT1,Approved symbol,AKT1,AKT serine/threonine kinase 1,HGNC:391,14q32.33
+VWF,Approved symbol,VWF,von Willebrand factor,HGNC:12726,12p13.31
+Ptk2,Approved symbol,PTK2,protein tyrosine kinase 2,HGNC:9611,8q24.3
+FGFR4,Approved symbol,FGFR4,fibroblast growth factor receptor 4,HGNC:3691,5q35.2
+Mapre1,Approved symbol,MAPRE1,microtubule associated protein RP/EB family member 1,HGNC:6890,20q11.21
+Raf1,Approved symbol,RAF1,"Raf-1 proto-oncogene, serine/threonine kinase",HGNC:9829,3p25.2
+NSD3,Approved symbol,NSD3,nuclear receptor binding SET domain protein 3,HGNC:12767,8p11.23
+Abl1,Approved symbol,ABL1,"ABL proto-oncogene 1, non-receptor tyrosine kinase",HGNC:76,9q34.12
+NOTCH1,Approved symbol,NOTCH1,notch receptor 1,HGNC:7881,9q34.3
+PRKAR1A,Approved symbol,PRKAR1A,protein kinase cAMP-dependent type I regulatory subunit alpha,HGNC:9388,17q24.2
+MLKL,Approved symbol,MLKL,mixed lineage kinase domain like pseudokinase,HGNC:26617,16q23.1
+Prkaa1,Approved symbol,PRKAA1,protein kinase AMP-activated catalytic subunit alpha 1,HGNC:9376,5p13.1
+PGR,Approved symbol,PGR,progesterone receptor,HGNC:8910,11q22.1
+SARM1,Approved symbol,SARM1,sterile alpha and TIR motif containing 1,HGNC:17074,17q11.2
+,,,,,
+Irf3,Approved symbol,IRF3,interferon regulatory factor 3,HGNC:6118,19q13.33
+PARP2,Approved symbol,PARP2,poly(ADP-ribose) polymerase 2,HGNC:272,14q11.2
+AKT2,Approved symbol,AKT2,AKT serine/threonine kinase 2,HGNC:392,19q13.2
+TP63,Approved symbol,TP63,tumor protein p63,HGNC:15979,3q28
+NF1,Approved symbol,NF1,neurofibromin 1,HGNC:7765,17q11.2
+TEK,Approved symbol,TEK,TEK receptor tyrosine kinase,HGNC:11724,9p21.2
+MINDY1,Approved symbol,MINDY1,MINDY lysine 48 deubiquitinase 1,HGNC:25648,1q21.3
+NSF,Approved symbol,NSF,"N-ethylmaleimide sensitive factor, vesicle fusing ATPase",HGNC:8016,17q21.31
+VMA13,Alias symbol,ATP6V1H,ATPase H+ transporting V1 subunit H,HGNC:18303,8q11.23
+KPNA4,Approved symbol,KPNA4,karyopherin subunit alpha 4,HGNC:6397,3q25.33
+sbcD,Unmatched,,,,
+OTULIN,Approved symbol,OTULIN,OTU deubiquitinase with linear linkage specificity,HGNC:25118,5p15.2
+DCLK1,Approved symbol,DCLK1,doublecortin like kinase 1,HGNC:2700,13q13.3
+TNFRSF10B,Approved symbol,TNFRSF10B,TNF receptor superfamily member 10b,HGNC:11905,8p21.3
+ACTN2,Approved symbol,ACTN2,actinin alpha 2,HGNC:164,1q43
+BAIAP2,Approved symbol,BAIAP2,BAR/IMD domain containing adaptor protein 2,HGNC:947,17q25.3
+Crk,Approved symbol,CRK,"CRK proto-oncogene, adaptor protein",HGNC:2362,17p13.3
+SEC22B,Approved symbol,SEC22B,"SEC22 homolog B, vesicle trafficking protein",HGNC:10700,1p12
+HMGB1,Approved symbol,HMGB1,high mobility group box 1,HGNC:4983,13q12.3
+PREX1,Approved symbol,PREX1,"phosphatidylinositol-3,4,5-trisphosphate dependent Rac exchange factor 1",HGNC:32594,20q13.13
+Dnmt1,Approved symbol,DNMT1,DNA methyltransferase 1,HGNC:2976,19p13.2
+KPNA2,Approved symbol,KPNA2,karyopherin subunit alpha 2,HGNC:6395,17q24.2
+V-SRC,Unmatched,,,,
+SMG1,Approved symbol,SMG1,SMG1 nonsense mediated mRNA decay associated PI3K related kinase,HGNC:30045,16p12.3
+MINDY2,Approved symbol,MINDY2,MINDY lysine 48 deubiquitinase 2,HGNC:26954,15q21.3-q22.1
+POL3RG,Unmatched,,,,
+Mylk,Approved symbol,MYLK,myosin light chain kinase,HGNC:7590,3q21.1
+CBS,Approved symbol,CBS,cystathionine beta-synthase,HGNC:1550,21q22.3
+Diaph1,Approved symbol,DIAPH1,diaphanous related formin 1,HGNC:2876,5q31.3
+Ets1,Approved symbol,ETS1,"ETS proto-oncogene 1, transcription factor",HGNC:3488,11q24.3
+gyrA,Unmatched,,,,
+HST2,Unmatched,,,,
+MAVS,Approved symbol,MAVS,mitochondrial antiviral signaling protein,HGNC:29233,20p13
+PRKCI,Approved symbol,PRKCI,protein kinase C iota,HGNC:9404,3q26.2
+PTEN,Approved symbol,PTEN,phosphatase and tensin homolog,HGNC:9588,10q23.31
+Clip1,Approved symbol,CLIP1,CAP-Gly domain containing linker protein 1,HGNC:10461,12q24.31
+Cyth3,Approved symbol,CYTH3,cytohesin 3,HGNC:9504,7p22.1
+PLCG1,Approved symbol,PLCG1,phospholipase C gamma 1,HGNC:9065,20q12
+VTA1,Approved symbol,VTA1,vesicle trafficking 1,HGNC:20954,6q24.1-q24.2
+Rps6ka3,Approved symbol,RPS6KA3,ribosomal protein S6 kinase A3,HGNC:10432,Xp22.12
+TelA,Unmatched,,,,
+USP14,Approved symbol,USP14,ubiquitin specific peptidase 14,HGNC:12612,18p11.32
+mdm4,Approved symbol,MDM4,MDM4 regulator of p53,HGNC:6974,1q32.1
+SNF1,Unmatched,,,,
+EPHB1,Approved symbol,EPHB1,EPH receptor B1,HGNC:3392,3q22.2
+STING1,Approved symbol,STING1,stimulator of interferon response cGAMP interactor 1,HGNC:27962,5q31.2
+KIF1A,Approved symbol,KIF1A,kinesin family member 1A,HGNC:888,2q37.3
+Sh3kbp1,Approved symbol,SH3KBP1,SH3 domain containing kinase binding protein 1,HGNC:13867,Xp22.12
+ssp2,Unmatched,,,,
+Ephb2,Approved symbol,EPHB2,EPH receptor B2,HGNC:3393,1p36.12
+GCN2,Alias symbol,EIF2AK4,eukaryotic translation initiation factor 2 alpha kinase 4,HGNC:19687,15q15.1
+PLCG1,Approved symbol,PLCG1,phospholipase C gamma 1,HGNC:9065,20q12
+Plxna2,Approved symbol,PLXNA2,plexin A2,HGNC:9100,1q32.2
+Prkca,Approved symbol,PRKCA,protein kinase C alpha,HGNC:9393,17q24.2
+WNK3,Approved symbol,WNK3,WNK lysine deficient protein kinase 3,HGNC:14543,Xp11.22
+USP8,Approved symbol,USP8,ubiquitin specific peptidase 8,HGNC:12631,15q21.2
+WWP1,Approved symbol,WWP1,WW domain containing E3 ubiquitin protein ligase 1,HGNC:17004,8q21.3
+nef,Unmatched,,,,
+Rhodesain,Unmatched,,,,
+Khc,Unmatched,,,,
+mre11,Approved symbol,MRE11,"MRE11 homolog, double strand break repair nuclease",HGNC:7230,11q21
+STIM1,Approved symbol,STIM1,stromal interaction molecule 1,HGNC:11386,11p15.4
+Vav1,Approved symbol,VAV1,vav guanine nucleotide exchange factor 1,HGNC:12657,19p13.3
+WNK1,Approved symbol,WNK1,WNK lysine deficient protein kinase 1,HGNC:14540,12p13.33
+ERCC6,Approved symbol,ERCC6,"ERCC excision repair 6, chromatin remodeling factor",HGNC:3438,10q11.23
+FGFR3,Approved symbol,FGFR3,fibroblast growth factor receptor 3,HGNC:3690,4p16.3
+FKBP8,Approved symbol,FKBP8,FKBP prolyl isomerase 8,HGNC:3724,19p13.11
+ADAMTS13,Approved symbol,ADAMTS13,ADAM metallopeptidase with thrombospondin type 1 motif 13,HGNC:1366,9q34.2
+ARID4A,Approved symbol,ARID4A,AT-rich interaction domain 4A,HGNC:9885,14q23.1
+cnn,Unmatched,,,,
+CHD1L,Approved symbol,CHD1L,chromodomain helicase DNA binding protein 1 like,HGNC:1916,1q21.1
+ralF,Unmatched,,,,
+lapD,Unmatched,,,,
+Lyn,Approved symbol,LYN,"LYN proto-oncogene, Src family tyrosine kinase",HGNC:6735,8q12.1
+MAP2K6,Approved symbol,MAP2K6,mitogen-activated protein kinase kinase 6,HGNC:6846,17q24.3
+Mical1,Approved symbol,MICAL1,"microtubule associated monooxygenase, calponin and LIM domain containing 1",HGNC:20619,6q21
+PLC1,Previous symbol,PLCG1,phospholipase C gamma 1,HGNC:9065,20q12
+ROR2,Approved symbol,ROR2,receptor tyrosine kinase like orphan receptor 2,HGNC:10257,9q22.31
+unc-43,Unmatched,,,,
+fimh,Unmatched,,,,
+IQGAP1,Approved symbol,IQGAP1,IQ motif containing GTPase activating protein 1,HGNC:6110,15q26.1
+Lyn,Approved symbol,LYN,"LYN proto-oncogene, Src family tyrosine kinase",HGNC:6735,8q12.1
+Plxna1,Approved symbol,PLXNA1,plexin A1,HGNC:9099,3q21.3
+STING1,Approved symbol,STING1,stimulator of interferon response cGAMP interactor 1,HGNC:27962,5q31.2
+WNK1,Approved symbol,WNK1,WNK lysine deficient protein kinase 1,HGNC:14540,12p13.33
+rapA,Alias symbol,TRERF1,transcriptional regulating factor 1,HGNC:18273,6p21.1
+lapA,Unmatched,,,,
+MEC1,Alias symbol,ATR,ATR serine/threonine kinase,HGNC:882,3q23
+unc-22,Unmatched,,,,
+ARHGEF12,Approved symbol,ARHGEF12,Rho guanine nucleotide exchange factor 12,HGNC:14193,11q23.3
+ELK4,Approved symbol,ELK4,ETS transcription factor ELK4,HGNC:3326,1q32.1
+KPNA1,Approved symbol,KPNA1,karyopherin subunit alpha 1,HGNC:6394,3q21.1
+Plk1,Approved symbol,PLK1,polo like kinase 1,HGNC:9077,16p12.2
+Prkn,Approved symbol,PRKN,parkin RBR E3 ubiquitin protein ligase,HGNC:8607,6q26
+STE5,Unmatched,,,,
+TLN1,Approved symbol,TLN1,talin 1,HGNC:11845,9p13.3
+dlg1,Approved symbol,DLG1,discs large MAGUK scaffold protein 1,HGNC:2900,3q29
+Etv6,Approved symbol,ETV6,ETS variant transcription factor 6,HGNC:3495,12p13.2
+Gsdmd,Approved symbol,GSDMD,gasdermin D,HGNC:25697,8q24.3
+ipaH9.8,Unmatched,,,,
+Nlrc4,Approved symbol,NLRC4,NLR family CARD domain containing 4,HGNC:16412,2p22.3
+Ptpn11,Approved symbol,PTPN11,protein tyrosine phosphatase non-receptor type 11,HGNC:9644,12q24.13
+SEC22B,Approved symbol,SEC22B,"SEC22 homolog B, vesicle trafficking protein",HGNC:10700,1p12
+ARRB1,Approved symbol,ARRB1,arrestin beta 1,HGNC:711,11q13.4
+HCN1,Approved symbol,HCN1,hyperpolarization activated cyclic nucleotide gated potassium channel 1,HGNC:4845,5p12
+bchL,Unmatched,,,,
+PLEKHM2,Approved symbol,PLEKHM2,pleckstrin homology and RUN domain containing M2,HGNC:29131,1p36.21
+odhI,Unmatched,,,,
+BNI1,Unmatched,,,,
+LEU3,Unmatched,,,,
+Mapre1,Approved symbol,MAPRE1,microtubule associated protein RP/EB family member 1,HGNC:6890,20q11.21
+MYLK2,Approved symbol,MYLK2,myosin light chain kinase 2,HGNC:16243,20q11.21
+PHKG1,Approved symbol,PHKG1,phosphorylase kinase catalytic subunit gamma 1,HGNC:8930,7p11.2
+Ptk2,Approved symbol,PTK2,protein tyrosine kinase 2,HGNC:9611,8q24.3
+Sh3kbp1,Approved symbol,SH3KBP1,SH3 domain containing kinase binding protein 1,HGNC:13867,Xp22.12
+plaC,Unmatched,,,,
+WNK4,Approved symbol,WNK4,WNK lysine deficient protein kinase 4,HGNC:14544,17q21.2
+pma-1,Unmatched,,,,
+APBB1IP,Approved symbol,APBB1IP,amyloid beta precursor protein binding family B member 1 interacting protein,HGNC:17379,10p12.1
+ESPl1,Approved symbol,ESPL1,"extra spindle pole bodies like 1, separase",HGNC:16856,12q13.13
+ANG1,Alias symbol,ANGPT1,angiopoietin 1,HGNC:484,8q23.1
+PCMP-H83,Unmatched,,,,
+SH3GLB1,Approved symbol,SH3GLB1,"SH3 domain containing GRB2 like, endophilin B1",HGNC:10833,1p22.3
+FOXM1,Approved symbol,FOXM1,forkhead box M1,HGNC:3818,12p13.33
+TT_C0164,Unmatched,,,,
+ACA8,Alias symbol,SNORA8,"small nucleolar RNA, H/ACA box 8",HGNC:32596,11q21
+Apaf1,Approved symbol,APAF1,apoptotic peptidase activating factor 1,HGNC:576,12q23.1
+byr2,Unmatched,,,,
+ecoRIIR,Unmatched,,,,
+Gsdma3,Unmatched,,,,
+Itsn1,Approved symbol,ITSN1,intersectin 1,HGNC:6183,21q22.11
+Jak2,Approved symbol,JAK2,Janus kinase 2,HGNC:6192,9p24.1
+Ppp5c,Approved symbol,PPP5C,protein phosphatase 5 catalytic subunit,HGNC:9322,19q13.32
+PRKAR1B,Approved symbol,PRKAR1B,protein kinase cAMP-dependent type I regulatory subunit beta,HGNC:9390,7p22.3
+Rock2,Approved symbol,ROCK2,Rho associated coiled-coil containing protein kinase 2,HGNC:10252,2p25.1
+TM_1451,Unmatched,,,,
+sspH1,Unmatched,,,,
+ZUO1,Alias symbol,DNAJC2,DnaJ heat shock protein family (Hsp40) member C2,HGNC:13192,7q22.1
+Aim2,Approved symbol,AIM2,absent in melanoma 2,HGNC:357,1q23.1-q23.2
+Ddx58,Previous symbol,RIGI,RNA sensor RIG-I,HGNC:19102,9p21.1
+HIPK3,Approved symbol,HIPK3,homeodomain interacting protein kinase 3,HGNC:4915,11p13
+SFxv_5076,Unmatched,,,,
+lmo1076,Unmatched,,,,
+,,,,,
+Plxnd1,Approved symbol,PLXND1,plexin D1,HGNC:9107,3q22.1
+,,,,,
+Syk,Approved symbol,SYK,spleen associated tyrosine kinase,HGNC:11491,9q22.2
+Unc5b,Approved symbol,UNC5B,unc-5 netrin receptor B,HGNC:12568,10q22.1
+,,,,,
+WNK2,Approved symbol,WNK2,WNK lysine deficient protein kinase 2,HGNC:14542,9q22.31
+CDK5RAP2,Approved symbol,CDK5RAP2,CDK5 regulatory subunit associated protein 2,HGNC:18672,9q33.2
+KIF4A,Approved symbol,KIF4A,kinesin family member 4A,HGNC:13339,Xq13.1
+MYO7A,Approved symbol,MYO7A,myosin VIIA,HGNC:7606,11q13.5
+Mer,Alias symbol,MERTK,"MER proto-oncogene, tyrosine kinase",HGNC:7027,2q13
+PREX2,Approved symbol,PREX2,"phosphatidylinositol-3,4,5-trisphosphate dependent Rac exchange factor 2",HGNC:22950,8q13.2
+PDS5B,Approved symbol,PDS5B,PDS5 cohesin associated factor B,HGNC:20418,13q13.1
+BABAM1,Approved symbol,BABAM1,BRISC and BRCA1 A complex member 1,HGNC:25008,19p13.11
+Plxna3,Approved symbol,PLXNA3,plexin A3,HGNC:9101,Xq28
+YES1,Approved symbol,YES1,"YES proto-oncogene 1, Src family tyrosine kinase",HGNC:12841,18p11.32
+,,,,,
+ACA2,Unmatched,,,,
+AHA2,Unmatched,,,,
+ELF3,Approved symbol,ELF3,E74 like ETS transcription factor 3,HGNC:3318,1q32.1
+ELF5,Approved symbol,ELF5,E74 like ETS transcription factor 5,HGNC:3320,11p13
+FGR,Approved symbol,FGR,"FGR proto-oncogene, Src family tyrosine kinase",HGNC:3697,1p35.3
+Fmnl3,Approved symbol,FMNL3,formin like 3,HGNC:23698,12q13.12
+GAD1,Approved symbol,GAD1,glutamate decarboxylase 1,HGNC:4092,2q31.1
+ipaH3,Unmatched,,,,
+IRF7,Approved symbol,IRF7,interferon regulatory factor 7,HGNC:6122,11p15.5
+KPNA6,Approved symbol,KPNA6,karyopherin subunit alpha 6,HGNC:6399,1p35.2
+Nek9,Approved symbol,NEK9,NIMA related kinase 9,HGNC:18591,14q24.3
+NOX5,Approved symbol,NOX5,NADPH oxidase 5,HGNC:14874,15q23
+Ppp3ca,Approved symbol,PPP3CA,protein phosphatase 3 catalytic subunit alpha,HGNC:9314,4q24
+sspH2,Unmatched,,,,
+STIM2,Approved symbol,STIM2,stromal interaction molecule 2,HGNC:19205,4p15.2
+KIAA1482,Unmatched,,,,
+VAMP7,Approved symbol,VAMP7,vesicle associated membrane protein 7,HGNC:11486,Xq28 and Yq12
+Ykt6,Approved symbol,YKT6,YKT6 v-SNARE homolog,HGNC:16959,7p13
+ARHGEF9,Approved symbol,ARHGEF9,Cdc42 guanine nucleotide exchange factor 9,HGNC:14561,Xq11.1
+Camk2d,Approved symbol,CAMK2D,calcium/calmodulin dependent protein kinase II delta,HGNC:1462,4q26
+CCNT1,Approved symbol,CCNT1,cyclin T1,HGNC:1599,12q13.11-q13.12
+Clip1,Approved symbol,CLIP1,CAP-Gly domain containing linker protein 1,HGNC:10461,12q24.31
+Dlg2,Approved symbol,DLG2,discs large MAGUK scaffold protein 2,HGNC:2901,11q14.1
+Dlg2,Previous symbol,MPP2,MAGUK p55 scaffold protein 2,HGNC:7220,17q21.31
+DDB_G0287295,Unmatched,,,,
+glnR,Unmatched,,,,
+GRK5,Approved symbol,GRK5,G protein-coupled receptor kinase 5,HGNC:4544,10q26.11
+SF2311,Unmatched,,,,
+Igf1r,Approved symbol,IGF1R,insulin like growth factor 1 receptor,HGNC:5465,15q26.3
+Irf3,Approved symbol,IRF3,interferon regulatory factor 3,HGNC:6118,19q13.33
+Irf4,Approved symbol,IRF4,interferon regulatory factor 4,HGNC:6119,6p25.3
+IRF7,Approved symbol,IRF7,interferon regulatory factor 7,HGNC:6122,11p15.5
+KPNA5,Approved symbol,KPNA5,karyopherin subunit alpha 5,HGNC:6398,6q22.1
+Msn,Approved symbol,MSN,moesin,HGNC:7373,Xq12
+Nlrp3,Approved symbol,NLRP3,NLR family pyrin domain containing 3,HGNC:16400,1q44
+,,NSF,,,
+OTUD7A,Approved symbol,OTUD7A,OTU deubiquitinase 7A,HGNC:20718,15q13.3
+PACSIN2,Approved symbol,PACSIN2,protein kinase C and casein kinase substrate in neurons 2,HGNC:8571,22q13.2
+PACSIN2,Approved symbol,PACSIN2,protein kinase C and casein kinase substrate in neurons 2,HGNC:8571,22q13.2
+Pak1,Approved symbol,PAK1,p21 (RAC1) activated kinase 1,HGNC:8590,11q13.5-q14.1
+Pak3,Approved symbol,PAK3,p21 (RAC1) activated kinase 3,HGNC:8592,Xq23
+PAK5,Approved symbol,PAK5,p21 (RAC1) activated kinase 5,HGNC:15916,20p12.2
+PME1.9,Unmatched,,,,
+,,PPP3CA,,,
+,,PRKAA1,,,
+PRKG1,Approved symbol,PRKG1,protein kinase cGMP-dependent 1,HGNC:9414,10q11.23-q21.1
+RAD26,Alias symbol,ERCC6,"ERCC excision repair 6, chromatin remodeling factor",HGNC:3438,10q11.23
+Raf1,Approved symbol,RAF1,"Raf-1 proto-oncogene, serine/threonine kinase",HGNC:9829,3p25.2
+TLN2,Approved symbol,TLN2,talin 2,HGNC:15447,15q22.2
+,,SRC,,,
+,,SRC,,,
