@@ -1,0 +1,6 @@
+Building DAG of jobs...
+MissingInputException in line 54 of /home/bjechow/Documents/Gsponer Lab/Autoinhibition Protein Data/Pipeline/Pipeline/Snakefile:
+Missing input files for rule map_mutations:
+    output: data/enrichment_analysis/proteins_interface_drivers_norep.tsv, data/enrichment_analysis/proteins_interface_drivers_rep.tsv
+    affected files:
+        data/mutations/cmc_export.tsv
