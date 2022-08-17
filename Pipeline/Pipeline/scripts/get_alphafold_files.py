@@ -11,7 +11,7 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
     source_blob_name = 'AF-Q9BXL7-F1-model_v3.cif'
 
     # The path to which the file should be downloaded.
-    destination_file_name = "~/Documents/gsponer_lab/auotinhibition_protein_data/alphafold_files/AF-Q9BXL7-F1-model_v3.cif"
+    destination_file_name = "~/Documents/gsponer_lab/alphafold_files/AF-Q9BXL7-F1-model_v3.cif"
 
     storage_client = storage.Client()
 
