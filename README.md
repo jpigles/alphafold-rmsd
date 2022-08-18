@@ -1,2 +1,3 @@
 # autoinhibition_and_alphafold2
 This is my first project in my Masters. This aims to evaluate the performance of AlphaFold2 on autoinhibitory interfaces in proteins exhibiting autoinhibitory functionality.
+Please note that all files containing protein structural data exist in a folder parent to this one, and only on my workspace in the Gsponer lab, to avoid uneccessarily large data uploads to Github or other locations.
