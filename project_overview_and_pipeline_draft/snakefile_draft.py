@@ -1,4 +1,9 @@
+import pandas as pd
 
+
+df_samples = pd.read_csv('data/proteins_pdb.csv', sep = ',')
+#change sample names to use Uniprot accession codes, not gene names.
+sample_names = list(df_samples['Uniprot_ID'])
 #Establishing the end directory
 rule all:
     input:
@@ -6,12 +11,12 @@ rule all:
 
 rule pdb_files:
     input:
-        #List of desired PDB files.
+        'data/proteins_pdb.csv'    
     output:
-        #Directory containing all of the PDB files.
+        directory(expand('data/structures/{protein}', protein = sample_names))
     script:
-        #scripts/get_pdb_files.py or something similar
-        'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
+        'get_pdb_files_aa.py'
+        # 'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
     
 rule best_pdb_files:
     input:
