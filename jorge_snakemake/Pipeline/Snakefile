@@ -2,6 +2,7 @@ import pandas as pd
 
 
 df_samples = pd.read_csv('data/proteins.tsv', sep = '\t')
+#change sample names to use Uniprot accession codes, not gene names.
 sample_names = list(df_samples['Gene_name'])
 
 # Don't need this section, we won't need a target rule as there's no data subset we're trying to collect.
