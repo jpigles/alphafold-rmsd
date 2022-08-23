@@ -68,7 +68,7 @@ import csv
 #         output_writer.writerow(item)
 
 
-# The below section is for clearing out white space at the start of each PDB file list in our csv.
+# 2022-08-23 The below section is for clearing out white space at the start of each PDB file list in our csv.
 
 pdb_id_list = []
 dataset=[]
