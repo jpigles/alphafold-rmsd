@@ -15,9 +15,9 @@ import os
 df_prot = pd.read_csv(snakemake.input[0], sep = ',')
 
 for item in range(len(df_prot)):
-    gene = df_prot.loc[item, 'Gene_name']
+    uniprot = df_prot.loc[item, 'Uniprot_ID']
     
-    if gene in snakemake.output[item]:
+    if uniprot in snakemake.output[item]:
     
         # Try to make a new directory with the gene name. If such a directory
         # already exists then continue
@@ -30,7 +30,7 @@ for item in range(len(df_prot)):
         
         if pd.isna(pdb_ids):
             
-            print('No structures found for %s' % gene)
+            print('No structures found for %s' % uniprot)
             
         else:
             
@@ -42,7 +42,7 @@ for item in range(len(df_prot)):
             # A PDB list object that allows to download PDB files
             pdbl = PDBList(verbose=False)
 
-            print('Downloading structures for %s' % gene)
+            print('Downloading structures for %s' % uniprot)
 
             # Retrieve the PDB file from the PDB and save to the directory with the gene name
             pdbl.download_pdb_files(pdb_ids, pdir=snakemake.output[item], file_format='mmCif')
