@@ -1,0 +1,3 @@
+This folder contains two lists of uniprot IDs, one taken from the curated master list of autoinhibited proteins and one from the list of those proteins that exist in the
+Deepmind Alphafold database. There is also a script that determines which Uniprot IDs are missing from the AlphaFold list, as there are only 442 in that list as 
+compared to the 454 in the curated master list.
