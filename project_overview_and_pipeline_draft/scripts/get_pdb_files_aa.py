@@ -12,7 +12,7 @@ import os
 
 # path = './data/structures/'
 
-df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
+df_prot = pd.read_csv(snakemake.input[0], sep = ',')
 
 for item in range(len(df_prot)):
     gene = df_prot.loc[item, 'Gene_name']
