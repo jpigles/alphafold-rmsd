@@ -47,17 +47,17 @@ for i in range(len(df_prot)):
     pdb_id = df_prot.loc[i, 'PDB ID']
     
     # Define the file path for the PDB file of that protein
-    gene = df_prot.loc[i, 'Gene_name']
-    path_gene = 'data/structures/%s/' % gene
+    uniprot = df_prot.loc[i, 'Uniprot_ID']
+    path_uniprot = 'data/structures/%s/' % uniprot
     
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)
     
     # Then make a structure object
-    structure = parser.get_structure(pdb_id, path_gene + pdb_id + '.cif')
+    structure = parser.get_structure(pdb_id, path_uniprot + pdb_id + '.cif')
     
     # Make an MMCIFDict object to grab more information from the .cif files
-    mmcif_dict = MMCIF2Dict((path_gene + pdb_id + '.cif'))
+    mmcif_dict = MMCIF2Dict((path_uniprot + pdb_id + '.cif'))
     
     # Retrieve the mutation information from the .cif file
     df_prot.loc[i, 'PDB Mutations'] = mmcif_dict['_entity.pdbx_mutation'][0]
@@ -147,8 +147,8 @@ df_prot.loc[:, 'Number Interface Residues'] = pd.to_numeric(df_prot['Number Inte
 # Make a new column to flag the rows to keep
 df_prot['Keep'] = ''
 
-# Get all the Gene_names
-proteins = set(df_prot['Gene_name'])
+# Get all the Uniprot_IDs
+proteins = set(df_prot['Uniprot_ID'])
 
 # Iterate through all the proteins
 for protein in proteins:
@@ -156,7 +156,7 @@ for protein in proteins:
     print('Determining the interface residues for', protein)
     
     # Grab all the instances of each protein in df_prot
-    df_temp = df_prot.loc[df_prot['Gene_name'] == protein]
+    df_temp = df_prot.loc[df_prot['Uniprot_ID'] == protein]
     
     # Grab the intances of each protein in df_prot with no mutations
     df_temp_no_mut = df_temp.loc[df_temp['PDB Mutations'] == '?']
@@ -207,7 +207,7 @@ df_prot_keep_result.loc[:, 'Interface Residues'] = df_prot_keep_result['Interfac
 
 df_prot_keep_result.loc[:, 'Interacting residue pairs'] = df_prot_keep_result['Interacting residue pairs'].apply(to_string)
 
-df_prot_keep_result = df_prot_keep_result.dropna(subset = ['Gene_name']).reset_index(drop = True)
+df_prot_keep_result = df_prot_keep_result.dropna(subset = ['Uniprot_ID']).reset_index(drop = True)
 df_prot_keep_result = df_prot_keep_result.drop(['region_1 search', 'region_2 search', 'Keep'], axis = 'columns')
 
 # Save the file with all the best pdb files
