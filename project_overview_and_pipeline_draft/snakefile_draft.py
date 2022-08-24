@@ -35,11 +35,16 @@ rule interface_residues:
     script:
         #scripts/get_interface_all.py. Should be fine.
 
-rule compare_alphafold:
-    #This is where it gets interesting. What I should do is, I should get interface proteins from both the PDB and the AlphaFold files.
-    #Or I could compare the AlphaFold and PDB files directly.
-        #If I do this, then I could generate a list of residues for each protein where AlphaFold and PDB
-        # do not match, then compare that to the interface residues and see if there's any overlap.
-    #What would be the output of such analysis? A measure of how well AlphaFold matches autoinhibited structures versus its own measure of correctness?
-    #And then we could follow del Alamo et al (March 2022) and look at alternative conformational states and see how AlphaFold does there.
-    #This could potentially lead to the revelation that sampling multiple conformations allows AlphaFold to capture all possible states of autoinhibited proteins.
+rule compare_structures:
+    """
+    2 ways to compare
+    1st: Directly compare the coordinates between the AF and PDB files. This gives us a percentage of residues that are within a certain distance of each other.
+    Then we look at how many of the interface residues are within that cutoff distance. Or we look at the average distance between residues for each protein. Graph that against Alphafold confidence score.
+    2nd: A follow-up analysis to determine the interface residues in the AF and PDB files separately (using Jorge's script) then compare. Acts as a secondary verification.
+    
+    So: what is the cutoff distance?
+        Consult "Advances and pitfalls of protein structural alignment", Hitomi & Holm, https://doi.org/10.1016/j.sbi.2009.04.003. Possibilities: least-squares superimposition
+        (rigid or flexible) or distance difference matrix.
+            If we use LSS, what residues do we center on? Active sites? Do I have to write a program to align them, or can I use existing software? https://doi.org/10.1093/nar/gkaa443 (FATCAT), https://doi.org/10.1093/protein/11.9.739 (CE)
+            PDB has a page with pairwise structure alignment resources: https://www.rcsb.org/docs/tools/pairwise-structure-alignment#:~:text=Structure%20alignment%20is%20a%20valuable,by%20standard%20sequence%20alignment%20techniques. 
+            I don't understand what distance difference matrices are."""

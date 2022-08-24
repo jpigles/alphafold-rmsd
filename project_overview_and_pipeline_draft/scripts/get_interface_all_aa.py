@@ -20,7 +20,7 @@ df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
 # df_prot = pd.read_csv('../data/proteins_pdb_best.tsv', sep = '\t').astype('object')
 
 # Keep only the rows which have a PDB file
-# 2022-08-24
+# 2022-08-24: Probably do not need this line, all rows will have a PDB file.
 df_prot = df_prot.dropna(subset = ['PDB ID']).reset_index(drop = True)
 
 # Go through the region_1 and region_2 column and convert the strings into ranges or lists of 
