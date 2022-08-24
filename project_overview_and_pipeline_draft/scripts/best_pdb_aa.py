@@ -22,11 +22,12 @@ df_pdb = pd.DataFrame(columns = ['Gene_name', 'Uniprot_ID', 'Protein_length', 'r
                                  'Percent residues in region_1', 'Percent residues in region_2'])
 
 # Open the data of proteins with an IAS
-df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
+df_prot = pd.read_csv(snakemake.input[0], sep = ',').astype('object')
 # df_prot = pd.read_csv('../data/protein_list_pdb.tsv', sep = '\t').astype('object')
 
 # Keep only the rows which have a PDB file
-df_prot = df_prot.dropna(subset = ['PDB']).reset_index(drop = True)
+# 2022-08-24: Unneeded, all will have a PDB file.
+# df_prot = df_prot.dropna(subset = ['PDB']).reset_index(drop = True)
 
 # Go through the region_1 and region_2 column and convert the strings into ranges or lists of 
 # ranges
