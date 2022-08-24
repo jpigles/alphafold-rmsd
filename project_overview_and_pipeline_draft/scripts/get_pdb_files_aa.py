@@ -35,7 +35,7 @@ for item in range(len(df_prot)):
         else:
             
             #The separator for the PDB IDs I have in my file is a space. I can reconfigure this to make it a comma.
-            pdb_ids = pdb_ids.split(sep = ',')
+            pdb_ids = pdb_ids.split(sep = ' ')
 
             pdb_ids = [i[:-2] for i in pdb_ids] #Does this get rid of the comma?
 
