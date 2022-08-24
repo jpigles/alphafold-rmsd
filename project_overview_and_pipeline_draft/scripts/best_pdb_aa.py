@@ -3,6 +3,10 @@
 Created on Wed May 13 16:24:49 2020
 
 @author: Jorge Holguin
+
+Copy created on Wed Aug 24 2022
+
+@author: Brooks Perkins-Jechow
 """
 
 from Bio.PDB.MMCIFParser import MMCIFParser

@@ -3,6 +3,10 @@
 Created on Thu May 14 15:00:38 2020
 
 @author: Jorge Holguin
+
+Copy created on Tue Aug 23 2022
+
+@author: Brooks Perkins-Jechow
 """
 
 from Bio.PDB.PDBList import PDBList

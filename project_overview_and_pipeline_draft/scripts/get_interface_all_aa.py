@@ -3,6 +3,10 @@
 Created on Thu May 21 10:31:23 2020
 
 @author: Jorge Holguin
+
+Copy created on Wed Aug 24 12:30 2022
+
+@author: Brooks Perkins-Jechow
 """
 
 from Bio.PDB import MMCIFParser, NeighborSearch, Selection
@@ -16,6 +20,7 @@ df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
 # df_prot = pd.read_csv('../data/proteins_pdb_best.tsv', sep = '\t').astype('object')
 
 # Keep only the rows which have a PDB file
+# 2022-08-24
 df_prot = df_prot.dropna(subset = ['PDB ID']).reset_index(drop = True)
 
 # Go through the region_1 and region_2 column and convert the strings into ranges or lists of 
