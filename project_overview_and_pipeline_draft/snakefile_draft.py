@@ -20,11 +20,12 @@ rule pdb_files:
     
 rule best_pdb_files:
     input:
-        #Directory containing all of the PDB files, as well as file with information on proteins.
+        'data/proteins_pdb.csv'
+        expand('data/structures/{protein}', protein = sample_names) 
     output:
-        #In Jorge's script it's a .tsv file, so I guess stick with that.
+        'data/proteins_pdb_best.tsv'
     script:
-        #scripts/best_pdb.py. Should be fine.
+        'scripts/best_pdb_aa.py'
 
 rule interface_residues:
     input:

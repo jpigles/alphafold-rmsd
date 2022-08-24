@@ -43,16 +43,16 @@ for i in range(len(df_prot)):
     region_2_res = df_prot.loc[i, 'region_2 search']
 
     # Get the names of all the PDB files corresponding to one protein in a set
-    pdb_ids = set(df_prot.loc[i, 'PDB'].split(sep = ','))
+    pdb_ids = set(df_prot.loc[i, 'PDB'].split(sep = ' '))
     
     # Define the file path for the PDB files of that protein
-    gene = df_prot.loc[i, 'Gene_name']
-    path_gene = snakemake.input[i+1] + '/'
-    # path_gene = '../data/structures/' + gene + '/'
+    uniprot = df_prot.loc[i, 'Uniprot_ID']
+    path_uniprot = snakemake.input[i+1] + '/'
+    # path_uniprot = '../data/structures/' + uniprot ID + '/'
     
-    if gene in path_gene:
+    if uniprot in path_uniprot:
     
-        print('Determining the best structures for %s' % gene)
+        print('Determining the best structures for %s' % uniprot)
     
         # Iterate through all the PDB files and determine the number of residues inside
         # the IAS and the Domain that are present in each PDB file
@@ -70,10 +70,10 @@ for i in range(len(df_prot)):
                 parser = MMCIFParser(QUIET=True)
                 
                 # Then make a structure object
-                structure = parser.get_structure(pdb, path_gene + pdb + '.cif')
+                structure = parser.get_structure(pdb, path_uniprot + pdb + '.cif')
                 
                 # Make an MMCIFDict object to grab more information form the .cif files
-                mmcif_dict = MMCIF2Dict((path_gene + pdb + '.cif'))
+                mmcif_dict = MMCIF2Dict((path_uniprot + pdb + '.cif'))
                 
                 # If the structure was determined through X-Ray crystallography, get the resolution of the structure
                 # If the structure was determined through NMR, leave blank
