@@ -37,8 +37,8 @@ rule best_pdb_files:
 
 # rule compare_structures:
 #       input:
-#           data/proteins_pdb.csv
-
+#           data/proteins_pdb_best.tsv
+#           expand('data/structures/{protein}/{pdb}.cif', protein=sample_names)
 #     """
 #     2 ways to compare
 #     1st: Directly compare the coordinates between the AF and PDB files. This gives us a percentage of residues that are within a certain distance of each other.
