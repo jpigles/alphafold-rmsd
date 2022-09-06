@@ -17,13 +17,25 @@ df_uniprot = pd.read_csv(snakemake.input[1], sep=",").astype("object")
 #Loop through each unique Uniprot
 for i in range(len(df_uniprot)):
 
-    #Create the list of PDB files
+    #Designate Uniprot ID for this loop
+    uniprot_id = df_uniprot.loc(i, "Uniprot_ID")
 
-    #Create a parser object
+    #Designate file path for Alphafold structure
+    path_alphafold = 'data/alphafold_files/'
+
+    #make a parser object
+    parser = MMCIFParser(QUIET=True)
 
     #Create the Alphafold structure object
+    af_structure = parser.get_structure(uniprot_id, path_alphafold + 'F-' + uniprot_id + '-F1-model_v3.cif')
+
+    #Make an MMCIFDict structure to get more information from it
+    mmcif_dict_af = MMCIF2Dict((path_alphafold + 'F-' + uniprot_id + '-F1-model_v3.cif'))
 
     #Set it as the reference structure
+
+    #Create the set of PDB files
+    pdb_ids = set(df_uniprot.loc(i, "PDB").split(" "))
 
     #name of the PDB file
     pdb_id = df_prot.loc(i, "PDB ID")
@@ -32,12 +44,7 @@ for i in range(len(df_uniprot)):
     uniprot = df_prot.loc(i, "Uniprot_ID")
     path_pdb = 'data/structures/%u/' % uniprot
 
-    #define the file path of the PDB file
-    path_alphafold = 'data/alphafold_files/'
-
-    #make a parser object
-    parser = MMCIFParser(QUIET=True)
-
+   
     #I don't want to make a new structure object for my Alphafold file for every single PDB file. Any way I can make it once for each unique Uniprot and compare the PDBs against it?
 
 
