@@ -4,7 +4,7 @@ Created on Thu May 14 15:00:38 2020
 
 @author: Jorge Holguin
 
-Copy created on Tue Aug 23 2022
+Copy created on Tue Aug 23 14:35 2022
 
 @author: Brooks Perkins-Jechow
 """
@@ -16,7 +16,7 @@ import os
 
 # path = './data/structures/'
 
-df_prot = pd.read_csv(snakemake.input[0], sep = ',')
+df_prot = pd.read_csv('data/proteins_pdb.csv', sep = ',')
 
 for item in range(len(df_prot)):
     uniprot = df_prot.loc[item, 'Uniprot_ID']
