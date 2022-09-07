@@ -32,7 +32,13 @@ for i in range(len(df_uniprot)):
     #Make an MMCIFDict structure to get more information from it
     mmcif_dict_af = MMCIF2Dict((path_alphafold + 'F-' + uniprot_id + '-F1-model_v3.cif'))
 
-    #Set it as the reference structure
+    #Make a cealigner object
+    aligner = CEAligner()
+
+    #Get the guide coordinates for the AF 
+
+    #Set the AlphaFold structure as the reference structure
+    ref_structure = cealign.set_reference(af_structure)
 
     #Create the set of PDB files
     pdb_ids = set(df_uniprot.loc(i, "PDB").split(" "))
