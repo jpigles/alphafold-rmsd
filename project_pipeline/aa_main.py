@@ -1,12 +1,12 @@
 
 import os
-import utils
+import project_pipeline.aa_utils as aa_utils
 import pickle
 import argparse
 import configargparse
 
 from pymol import cmd
-from parser import parse_args
+from project_pipeline.aa_parser import parse_args
 from os.path import join, exists
 
 def process_input(args):
@@ -18,11 +18,11 @@ def process_input(args):
     #if args.remove_x:
 
 
-    chain_start_resid_ids = utils.generate_fasta_from_pdb\
+    chain_start_resid_ids = aa_utils.generate_fasta_from_pdb\
         (args.input_pdb_dir, args.linker_fasta_dir, args.pdb_ids, args.n_g,
          remove_x=args.remove_x)
 
-    gt_chain_bd_resid_ids = utils.read_bd_resid_id_all \
+    gt_chain_bd_resid_ids = aa_utils.read_bd_resid_id_all \
         (args.input_pdb_dir, args.pdb_ids)
 
     with open(args.chain_start_resid_ids_fn, 'wb') as fp: #...data/input/idr_84/poly_g_6/chain_start_ids.pkl
@@ -32,7 +32,7 @@ def process_input(args):
         pickle.dump(gt_chain_bd_resid_ids, fp)
 
     # get chain names and store locally
-    chain_names = utils.get_chain_identifiers_all \
+    chain_names = aa_utils.get_chain_identifiers_all \
         (args.pdb_ids, args.input_pdb_dir) #Another dictionary of chain IDs associated with PDB files.
     with open(args.chain_names_fn, 'wb') as fp:
         pickle.dump(chain_names, fp)
@@ -73,7 +73,7 @@ def process_output(args):
         pred_fn = join(dir, args.pred_fn_str) #? output/idr_84_af_full/poly_g_6/{PDB_ID}.fasta.ranked_0.pdb? This is the predicted filename, so in my case it will be my Alphafold file
         gt_pdb_fn = join(args.input_pdb_dir, pdb_id+ '.pdb') #.cif
         pred_removed_linker_fn = join(dir, args.removed_linker_fn_str) #... {PDB_ID}.fasta.ranked_0_removed_linker.pdb?
-        utils.remove_linker(pred_fn, pred_removed_linker_fn, args.n_g,
+        aa_utils.remove_linker(pred_fn, pred_removed_linker_fn, args.n_g,
                             chain_names[pdb_id], chain_start_ids[pdb_id],
                             gt_chain_bd_ids[pdb_id])
 
@@ -82,14 +82,14 @@ def process_output(args):
             assert(False)
 
         complex_fn = join(args.output_dir, pdb_id + '.fasta', args.complex_fn_str)
-        cur_rmsds = utils.calculate_rmsd\
+        cur_rmsds = aa_utils.calculate_rmsd\
             (gt_pdb_fn, pred_removed_linker_fn, complex_fn,
              chain_names[pdb_id], backbone=args.backbone,
              remove_hydrogen=args.remove_hydrogen)
         cur_rmsds.insert(0, pdb_id)
         rmsds.append(cur_rmsds)
 
-    utils.write_to_csv(rmsds, args.rmsd_fn)
+    aa_utils.write_to_csv(rmsds, args.rmsd_fn)
     cmd.quit()
 
 def assert_fasta(args):
@@ -99,8 +99,8 @@ def assert_fasta(args):
     for id in args.pdb_ids:
         pdb_fn = join(args.input_pdb_dir, id + '.pdb')
         pred_fn = join(args.output_dir, id + '.fasta', args.pred_fn)
-        seq_1 = utils.read_residue_from_pdb(pdb_fn)
-        seq_2 = utils.read_residue_from_pdb(pred_fn)
+        seq_1 = aa_utils.read_residue_from_pdb(pdb_fn)
+        seq_2 = aa_utils.read_residue_from_pdb(pred_fn)
         #print(seq_1)
         #print(seq_2)
         assert(seq_1 == seq_2)

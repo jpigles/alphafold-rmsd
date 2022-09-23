@@ -16,7 +16,7 @@ import os
 
 # path = './data/structures/'
 
-df_prot = pd.read_csv(snakemake.input[0], sep = ',')
+df_prot = pd.read_csv(snakemake.input[0], sep = ',').astype('object')
 
 for item in range(len(df_prot)):
     uniprot = df_prot.loc[item, 'Uniprot_ID']
