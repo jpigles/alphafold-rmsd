@@ -40,10 +40,10 @@ rule compare_structures:
         'data/proteins_pdb_best.tsv', #args.pdb_ids
         expand('data/input/{protein}/', protein=sample_names) #args.input_pdb_dir
         expand('data/input/poly_g_6/'), # args.linker_fasta_dir.
-        expand('data/output/') #args.output_dir
     output:
+        expand('data/output/') #args.output_dir
     shell:
-#           "python aa_main.py --config configs/test.ini"
+        "python aa_main.py --config configs/test.ini"
 #           Do I have to specify the scripts that will be used for this? Or will this automatically run it? 
 #     """
 #     2 ways to compare

@@ -31,7 +31,7 @@ def add_hardcoded_args(config):
     config['n_g'] = 6
     config['gt_model_nm'] = 'native'
 
-    config['data_dir'] = snakemake.input[3]
+    config['data_dir'] = snakemake.output[0]
 
     config['pdb_str'] = 'pdbs'
     config['input_str'] = 'input'
@@ -65,7 +65,7 @@ def add_path(config):
     config['input_pdb_dir'] = snakemake.input[1]    #.../input/pdbs/       #Make sure that the config values match any of the folders or files correctly.
     config['source_fasta_dir'] = join(input_dir, config['source_dir_str'])  
     config['linker_fasta_dir'] = snakemake.input[2] #...data/input/poly_g_6/
-    config['output_dir'] = join(config['data_dir'], config['output_str'], config['experiment_id'] + '_' + config['model_name'], config['linker_dir_str']) #/media/fred/Local Disk/Projects/bioinfo/data/output/idr_84_af_full/poly_g_6/
+    config['output_dir'] = join(config['data_dir'], config['output_str'], config['model_name'], config['linker_dir_str']) #/data/output/af_full/poly_g_6
 
     config['rmsd_fn'] = join(config['output_dir'], config['rmsd_fn_str'])
     config['chain_names_fn'] = join(config['linker_fasta_dir'], config['chain_names_fn_str'])
