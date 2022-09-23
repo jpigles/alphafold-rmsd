@@ -1,12 +1,12 @@
 
 import os
-import project_overview_and_pipeline_draft.aa_utils as aa_utils
+import project_pipeline.aa_utils as aa_utils
 import pickle
 import argparse
 import configargparse
 
 from pymol import cmd
-from project_overview_and_pipeline_draft.aa_parser import parse_args
+from project_pipeline.aa_parser import parse_args
 from os.path import join, exists
 
 def process_input(args):

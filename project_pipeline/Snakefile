@@ -13,7 +13,7 @@ rule pdb_files:
     input:
         'data/proteins_pdb.csv'    
     output:
-        directory(expand('data/structures/{protein}', protein = uniprot_id))
+        directory(expand('data/input/{protein}/', protein = uniprot_id))
     script:
         'scripts/get_pdb_files_aa.py'
         # 'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
@@ -21,7 +21,7 @@ rule pdb_files:
 rule best_pdb_files:
     input:
         'data/proteins_pdb.csv',
-        expand('data/structures/{protein}', protein = uniprot_id) 
+        expand('data/input/{protein}/', protein = uniprot_id) 
     output:
         'data/proteins_pdb_best.tsv'
     script:
@@ -37,8 +37,10 @@ rule interface_residues:
 
 rule compare_structures:
     input:
-        data/proteins_pdb_best.tsv, 
-        expand('data/structures/{protein}/{pdb}.cif', protein=sample_names) #
+        'data/proteins_pdb_best.tsv', #args.pdb_ids
+        expand('data/input/{protein}/', protein=sample_names) #args.input_pdb_dir
+        expand('data/input/poly_g_6/'), # args.linker_fasta_dir.
+        expand('data/output/') #args.output_dir
     output:
     shell:
 #           "python aa_main.py --config configs/test.ini"

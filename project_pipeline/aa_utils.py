@@ -472,3 +472,12 @@ def peptide_metric(pdb_ids, input_dir, output_dir, pred_fn, chain_names):
     out_csv_dir = os.path.dirname(input_dir.rstrip('/'))
     metrics_df = pandas.DataFrame(metrics, columns = colnames)
     metrics_df.to_csv(os.path.join(out_csv_dir, 'metric' + '.csv'))
+
+def get_pdb_list(in_fn):
+    pdb_ids = []
+    df_pdb = pd.read_csv(in_fn, sep='\t').astype('object')
+    for i in range(len(df_pdb)):
+        pdb = df_pdb.loc[i, 'PDB ID']
+        pdb_ids.append[pdb]
+    
+    return pdb_ids
