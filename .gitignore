@@ -1,3 +1,2 @@
-project_overview_and_pipeline_draft/data/structures/
-project_overview_and_pipeline_draft/data/alphafold_files/
-project_overview_and_pipeline_draft/.snakemake/
+project_pipeline/data/
+project_pipeline/.snakemake/

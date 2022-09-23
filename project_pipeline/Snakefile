@@ -3,7 +3,7 @@ import pandas as pd
 
 df_samples = pd.read_csv('data/proteins_pdb.csv', sep = ',')
 #change sample names to use Uniprot accession codes, not gene names.
-sample_names = list(df_samples['Uniprot_ID'])
+uniprot_id = list(df_samples['Uniprot_ID'])
 #Establishing the end directory
 # rule all:
 #     input:
@@ -13,7 +13,7 @@ rule pdb_files:
     input:
         'data/proteins_pdb.csv'    
     output:
-        directory(expand('data/structures/{protein}', protein = sample_names))
+        directory(expand('data/structures/{protein}', protein = uniprot_id))
     script:
         'scripts/get_pdb_files_aa.py'
         # 'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
@@ -21,24 +21,28 @@ rule pdb_files:
 rule best_pdb_files:
     input:
         'data/proteins_pdb.csv',
-        expand('data/structures/{protein}', protein = sample_names) 
+        expand('data/structures/{protein}', protein = uniprot_id) 
     output:
         'data/proteins_pdb_best.tsv'
     script:
         'scripts/best_pdb_aa.py'
 
-# rule interface_residues:
-#     input:
+rule interface_residues:
+    input:
 #         #Takes in the .tsv file generated from the last rule.
-#     output:
+    output:
 #         #Creates another .tsv file containing the interface residues (see Jorge's sop)
-#     script:
+    script:
 #         #scripts/get_interface_all.py. Should be fine.
 
-# rule compare_structures:
-#       input:
-#           data/proteins_pdb_best.tsv
-#           expand('data/structures/{protein}/{pdb}.cif', protein=sample_names)
+rule compare_structures:
+    input:
+        data/proteins_pdb_best.tsv, 
+        expand('data/structures/{protein}/{pdb}.cif', protein=sample_names) #
+    output:
+    shell:
+#           "python aa_main.py --config configs/test.ini"
+#           Do I have to specify the scripts that will be used for this? Or will this automatically run it? 
 #     """
 #     2 ways to compare
 #     1st: Directly compare the coordinates between the AF and PDB files. This gives us a percentage of residues that are within a certain distance of each other.
