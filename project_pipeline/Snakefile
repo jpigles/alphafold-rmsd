@@ -27,6 +27,12 @@ rule best_pdb_files:
     script:
         'scripts/best_pdb_aa.py'
 
+rule convert_cif_to_pdb
+    input:
+        #All of my alphafold files, whatever PDB files I end up getting that are in .cif format
+    output:
+        
+
 rule interface_residues:
     input:
 #         #Takes in the .tsv file generated from the last rule.

@@ -12,7 +12,7 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from os.path import join
 from functools import reduce
-from biopandas.pdb import PandasPdb
+from biopandas.mmcif import PandasMmcif
 from Bio.SeqRecord import SeqRecord
 
 def write_to_csv(data, out_fn):
@@ -33,8 +33,8 @@ def read_fasta(fn):
 
 def read_residue_from_pdb(fn, print=False):
     fastas = [] #A list of residue sequences, i.e. ['EKLVQPTPLLLSLLKSAGAQKETFTMKEVIYHLGQYIMAKQLYDEKQQHIVHCSNDPLGELFGVQEFSVKEPRRLYAMISRNLVSANV', 'ETFSDLWKLLP']
-    with open(fn, 'r') as pdb_file: #Note that all of my files are .cif, so I will need to modify this. fn is .../inputidr_84/pdbs/{PDB_ID}.pdb.
-        for record in SeqIO.parse(pdb_file, 'pdb-atom'): #Here we change 'pdb-atom' to 'cif-atom'.
+    with open(fn, 'r') as cif_file: #Note that all of my files are .cif, so I will need to modify this. fn is .../inputidr_84/pdbs/{PDB_ID}.pdb.
+        for record in SeqIO.parse(cif_file, 'cif-atom'):
             if print:
                 print('>' + record.id)
                 print(record.seq)
@@ -74,7 +74,7 @@ def prune_seq_given_range(df, rnge, chain_id, to_remove_atom_ids):
 
 def prune_seq_given_ranges(in_fn, out_fn, chain_ids, ranges):
     #if len(ranges) == 0: return
-    ppdb = PandasPdb()
+    ppdb = PandasPDB()
     _ = ppdb.read_pdb(in_fn)
     df = ppdb.df['ATOM']
     to_remove_atom_ids = []
