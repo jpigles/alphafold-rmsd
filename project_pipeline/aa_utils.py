@@ -12,7 +12,7 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from os.path import join
 from functools import reduce
-from biopandas.mmcif import PandasMmcif
+from biopandas.pdb import PandasPdb
 from Bio.SeqRecord import SeqRecord
 
 def write_to_csv(data, out_fn):

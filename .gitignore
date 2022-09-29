@@ -1,2 +1,3 @@
 project_pipeline/data/
 project_pipeline/.snakemake/
+env/
