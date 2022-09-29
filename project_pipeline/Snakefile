@@ -13,7 +13,7 @@ rule pdb_files:
     input:
         'data/proteins_pdb.csv'    
     output:
-        directory(expand('data/input/{protein}/', protein = uniprot_id))
+        directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
     script:
         'scripts/get_pdb_files_aa.py'
         # 'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
@@ -21,11 +21,27 @@ rule pdb_files:
 rule best_pdb_files:
     input:
         'data/proteins_pdb.csv',
-        expand('data/input/{protein}/', protein = uniprot_id) 
+        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id) 
     output:
         'data/proteins_pdb_best.tsv'
     script:
         'scripts/best_pdb_aa.py'
+
+df_best = pd.read_csv('data/proteins_pdb_best.tsv')
+unique_uniprot = df_best.drop_duplicates(subset='Uniprot ID', keep='first')
+best_uniprot_id = list(unique_uniprot['Uniprot ID'])
+pdb_id = 
+
+rule convert_cif_to_pdb
+    input:
+        'data/proteins_pdb_best.tsv',
+        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id),
+        expand('data/input/Alphafold_cif/')
+    output:
+
+    shell:
+
+
 
 rule interface_residues:
     input:
