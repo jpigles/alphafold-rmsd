@@ -27,20 +27,20 @@ rule best_pdb_files:
     script:
         'scripts/best_pdb_aa.py'
 
-df_best = pd.read_csv('data/proteins_pdb_best.tsv')
-unique_uniprot = df_best.drop_duplicates(subset='Uniprot ID', keep='first')
-best_uniprot_id = list(unique_uniprot['Uniprot ID'])
-pdb_id = 
+df_best = pd.read_csv('data/proteins_pdb_best.tsv', sep='\t').astype('object')
+
 
 rule convert_cif_to_pdb
     input:
         'data/proteins_pdb_best.tsv',
-        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id),
-        expand('data/input/Alphafold_cif/')
+        expand('data/input/RCSB_cif/{protein}/{sample}.cif', protein = uniprot_id),
+        expand('data/input/Alphafold_cif/{sample}.cif')
     output:
+        expand('data/output/RCSB_pdb/{protein}/{sample}.pdb', protein=uniprot_id)
+        expand('data/output/Alphafold_pdb/{sample}.pdb')
 
     shell:
-
+        "python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py ./project_pipline/sample_data
 
 
 rule interface_residues:

@@ -1,14 +1,14 @@
-# from Bio import SeqIO
-# from functools import reduce
-from biopandas.pdb import PandasPdb
-from biopandas.mmcif import PandasMmcif
+# # from Bio import SeqIO
+# # from functools import reduce
+# from biopandas.pdb import PandasPdb
+# from biopandas.mmcif import PandasMmcif
 
-ppdb = PandasPdb()
-pcif = PandasMmcif()
+# ppdb = PandasPdb()
+# pcif = PandasMmcif()
 
-n_g = 6
-fastas = []
-remove_x = False
+# n_g = 6
+# fastas = []
+# remove_x = False
 
 # with open("./sample_data/input/idr/pdbs/1YCQ.pdb", 'r') as pdb_file: #Note that all of my files are .cif, so I will need to modify this. fn is .../inputidr_84/pdbs/{PDB_ID}.pdb.
 #     for record in SeqIO.parse(pdb_file, 'pdb-atom'): #Here we change 'pdb-atom' to 'cif-atom'.
@@ -45,4 +45,7 @@ remove_x = False
 #     # print(resid_lo)
 #     # print(resid_hi)
 
-pdb_df = ppdb.read_pdb()
+some_dict = {'Birds': ['Swan, Sparrow'], 'Cats': ['Kyle', 'Charlie']}
+
+some_dict['Birds'] = ['Hawk']
+print(some_dict)
