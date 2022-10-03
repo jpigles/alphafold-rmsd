@@ -9,12 +9,15 @@ Copy created on Wed Aug 24 2022
 @author: Brooks Perkins-Jechow
 """
 
+from typing import ByteString
 from Bio.PDB.MMCIFParser import MMCIFParser
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+from os.path import join
 import pandas as pd
 import numpy as np
 import re
 from mutation_enrichment import string2range
+import shutil
 
 # path = 'C:\\Users\\Jorge Holguin\\Documents\\UBC\\4. Fourth Year\\BIOC 448\\Data\\Structures\\Data Files\\'
 # path_IAS = '../data/protein_list_pdb.tsv'
@@ -155,6 +158,13 @@ df_pdb_best = df_pdb.loc[(df_pdb['Percent residues in region_1'] > 80.0) & (df_p
 
 # Save the file with all the pdb files
 # df_pdb.to_csv(path + 'pdb_summary.tsv', sep = '\t', index = False)
+
+for i in range(len(df_pdb_best)):
+    uniprot = df_pdb_best[i, 'Uniprot_ID']
+    pdb = df_pdb_best[i, 'PDB ID']
+    all_pdbs_path = join('data/input/RCSB_cif', uniprot, pdb + '.cif')
+    best_pdbs_path = join(snakemake.output[1], pdb + '.cif')
+    shutil.copy(all_pdbs_path, best_pdbs_path)
 
 # Save the file with all the best pdb files
 df_pdb_best.to_csv(snakemake.output[0], sep = '\t', index = False)

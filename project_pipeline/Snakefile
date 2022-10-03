@@ -23,46 +23,36 @@ rule best_pdb_files:
         'data/proteins_pdb.csv',
         expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id) 
     output:
-        'data/proteins_pdb_best.tsv'
+        'data/proteins_pdb_best.tsv',
+        'data/input/RCSB_cif_best/'
     script:
         'scripts/best_pdb_aa.py'
 
-df_best = pd.read_csv('data/proteins_pdb_best.tsv', sep='\t').astype('object')
-
-best_uniprot = []
-
-for i in range(len(df_best)):
-    if df_best.loc[i, 'Uniprot_ID'] not in best_uniprot:
-        best_uniprot.append(df_best.loc[i, 'Uniprot_ID'])
-    else:
-        continue
-
-rule convert_cif_to_pdb
+rule convert_cif_to_pdb:
     input:
-        rcsb=expand('data/input/RCSB_cif/{protein}/{sample}.cif', protein = best_uniprot,)
-        af=expand('data/input/Alphafold_cif/{sample}.cif')
+        rcsb='data/input/RCSB_cif_best/{sample}.cif',
+        af='data/input/Alphafold_cif/{sample}.cif'
     output:
-        rcsb=expand('data/output/RCSB_pdb/{protein}/{sample}.pdb', protein = best_uniprot)
-        af=expand('data/output/Alphafold_pdb/{sample}.pdb')
-
+        rcsb='data/input/RCSB_pdb/{sample}.pdb',
+        af='data/input/Alphafold_pdb/{sample}.pdb'
     shell:
         "python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input.rcsb} > {output.rcsb} "
         "python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input.af} > {output.af} "
 
 
 
-rule interface_residues:
-    input:
-#         #Takes in the .tsv file generated from the last rule.
-    output:
-#         #Creates another .tsv file containing the interface residues (see Jorge's sop)
-    script:
-#         #scripts/get_interface_all.py. Should be fine.
+# rule interface_residues:
+#     input:
+# #         #Takes in the .tsv file generated from rule best_pdb_files
+#     output:
+# #         #Creates another .tsv file containing the interface residues (see Jorge's sop)
+#     script:
+# #         #scripts/get_interface_all.py. Should be fine.
 
 rule compare_structures:
     input:
         'data/proteins_pdb_best.tsv', #args.pdb_ids
-        expand('data/input/{protein}/', protein=sample_names) #args.input_pdb_dir
+        expand('data/input/RCSB_pdb/{protein}/', protein=sample_names), #args.input_pdb_dir
         expand('data/input/poly_g_6/'), # args.linker_fasta_dir.
     output:
         expand('data/output/') #args.output_dir
