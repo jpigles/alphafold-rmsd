@@ -159,6 +159,7 @@ df_pdb_best = df_pdb.loc[(df_pdb['Percent residues in region_1'] > 80.0) & (df_p
 # Save the file with all the pdb files
 # df_pdb.to_csv(path + 'pdb_summary.tsv', sep = '\t', index = False)
 
+#Copy the best files into a new directory
 for i in range(len(df_pdb_best)):
     uniprot = df_pdb_best[i, 'Uniprot_ID']
     pdb = df_pdb_best[i, 'PDB ID']
