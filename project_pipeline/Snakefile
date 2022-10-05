@@ -24,7 +24,7 @@ rule best_pdb_files:
         directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id)) 
     output:
         'data/proteins_pdb_best.tsv',
-        'data/input/RCSB_cif_best/'
+        'data/input/RCSB_cif_best'
     script:
         'scripts/best_pdb_aa.py'
 
@@ -47,8 +47,9 @@ rule convert_RCSB_cif_to_pdb:
 rule convert_AF_cif_to_pdb:
     input:
         'data/proteins_pdb.csv',
+        'data/input/Alphafold_cif'
     output:
-        'data/output/RCSB_af_full/poly_g_6/'
+        'data/output/RCSB_af_full/poly_g_6'
     script:
         'scripts/af_cif_to_pdb.py'
 

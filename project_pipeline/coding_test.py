@@ -1,6 +1,7 @@
 # from Bio import SeqIO
 # from functools import reduce
 import os
+from os.path import join
 
 # n_g = 6
 # fastas = []
@@ -40,5 +41,11 @@ import os
 #     resid_hi = chain_start_ids[i+1] - linker_len
 #     # print(resid_lo)
 #     # print(resid_hi)
+pdb = 'IE3C'
+snakemake = 'project_pipeline/sample_data/output/idr_af_full/poly_g_6'
+output_dir = os.mkdir(snakemake + f'/{pdb}.fasta')
+output_path = join(snakemake, f'{pdb}.fasta', 'ranked_0.pdb')
+stream = os.popen(f'python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py project_pipeline/sample_data/input/idr/cif/F-B8XX90-F1-model_v3.cif > {output_path}')
 
-steam = os.popen('python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py project_pipeline/sample_data/input/idr/cif/F-B8XX90-F1-model_v3.cif > project_pipeline/sample_data/output/idr_af_full/pdb/F-B8XX90-F1-model_v3.pdb')
+# path = join('data/input/poly_g_6', 'pdb.fasta', 'uniprot.pdb')
+# print(path)
