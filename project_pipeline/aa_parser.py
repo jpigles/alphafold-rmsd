@@ -69,10 +69,10 @@ def add_hardcoded_args(config):
 def add_path(config):
 
     # add dir
-    input_dir = join(config['data_dir'], config['input_str'], config['experiment_id'])
+    input_dir = join(config['data_dir'], config['input_str'], config['experiment_id']) #data/input/RCSB/
 
-    config['input_pdb_dir'] = join(input_dir, config['pdb_str'])
-    config['linked_fasta_dir'] = join(input_dir, config['linked_seq_dir_str'])
+    config['input_pdb_dir'] = join(input_dir, config['pdb_str']) #data/input/RCSB/pdbs
+    config['linked_fasta_dir'] = join(input_dir, config['linked_seq_dir_str']) #data/input/RCSB/poly_g_6
     config['source_fasta_dir'] = join(input_dir, config['source_fasta_dir_str'])
     config['output_dir'] = join(config['data_dir'], config['output_str'], config['experiment_id'] + '_' + config['model_name'], config['linked_seq_dir_str'])
 
