@@ -52,10 +52,10 @@ rule convert_cif_to_pdb:
 rule compare_structures:
     input:
         'data/proteins_pdb_best.tsv', #args.pdb_ids
-        expand('data/input/RCSB_pdb/{protein}/', protein=sample_names), #args.input_pdb_dir
-        expand('data/input/poly_g_6/'), # args.linker_fasta_dir.
+        'data/input/RCSB_pdb', #args.input_pdb_dir
+        'data/input/poly_g_6', # args.linker_fasta_dir.
     output:
-        expand('data/output/') #args.output_dir
+        'data/output' #args.output_dir
     shell:
         "python aa_main.py --config configs/test.ini"
 #           Do I have to specify the scripts that will be used for this? Or will this automatically run it? 
