@@ -28,13 +28,13 @@ rule best_pdb_files:
     script:
         'scripts/best_pdb_aa.py'
 
-# rule interface_residues:
-#     input:
-# #         #Takes in the .tsv file generated from rule best_pdb_files
-#     output:
-# #         #Creates another .tsv file containing the interface residues (see Jorge's sop)
-#     script:
-# #         #scripts/get_interface_all.py. Should be fine.
+rule interface_residues:
+    input:
+        'data/proteins_pdb_best.tsv',
+    output:
+        'data/proteins_interface.tsv'
+    script:
+        'get_interface_all_aa.py'
 
 rule convert_RCSB_cif_to_pdb:
     input:
