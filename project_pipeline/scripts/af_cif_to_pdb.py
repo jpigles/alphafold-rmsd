@@ -20,4 +20,3 @@ for i in range(len(af_df)):
 
     #Convert the files
     stream = os.popen(f'python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input_path} > {output_path}')
-    
