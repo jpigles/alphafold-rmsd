@@ -11,9 +11,11 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 
 rule pdb_files:
     input:
-        'data/proteins_pdb.csv'    
+        'data/proteins_pdb.csv'
+
     output:
         directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
+
     script:
         'scripts/get_pdb_files_aa.py'
         # 'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
@@ -21,26 +23,32 @@ rule pdb_files:
 rule best_pdb_files:
     input:
         'data/proteins_pdb.csv',
-        directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id)) 
+        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id)
+
     output:
         'data/proteins_pdb_best.tsv',
         'data/input/RCSB_cif_best'
+
     script:
         'scripts/best_pdb_aa.py'
 
 rule interface_residues:
     input:
         'data/proteins_pdb_best.tsv',
+
     output:
         'data/proteins_interface.tsv'
+
     script:
         'get_interface_all_aa.py'
 
 rule convert_RCSB_cif_to_pdb:
     input:
         'data/input/RCSB_cif_best/{sample}.cif'
+
     output:
         'data/input/RCSB/pdbs/{sample}.pdb'    
+
     shell:
         "python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input} > {output} "
 
@@ -48,8 +56,10 @@ rule convert_AF_cif_to_pdb:
     input:
         'data/proteins_pdb.csv',
         'data/input/Alphafold_cif'
+
     output:
         'data/output/RCSB_af_full/poly_g_6'
+
     script:
         'scripts/af_cif_to_pdb.py'
 
@@ -58,8 +68,10 @@ rule compare_structures:
         'data/proteins_pdb_best.tsv', #args.pdb_ids
         'data/input/RCSB_pdb', #args.input_pdb_dir
         'data/input/poly_g_6', # args.linker_fasta_dir.
+
     output:
         'data/output' #args.output_dir
+        
     shell:
         "python aa_main.py --config configs/test.ini"
 #           Do I have to specify the scripts that will be used for this? Or will this automatically run it? 
