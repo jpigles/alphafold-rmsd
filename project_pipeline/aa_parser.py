@@ -1,4 +1,5 @@
 import os
+import csv
 import numpy as np
 
 from pathlib import Path
@@ -97,27 +98,34 @@ def select_pdb_ids(config):
     #config['pdb_ids'] = ['1AWR','1EG4','1ELW','1ER8','1JD5']
     #config['pdb_ids'] = ['1YCQ','2AZE','2M3M','2QTV','2RSN','3DF0','4U7T']
 
-    fn = config['pdb_ids_fn']
-    excld_fn = config['pdb_exclude_fn']
+    # fn = config['pdb_ids_fn']
+    # excld_fn = config['pdb_exclude_fn']
 
-    if exists(fn):
-        pdb_ids = np.load(fn)
-        if exists(excld_fn):
-            #exclude_ids = np.load(excld_fn)
-            #print(exclude_ids)
-            #exclude_ids = np.append(exclude_ids,['2M3M','4X34'])
-            #pdb_ids = np.array(list( set(pdb_ids) - set(exclude_ids) ))
-            pdb_ids = np.sort(pdb_ids)
-    else:
-        #if config['from_fasta']:
-        #    all_pdb_ids = np.array(os.listdir(config['source_fasta_dir']))
-        #else:
-        all_pdb_ids = np.array(os.listdir(config['input_pdb_dir']))
-        pdb_ids = np.random.choice(all_pdb_ids, config['n_seqs'], replace=False)
-        split_char = '_' if config['from_fasta'] and config['separate_fasta'] else '.'
-        pdb_ids = np.array([id.split(split_char)[0] for id in pdb_ids])
-        pdb_ids = np.sort(pdb_ids)
-        np.save(fn, pdb_ids)
+    # if exists(fn):
+    #     pdb_ids = np.load(fn)
+    #     if exists(excld_fn):
+    #         #exclude_ids = np.load(excld_fn)
+    #         #print(exclude_ids)
+    #         #exclude_ids = np.append(exclude_ids,['2M3M','4X34'])
+    #         #pdb_ids = np.array(list( set(pdb_ids) - set(exclude_ids) ))
+    #         pdb_ids = np.sort(pdb_ids)
+    # else:
+    #     #if config['from_fasta']:
+    #     #    all_pdb_ids = np.array(os.listdir(config['source_fasta_dir']))
+    #     #else:
+    #     all_pdb_ids = np.array(os.listdir(config['input_pdb_dir']))
+    #     pdb_ids = np.random.choice(all_pdb_ids, config['n_seqs'], replace=False)
+    #     split_char = '_' if config['from_fasta'] and config['separate_fasta'] else '.'
+    #     pdb_ids = np.array([id.split(split_char)[0] for id in pdb_ids])
+    #     pdb_ids = np.sort(pdb_ids)
+    #     np.save(fn, pdb_ids)
+    pdb_ids = []
+
+    with open(join(config['data_dir'], 'proteins_pdb_best.tsv')) as pdb_file:
+        reader = csv.DictReader(pdb_file, delimiter='\t')
+        for row in reader:
+            pdb_ids.append(row['PDB ID'])
+
 
     config['pdb_ids'] = pdb_ids
     print(f'selected proteins {pdb_ids}')
