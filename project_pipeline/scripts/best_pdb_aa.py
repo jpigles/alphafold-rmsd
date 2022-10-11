@@ -16,7 +16,7 @@ from os.path import join
 import pandas as pd
 import numpy as np
 import re
-from mutation_enrichment import string2range
+from project_pipeline.scripts.mutation_enrichment import string2range
 import shutil
 
 # path = 'C:\\Users\\Jorge Holguin\\Documents\\UBC\\4. Fourth Year\\BIOC 448\\Data\\Structures\\Data Files\\'
