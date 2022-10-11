@@ -48,7 +48,7 @@ import os
 
 df_prot = pd.read_csv('project_pipeline/data/proteins_pdb.csv', sep = ',').astype('object')
     
-for item in range(5):
+for item in range(400,402):
     uniprot = df_prot.loc[item, 'Uniprot_ID']
 
     try:

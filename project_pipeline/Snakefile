@@ -9,17 +9,17 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #     input:
         # Here I place my final analysis. What is my final analysis?
 
-rule pdb_files:
-    input:
-        'data/proteins_pdb.csv'
+# rule pdb_files:
+#     input:
+#         'data/proteins_pdb.csv'
 
-    output:
-        directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
+#     output:
+#         directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
 
-    script:
-        'scripts/get_pdb_files_aa.py'
-        # 'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
-    
+#     script:
+#         'scripts/get_pdb_files_aa.py'
+
+
 rule best_pdb_files:
     input:
         'data/proteins_pdb.csv',
@@ -65,13 +65,12 @@ rule convert_AF_cif_to_pdb:
 
 rule compare_structures:
     input:
-        'data/proteins_pdb_best.tsv', #args.pdb_ids
-        'data/input/RCSB_pdb', #args.input_pdb_dir
-        'data/input/poly_g_6', # args.linker_fasta_dir.
+        'proteins_pdb_best.tsv', #args.pdb_ids
+        'input' #args.input_pdb_dir# args.linker_fasta_dir.
 
     output:
-        'data/output' #args.output_dir
-        
+        'output' #args.output_dir
+
     shell:
         "python aa_main.py --config configs/test.ini"
 #           Do I have to specify the scripts that will be used for this? Or will this automatically run it? 
