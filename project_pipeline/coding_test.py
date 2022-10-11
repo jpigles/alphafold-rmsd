@@ -3,7 +3,7 @@
 import os
 from os.path import join
 import pandas
-from project_pipeline.scripts.mutation_enrichment import string2range
+from scripts.mutation_enrichment import string2range
 
 # n_g = 6
 # fastas = []
@@ -52,7 +52,7 @@ from project_pipeline.scripts.mutation_enrichment import string2range
 # path = join('data/input/poly_g_6', 'pdb.fasta', 'uniprot.pdb')
 # print(path)
 
-df_prot = pandas.read_csv('sample_data/proteins_pdb.csv', sep = ',').astype('object')
+df_prot = pandas.read_csv('sample_data/proteins_pdb_sample.csv', sep = ',').astype('object')
 
 
 aa_range = '166-309,482-618'
@@ -76,8 +76,8 @@ def string2range(x):
                     # print(f'This is list_temp[y]:{list_temp[y]}')
                     break
 
-            print(list(set([item for sublist in list_temp for item in sublist])))
-            # return list(set([item for sublist in list_temp for item in sublist]))
+            # print(list(set([item for sublist in list_temp for item in sublist])))
+            return list(set([item for sublist in list_temp for item in sublist]))
 
         # Handle instances with only one range
     else:
@@ -92,7 +92,8 @@ def string2range(x):
 
 
 df_prot['region_1 search'] = df_prot['region_1'].apply(lambda x: string2range(x))
+df_prot['region_2 search'] = df_prot['region_2'].apply(lambda x: string2range(x)) 
 
 
-print(df_prot['region_1 search'])
+print(df_prot['region_2 search'])
 
