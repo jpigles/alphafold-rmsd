@@ -50,7 +50,7 @@ for i in range(len(df_prot)):
     region_2_res = df_prot.loc[i, 'region_2 search']
 
     # Get the names of all the PDB files corresponding to one protein in a set
-    pdb_ids = set(df_prot.loc[i, 'PDB'].split(sep = ' '))
+    pdb_ids = set(df_prot.loc[i, 'PDB'].split(sep = ','))
     
     # Define the file path for the PDB files of that protein
     uniprot = df_prot.loc[i, 'Uniprot_ID']
