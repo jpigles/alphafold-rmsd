@@ -5,7 +5,6 @@ import os
 from os.path import join
 import pandas
 from scripts.mutation_enrichment import string2range
-from scripts.best_pdb_aa import prune_extra_chains
 
 # n_g = 6
 # fastas = []
@@ -99,3 +98,23 @@ from scripts.best_pdb_aa import prune_extra_chains
 
 # print(df_prot['region_2 search'])
 
+def prune_extra_chains(pdb_ids):
+    pdb_ids_only = []
+    single_chain_ids = set()
+    for pdb_id in pdb_ids:
+        id_only = pdb_id[:4]
+        pdb_ids_only.append(id_only)
+    for pdb_id in pdb_ids_only:
+        if pdb_ids_only.count(pdb_id) != 1:
+            pdb_ids_only.remove(pdb_id)
+        else:
+            single_chain_ids.add(pdb_id)
+    return single_chain_ids
+
+id_str = '4Y07.A 5TJ7.A 5TJ7.B 5TJ7.C 5TJ7.D 5TJ8.A 5TJQ.A 6J1Z.A 6RSS.A '
+
+id_list = id_str.strip().split(sep=' ')
+
+pruned_list = prune_extra_chains(id_list)
+
+print(pruned_list)
