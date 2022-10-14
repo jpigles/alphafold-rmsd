@@ -103,7 +103,8 @@ def prune_extra_chains(pdb_ids):
     single_chain_ids = set()
     for pdb_id in pdb_ids:
         id_only = pdb_id[:4]
-        pdb_ids_only.append(id_only)
+        lowercase_id = id_only.lower()
+        pdb_ids_only.append(lowercase_id)
     for pdb_id in pdb_ids_only:
         if pdb_ids_only.count(pdb_id) != 1:
             pdb_ids_only.remove(pdb_id)

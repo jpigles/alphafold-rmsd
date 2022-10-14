@@ -16,7 +16,7 @@ from os.path import join
 import pandas as pd
 import numpy as np
 import re
-from scripts.mutation_enrichment import string2range
+from mutation_enrichment import string2range
 import shutil
 
 # path = 'C:\\Users\\Jorge Holguin\\Documents\\UBC\\4. Fourth Year\\BIOC 448\\Data\\Structures\\Data Files\\'
@@ -29,7 +29,7 @@ df_pdb = pd.DataFrame(columns = ['Gene_name', 'Uniprot_ID', 'Protein_length', 'r
                                  'Percent residues in region_1', 'Percent residues in region_2'])
 
 # Open the data of proteins with an IAS
-df_prot = pd.read_csv(snakemake.input[0], sep = ',').astype('object')
+df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
 # df_prot = pd.read_csv('../data/protein_list_pdb.tsv', sep = '\t').astype('object')
 
 
@@ -39,7 +39,8 @@ def prune_extra_chains(pdb_ids):
     single_chain_ids = set()
     for pdb_id in pdb_ids:
         id_only = pdb_id[:4]
-        pdb_ids_only.append(id_only)
+        lowercase_id = id_only.lower()
+        pdb_ids_only.append(lowercase_id)
     for pdb_id in pdb_ids_only:
         if pdb_ids_only.count(pdb_id) != 1:
             pdb_ids_only.remove(pdb_id)

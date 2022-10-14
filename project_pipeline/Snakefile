@@ -9,6 +9,17 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #     input:
         # Here I place my final analysis. What is my final analysis?
 
+# rule pdb_ids:
+#     input:
+#         'data/proteins.tsv'
+        
+#     output:
+#         'data/proteins_pdb.tsv'
+        
+#     script:
+#         'scripts/get_pdb_ids_aa.py'
+#         
+
 # rule pdb_files:
 #     input:
 #         'data/proteins_pdb.csv'
@@ -18,16 +29,6 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 
 #     script:
 #         'scripts/get_pdb_files_aa.py'
-
-rule pdb_ids:
-    input:
-        'data/proteins.tsv'
-        
-    output:
-        'data/proteins_pdb.tsv'
-        
-    script:
-        'scripts/get_pdb_ids_aa.py'
 
 
 rule best_pdb_files:
