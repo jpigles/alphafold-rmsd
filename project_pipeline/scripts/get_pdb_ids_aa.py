@@ -21,35 +21,56 @@ for i in range(len(df_prot)):
     # Create a variable with the Uniprot_ID
     uniprot_id = df_prot.loc[i, 'Uniprot_ID']
 
-    url = 'http://www.rcsb.org/pdb/rest/search'
+    url = 'https://search.rcsb.org/rcsbsearch/v2/query'
     
     # Query text to request all the PDB IDs associated to a Uniprot_ID
     # Taken from https://www.rcsb.org/pdb/software/rest.do
-    query_text = """
-<?xml version="1.0" encoding="UTF-8"?>
-
-<orgPdbQuery>
-
-<queryType>org.pdb.query.simple.UpAccessionIdQuery</queryType>
-
-<description>Simple query for a list of Uniprot Accession IDs</description>
-
-<accessionIdList>%s</accessionIdList>
-
-</orgPdbQuery>
-
-""" % uniprot_id
+    query_text = {
+  "query": {
+    "type": "group",
+    "logical_operator": "and",
+    "nodes": [
+      {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+          "operator": "exact_match",
+          "value": uniprot_id,
+          "attribute": "rcsb_polymer_entity_container_identifiers.reference_sequence_identifiers.database_accession"
+        }
+      },
+      {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+          "operator": "exact_match",
+          "value": "UniProt",
+          "attribute": "rcsb_polymer_entity_container_identifiers.reference_sequence_identifiers.database_name"
+        }
+      }
+    ]
+  },
+  "request_options": {
+    "return_all_hits": True
+  },
+  "return_type": "polymer_instance"
+    }
     
     print("Querying RCSB PDB REST API for Uniprot_ID: %s" % uniprot_id)
     
     header = {'Content-Type': 'application/x-www-form-urlencoded'}
     
-    response = requests.post(url, data=query_text, headers=header)
+    response = requests.post(url, json=query_text)
     
     # Store the results in df_prot
     if response.status_code == 200:
-        pdb_id = response.text.strip().replace('\n', ',')
-        df_prot.loc[i, 'PDB'] = pdb_id
+        # pdb_id = response.text.strip().replace('\n', ',')
+        # df_prot.loc[i, 'PDB'] = pdb_id
+        response_dic = response.json()
+        pdb_str = ''
+        for n in range(len(response_dic['result_set'])):
+            pdb_str = pdb_str + response_dic['result_set'][n]['identifier'] + ' '
+        df_prot.loc[i, 'PDB'] = pdb_str
         # print("Found %d PDB entries matching query." % len(response.text))
         # print("Matches: \n%s" % response.text)
         
