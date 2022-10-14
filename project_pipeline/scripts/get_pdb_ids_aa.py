@@ -80,5 +80,5 @@ for i in range(len(df_prot)):
         print("Failed to retrieve results for Uniprot_ID: %s" % uniprot_id)
         
 # Save the df_prot as a tsv file
-df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
+# df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
         
