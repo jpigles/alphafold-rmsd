@@ -27,7 +27,7 @@ df_prot = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 #Remove any empty PDB ID entries
 for i in range(len(df_prot)):
     if type(df_prot.loc[i, 'PDB']) == float:
-        df_prot.drop(index=i)
+        df_prot = df_prot.drop(index=i)
 
 for i in range(len(df_prot)):
     pdb_ids_unpruned = df_prot.loc[i, 'PDB']
