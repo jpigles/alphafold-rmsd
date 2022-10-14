@@ -32,24 +32,6 @@ df_pdb = pd.DataFrame(columns = ['Gene_name', 'Uniprot_ID', 'Protein_length', 'r
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
 # df_prot = pd.read_csv('../data/protein_list_pdb.tsv', sep = '\t').astype('object')
 
-
-
-def prune_extra_chains(pdb_ids):
-    pdb_ids_only = []
-    single_chain_ids = set()
-    for pdb_id in pdb_ids:
-        id_only = pdb_id[:4]
-        lowercase_id = id_only.lower()
-        pdb_ids_only.append(lowercase_id)
-    for pdb_id in pdb_ids_only:
-        if pdb_ids_only.count(pdb_id) != 1:
-            pdb_ids_only.remove(pdb_id)
-        else:
-            single_chain_ids.add(pdb_id)
-    return single_chain_ids
-
-
-
 # Keep only the rows which have a PDB file
 # 2022-08-24: Unneeded, all will have a PDB file.
 # df_prot = df_prot.dropna(subset = ['PDB']).reset_index(drop = True)
@@ -67,11 +49,8 @@ for i in range(len(df_prot)):
     region_1_res = df_prot.loc[i, 'region_1 search']
     region_2_res = df_prot.loc[i, 'region_2 search']
 
-    # Retrieve the PDB IDs in the format ID:chain
-    pdb_ids_multiple_chains = df_prot.loc[i, 'PDB'].strip().split(sep = ' ')
-
-    # Create a set of PDBs with one unique chain.
-    pdb_ids = prune_extra_chains(pdb_ids_multiple_chains)
+    # Retrieve the PDB IDs
+    pdb_ids= set(df_prot.loc[i, 'PDB'].strip().split(sep = ' '))
     
     # Define the file path for the PDB files of that protein
     uniprot = df_prot.loc[i, 'Uniprot_ID']
