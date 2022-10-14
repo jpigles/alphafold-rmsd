@@ -19,7 +19,7 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #     script:
 #         'scripts/get_pdb_ids_aa.py'
 #        
-rule prune_ids
+rule prune_ids:
     input:
         'data/proteins_pdb_w_chains.tsv'
 

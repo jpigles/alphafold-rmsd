@@ -26,7 +26,8 @@ df_prot = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 
 for i in range(len(df_prot)):
     pdb_ids_unpruned = df_prot.loc[i, 'PDB']
-    pdb_ids_pruned = prune_extra_chains(pdb_ids_unpruned)
-    df_prot.loc[i, 'PDB'] = pdb_ids_pruned
+    pdb_ids_list = pdb_ids_unpruned.strip().split(sep = ' ')
+    pdb_ids_pruned = prune_extra_chains(pdb_ids_list)
+    df_prot.loc[i, 'PDB'] = str(pdb_ids_pruned)
 
 df_prot.to_csv(snakemake.output[0], sep='\t', index=False)
