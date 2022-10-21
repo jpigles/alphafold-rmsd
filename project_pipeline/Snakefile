@@ -9,25 +9,26 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #     input:
         # Here I place my final analysis. What is my final analysis?
 
-rule pdb_ids:
-    input:
-        'data/proteins.tsv'
+# rule pdb_ids:
+#     input:
+#         'data/proteins.tsv'
         
-    output:
-        'data/proteins_pdb_w_chains.tsv'
+#     output:
+#         'data/proteins_pdb_w_chains.tsv'
         
-    script:
-        'scripts/get_pdb_ids_aa.py'
+#     script:
+#         'scripts/get_pdb_ids_aa.py'
+
 #        
-rule prune_ids:
-    input:
-        'data/proteins_pdb_w_chains.tsv'
+# rule prune_ids:
+#     input:
+#         'data/proteins_pdb_w_chains.tsv'
 
-    output:
-        'data/proteins_pdb.tsv'
+#     output:
+#         'data/proteins_pdb.tsv'
 
-    script:
-        'scripts/prune_pdb_ids.py'
+#     script:
+#         'scripts/prune_pdb_ids.py'
 
 
 rule pdb_files:
