@@ -16,7 +16,7 @@ import os
 
 # path = './data/structures/'
 
-df_prot = pd.read_csv(snakemake.input[0], sep = ',').astype('object')
+df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
 
 for item in range(len(df_prot)):
     uniprot = df_prot.loc[item, 'Uniprot_ID']
@@ -39,9 +39,14 @@ for item in range(len(df_prot)):
         else:
             
             #The separator for the PDB IDs I have in my file is a space. I can reconfigure this to make it a comma.
-            pdb_ids = pdb_ids.split(sep = ' ')
+            pdb_ids_lower = pdb_ids.split(sep = ',')
 
-            pdb_ids = [i[:-2] for i in pdb_ids] #Does this get rid of the comma?
+            pdb_ids = []
+            for pdb_id_lower in pdb_ids_lower:
+                pdb_id = pdb_id_lower.upper()
+                pdb_ids.append(pdb_id)
+
+            # pdb_ids = [i[:-2] for i in pdb_ids] #Does this get rid of the comma?
 
             # A PDB list object that allows to download PDB files
             pdbl = PDBList(verbose=False)

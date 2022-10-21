@@ -9,67 +9,90 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #     input:
         # Here I place my final analysis. What is my final analysis?
 
+# rule pdb_ids:
+#     input:
+#         'data/proteins.tsv'
+        
+#     output:
+#         'data/proteins_pdb_w_chains.tsv'
+        
+#     script:
+#         'scripts/get_pdb_ids_aa.py'
+
+#        
+# rule prune_ids:
+#     input:
+#         'data/proteins_pdb_w_chains.tsv'
+
+#     output:
+#         'data/proteins_pdb.tsv'
+
+#     script:
+#         'scripts/prune_pdb_ids.py'
+
+
 rule pdb_files:
     input:
-        'data/proteins_pdb.csv'    
+        'data/proteins_pdb.tsv'
+
     output:
         directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
+
     script:
         'scripts/get_pdb_files_aa.py'
-        # 'Note: this must be updated because RCSB and/or Uniprot have changed their API.'
-    
+
+
 rule best_pdb_files:
     input:
-        'data/proteins_pdb.csv',
-        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id) 
+        'data/proteins_pdb.tsv',
+        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id)
+
     output:
-        'data/proteins_pdb_best.tsv'
+        'data/proteins_pdb_best.tsv',
+        'data/input/RCSB_cif_best'
+
     script:
         'scripts/best_pdb_aa.py'
 
-df_best = pd.read_csv('data/proteins_pdb_best.tsv')
-unique_uniprot = df_best.drop_duplicates(subset='Uniprot ID', keep='first')
-best_uniprot_id = list(unique_uniprot['Uniprot ID'])
-pdb_id = 
-
-rule convert_cif_to_pdb
-    input:
-        'data/proteins_pdb_best.tsv',
-        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id),
-        expand('data/input/Alphafold_cif/')
-    output:
-
-    shell:
-
-
-
 rule interface_residues:
     input:
-#         #Takes in the .tsv file generated from the last rule.
+        'data/proteins_pdb_best.tsv',
+
     output:
-#         #Creates another .tsv file containing the interface residues (see Jorge's sop)
+        'data/proteins_interface.tsv'
+
     script:
-#         #scripts/get_interface_all.py. Should be fine.
+        'get_interface_all_aa.py'
+
+rule convert_RCSB_cif_to_pdb:
+    input:
+        'data/input/RCSB_cif_best/{sample}.cif'
+
+    output:
+        'data/input/RCSB/pdbs/{sample}.pdb'    
+
+    shell:
+        "python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input} > {output} "
+
+rule convert_AF_cif_to_pdb:
+    input:
+        'data/proteins_pdb.csv',
+        'data/input/Alphafold_cif'
+
+    output:
+        'data/output/RCSB_af_full/poly_g_6'
+
+    script:
+        'scripts/af_cif_to_pdb.py'
 
 rule compare_structures:
     input:
-        'data/proteins_pdb_best.tsv', #args.pdb_ids
-        expand('data/input/{protein}/', protein=sample_names) #args.input_pdb_dir
-        expand('data/input/poly_g_6/'), # args.linker_fasta_dir.
+        'proteins_pdb_best.tsv', #args.pdb_ids
+        'input' #args.input_pdb_dir# args.linker_fasta_dir.
+
     output:
-        expand('data/output/') #args.output_dir
+        'output' #args.output_dir
+
     shell:
         "python aa_main.py --config configs/test.ini"
 #           Do I have to specify the scripts that will be used for this? Or will this automatically run it? 
-#     """
-#     2 ways to compare
-#     1st: Directly compare the coordinates between the AF and PDB files. This gives us a percentage of residues that are within a certain distance of each other.
-#     Then we look at how many of the interface residues are within that cutoff distance. Or we look at the average distance between residues for each protein. Graph that against Alphafold confidence score.
-#     2nd: A follow-up analysis to determine the interface residues in the AF and PDB files separately (using Jorge's script) then compare. Acts as a secondary verification.
-    
-#     So: what is the cutoff distance?
-#         Consult "Advances and pitfalls of protein structural alignment", Hitomi & Holm, https://doi.org/10.1016/j.sbi.2009.04.003. Possibilities: least-squares superimposition
-#         (rigid or flexible) or distance difference matrix.
-#             If we use LSS, what residues do we center on? Active sites? Do I have to write a program to align them, or can I use existing software? https://doi.org/10.1093/nar/gkaa443 (FATCAT), https://doi.org/10.1093/protein/11.9.739 (CE)
-#             PDB has a page with pairwise structure alignment resources: https://www.rcsb.org/docs/tools/pairwise-structure-alignment#:~:text=Structure%20alignment%20is%20a%20valuable,by%20standard%20sequence%20alignment%20techniques. 
-#             I don't understand what distance difference matrices are."""

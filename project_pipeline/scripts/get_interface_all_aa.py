@@ -13,7 +13,7 @@ from Bio.PDB import MMCIFParser, NeighborSearch, Selection
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 import pandas as pd
 import numpy as np
-from mutation_enrichment import string2range
+from project_pipeline.scripts.mutation_enrichment import string2range
 
 # Open the data of proteins with an region_1
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
@@ -25,12 +25,13 @@ df_prot = df_prot.dropna(subset = ['PDB ID']).reset_index(drop = True)
 
 # Go through the region_1 and region_2 column and convert the strings into ranges or lists of 
 # ranges
-df_prot['region_1 search'] = df_prot['region_1'].apply(lambda x: string2range(x))
-df_prot['region_2 search'] = df_prot['region_2'].apply(lambda x: string2range(x))    
-
-# Create a column to store the interacting residue pairs and another to store the
-# residues at the interface
-
+df_prot['region_1 search'] = df_prot['region_1'].apply(l# rule interface_residues:
+#     input:
+# #         #Takes in the .tsv file generated from rule best_pdb_files
+#     output:
+# #         #Creates another .tsv file containing the interface residues (see Jorge's sop)
+#     script:
+# #         #scripts/get_interface_all.py. Should be fine.
 df_prot['PDB Mutations'] = ''
 df_prot['Interacting residue pairs'] = ''
 df_prot['Interface Residues'] = ''
@@ -48,7 +49,7 @@ for i in range(len(df_prot)):
     
     # Define the file path for the PDB file of that protein
     uniprot = df_prot.loc[i, 'Uniprot_ID']
-    path_uniprot = 'data/structures/%s/' % uniprot
+    path_uniprot = 'data/input/RCSB_cif/%s/' % uniprot
     
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)

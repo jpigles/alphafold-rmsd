@@ -78,18 +78,18 @@ def string2range(x):
     """
     # Handle instances with more than one range
     if ',' in x:
-        list_temp = x.split(sep = ',')
-        for y in range(len(list_temp)):
-            list_temp[y] = list_temp[y].split(sep = '-')
-        for y in range(len(list_temp)):
+        list_temp = x.split(sep = ',') #list_temp = ['123-456,' '789-1111']
+        for y in range(len(list_temp)): 
+            list_temp[y] = list_temp[y].split(sep = '-') #list_temp[y] = [['123', '456'], ['789', '1111']]
+        for y in range(len(list_temp)): 
             for x in range(len(list_temp[y])):
-                list_temp[y][x] = int(list_temp[y][x])
+                list_temp[y][x] = int(list_temp[y][x]) #turns each list item into an integer
 
         # Make a range object with the bounds of the range. Note to the 
         # end a 1 has to be added in order to include the last position in the range
-        for y in range(len(list_temp)):
-            for x in range(len(list_temp[y])):        
-                list_temp[y] = list(range(list_temp[y][x], list_temp[y][x+1]+1))
+        for y in range(len(list_temp)): #[1, 2] where 1=[123, 456] and 2=[789, 1111]
+            for x in range(len(list_temp[y])): #[123, 456]       
+                list_temp[y] = list(range(list_temp[y][x], list_temp[y][x+1]+1)) #list_temp[0][0] = [123], list_temp[0][0+1]+1 or [456] + 1 = [457]
                 break
 
         return list(set([item for sublist in list_temp for item in sublist]))
@@ -98,7 +98,7 @@ def string2range(x):
     else:
         list_temp = x.split(sep = '-')
         for y in range(len(list_temp)):
-            list_temp[y] = int(list_temp[y])
+            list_temp[y] = int(list_temp[y]) #
 
         # Make a range object with the bounds of the region. Note to the 
         # end a 1 has to be added in order to include the last position in the range
