@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-df_samples = pd.read_csv('data/proteins_pdb.csv', sep = ',')
+df_samples = pd.read_csv('data/proteins_pdb.tsv', sep = '\t')
 #change sample names to use Uniprot accession codes, not gene names.
 uniprot_id = list(df_samples['Uniprot_ID'])
 #Establishing the end directory
