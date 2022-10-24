@@ -31,15 +31,15 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #         'scripts/prune_pdb_ids.py'
 
 
-rule pdb_files:
-    input:
-        'data/proteins_pdb.tsv'
+# rule pdb_files:
+#     input:
+#         'data/proteins_pdb.tsv'
 
-    output:
-        directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
+#     output:
+#         directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
 
-    script:
-        'scripts/get_pdb_files_aa.py'
+#     script:
+#         'scripts/get_pdb_files_aa.py'
 
 
 rule best_pdb_files:

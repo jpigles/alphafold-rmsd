@@ -119,3 +119,8 @@ from scripts.mutation_enrichment import string2range
 # pruned_list = prune_extra_chains(id_list)
 
 # print(pruned_list)
+
+pdb_str = '1djs 1gjo 1nun 1oec 1wvz 3caf 3cly 3ojm 4j23 5eg3'
+pdb_up = pdb_str.upper()
+
+print(pdb_up)
