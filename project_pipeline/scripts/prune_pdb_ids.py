@@ -8,15 +8,23 @@ Author: Brooks Perkins-Jechow
 import pandas as pd
 
 def prune_extra_chains(pdb_ids):
+    
+    #Create list of ids without chains.
     pdb_ids_only = []
     single_chain_ids = ''
+
+    #Collect the IDs and add them to pdb_ids_only
     for pdb_id in pdb_ids:
         id_only = pdb_id[:4]
         lowercase_id = id_only.lower()
         pdb_ids_only.append(lowercase_id)
+
+    #Determine if a PDB ID is unique. If it isn't unique, remove it.
     for pdb_id in pdb_ids_only:
         if pdb_ids_only.count(pdb_id) != 1:
             pdb_ids_only.remove(pdb_id)
+
+    #If it is unique, add io 
         else:
             single_chain_ids = single_chain_ids + pdb_id + ' '
     return single_chain_ids.strip()

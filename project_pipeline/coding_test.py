@@ -6,6 +6,7 @@ from os.path import join
 import pandas as pd
 from scripts.mutation_enrichment import string2range
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+from Bio.PDB.MMCIFParser import MMCIFParser
 
 # n_g = 6
 # fastas = []
@@ -124,3 +125,19 @@ from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 # df_prot = pd.read_csv('data/proteins_pdb.tsv', sep='\t').astype('object')
 
 # print(df_prot.loc[313, 'PDB'])
+
+# mmcif_dict = MMCIF2Dict('data/input/RCSB_cif/P04637/6xre.cif')
+
+# parser = MMCIFParser(QUIET=True)
+
+# structure = parser.get_structure('6xre', 'data/input/RCSB_cif/P04637/6xre.cif')
+
+# for model in structure:
+#     for chain in model:
+#         print(chain.get_id())
+
+pdb_ids_chain = ['3a4z.A', '5g87.A', '9TYO.D']
+
+pdb_id = '3a4z'
+
+print(pdb_id in pdb_ids_chain)
