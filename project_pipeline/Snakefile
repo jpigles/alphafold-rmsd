@@ -4,6 +4,9 @@ import pandas as pd
 df_samples = pd.read_csv('data/proteins_pdb.tsv', sep = '\t')
 #change sample names to use Uniprot accession codes, not gene names.
 uniprot_id = list(df_samples['Uniprot_ID'])
+
+updated_df_samples = pd.read_csv('data/proteins_pdb_no_na.tsv', sep='\t')
+updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #Establishing the end directory
 # rule all:
 #     input:
@@ -41,23 +44,24 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #     script:
 #         'scripts/get_pdb_files_aa.py'
 
-rule drop_na:
-    input:
-        'data/proteins_pdb.tsv'
-    output:
-        'data/proteins_pdb_no_na.tsv'
-    script:
-        'scripts/drop_na_aa.py'
+# rule drop_na:
+#     input:
+#         'data/proteins_pdb.tsv'
+#     output:
+#         'data/proteins_pdb_no_na.tsv'
+#     script:
+#         'scripts/drop_na_aa.py'
 
 
 rule best_pdb_files:
     input:
         'data/proteins_pdb_no_na.tsv',
-        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id)
+        expand('data/input/RCSB_cif/{protein}/', protein = updated_uniprot_id)
 
     output:
+        'data/proteins_pdb_summary.tsv',
         'data/proteins_pdb_best.tsv',
-        'data/input/RCSB_cif_best'
+        directory('data/input/RCSB_cif_best')
 
     script:
         'scripts/best_pdb_aa.py'

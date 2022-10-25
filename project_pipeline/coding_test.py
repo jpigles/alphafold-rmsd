@@ -3,8 +3,9 @@
 import requests
 import os
 from os.path import join
-import pandas
+import pandas as pd
 from scripts.mutation_enrichment import string2range
+from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 
 # n_g = 6
 # fastas = []
@@ -120,7 +121,6 @@ from scripts.mutation_enrichment import string2range
 
 # print(pruned_list)
 
-pdb_str = '1djs 1gjo 1nun 1oec 1wvz 3caf 3cly 3ojm 4j23 5eg3'
-pdb_up = pdb_str.upper()
+# df_prot = pd.read_csv('data/proteins_pdb.tsv', sep='\t').astype('object')
 
-print(pdb_up)
+# print(df_prot.loc[313, 'PDB'])

@@ -18,6 +18,7 @@ import numpy as np
 import re
 from mutation_enrichment import string2range
 import shutil
+import os
 
 # path = 'C:\\Users\\Jorge Holguin\\Documents\\UBC\\4. Fourth Year\\BIOC 448\\Data\\Structures\\Data Files\\'
 # path_IAS = '../data/protein_list_pdb.tsv'
@@ -127,8 +128,8 @@ for i in range(len(df_prot)):
                     percent_dis_in_region_1 = (count_dis_res_region_1/len(region_1_res))*100
                     percent_dis_in_region_2 = (count_dis_res_region_2/len(region_2_res))*100
                     
-                    # Append the results to the df_pdb
-                    df_pdb = df_pdb.append({'Gene_name': df_prot.loc[i, 'Gene_name'],
+                    # Create a new dataframe with the results
+                    df_pdb_part1 = pd.DataFrame({'Gene_name': df_prot.loc[i, 'Gene_name'],
                                             'Uniprot_ID': df_prot.loc[i, 'Uniprot_ID'],
                                             'Protein_length': df_prot.loc[i, 'Protein_length'],
                                             'region_1': df_prot.loc[i, 'region_1'],
@@ -143,21 +144,25 @@ for i in range(len(df_prot)):
                                             'PDB residues in region_1': count_res_region_1,
                                             'PDB residues in region_2': count_res_region_2,
                                             'Percent residues in region_1': percent_in_region_1,
-                                            'Percent residues in region_2': percent_in_region_2}, ignore_index=True)
+                                            'Percent residues in region_2': percent_in_region_2}, index=[0])
+                                        
+                    #Concatenate the new dataframe with the main dataframe. 
+                    df_pdb = pd.concat([df_pdb, df_pdb_part1], ignore_index=True)
                 
 # Store the files where more than 80% of the IAS and the Domain exist in the structure
 df_pdb_best = df_pdb.loc[(df_pdb['Percent residues in region_1'] > 80.0) & (df_pdb['Percent residues in region_2'] > 80.0)].reset_index(drop = True)
 
 # Save the file with all the pdb files
-# df_pdb.to_csv(path + 'pdb_summary.tsv', sep = '\t', index = False)
+df_pdb.to_csv(snakemake.output[0], sep = '\t', index = False)
 
 #Copy the best files into a new directory
+rcsb_best_dir = os.mkdir(snakemake.output[2])
 for i in range(len(df_pdb_best)):
-    uniprot = df_pdb_best[i, 'Uniprot_ID']
-    pdb = df_pdb_best[i, 'PDB ID']
+    uniprot = df_pdb_best.loc[i, 'Uniprot_ID']
+    pdb = df_pdb_best.loc[i, 'PDB ID']
     all_pdbs_path = join('data/input/RCSB_cif', uniprot, pdb + '.cif')
-    best_pdbs_path = join(snakemake.output[1], pdb + '.cif')
-    shutil.copy(all_pdbs_path, best_pdbs_path)
+    best_pdbs_path = join(snakemake.output[2], pdb + '.cif')
+    shutil.copyfile(all_pdbs_path, best_pdbs_path)
 
 # Save the file with all the best pdb files
-df_pdb_best.to_csv(snakemake.output[0], sep = '\t', index = False)
+df_pdb_best.to_csv(snakemake.output[1], sep = '\t', index = False)
