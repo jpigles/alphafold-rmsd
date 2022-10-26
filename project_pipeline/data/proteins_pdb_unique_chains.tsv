@@ -1,0 +1,442 @@
+Gene_name	Uniprot_ID	Protein_length	region_1	region_2	PDB
+Nos1	P29476	1429.0	815-870	757-949	 1b8q.A 1f20.A 1qau.A 1qav.B 1qw6.A 1qwc.A 1vag.A 1zvi.A 5fvo.A 7ts9.A 7tsa.A 7tsb.A 7tsc.A 7tsd.A 7tse.A 7uan.A
+PTPN1	P18031	435.0	353-387	2-277	 1a5y.A 1aax.A 1bzc.A 1bzh.A 1bzj.A 1c83.A 1c84.A 1c85.A 1c86.A 1c87.A 1c88.A 1ecv.A 1een.A 1eeo.A 1g1f.A 1g1g.A 1g1h.A 1g7f.A 1g7g.A 1gfy.A 1i57.A 1kak.A 1kav.A 1l8g.A 1nl9.A 1nny.A 1no6.A 1nwe.A 1nwl.A 1nz7.A 1oem.A 1oeo.A 1oes.A 1oet.A 1oeu.A 1oev.A 1ony.A 1onz.A 1pa1.A 1ph0.A 1ptt.A 1ptu.A 1ptv.A 1pty.A 1pxh.A 1pyn.A 1q1m.A 1q6j.A 1q6m.A 1qxk.A 1sug.A 1t48.A 1t49.A 1t4j.A 1wax.A 1xbo.A 2azr.A 2b07.A 2bgd.A 2bge.A 2cm2.A 2cm7.A 2cm8.A 2cma.A 2cmb.A 2cmc.A 2cne.A 2cnf.A 2cng.A 2cnh.A 2cni.A 2f6f.A 2f6t.A 2f6v.A 2f6w.A 2f6y.A 2f6z.A 2f70.A 2f71.A 2h4g.A 2h4k.A 2hb1.A 2hnp.A 2hnq.A 2nt7.A 2nta.A 2qbp.A 2qbq.A 2qbr.A 2qbs.A 2veu.A 2vev.A 2vew.A 2vex.A 2vey.A 2zmm.A 2zn7.A 3a5j.A 3a5k.A 3cwe.A 3d9c.A 3eax.A 3eb1.A 3eu0.A 3i7z.A 3i80.A 3qkp.A 3qkq.A 3sme.A 3zmq.A 3zv2.A 4i8n.A 4qah.A 4qap.A 4qbe.A 4qbw.A 4zrt.A 5k9v.A 5k9w.A 5ka0.A 5ka1.A 5ka2.A 5ka3.A 5ka4.A 5ka7.A 5ka8.A 5ka9.A 5kaa.A 5kab.A 5kac.A 5qde.A 5qdf.A 5qdg.A 5qdh.A 5qdi.A 5qdj.A 5qdk.A 5qdl.A 5qdm.A 5qdn.A 5qdo.A 5qdp.A 5qdq.A 5qdr.A 5qds.A 5qdt.A 5qdu.A 5qdv.A 5qdw.A 5qdx.A 5qdy.A 5qdz.A 5qe0.A 5qe1.A 5qe2.A 5qe3.A 5qe4.A 5qe5.A 5qe6.A 5qe7.A 5qe8.A 5qe9.A 5qea.A 5qeb.A 5qec.A 5qed.A 5qee.A 5qef.A 5qeg.A 5qeh.A 5qei.A 5qej.A 5qek.A 5qel.A 5qem.A 5qen.A 5qeo.A 5qep.A 5qeq.A 5qer.A 5qes.A 5qet.A 5qeu.A 5qev.A 5qew.A 5qex.A 5qey.A 5qez.A 5qf0.A 5qf1.A 5qf2.A 5qf3.A 5qf4.A 5qf5.A 5qf6.A 5qf7.A 5qf8.A 5qf9.A 5qfa.A 5qfb.A 5qfc.A 5qfd.A 5qfe.A 5qff.A 5qfg.A 5qfh.A 5qfi.A 5qfj.A 5qfk.A 5qfl.A 5qfm.A 5qfn.A 5qfo.A 5qfp.A 5qfq.A 5qfr.A 5qfs.A 5qft.A 5qfu.A 5qfv.A 5qfw.A 5qfx.A 5qfy.A 5qfz.A 5qg0.A 5qg1.A 5qg2.A 5qg3.A 5qg4.A 5qg5.A 5qg6.A 5qg7.A 5qg8.A 5qg9.A 5qga.A 5qgb.A 5qgc.A 5qgd.A 5qge.A 5qgf.A 5t19.A 6b8e.A 6b8t.A 6b8x.A 6b8z.A 6b90.A 6b95.A 6bai.A 6cwu.A 6cwv.A 6ntp.A 6ol4.A 6olq.A 6olv.A 6omy.A 6pfw.A 6pg0.A 6pgt.A 6pha.A 6phs.A 6pm8.A 6w30.A 6xe8.A 6xea.A 6xed.A 6xee.A 6xef.A 6xeg.A 7ken.A 7key.A 7klx.A 7l0c.A 7l0h.A 7lfo.A 7mkz.A 7mm1.A 7mn7.A 7mn9.A 7mna.A 7mnb.A 7mnc.A 7mnd.A 7mne.A 7mnf.A 7mou.A 7mow.A 7rin.A 7s4f.A 8du7.A
+EGFR	P00533	1210.0	166-309,482-618	712-979	 1m14.A 1m17.A 1nql.A 1xkk.A 1yy9.A 1z9i.A 2eb2.A 2eb3.A 2gs2.A 2gs6.A 2itn.A 2ito.A 2itp.A 2itq.A 2itt.A 2itu.A 2itv.A 2itw.A 2itx.A 2ity.A 2itz.A 2j5e.A 2j5f.A 2j6m.A 2ks1.B 2n5s.A 2rgp.A 3b2v.C 3bel.A 3g5v.C 3g5y.C 3gop.A 3ob2.A 3p0y.A 3poz.A 3qwq.A 3ug1.A 3ug2.A 3vjn.A 3vjo.A 3vrp.B 3vrr.B 3w2o.A 3w2p.A 3w2q.A 3w2r.A 3w2s.A 3w32.A 3w33.A 4g5j.A 4hjo.A 4i1z.A 4i20.A 4i22.A 4i23.A 4jq7.A 4jq8.A 4jr3.A 4jrv.A 4krl.B 4kro.A 4krp.A 4li5.A 4lqm.A 4r3p.A 4r3r.A 4r5s.A 4rj4.A 4rj5.A 4rj6.A 4rj7.A 4rj8.A 4tks.A 4uip.A 4uv7.A 4wkq.A 4wrg.A 4zau.A 5c8k.A 5c8m.A 5c8n.A 5cal.A 5can.A 5cao.A 5cap.A 5caq.A 5cas.A 5cau.A 5cav.A 5czh.A 5czi.A 5edp.A 5edq.A 5edr.A 5em5.A 5em6.A 5em7.A 5em8.A 5fed.A 5fee.A 5feq.A 5gmp.A 5gnk.A 5gtz.A 5hcx.A 5hcy.A 5hcz.A 5hg5.A 5hg7.A 5hg8.A 5hg9.A 5hib.A 5hic.A 5j9y.A 5j9z.A 5jeb.A 5u8l.A 5ug8.A 5ug9.A 5uga.A 5ugb.A 5ugc.A 5uwd.A 5x26.A 5x27.A 5x28.A 5x2k.A 5xdk.A 5xdl.A 5xgm.A 5xwd.A 5y25.A 5y9t.A 5zto.A 5zwj.A 6aru.A 6d8e.A 6jrj.A 6jrk.A 6jrx.A 6jwl.A 6jx0.A 6jx4.A 6jxt.A 6jz0.A 6lub.A 6lud.A 6s89.A 6s8a.A 6s9b.A 6s9c.A 6s9d.A 6vh4.A 6vhn.A 6vhp.A 7a6i.A 7aei.A 7aem.A 7b85.A 7er2.A 7k1i.A 7kxz.A 7om4.A 7oxb.A 7tvd.A 7vra.A 7vre.A
+TP53	P04637	393.0	364-393	102-292	 1aie.A 1c26.A 1h26.E 1jsp.A 1ma3.B 1yc5.B 1ycq.B 1ycr.B 1ycs.A 2b3g.B 2bin.A 2bio.A 2bip.A 2biq.A 2fej.A 2foj.B 2foo.B 2gs0.B 2h2d.B 2h2f.B 2h4f.B 2h4h.B 2h4j.B 2k8f.B 2l14.B 2ly4.B 2mej.B 2mwo.B 2mwp.B 2mwy.B 2mzd.B 2pcx.A 2ruk.A 2ydr.B 3d05.A 3d06.A 3d08.A 3d09.A 3igk.A 3igl.A 3lw1.B 3pdh.B 3tg5.B 4buz.B 4fz3.B 4ibv.A 4ibw.A 4ijt.A 4lof.A 4mzi.A 4qo1.B 4rp6.A 4rp7.A 4zzj.B 5bua.A 5hou.A 5hp0.A 5hpd.A 5mhc.B 5moc.B 6r5l.B 6rjz.B 6rk8.B 6rki.B 6rkk.B 6rkm.B 6rl3.B 6rl4.B 6rl6.B 6rm5.B 6rm7.B 6rwh.B 6rwi.B 6rws.B 6rwu.B 6rx2.B 6rz3.A 6s39.B 6s3c.B 6s40.B 6s9q.B 6sin.B 6sio.B 6sip.B 6siq.B 6sl6.A 6slv.B 6v4f.B 6vrm.E 6vrn.E 6xre.M 6znc.A 7b4d.A 7b4e.A 7b4f.A 7b4g.A 7b4h.A 7b4n.A 7eds.A 7el4.A 7nmi.A 8dc7.A 8dc8.A
+CHEK1	O14757	476.0	391-476	9-265	 1ia8.A 1nvq.A 1nvr.A 1nvs.A 1zlt.A 1zys.A 2ayp.A 2br1.A 2brb.A 2brg.A 2brh.A 2brm.A 2brn.A 2bro.A 2c3j.A 2c3k.A 2c3l.A 2cgu.A 2cgv.A 2cgw.A 2cgx.A 2e9n.A 2e9o.A 2e9p.A 2e9u.A 2gdo.A 2ghg.A 2hog.A 2hxl.A 2hxq.A 2hy0.A 2qhm.A 2qhn.A 2r0u.A 2wmq.A 2wmr.A 2wms.A 2wmt.A 2wmu.A 2wmv.A 2wmw.A 2wmx.A 2x8d.A 2x8e.A 2x8i.A 2xey.A 2xez.A 2xf0.A 2ydi.A 2ydk.A 2yer.A 2yex.A 2ym3.A 2ym4.A 2ym5.A 2ym6.A 2ym7.A 2ym8.A 2ywp.A 3f9n.A 3jvr.A 3jvs.A 3nlb.A 3ot3.A 3ot8.A 3pa3.A 3pa4.A 3pa5.A 3tkh.A 3tki.A 3u9n.A 4fsm.A 4fsn.A 4fsq.A 4fsr.A 4fst.A 4fsu.A 4fsw.A 4fsy.A 4fsz.A 4ft0.A 4ft3.A 4ft5.A 4ft7.A 4ft9.A 4fta.A 4ftc.A 4fti.A 4ftj.A 4ftk.A 4ftl.A 4ftm.A 4ftn.A 4fto.A 4ftq.A 4ftr.A 4ftt.A 4ftu.A 4gh2.A 4hyh.A 4hyi.A 4jik.A 4qye.A 4qyf.A 4rvk.A 4rvl.A 4rvm.A 5dls.A 5f4n.A 5oop.A 5oor.A 5oot.A 5op2.A 5op4.A 5op5.A 5op7.A 5opb.A 5opr.A 5ops.A 5opu.A 5opv.A 5oq5.A 5oq6.A 5oq8.A 6fc8.A 6fcf.A 6fck.A 7bjd.A 7bje.A 7bjh.A 7bjj.A 7bjm.A 7bjo.A 7bjr.A 7bk1.A 7bk2.A 7bk3.A 7bkn.A 7bko.A 7mck.A 7suf.A 7sug.A 7suh.A 7sui.A
+SRC	P00523	533.0	148-245,246-266	81-142,521-533	 1f1w.A 1f2f.A 1nlo.A 1nlp.A 1prl.A 1prm.A 1rlp.A 1rlq.A 1srl.A 1srm.A 2ptk.A 3d7t.B 3el7.A 3u4w.A 4hvu.A 4hvv.A 4hvw.A 4jz3.A 4le9.A 4oml.A 4omm.A 4omn.A 4omp.A 4omq.A 4qt7.A 4rtu.A 4rtv.A 4rty.A 4rtz.A 4ybk.A 5eca.A 5i11.A 5ob0.A 5ob1.A 6xvo.A 6xx2.A 6xx3.A 6xx4.A 6xx5.A 7a30.A 7a34.A 7a3a.A 7a3b.A 7a3e.A 7ner.A 7nes.A 7pvy.A
+NOS3	P29473	1205.0	593-637	522-795	
+JAK2	O60674	1132.0	758-807	849-1124	 3e62.A 3e63.A 3e64.A 3io7.A 3iok.A 3jy9.A 3kck.A 3krr.A 3rvg.A 3ugc.A 4d0w.A 4d0x.A 4d1s.A 4f09.A 4fvp.A 4fvq.A 4fvr.A 4gfm.A 4gmy.A 4iva.A 4jia.A 4ytc.A 4ytf.A 4yth.A 4yti.A 5aep.A 5i4n.A 5l3a.A 5tq4.A 5tq5.A 5tq8.A 5usz.A 5ut0.A 5ut1.A 5ut2.A 5ut3.A 5ut4.A 5ut5.A 5ut6.A 5wev.A 5wij.A 5wik.A 5wil.A 5wim.A 5win.A 6bbv.A 6brw.A 6bs0.A 6bss.A 6drw.A 6m9h.A 6oav.A 6obb.A 6obf.A 6obl.A 6occ.A 6tpd.A 6wtn.A 6wto.A 6wtp.A 6wtq.A 6xjk.A 7jyo.A 7jyq.A 7ll4.A 7ll5.A 7q7i.A 7q7k.A 7q7l.A 7q7w.A 7ree.A 7rn6.A 7t1t.A 7uyw.A
+MAPK1	P28482	360.0	173-196	25-172,197-313	 1pme.A 1tvo.A 1wzy.A 2ojg.A 2oji.A 2ojj.A 2y9q.A 3d42.B 3d44.B 3i5z.A 3i60.A 3sa0.A 3tei.A 3w55.A 4fmq.A 4fux.A 4fuy.A 4fv0.A 4fv1.A 4fv2.A 4fv3.A 4fv4.A 4fv5.A 4fv6.A 4fv7.A 4fv8.A 4fv9.A 4g6n.A 4g6o.A 4h3q.A 4n0s.A 4o6e.A 4qp9.A 4qta.A 4qte.A 4zxt.A 4zzm.A 4zzn.A 4zzo.A 5ax3.A 5bue.A 5bui.A 5buj.A 5bvd.A 5bve.A 5bvf.A 5k4i.A 5lcj.A 5lck.A 5ngu.A 5nhf.A 5nhh.A 5nhj.A 5nhl.A 5nho.A 5nhp.A 5nhv.A 5v60.A 5v61.A 5v62.A 5wp1.A 6d5y.A 6dmg.A 6g54.A 6g8x.A 6g91.A 6g92.A 6g93.A 6g97.A 6g9a.A 6g9d.A 6g9h.A 6g9j.A 6g9k.A 6g9m.A 6g9n.A 6gdm.A 6gdq.A 6ge0.A 6gjb.A 6gjd.A 6nbs.A 6opg.A 6oph.A 6opi.A 6q7k.A 6q7s.A 6q7t.A 6qa1.A 6qa3.A 6qa4.A 6qag.A 6qah.A 6qal.A 6qaq.A 6qaw.A 6rq4.A 6slg.A 7auv.A 7e73.A 7e75.A 7nqq.A 7nqw.A 7nr3.A 7nr5.A 7nr8.A 7nr9.A 7opm.A 8ao2.A 8ao3.A 8ao4.A 8ao5.A 8ao6.A 8ao7.A 8ao8.A 8ao9.A 8aoa.A 8aob.A 8aoc.A 8aod.A 8aoe.A 8aof.A 8aog.A 8aoh.A 8aoi.A 8aoj.A
+BTK	Q06187	659.0	3-133	402-655	 1aww.A 1awx.A 1qly.A 2ge9.A 3gen.A 3k54.A 3ocs.A 3oct.A 3pix.A 3piy.A 3piz.A 3pj1.A 3pj2.A 3pj3.A 4ot5.A 4ot6.A 4otf.A 4otq.A 4otr.A 4rfy.A 4rfz.A 4rg0.A 4rx5.A 4z3v.A 4zly.A 4zlz.A 5bq0.A 5fbo.A 5kup.A 5p9f.A 5p9g.A 5p9h.A 5p9i.A 5p9j.A 5p9k.A 5p9l.A 5p9m.A 5t18.A 5u9d.A 5vfi.A 5vgo.A 6aua.A 6aub.A 6bik.A 6bke.A 6bkh.A 6bkw.A 6bln.A 6di0.A 6di1.A 6di3.A 6di5.A 6di9.A 6e4f.A 6ep9.A 6hrp.A 6hrt.A 6htf.A 6j6m.A 6n9p.A 6nfh.A 6nfi.A 6o8i.A 6omu.A 6vxq.A 6w06.A 6w07.A 6x3n.A 6x3p.A 6xe4.A 7kxl.A 7kxm.A 7kxn.A 7kxo.A 7kxp.A 7kxq.A 7l5o.A 7lty.A 7ltz.A 7n4q.A 7n4r.A 7n4s.A 7n5o.A 7n5r.A 7n5x.A 7n5y.A 7r60.A 7r61.A
+KPNA2	P52293	529.0	2-60	142-238,315-403	 1ejl.C 1ejy.B 1ial.A 1pjm.B 1pjn.B 1q1s.C 1q1t.C 1y2a.A 2c1m.A 2ynr.A 3btr.A 3knd.A 3l3q.A 3oqs.B 3q5u.A 3rz9.A 3rzx.A 3tpm.A 3tpo.A 3ukw.A 3ukx.A 3uky.A 3ukz.A 3ul0.A 3ul1.A 3uvu.B 3ve6.A 3zin.A 3zio.A 3zip.A 3ziq.A 3zir.A 4ba3.A 4htv.A 4mz5.C 4mz6.C 4oih.A 4u54.A 4u58.A 4u5l.A 4u5n.A 4u5o.A 4u5s.A 4u5u.A 4u5v.A 4uaf.A 4yi0.A 4zdu.A 5ctt.A 5d5k.A 5e6q.A 5ekf.C 5ekg.C 5fc8.B 5gxw.A 5hhg.B 5huw.A 5huy.A 5k9s.A 5klr.A 5klt.A 5svz.A 5u5p.C 5u5r.A 5umz.A 5v5o.A 5v5p.A 5w41.A 5w4e.A 5w4f.A 5w4g.A 5wum.A 5wun.A 5x8n.A 6bvt.A 6bw0.B 6bw1.B 6d7m.A 6d7n.A 6iu7.A 6iua.A 6iw8.B 6iwa.B 6k06.B 6mjl.A 6p6a.A 6p6e.A 6wba.A 6wbb.A 6wbc.A 6wx7.A 7jjm.B 7jk7.B 7jvo.A 7l04.B 7leq.A 7let.A 7leu.A 7m60.C 7rfx.A 7rfz.A 7rg0.A 7rg1.A 7rg2.A 7rg3.A 7rg4.A 7rg6.A 8ech.B
+RAN	P62826	216.0	179-216	10-169	 1qbk.B 2mmc.A 2mmg.A 2n1b.A 3ch5.A 3gj3.A 3gj6.A 3nc1.A 4gmx.A 4gpt.A 4hat.A 4hau.A 4hav.A 4haw.A 4hax.B 4hay.A 4haz.A 4hb0.A 4hb2.A 4hb3.A 4hb4.A 4ol0.A 4wvf.A 5dh9.A 5dha.A 5dhf.A 5di9.A 5dif.A 5dis.B 5jlj.A 5uwh.A 5uwi.A 5uwj.A 5uwo.A 5uwp.A 5uwq.A 5uwr.A 5uws.A 5uwt.A 5uwu.A 5uww.A 5yro.A 5yst.A 5ysu.A 5ytb.A 5zpu.A 6a38.A 6a3a.A 6a3b.A 6a3c.A 6a3e.A 6cit.A 6kft.A 6lq9.A 6m60.A 6m6x.A 6nif.A 6q82.B 6tvo.A 6x2m.A 6x2o.A 6x2p.A 6x2r.A 6x2s.A 6x2u.A 6x2v.A 6x2w.A 6x2x.A 6x2y.A 6xjp.A 6xjr.A 6xjs.A 6xjt.A 6xju.A 7b51.A 7cnd.A 7dbg.A 7l5e.A 7mnq.A 7mnr.A 7mns.A 7mnu.A 7mnv.A 7mo1.A 7mo5.A
+BRAF	P15056	766.0	100-345	457-717	 2l05.A 4xv9.A 5csx.A 5hi2.A 5j17.A 5j18.A 5j2r.A 5vr3.A 6nyb.A 6p3d.A 6pp9.A 6u2g.B 6v2w.A 6xfp.A 7m0t.B 7m0u.A 7m0v.A 7m0w.B 7m0x.A 7m0y.A 7m0z.A 7mfd.A 7mfe.A
+PDE4D	Q08499	809.0	271-339	386-715	 1e9k.A 3iak.A 3k4s.A
+GSK3B	P49841	420.0	3-12	56-340	 1o6k.B 1o6l.B 1o9u.A 1uv5.A 2jdo.B 2jdr.B 2o5k.A 2uw9.B 2x39.B 2xh5.B 3cqu.B 3cqw.B 3gb2.A 3mv5.B 3qkk.B 3zdi.A 4b7t.A 4dit.A 4nm0.A 4nm3.A 4nm5.A 4nm7.A 6b8j.A 6hk7.A 6tcu.A 6v6l.A 6y9r.A 7b6f.A
+RELA	Q04206	551.0	436-550	1-194	 2lsp.A 2o61.C 4kv4.B 5u4k.B 5urn.B 6nv2.B 6qhl.B 6qhm.B 6yow.B 6yox.B 6yoy.B 6yp2.B 6yp3.B 6yp8.B 6ypl.B 6ypy.B 6yq2.B 7bi3.B 7biq.B 7biw.B 7biy.B 7bjb.B 7bjf.B 7bjl.B 7bjw.B 7bkh.B 7let.C 7nj9.B 7njb.B 7nk3.B 7nk5.B 7nla.B 7nle.B 7nm1.B 7nm3.B 7nm9.B 7nmh.B 7nqp.B 7nr7.B 7nsv.B 7nv4.B 7nvi.B 7nws.B 7nxs.B 7nxt.B 7nxw.B 7nxy.B 7ny4.B 7nye.B 7nyf.B 7nyg.B 7nz6.B 7nzg.B 7nzk.B 7nzv.B 7o34.B 7o3a.B 7o3f.B 7o3p.B 7o3q.B 7o3r.B 7o3s.B 7o57.B 7o59.B 7o5a.B 7o5c.B 7o5d.B 7o5f.B 7o5g.B 7o5o.B 7o5p.B 7o5s.B 7o5u.B 7o5x.B 7o6f.B 7o6g.B 7o6i.B 7o6j.B 7o6k.B 7o6m.B 7o6o.B
+SYK	P43405	635.0	93-167,245-370	371-631	 1csy.A 1csz.A 1xba.A 1xbb.A 1xbc.A 3emg.A 3fqe.A 3fqs.A 3tub.A 3tuc.A 3tud.A 3vf8.A 3vf9.A 4dfl.A 4dfn.A 4f4p.A 4fl1.A 4fl2.A 4fl3.A 4fyn.A 4fyo.A 4fz6.A 4fz7.A 4gfg.A 4i0r.A 4i0s.A 4i0t.A 4pv0.A 4px6.A 4rss.A 4rx7.A 4rx8.A 4rx9.A 4wnm.A 4xg2.A 4xg4.A 4xg6.A 4xg7.A 4yjo.A 4yjp.A 4yjq.A 4yjr.A 4yjs.A 4yjt.A 4yju.A 4yjv.A 5c26.A 5c27.A 5cxh.A 5cxz.A 5cy3.A 5lma.A 5tiu.A 5tr6.A 5tt7.A 5y5t.A 6hm6.A 6hm7.A 6ssb.A 6zc0.A 6zcp.A 6zcq.A 6zcr.A 6zcs.A 6zcu.A 6zcx.A 6zcy.A
+	P00579	613.0	2-80	379-449,458-534	 1sig.A 1tlh.B 3iyd.F 5vt0.F 6b6h.F 6c9y.F 6ca0.F 6jnx.F 6k4y.F 6ldi.F 6n4c.A 6n57.F 6n58.F 6oul.F 6p18.H 6p1k.F 6pb4.F 6pb5.F 6pb6.F 6psq.G 6psr.F 6pss.F 6pst.J 6psu.G 6psv.G 6psw.F 6wmu.F 6xh7.F 6xh8.F 6xl5.F 6xl9.E 6xlj.F 6xll.F 6xlm.F 7bef.F 7beg.F 7c17.F 7c97.J 7chw.H 7dy6.I 7khb.F 7khc.F 7khe.F 7khi.F 7mkd.F 7mke.F 7mki.G 7mkj.F 7szj.F 7szk.F 7vwy.F 7vwz.F 7xui.F
+SOS1	Q07889	1333.0	1-198	198-565	 1awe.A 1bkd.B 1dbh.A 1nvu.C 1nvv.C 1nvw.C 1nvx.C 1xd2.C 2ii0.A 3ksy.A 4nyi.C 4nyj.C 4nym.C 4uru.B 4urv.B 4urw.B 4urx.B 4ury.B 4urz.B 4us0.B 4us1.B 4us2.B 5ovd.A 5ove.A 5ovf.A 5ovg.A 5ovh.A 5ovi.A 5wfo.C 5wfp.C 5wfq.C 5wfr.C 6bvi.B 6bvj.B 6bvk.B 6bvl.B 6bvm.B 6cuo.B 6cup.B 6cur.B 6d55.B 6d56.B 6d59.B 6d5e.B 6d5g.B 6d5h.B 6d5j.B 6d5l.B 6d5m.C 6d5v.C 6d5w.C 6epl.B 6epm.B 6epn.B 6epo.B 6epp.B 6scm.A 6v94.B 6v9f.B 6v9j.B 6v9l.B 6v9m.B 6v9n.B 6v9o.B 6y44.B 7avv.A 7kfz.B 7uks.A
+ALK	Q9UM73	1620.0	1279-1288,1158-1173	1116-1157,1174-1278,1289-1392	 2kup.B 2kuq.A 2xb7.A 2xba.A 2xp2.A 2yfx.A 2yhv.A 2yjr.A 2yjs.A 2ys5.B 2yt2.A 3aox.A 3l9p.A 3lcs.A 3lct.A 4anl.A 4anq.A 4ans.A 4ccb.A 4ccu.A 4cd0.A 4cli.A 4clj.A 4cmo.A 4cmt.A 4cmu.A 4ctb.A 4ctc.A 4fnw.A 4fnx.A 4fny.A 4fnz.A 4fob.A 4foc.A 4fod.A 4joa.A 4mkc.A 4tt7.A 4z55.A 5a9u.A 5aa8.A 5aa9.A 5aaa.A 5aab.A 5aac.A 5fto.A 5ftq.A 5imx.A 5iug.A 5iuh.A 5iui.A 5kz0.A 5vz5.C 6at9.C 6cdt.A 6e0r.A 6ebw.A 6edl.A 6mx8.A 7btt.A 7jy4.A 7jyr.A 7jys.A 7jyt.A 7lrz.A 7mzw.A 7nx4.A 7r7k.A 7r7r.A 8arj.A
+NOS1	P29475	1434.0	834-875	760-940	
+ABL1	P00519	1130.0	67-113,127-217	242-493	 1ab2.A 1awo.A 1ju5.C 1zzp.A 2abl.A 2f4j.A 2fo0.A 3eg0.A 3eg2.A 3eg3.A 3egu.A 3qrk.A 3t04.A 3uyo.A 4j9b.A 4j9c.A 4jjb.A 4jjc.A 4jjd.A 5dc0.B 5dc4.A 5dc9.A 5hu9.A 5mo4.A 6amv.A 6amw.A 6xr6.A 6xr7.A 6xrg.A 7pvr.A
+FGFR1	P11362	822.0	120-149	158-246,478-767	 1xr0.A 2cr3.A 3dpk.A 3gqi.A 3krj.A 3krl.A 5w21.C 5w59.B 7tnh.A
+PTPN11	Q06124	593.0	3-104	247-517	 3b7o.A 3mow.A 3o5x.A 3tkz.A 3tl0.A 3zm0.A 3zm1.A 3zm2.A 3zm3.A 4dgp.A 4dgx.A 4h1o.A 4h34.A 4je4.A 4jeg.A 4jmg.B 4ohd.A 4ohe.A 4ohh.A 4ohi.A 4pvg.A 4qsy.A 4rdd.A 5bk8.A 5df6.A 5x7b.A 5xzr.A 6cmr.A 6cms.A 6r5g.A 7ppl.A 7ppm.A 7ppn.A 7r75.A
+SRC	P12931	536.0	249-269,151-248	84-145,524-536	 1fmk.A 1hcs.B 1hct.B 1ksw.A 1o41.A 1o42.A 1o43.A 1o44.A 1o45.A 1o46.A 1o47.A 1o48.A 1o49.A 1o4a.A 1o4b.A 1o4c.A 1o4d.A 1o4e.A 1o4f.A 1o4g.A 1o4h.A 1o4i.A 1o4j.A 1o4k.A 1o4l.A 1o4m.A 1o4n.A 1o4o.A 1o4p.A 1o4q.A 1o4r.A 1shd.A 1y57.A 2bdj.A 2h8h.A 2src.A 3vro.B 3zmq.B 4f59.A 4f5a.A 4f5b.A 4k11.A 6ate.A 7ng7.A
+PMAIP1	P00782	382.0	1-77	112-381	 1a2q.A 1ak9.A 1aqn.A 1au9.A 1dui.A 1gns.A 1gnv.A 1lw6.A 1s01.A 1s02.A 1sbh.A 1sbi.A 1sbn.A 1sbt.A 1sib.A 1st2.A 1sua.A 1sub.A 1suc.A 1sud.A 1sue.A 1sup.A 1tm1.A 1tm3.A 1tm4.A 1tm5.A 1tm7.A 1tmg.A 1to1.A 1to2.A 1ubn.A 1v5i.A 1y1k.A 1y33.A 1y34.A 1y3b.A 1y3c.A 1y3d.A 1y3f.A 1y48.A 1y4a.A 1y4d.A 1yja.A 1yjb.A 1yjc.A 2sbt.A 2sic.A 2sni.A 2st1.A 3f49.A 3sic.A 5sic.A 7am3.A 7am4.A 7am5.A 7am8.A
+PLK1	P53350	603.0	367-603	53-305	 2ogq.A 2ojx.A 2ou7.A 2owb.A 2rku.A 2yac.A 3bzi.A 3c5l.A 3fc2.A 3fvh.A 3hik.A 3kb7.A 3p2w.A 3p2z.A 3p34.A 3p36.A 3q1i.A 3rq7.A 3thb.A 4a4l.A 4a4o.A 4dfw.A 4e67.A 4e9c.A 4e9d.A 4hy2.A 4j52.A 4j53.A 4lkl.A 4o56.A 4o6w.A 4o9w.A 4rcp.A 4whh.A 4whk.A 4whl.A 4x9r.A 4x9v.A 4x9w.A 5nei.A 5nfu.A 5nje.A 5nmm.A 5nn1.A 5nn2.A 5ta6.A 5ta8.A 6ax4.A
+MAP2K1	Q02750	393.0	75-102	68-74,103-361	 1s9j.A 2p55.A 3dv3.A 3dy7.A 3e8n.A 3eqb.A 3eqc.A 3eqd.A 3eqf.A 3eqg.A 3eqh.A 3eqi.A 3mbl.A 3orn.A 3os3.A 3pp1.A 3v01.A 3v04.A 3w8q.A 3wig.A 3zls.A 3zlw.A 3zlx.A 3zly.A 3zm4.A 4an2.A 4an3.A 4an9.A 4anb.A 4ark.A 4lmn.A 4u7z.A 4u80.A 4u81.A 5bx0.A 5hze.A 6nyb.B 6pp9.B 6q0t.C 6u2g.A 6v2w.B 6x2p.D 6x2s.D 6x2x.D 7m0t.A 7m0u.B 7m0v.B 7m0w.A 7m0x.B 7m0y.B 7m0z.B 7mfd.B 7pqv.A
+LCK	P06239	509.0	127-244,341-408	61-121,499-509	 1bhf.A 1cwd.A 1h92.A 1ijr.A 1kik.A 1lcj.A 1lkk.A 1lkl.A 1q68.B 1q69.B 1qpc.A 1qpd.A 1qpe.A 1qpj.A 2iim.A 2of2.A 2of4.A 2ofu.A 2pl0.A 2zm1.A 2zm4.A 2zyb.A 3ac1.A 3ac2.A 3ac3.A 3ac4.A 3ac5.A 3ac8.A 3acj.A 3ack.A 3ad4.A 3ad5.A 3ad6.A 3b2w.A 3bym.A 3byo.A 3bys.A 3byu.A 3kmm.A 3kxz.A 3lck.A 3mpm.A 4c3f.A 4d8k.A 5mtm.A 5mtn.A 6pdj.A
+KDR	P35968	1356.0	790-833	834-1162	 1vr2.A 1y6a.A 1y6b.A 1ywn.A 2oh4.A 2p2h.A 2qu5.A 2rl5.A 2x1x.B 2xir.A 3be2.A 3c7q.A 3cjf.A 3cjg.A 3ewh.A 3kvq.A 3s35.C 3s36.C 3s37.C 3u6j.A 3v2a.A 3v6b.B 3vhe.A 3vhk.A 3vid.A 3vnt.A 3vo3.A 3wzd.A 3wze.A 4ag8.A 4agc.A 4agd.A 4asd.A 4ase.A 6gqo.A 6gqp.A 6gqq.A 6xvj.A 6xvk.A
+NTRK1	P04629	796.0	287-384	510-781	 1he7.A 1shc.B 4crp.A 4gt5.A 4pmm.A 4pmp.A 4pms.A 4pmt.A 4yne.A 4yps.A 5h3q.A 5i8a.A 5jfs.A 5jfv.A 5jfw.A 5jfx.A 5kmi.A 5kmj.A 5kmk.A 5kml.A 5kmm.A 5kmn.A 5kmo.A 5kvt.A 5wr7.A 6d1y.A 6d1z.A 6d20.A 6d22.A 6dkb.A 6dkg.A 6dki.A 6j5l.A 6npt.A 6nsp.A 6nss.A 6pl1.A 6pl2.A 6pl3.A 6pl4.A 6pma.A 6pmb.A 6pmc.A 7vkm.A 7vkn.A 7vko.A 7xaf.A
+TMEM173	Q86WV6	379.0	340-379	153-339	 4ef5.A 4f5e.A 4f5w.A 4f9e.A 4ksy.A 4qxo.A 5bqx.A 6cff.A 6cy7.A 6dnk.A 6dxg.A 6rm0.A 6s27.A 6ukm.A 6uku.A 6uky.A 6ul0.A 6y99.A 6ydb.A 6ydz.A 6yea.A 6ywb.A 6z0z.A 6z15.A 7a90.A 7kvx.A 7kvz.A 7kw1.A 7mhc.A 7ob3.A 7r4h.E 7sho.A 7ssm.A 7x9q.A
+FYN	P06241	537.0	149-246,247-270	82-143,525-537	 1a0n.B 1aot.A 1aou.A 1avz.C 1azg.B 1fyn.A 1m27.C 1nyf.A 1nyg.A 1zbj.A 2dq7.A 2mqi.A 2mrj.A 3h0f.A 3h0h.A 4eik.A 4u1p.A 5zau.A 6edf.A 6ipy.A 6ipz.A 7a2o.A 7a2p.A 7a2q.A 7a2r.A 7a2s.A 7a2t.A 7a2u.A 7a2v.A 7a2w.A 7a2x.A 7a2y.A 7a2z.A
+FGFR2	P21802	821.0	125-144	154-247,481-770	 1djs.A 1gjo.A 1nun.B 1oec.A 1wvz.A 3caf.A 3cly.A 3ojm.B 4j23.A 5eg3.A
+NOS3	P29474	1203.0	580-635	520-703	 2ll7.B 2mg5.B 2n8j.B
+TBP	P20226	339.0	1-55	165-241,255-332	 1cdw.C 1jfi.E 1nvp.C 1tgh.C 4roc.B 4rod.B 4roe.B 5fur.A 5iy6.P 5iy7.P 5iy8.P 5iy9.P 5iya.P 5iyb.P 5iyc.P 5iyd.P 6mzd.K 6mzl.T 6mzm.L 6o9l.P 7edx.L 7eg7.L 7eg8.L 7eg9.L 7ega.L 7egb.V 7egc.V 7egd.L 7ege.K 7egf.A 7egi.L 7egj.L 7ena.E 7enc.C 7lbm.T 7nvr.Y 7nvs.O 7nvt.O 7nvu.O 7nvy.W 7nvz.W 7nw0.W
+PCSK9	Q8NBP7	692.0	31-60	155-461	 5vla.A 5vlh.A 5vlk.A 5vll.A 5vlp.A 6e4y.C 6e4z.C 6mv5.C 6olz.D 6om0.E 6om7.E 6u2f.A 6u3i.A 7anq.A
+INSR	P06213	1382.0	980-1017	1023-1298	 1gag.A 1i44.A 1ir3.A 1irk.A 1p14.A 2auh.A 2mfr.A 2z8c.A 3bu3.A 3bu5.A 3bu6.A 3ekk.A 3ekn.A 4xlv.A 4xss.B 4xst.A 4zxb.E 5e1s.A 5hhw.A 5j3h.D 5u1m.B 7s0q.B 7s8v.B
+NEIL1	Q96FI4	390.0	244-245	220-280	 1tdh.A 4nrv.A 5itq.A
+PDE4B	Q07343	736.0	166-281	330-649	 1xos.A 2chm.A 2qyl.A 3d3p.A 3frg.A 3gwt.A 3o0j.A 3o56.A 3o57.A 4kp6.A 4myq.A 4nw7.A 5k6j.A 5laq.A
+PAK4	O96013	591.0	1-130	321-572	 2cdz.A 2j0i.A 2q0n.A 2x4z.A 4app.A 4fih.A 4fij.A 4jdh.A 4jdi.A 4jdj.A 4jdk.A 4njd.A 4o0v.A 4o0x.A 4o0y.A 4xbr.A 4xbu.A 5bms.A 5i0b.A 5upl.A 5ved.A 5vee.A 5vef.A 5xva.A 5xvf.A 5xvg.A 5zjw.A 6wlx.A 6wly.A 7cmb.A 7cp3.A 7cp4.A 8ahg.A 8ahh.A 8ahi.A
+PDE5A	O76074	875.0	403-539	156-331	 1rkp.A 1t9r.A 1tbf.A 1udt.A 1uho.A 1xoz.A 1xp0.A 2chm.A 2h40.A 2h44.A 3bjc.A 3hc8.A 3hdz.A 3shy.A 3shz.A 3tge.A 3tgg.A 4g2w.A 4g2y.A 4i9z.A 4ia0.A 4md6.A 4oew.A 4oex.A 5jo3.A 5zz2.A 6acb.A 6iwi.A 6l6e.A 7faq.A 7far.A
+ERBB2	P04626	1255.0	676-684	720-987	 1mfg.B 1mfl.B 1mw4.B 1n8z.C 2a91.A 2ks1.A 2l4k.B 3be1.A 3mzw.A 3n85.A 3wsq.A 4gfu.B 4hrl.A 5k33.B 5kwg.A 5my6.A 5o4g.A 6att.A 6bgt.A 6j71.A 6lbx.B 6oge.A 7mn5.C 7mn6.B 7mn8.C 7pcd.A
+HSPA8	P11142	646.0	263-287	225-262	 3esk.B 3fzf.A 3fzh.A 3fzk.A 3fzl.A 3fzm.A 3ldq.A 3m3z.A 4h5t.A 4h5v.A 4hwi.A 5aqh.A 5aqk.A 5aqt.A 5aqu.A 5aqv.A
+DLG4	P31016	724.0	428-498	534-709	 1be9.A 1bfe.A 1iu0.A 1iu2.A 1jxm.A 1kjw.A 1qlc.A 1rgr.A 1tp3.A 1tp5.A 1tq3.A 2ka9.A 2mho.A 3wp0.A 3wp1.A 5b64.A 5gnv.A 5hdy.A 5heb.A 5hed.A 5het.A 5hey.A 5hf1.A 5hf4.A 5hfb.A 5hfc.A 5hfd.A 5hfe.A 5hff.A 5w72.A 5ypr.A 7cqf.A
+HCK	P08631	526.0	142-239,240-259	76-136,514-425	 1qcf.A 2hk5.A 2oi3.A 2oj2.A 3hck.A 3nhn.A 4hck.A 4orz.A 5h09.A 5h0b.A 5h0e.A 5h0g.A 5h0h.A 5hck.A
+SIRT2	Q8IXJ6	389.0	320-352	65-319	 4rmg.A 4rmh.A 4rmi.A 4x3o.A 4x3p.A 5dy4.A 5dy5.A 5y5n.A 5yql.A 5yqm.A 5yqn.A 5yqo.A 6l65.A 6l66.A 6l71.A 6l72.A 7bos.A 7bot.A
+EP300	Q09472	2414.0	1520-1581	1287-1663	 1l3e.B 1p4q.B 2k8f.A 2mh0.B 2mzd.A 3biy.A 3io2.A 3p57.M 3t92.A 4pzr.A 4pzs.A 4pzt.A 5bt3.A 5kj2.A 5lkt.A 5lku.A 5lkx.A 5lkz.A 5xzc.A 6ds6.A 6fgn.A 6fgs.A 6k4n.A 6v8b.A 6v8k.A 6v8n.A 6v90.A 7w9v.K
+MDM4	O15151	490.0	190-210	26-106	 2cr8.A 2mwy.A 2n06.A 2n0u.A 2n0w.A 2n14.A 3fdo.A 3fe7.A 3fea.A 3jzo.A 3jzp.A 3lbj.A 3mqr.B 6q9u.A 7c3q.A 7c3y.A 7c44.A 7el4.A 7kjn.A 7mla.A
+VCL	P18206	1134.0	878-890	896-1066	 1rkc.A 1syq.A 1ydi.A 2gww.A 2hsq.A 2ibf.A 3jbk.C 3myi.A 3tj5.A 3tj6.A 3vf0.A 4dj9.A 4ehp.A 4ln2.B 4lnp.B 5l0h.A 5l0i.A 5o2q.A 6fuy.A 7ktt.A 7ktu.A 7ktv.A 7ktw.A
+ITK	Q08881	620.0	4-111	363-615	 2e6i.A 2lmj.A 2yuq.A 3mj1.A 3mj2.A 3t9t.A 4hct.A 4hcu.A 4hcv.A 4m0y.A 4m0z.A 4m12.A 4m13.A 4m14.A 4m15.A 4pqn.A 4rfm.A
+PTK2	Q05397	1052.0	35-355	422-680	 1k04.A 1mp8.A 3bz3.A 4ebv.A 4ebw.A 4i4e.A 4i4f.A 4k9y.A 4q9s.A 6i8z.A 6pw8.A 6yoj.A 7pi4.D
+AKT1	P31749	480.0	5-108	150-408	 1h10.A 1unp.A 1unq.A 1unr.A 2uvm.A 2uzr.A 2uzs.A 3cqu.A 3cqw.A 3mv5.A 3mvh.A 3o96.A 3qkk.A 3qkl.A 3qkm.A 4ejn.A 4ekl.A 4gv1.A 5kcv.A 6ccy.A 6hhf.A 6hhg.A 6hhh.A 6hhi.A 6hhj.A 6s9w.A 6s9x.A 7apj.A 7nh4.A 7nh5.A
+PTK2	Q00944	1053.0	35-362	422-680	 1ktm.A 1pv3.A 1qvx.A 2j0j.A 2j0l.A 2jkk.A 2jkm.A 2jko.A 2jkq.A 2l6f.A 2l6g.A 2l6h.A 4brx.A 4c7t.A 4d55.A 6gcr.A 6gcx.A
+RET	P07949	1114.0	900-909	724-899,910-1016	 2ivt.A 2ivu.A 2ivv.A 2x2k.A 2x2l.A 2x2u.A 4cki.A 4ckj.A 5amn.A 5fm2.A 5fm3.A 6fek.A 6i83.A 6ne7.A 6nja.A 6vhg.A 7nzn.A
+MELK	Q14680	651.0	602-651	11-263	 4bky.A 4bkz.A 4bl1.A 4ixp.A 4umq.A 4umr.A 4umt.A 4umu.A 5ih8.A 5ih9.A 5iha.A 5ihc.A 5k00.A 5m5a.A 5maf.A 5mag.A 5mah.A 5mai.A 5tvt.A 5twl.A 5twz.A 6vxr.A
+CSNK1D	P48730	415.0	317-342	9-277	 5ih4.A 5ih5.A 5ih6.A 6rcg.A
+CBL	P22681	906.0	353-380	381-435	 1fbv.A 1yvh.A 2cbl.A 2juj.A 2k4d.A 3bum.B 3bun.B 3ob1.B 3ob2.B 4a49.A 4a4b.A 4a4c.A 4gpl.B 5hkx.A 5hky.A 5hkz.A 5hl0.A 6o02.A
+FGFR4	P22455	802.0	120-145	150-240,467-755	 4qq5.A 4qqc.A 4qqj.A 4qqt.A 4qrc.A 4r6v.A 4tye.A 4tyg.A 4tyi.A 4tyj.A 4uxq.A 4xcu.A 5jkg.A 5xff.A 5xfj.A 6iuo.A 6iup.A 6jpe.A 6jpj.A 6nvg.A 6nvh.A 6nvi.A 6nvj.A 6nvk.A 6v9c.A 7dtz.A 7f3m.A 7wct.A 7wcw.A 7wcx.A
+MAPRE1	Q15691	268.0	249-268	14-116	 1pa7.A 1txq.B 1ueg.A 1yib.A 2hkq.A 2hl3.C 3tq7.A 5jvs.A 5jx1.A 5wlq.A
+PAK1	Q13153	545.0	83-149	270-521	 1yhv.A 1yhw.A 1zsg.B 2hy8.A 2qme.B 3fxz.A 3fy0.A 3q52.A 3q53.A 4daw.A 4eqc.A 5dfp.A
+IGF1R	P08069	1367.0	930-960	999-1274	 1igr.A 1k3a.A 2oj9.A 3d94.A 3i81.A 3nw5.A 3nw6.A 3nw7.A 3o23.A 4d2r.A 4xss.C 5fxq.A 5fxr.A 5fxs.A 5u8q.A 5u8r.A 7ph8.A 7s0q.A 7s8v.A
+RAF1	P04049	648.0	51-186	349-609	 1c1y.B 1faq.A 1far.A 1gua.B 1rfa.A 3iqj.B 3iqu.B 3iqv.B 3kuc.B 3kud.B 3o8i.B 4fj3.C 4g0n.B 4g3x.B 4iea.B 4ihl.C 6ntc.B 6ntd.B 6pts.D 6ptw.D 6vjj.B 6xgu.B 6xgv.B 6xha.B 6xhb.B 6xi7.B 7jhp.B 7z37.C 7z38.C
+SMYD3	Q9H7B4	428.0	280-428	4-240	 3mek.A 3oxg.A 3oxl.A 3pdn.A 3qwp.A 5ccl.A 5ccm.A 5ex0.A 5ex3.A 5hi7.A 5v37.A 5xxd.A 5xxg.A 5xxj.A 5yjo.A 6ijl.A 6o9o.A 6p6g.A 6p6k.A 6p7z.A 6paf.A 6yuh.A 6zrb.A 7bj1.A 7o2a.A 7o2b.A 7o2c.A
+KIT	P10721	976.0	544-583	589-937	 1t45.A 1t46.A 2ec8.A 2iuh.B 2vif.B 3g0e.A 4hvs.A 4k94.C 4k9e.C 4u0i.A 6hh1.A 6itv.A 6kla.A 6mob.A 7khg.A
+DDX58	O95786	925.0	794-925	1-87,92-172	 2lwd.A 2lwe.A 2rmj.A 2ykg.A 3zd6.A 3zd7.A 4ay2.A 4bpb.A 5e3h.A 6gpg.C 7jl1.A
+MAPKAPK2	P49137	400.0	328-364	64-325	 1ny3.A 2jbo.A 2oza.A 2p3g.A 3fpm.A 3fyj.A 3fyk.A 3ka0.A 3kga.A 3m2w.A 3m42.A 3r2y.A 3r30.A 4tyh.A 7nry.A
+CCNT1	O60563	726.0	1-249,402-701	250-262	 3blh.B 3blq.B 3blr.B 3lq5.B 3mi9.B 3mia.B 3my1.B 3tn8.B 3tnh.B 3tni.B 4bcf.B 4bcg.B 4bch.B 4bci.B 4bcj.B 4ec8.B 4ec9.B 5l1z.B 6cyt.B 6gzh.B 6w9e.B 6z45.B 7nwk.B
+SETD2	Q9BYW2	2564.0	2353-2382	2383-2430	 2a7o.A 2mdc.A 2mdi.A 2mdj.A 4fmu.A 4h12.A 5jjy.A 5jlb.A 5jle.A 5lss.A 5lsx.A 5lsy.A 5lsz.A 5lt7.A 5lt8.A 5v21.A 5v22.A 6j9j.A 6vdb.A 7ea8.A 7lzb.A 7lzd.A 7lzf.A 7ty2.A 7ty3.A
+MAPK8IP1	Q9UQF2	711.0	495-544	0-0	 3oxi.B 3ptg.B 3vud.B 3vug.B 3vuh.B 3vui.B 3vuk.B 3vul.B 3vum.B 4e73.B 4g1w.B 4h39.B 4hys.B 4hyu.B 4izy.B 6fuz.A
+NSD3	Q9BZ95	1437.0	1145-1258	1258-1273	 2daq.A 2ncz.B 2nd1.B 4gne.A 4gnf.A 4rxj.A 5upd.A 6cen.A 6g24.A 6g25.A 6g27.A 6g29.A 6g2b.A 6g2c.A 6g2e.A 6g2f.A 6g2o.A 7crp.K 7crr.K 7jyn.B
+MAP3K5	Q99683	1374.0	1-648	680-938	
+ABL1	P00520	1123.0	1-60,61-121,127-217,218-241,383-400	242-493	 1abq.A 1opk.A 2hzn.A 2z60.A 3oxz.A
+NOTCH1	P46531	2555.0	1571-1734	0-0	 1pb5.A 1toz.A 2f8x.D 2vj3.A 4cud.A 4cue.A 4cuf.A 4d0e.A 4d0f.A 5fm9.A 5kzo.A 5l0r.B 5ub5.B 6idf.E
+FLNB	O75369	2602.0	2091-2185	2188-2280	 2di8.A 2di9.A 2dia.A 2dib.A 2dic.A 2dj4.A 2dlg.A 2dmb.A 2dmc.A 2e9i.A 2e9j.A 2ee6.A 2ee9.A 2eea.A 2eeb.A 2eec.A 2eed.A 2wa5.A 2wa6.A 2wa7.A
+CAMKK2	Q96RR4	588.0	472-477	165-446	 2zv2.A 5uy6.A 5uyj.A 5vt1.A 5yv8.A 5yv9.A 5yva.A 5yvb.A 5yvc.A 6bku.A 6ble.A 6bql.A 6bqp.A 6bqq.A 6y3o.B 6y8a.B
+BIRC2	Q13490	618.0	453-543	571-606	 1qbh.A 2l9m.A 3d9u.A 3t6p.A 3uw4.A 4kmn.A 6hpr.A 6w74.A
+FLNA	P21333	2647.0	2142-2235	2236-2325	 2aav.A 2jf1.A 2k3t.A 2k7p.A 2k7q.A 2mtp.A 4m9p.A 5xr1.A 6ew1.A
+CSF1R	P07333	972.0	542-574	582-910	 2i0v.A 2i0y.A 2i1m.A 2ogv.A 3bea.A 3dpk.A 3krj.A 3krl.A 3lcd.A 3lco.A 4dkd.C 4hw7.A 4liq.A 4r7h.A 4r7i.A 4wrm.A 6ig8.A 6n33.A 6t2w.A 6wxj.A 7mfc.A 7tnh.A
+PRKAR1A	P00514	380.0	1-101	137-380	 1ne4.A 1ne6.A 1rgs.A 2qcs.B 3fhi.B 3iia.A 3im3.A 3plq.A 3pvb.B 4jv4.A 4x6r.B
+MLKL	Q8NB16	471.0	133-150	1-124	 2msv.A 4m67.A 4mwi.A 5ko1.A 6bwk.A 6d74.A 6lk5.A 6lk6.A 6ux8.A 6zle.A 6zpr.A 7jw7.A 7mon.A 7nm2.A 7nm4.A 7nm5.A
+ETS1	P14921	441.0	280-330	335-415	 2stt.C 2stw.C 3wu1.B 4l0y.B 4l0z.B 4lg0.B 5zmc.C
+PRKAA1	P54645	559.0	313-335	27-279	 2v8q.A 2v92.A 2v9j.A 2y8l.A 2y8q.A 2ya3.A 4eai.A 4eaj.A 4eak.A 4eal.A 4f2l.A 4qfg.A 4qfr.A 4qfs.A 5kq5.A 5t5t.A 5ufu.A 6e4t.A 6e4u.A 6e4w.A
+SLC9A3R1	O14745	358.0	242-328	14-94,154-234	 1g9o.A 1gq4.A 1gq5.A 1i92.A 1sgh.B 2jxo.A 2kjd.A 2krg.A 2m0t.A 2m0u.A 2m0v.A 2ozf.A 4jl7.A 4lmm.A 4mpa.A 4n6x.A 4pqw.A
+RPS6KB1	P23443	525.0	424-525	91-352	 3a61.A 3a62.A 3we4.A 3wf5.A 3wf6.A 3wf7.A 3wf8.A 3wf9.A 4l3j.A 4l3l.A 4l42.A 4l43.A 4l44.A 4l45.A 4l46.A 4rlp.A 5wbh.F 5wbk.B
+GGA1	Q9UJY5	639.0	358-362	17-147	 1j2j.B 1jwf.A 1naf.A 1nwm.A 1o3x.A 1oxz.A 1x79.A
+PGR	P06401	933.0	375-397	1-164,456-564	 2ovh.A 2ovm.A 4oar.A
+SARM1	Q6SZW1	724.0	560-703,382-385,375-399,281-331	244-269,134-173,162-197,402-476,412-484	 6o1b.A
+PRKG1	Q13976	671.0	50-75	360-619	 4ku7.A 4qx5.A 4qxk.A 5jax.A 5jd7.A 5l0n.A 6c0t.A 7ssb.A
+PDCD6IP	Q8WUM4	868.0	709-745	3-392	 2oev.A 2oew.A 2ojq.A 2r02.A 2r03.A 2r05.A 2xs1.A 2xs8.A 3c3o.A 3c3q.A 3c3r.A 3e1r.C 5v3r.A 5wa1.A 6kp3.A
+PANX1	Q96RD7	426.0	412-426	1-287	
+RPS6KA1	Q15418	735.0	687-706	62-321,418-675	 2z7q.A 2z7r.A 2z7s.A 3tei.B 5csf.C 5csi.C 5csj.C 5csn.C 5n7d.C 5n7f.C 5n7g.C 5v61.B 5v62.B 6twy.C 7p74.B
+PPP5C	P53041	499.0	28-129,487-499	184-486	 1a17.A 2bug.A 4zx2.A 5hpe.A 5wg8.A
+DNMT3A	Q9Y6K1	912.0	476-626	634-912	 3a1a.A 3a1b.A 3svm.B 4qbs.A 4u7p.A
+	Q9EZJ8	438.0	1-73	249-438	 1ku3.A 1l9z.H 1rio.C 3lev.A 3ugo.A 3ugp.A 5tjg.F
+IRF3	Q14653	427.0	380-427	98-240	 2o61.C 5jel.A 5jeo.B 6siv.A 6sja.A
+PARP2	Q9UGN5	583.0	231-348	356-538	 4zzy.A 5d5k.B 6f1k.A 6tx3.A 7aeo.A
+PPP3CA	Q08209	521.0	467-491	1-348	 1aui.A 1mf8.A 2jog.A 2jzi.B 4f0z.A 4q5u.B 5sve.A 6nuc.A 6nuf.A 6nuu.A 6uuq.A
+MAP4K1	Q92918	833.0	474-687	17-274	 6cqf.A 7r9l.A
+AKT2	P31751	481.0	5-108,410-481	152-409	 1gzk.A 1gzn.A 1gzo.A 1mrv.A 1mry.A 1o6k.A 1o6l.A 1p6s.A 2jdo.A 2jdr.A 2uw9.A 2x39.A 2xh5.A
+TP63	Q9H3D4	680.0	610-680	394-443	 1rg6.A 2rmn.A 2y9t.A 2y9u.A 3zy1.A 6fgn.A 6ru6.C 7z72.A 7z7e.A
+TEK	Q02763	1124.0	770-807,832-836,982-1008,1110-1124	924-1096	 2gy5.A 2gy7.B 2oo8.A 2osc.A 2wqb.A 3bea.A 3l8p.A 4k0v.A 4x3j.A
+MINDY1	Q8N5J2	469.0	130-138	388-426	 5jkn.A 5jqs.A 5mn9.C 6tuv.A 6txb.A 6y6r.A 6yjg.A 6z90.A
+VCL	P12003	1135.0	878-890	891-1135	 1st6.A 1t01.A 1u6h.A 1xwj.A 1zvz.A 1zw2.A 1zw3.A 2gdc.A 3jbi.C 3zdl.A 4e17.A 4e18.A 6fq4.A 6nr7.A
+NSF	P18708	744.0	203-222	0-0	 1d2n.A 1nsf.A 1qcs.A
+ZAP70	P43403	619.0	126-155,256-337	338-600	 1fbv.B 1m61.A 1u59.A 2cbl.B 2oq1.A 2ozo.A 4a4b.B 4a4c.B 4k2r.A 4xz0.A 4xz1.A
+SDCBP	O00560	298.0	1-113,276-298	114-273	 1nte.A 1obx.A 1r6j.A
+NFKB1	P19838	968.0	434-968	42-367	 1mdi.B 1mdj.B 1mdk.B 1svc.B 2dbf.A 2o61.D 7leq.B 7let.B 7lfc.B 7rg4.B 7rg5.B
+DNMT1	P26358	1616.0	647-714	1140-1602	 3pta.A 3swr.A 4yoc.A 4z96.B 4z97.B 5wvo.C 5ydr.B 6l1f.A 6x9i.A 6x9j.A 6x9k.A 7sfc.A 7sfd.A 7sfe.A 7sff.A 7sfg.A
+CEBPB	P17676	345.0	64-170	271-334	
+BID	P55957	195.0	21-51	60-195	 1zy3.B 2bid.A 2kbw.B 2m5b.B 2m5i.A 4bd2.B 4qve.B 4zeq.B 4zig.B 4zii.B 5ajj.B 5c3f.B 7m5a.B
+KPNA4	O00629	521.0	2-57	137-229,306-394	 4uae.A 5xzx.A 6bvv.A 6bvz.A 6bw9.A 6bwa.A 6bwb.A 7jjl.A 7lfc.A 7rfy.A 7rg5.A
+	Q9X1X0	385.0	359-385	0-0	 3thn.A 3tho.B
+OTULIN	Q96BN8	352.0	330-340	129-341	 3znv.A 3znx.A 3znz.A 4ksj.A 5oe7.A 6i9c.A
+PTPN6	P29350	595.0	1-105	244-515	 1fpr.A 1gwz.A 1x6c.A 2b3o.A 2rmx.A 2yu7.A 3ps5.A 4gry.A 4grz.A 4hjp.A 6sm5.A
+NEDD4	P46934	1319.0	1-140	984-1318	 2kpz.A 2kq0.A 2m3o.A 2xbf.A 4bbn.A 4be8.A 4n7h.A 5aht.A 5c91.A
+DDX3X	O00571	662.0	132-181	211-575	 2i4i.A 4o2c.C 4pxa.A 5e7j.A 5e7m.A 6cz5.A
+DCLK1	O15075	740.0	647-740	390-646	 1mfw.A 1mg4.A 1uf0.A
+TRAF6	Q9Y4K3	522.0	346-522	1-273	 1lb4.A 1lb5.A 1lb6.A 2eci.A 2jmd.A 3hct.A 5zuj.A 6a33.A
+TNK2	Q07912	1038.0	803-880	126-385	 1cf4.B 4id7.A
+PRKAA2	P54646	552.0	291-376	16-268	 2h6d.A 2ltu.A 2yza.A 3aqv.A 6b2e.A 6bx6.A
+ITCH	Q96J02	903.0	5-99	569-903	 2dmv.A 2kyk.A 2nq3.A 2p4r.B 2ysf.A 3tug.A 5c7m.A 5cq2.A
+FLT1	P17948	1338.0	1159-1338	827-1158	 1qsv.A 1qsz.A 3hng.A 4ckv.A 5ex3.B
+ACTN2	P35609	894.0	259-307	753-824	 1h8b.A 1quu.A 4d1e.A 6swt.A 7a8t.A 7a8u.A 7b55.B 7b56.B 7b57.B
+BAIAP2	Q9UQB8	552.0	1-178	238-292	 2ykt.A 3rnj.A 4js0.B 6bd2.C
+CRK	Q64010	304.0	132-192	235-296	 1b07.A 1cka.A 1ckb.A 1ju5.B 1m30.A 1m3a.A 1m3b.A 1m3c.A 2ggr.A 5jn0.A 5l23.A
+SEC22B	O08547	215.0	1-130	134-194	 5vne.C 5vnf.C 5vng.C 5vnh.C 5vni.C 5vnj.C 5vnk.C 5vnl.C 5vnm.C 5vnn.C 5vno.C
+HMGB1	P09429	215.0	186-215	76-95	 2ly4.A 2rtu.A 2yrq.A 6cg0.K 6cij.G 6cik.E 6cil.E 6cim.E 6oeo.I
+PRKAA1	Q13131	559.0	313-392	27-279	 4rer.A 4rew.A 6c9f.A 6c9g.A 6c9h.A 6c9j.A 7jhg.A 7jhh.A 7jij.B 7m74.A
+CYTH2	Q99418	400.0	387-395	72-201	 1pbv.A 1r8m.A 1r8s.B 1s9d.B 4jmi.A 4jmo.A 4jwl.A 4jxh.A 4l5m.A 4z21.A
+PREX1	Q8TCU6	1659.0	409-499	49-240,271-392	 3qik.A 4yon.A 5d27.A 5fi1.A 6pcv.A 6vsk.A 7rx9.A 7syf.A
+DNMT1	P13864	1620.0	649-695	1142-1601	 3av4.A 3av5.A 3av6.A 3pt9.A 5gut.A 5guv.A 5wy1.A
+KPNA2	P52292	529.0	2-58	142-238,315-403	 1efx.C 1qgk.B 1qgr.B 3fex.C 3fey.C 4wv6.A 5h43.A 7n8j.A 7n9h.A
+MINDY2	Q8NBR6	621.0	259-267	507-559	
+MYLK	P11799	1906.0	1716-1728	1453-1708	 1qtx.B 1vrk.B 2k0f.B 2o5g.B 3ek7.A 3ek8.A 3ekh.A 3ekj.A 3evr.A 3evu.A 3evv.A 3o77.A 3sg2.A 3sg3.A 3sg4.A 3sg5.A 3sg6.A 3sg7.A 3wlc.A 3wld.A 4oy4.A
+STK3	Q13188	491.0	279-435	27-278	 6ao5.A
+RPS6KA3	P51812	740.0	694-711	68-327,422-679	 4d9t.A 4d9u.A 4jg6.A 4jg7.A 4jg8.A 4nus.A 4nw5.A 4nw6.A 5d9l.A
+ETV6	P41212	452.0	410-452	339-409	 2dao.A 5l0p.A 7n1o.A 7tw7.A 7tw8.A 7tw9.A
+ERBB4	Q15303	1308.0	676-684	718-935	 3u2p.A
+EIF4G1	Q04637	1599.0	607-618	682-1085	 5ehc.B 5ei3.B 5eir.B 5zk5.B 6zmw.E
+CRK	P46108	304.0	239-294	132-192	 1ju5.A 2dvj.A 2eyv.A 2eyw.A 2eyx.A 2eyy.A 2eyz.A 2ms4.B 5ul6.A 6atv.A
+ARIH1	Q9Y4X5	557.0	408-557	339-392	 1wd2.A 2m9y.A 4kc9.A 5tte.A 7b5l.B 7b5m.B 7b5n.B 7b5s.B
+CBS	P35520	551.0	414-551	40-413	
+DIAPH1	O08808	1255.0	131-378	1180-1199	 2f31.B 2v8f.C
+ETS1	P27577	440.0	304-310,416-441	335-415	 1mdm.D 1r36.A 2jv3.A 2kmd.A
+	P0AES4	875.0	838-875	1-450	 1ab4.A 3nuh.A
+	P53686	357.0	300-320	1-280	 1q14.A 1q1a.A 1szc.A 1szd.A 2od2.A 2od7.A 2od9.A 2qqf.A 2qqg.A 7f4e.A 7f51.A
+MAVS	Q7Z434	540.0	141-200,251-300	401-450	 2ms8.A 2vgq.A 3j6c.A 3rc5.B
+PRKCI	P41743	596.0	123-140	254-522	 1vd2.A 1wmh.A 1zrz.A 5li1.A 5li9.A
+PTEN	P60484	403.0	350-400	14-185,258-268,321-324	 1d5r.A 2kyl.B 4o1v.B 7jtx.A 7juk.A 7jul.A 7jvx.A
+VAV1	P15498	845.0	131-178	194-373	 2crh.A 2lct.A 2mc1.A 2ror.A 6new.A 6nf1.A 6nfa.A
+PDGFRA	P16234	1089.0	550-587	593-954	 5grn.A 5k5x.A 6a32.A 6joi.A 6joj.A 6jok.A 6jol.A 7lbf.D 7ram.D
+NFKB2	Q00653	900.0	455-900	38-343	 2d96.A 3do7.E 4ot9.A 5zmc.D
+NCK2	O43639	380.0	60-109	111-170	 1u5s.A 1wx6.A 1z3k.A 2b86.A 2cia.A 2frw.A 2fry.A 2jxb.A
+NCF1	P14598	390.0	226-390	4-125	 1gd5.A 1k4u.B 1kq6.A 1ng2.A 1uec.A 1wlp.B 7yxw.B
+DGCR8	Q8WYQ5	773.0	276-498	511-578,620-685	 1x47.A 2yt4.A 3le4.A 7cnc.B
+DAPK2	Q9UIK4	370.0	292-301	23-285	 1wrz.B 1zuz.B
+ARHGEF11	O15085	1522.0	672-730	734-1079	 1htj.A 2dls.A 5e6p.B
+ARHGAP1	Q07960	439.0	1-48,169-197	244-431	 1grn.B 1ow3.A 1rgp.A 1tx4.A 2ngr.B 6r3v.A
+CLIP1	P30622	1438.0	1417-1434	232-274	 2cp5.A 2cp6.A 2e3h.A 2e3i.A 2e4h.A 2qk0.A
+CYTH3	O08967	399.0	251-265,383-395	77-206	 1fgy.A 1fgz.A 1u2b.A 6bbp.A 6bbq.A
+PLCG1	P10686	1290.0	780-795	668-765	 1y0m.A 1ywo.A 1ywp.A 2fjl.A 3gqi.B 5eg3.B 6pbc.A 7z3j.A
+VTA1	Q06263	330.0	183-266	281-290	 2luh.A 3mhv.B 5h7p.A
+RPS6KA3	P18654	740.0	697-712	328-679	 2qr7.A 2qr8.A 3g51.A 3ubd.A 4el9.A 4gue.A 4m8t.A 4mao.A 5o1s.A
+	Q7CWV1	442.0	1-106	107-442	 4dwp.A 4e0g.A 4e0j.A 4e0p.A 4e0y.A 4e0z.A 4e10.A 4f41.A 4f43.A
+USP14	P54578	494.0	329-351,429-433	105-483	 2ayo.A 5gjq.U 7w37.T 7w38.R 7w39.W 7w3a.J 7w3b.U 7w3c.S 7w3f.S 7w3g.R 7w3h.T 7w3i.A 7w3j.E 7w3k.G 7w3m.T
+PTK6	Q13882	451.0	75-174,447-451	191-445	 1rja.A 2kgt.A 5da3.A 6cz2.A 6cz3.A 6cz4.A
+PKN1	Q16512	942.0	455-511	615-874	 1cxz.B 1urf.A 2rmk.B 4otd.A 4otg.A 4oth.A 4oti.A
+PDGFRB	P09619	1106.0	525-567	600-962	 1h9o.B 1sha.B 2pld.B 2ple.B
+NTRK2	Q16620	822.0	298-377	538-807	 1wwb.A 2mfq.B 4asz.A 4at3.A 4at4.A 4at5.A 5mo9.C
+NLRP1	Q9C000	1473.0	809-973	328-637	 1pn5.A 3kat.A 4im6.A
+FLT3	P36888	993.0	565-604	610-943	 1rjb.A 4rt7.A 5x02.A 6il3.A 6jqr.A
+ERG	P11308	479.0	272-289,378-388	290-377	 1sxe.A 4irg.A 4irh.A 4iri.A 6vge.A 6vgg.A
+APBA1	Q02410	837.0	626-641	453-622	 1u37.A 1u38.A 1u39.A 1u3b.A 1x45.A 1y7n.A
+MDM4	Q7ZUW7	496.0	275-295	22-105	 4n5t.A 6v4f.A 6v4g.A
+	P06782	633.0	316-398	55-306	 2fh9.A 3mn3.A 3t4n.A 3tdh.A 3te5.A
+EPHB1	P54762	984.0	593-618	619-882	 2djs.A 2eao.A 6umw.A 7kpl.A 7kpm.A
+STING1	Q3TBT3	378.0	339-378	152-339	
+KIF1A	Q12756		429-472,622-681	352-361,516-572	 4uxo.C 4uxp.C 4uxr.C 4uxs.C
+STK4	Q13043	487.0	282-431	30-281	 4oh8.A 5twg.B 5twh.B
+SMURF2	Q9HAU4	748.0	10-140	414-748	 1zvd.A 2djy.A 2jqz.A 2kxq.A 2ltz.A 7m3q.A
+NEK7	Q8TDX7	302.0	182-199	34-181,200-299	 2wqm.A 2wqn.A 6npy.B
+ACAP1	Q15027	740.0	525-568	405-524	
+SH3KBP1	Q96B97	665.0	337-346	267-328	 2k6d.A 2k9g.A 2o2o.A 2ydl.A 5abs.A
+	O74536	576.0	298-351	34-285	
+EPHB2	P54763	986.0	595-621	621-884	 1nuk.A 1shw.B 3etp.A 7s7k.A
+EIF2AK4	P15442	1659.0	1498-1659	599-981	 2yz0.A
+PLCG1	P08487	1291.0	757-790	668-756	 2fci.B 2pld.A 2ple.A 5to4.A 5tq1.A
+PLXNA2	P70207	1894.0	1261-1341,1471-1672	1324-1450,1651-1872	 3al8.B 3okt.A 3oky.A 5l74.A
+PRKCA	P05696	672.0	19-36	339-597	 1dsy.A 2nce.A 3gpe.A 3rdj.A 3twy.A 4l1l.A
+WNK3	Q9BYP7	1800.0	440-463	147-405	 5o2c.A
+USP8	P40818	1118.0	645-684	777-1109	 1whb.A 2gfo.A 3n3k.A
+WWP1	Q9H0M0	922.0	349-527	588-922	 1nd7.A 2op7.A 5hps.A 6j1x.A
+	Q95PM0	450.0	96-113	126-342	 2p7u.A 2p86.A 7avm.A
+WWP2	O00308	870.0	20-100	536-870	 4y07.A 5tj8.A 5tjq.A 6j1z.A 6rss.A
+WAS	P42768	502.0	238-251	430-447	 1cee.B 1ej5.A 1t84.A 2a3z.C 2k42.A
+TP53BP2	Q13625	1128.0	693-901	925-1128	 1ycs.B 2uwq.A 6hkp.B
+PAK5	Q9NQU5	681.0	60-180	407-658	 2c30.A 2odb.B 4ks7.A 4ks8.A 6qdr.B 6qds.B
+MICAL1	Q8TDZ2	1067.0	755-1067	1-450	 1wyl.A 2co8.A 2dk9.A 5le0.A 5lpn.B
+GSDMD	P57764	484.0	280-484	1-275	 5nh1.A 6ao4.A
+GGA3	Q9NZ52	723.0	391-395	16-146	 1p4u.A
+DLC1	Q96QB1	1528.0	1-76	655-801	 2dky.A 2gyt.A 2kap.A 2loz.B 3kuq.A 5fzt.B
+CRKL	P46109	303.0	129-175	14-102	 2bzx.A 2dbk.A 2eo3.A 2lqn.A 2lqw.A
+CAMK2D	Q13557	499.0	283-292	14-272	 2wel.A 3gp2.B
+AIM2	O14862	343.0	29-68	138-337	 3vd8.A 4o7q.A
+MRE11	Q58719	366.0	290-330	1-289	 3auz.A 3av0.A
+STIM1	Q13586	685.0	63-98,238-343	132-200,344-444	 2k60.A 6yel.A
+VAV1	P27870	845.0	1-119,120-193,402-504,782-842	194-373	 1f5x.A 1gcq.C 1k1z.A 2kbt.A 2vrw.B
+WNK1	Q9JIH7	2126.0	514-537	221-479	 2lru.A 4q2a.A 5drb.A 6ol2.A
+ERCC6	Q03468	1493.0	91-101	102-695	 4cvo.A 7oo3.Q 7oob.M 7oop.X 7opc.X 7opd.X
+FGFR3	P22607	806.0	127-149	151-244,472-761	 1ry7.B 4k33.A 6lvm.A 7dhl.A
+FKBP8	Q14318	412.0	1-32	120-204	 2awg.A 2d9f.A 2f2d.A 2mf9.A 3ey6.A
+ADAMTS13	Q76LX8	1427.0	1072-1298	80-685	 3ghm.A 3ghn.A 3vn4.A 6qig.C 7b01.A
+ARID4A	P29374	1257.0	273-310	309-401,568-635,1-121	 2lcc.A 2mam.A 2yrv.A 6bph.A 6l87.A
+	P54623	1320.0	1-77	104-174	
+CHD1L	Q86WJ1	897.0	704-897	351-513	 6zhy.I 7enn.A 7epu.B 7otq.A
+	Q8RT31	374.0	201-354	1-190	 1xt0.A 4c7p.A 4d7q.A 4d7r.A
+TRIB1	Q96RU8	372.0	355-360	1-338	 5cek.A 5cem.A
+PLCB3	Q01970	1234.0	469-589	318-468,590-706	 4qj3.B 4qj4.B 4qj5.B 7sq2.B
+NLRP3	Q96P20	1036.0	740-991	220-536	 2naq.A 6npy.A 7alv.A
+MSN	P26038	577.0	467-577	4-297	 1e5w.A 1sgh.A 6txq.A 6txs.A
+MAPKAPK3	Q16644		307-343	44-304	 3fhr.A 3fxw.A 3r1n.A 3she.A 7nrb.A
+CAMK1D	Q8IU85	385.0	279-319	23-278	 6qp5.A 6t28.A 6t29.A
+ATF2	P15336	505.0	349-415	1-243	 1bhi.A 1t2k.F 4h36.B 6zqs.B
+ASAP1	Q9ULH1	1129.0	1-325	326-560	 2da0.A 2ed1.A 2rqt.A 2rqu.A
+	Q3KK31	648.0	170-390	399-648	 3pju.A 3pjw.A 3pjx.A
+LYN	P07948	512.0	129-226,227-246	63-123,502-512	 1w1f.A 1wa7.A 3a4o.A 5xy1.A 6nmw.A
+MAP2K6	P52564	334.0	251-277	53-314	 2y8o.B 3fme.A 3vn9.A 5etf.B 8a8m.B
+MICAL1	Q8VDP3	1048.0	761-1048	1-489	 4txi.A 4txk.A
+PLCG1	P19174	1290.0	757-790	668-756	 1hsq.A 2hsp.A 4fbn.A 7nxe.A
+ROR2	Q01974	943.0	555-556	473-746	 6osh.B 6osn.A 6osv.B
+	O62305	720.0	273-317	12-269	 3kk8.A 3kk9.A
+	A0A0R4I961	279.0	155-279	3-147	 6gu0.A
+IQGAP1	P46940	1657.0	1276-1657	956-1274	 1x0h.A 2rr8.A 3fay.A
+LYN	P25911	512.0	129-226,227-246	63-123,502-512	 2zv7.A 2zv8.A 2zv9.A 2zva.A
+PLXNA1	P70206	1894.0	51-491,1266-1346,1472-1672	1348-1472,1673-1894	 5l56.A 5l5c.A 5l7n.A
+STING1	B8XX90	378.0	339-378	153-339	
+WNK1	Q9H4A3	2382.0	488-555	221-479	 4pwn.A 6fbk.B
+TRERF1	P60240		1-110	147-416,441-659	 7m8e.F 7mkn.F 7mkq.F
+	Q2U1F3		1-79	150-350	 6zep.A 6zeq.A 7oez.A
+ATR	P38111		2309-2317	2241-2263	 5x6o.A
+PTPN2	P17706	415.0	353-387	5-275	 1l8k.A
+PRKD2	Q9BZL6	878.0	397-509	551-807	 2coa.A 3bgm.C 4nnx.C 4nny.C
+PRKCA	P17252	672.0	19-37	339-597	 2eli.A 4dnl.A 4ra4.A
+PKN2	Q16513	984.0	455-511	657-916	 4crs.A 4rrv.B 6ccy.A 6gbe.B
+PACSIN2	Q9UNF0	486.0	344-486	11-282	
+PACSIN1	Q9BY11	444.0	385-444	13-283	
+MEIS2	O14770	477.0	150-193	276-338	 5eg0.A
+MAP3K11	Q16584	847.0	43-103	117-379	 6cq7.A
+IRF4	Q15306	451.0	401-451	21-129	 2dll.A 6td4.A
+EPHB2	P29323	1055.0	588-623	624-884	 1f0m.A 3zfm.A
+CHMP3	Q9Y3E7	222.0	151-222	1-113	 3frv.A
+CAMK1	Q14012	370.0	286-300	20-276	 4fg7.A 4fgb.A
+ARHGEF4	Q9NR80	690.0	129-179	284-468	 2dx1.A 2pz1.A
+ANP32A	P39687	249.0	121-163	1-120	 6xzq.H
+ARHGEF12	Q9NZN5	1544.0	721-764	765-782	 1txd.A 2omj.A 2os6.A
+ELK4	P28324	431.0	136-214	5-85	 1bc7.C 1bc8.C 1k6o.C
+KPNA1	P52294	538.0	1-57	149-241,318-406	 4b18.A 6wx9.A
+PLK1	Q07832	603.0	402-603	53-305	 5dmv.A 5dnj.A
+PRKN	Q9JK66	465.0	141-225,378-410	226-377,410-465	 2knb.A
+	P32917	917.0	367-517	593-786	 2kgn.A 2l4u.A 3fze.A 4f2h.A
+TLN1	Q9Y490	2541.0	1654-2344	86-403	 1syq.B 2mwn.B 4dj9.B 6r9t.A
+DLG1	P31007	970.0	481-681	780-955	 3tvt.A
+ETV6	P97360	485.0	426-435	335-416	 2lf7.A 2lf8.A 2md5.A 4mhg.C
+GSDMD	Q9D8T2	487.0	279-469	1-273	
+	Q8VSC3	545.0	57-228	251-545	 3l3p.A 5b0t.A 6k2d.B
+NLRC4	Q3UP24	1024.0	356-463,578-1020	95-298	
+PTPN11	P35235	593.0	1-103	247-521	 1ayb.A 1ayc.A 1ayd.A
+SEC22B	O75396	215.0	1-130	134-194	 2nup.C 2nut.C 3egd.C 3egx.C
+STING1	E1C7U0	379.0	345-379	158-345	
+ARRB1	P49407	418.0	357-418	1-110	 6pwc.C 6tko.B 6up7.B 7r0c.C 7r0j.B 7srs.D
+HCN1	O60741	890.0	401-479	480-604	
+	Q9RFD6	297.0	1-29	120-175	
+VPS4A	Q9UN37	437.0	2-116	117-437	 1yxr.A 2jq9.A 2k3w.A
+RPS6KA5	O75582	802.0	702-723	49-318,426-687	 1vzo.A 7up6.A
+PRKAR1A	P10644	381.0	1-98	137-381	 5kjx.A 5kjy.A 5kjz.A
+PPP3CB	P16298	524.0	417-423,474-496	22-357	 4or9.A 4ora.A 4orc.A
+PLK4	O97143	769.0	318-380	14-267	 4nk7.A
+PACSIN1	Q61644	441.0	426-496	10-280	
+OTUD7B	Q6GQQ9	843.0	187-193	194-365	 5lru.A 5lrv.A
+NLRC4	Q9NPP4	1024.0	464-579	95-298	
+MST1R	Q04912	1400.0	1346-1400	1082-1345	 3pls.A 4fww.A
+MEFV	O15553	781.0	1-92	580-775	 2mpc.A 2wl1.A
+MAP3K8	P41279	467.0	395-467	138-388	
+MAP2K4	P45985	399.0	109-136	102-108,137-367	 3alo.A
+GSK3B	Q9WV60	420.0	1-34	56-340	 4nu1.A
+GSDMB	Q8TAX9	411.0	248-411	1-247	
+GRK5	P34947	590.0	563-590	186-448	 4tnb.A 4tnd.A 6pjx.A
+GABPA	Q00422	454.0	401-430	320-400	 1awc.C 1sxd.A 2juo.A
+FHOD1	Q9Y613	1164.0	1053-1133	53-458	
+FARP2	Q91VS8	1065.0	728-745,755-1026	536-727	 6d2k.A
+ETV4	P43268	484.0	321-340,433-474	341-421	 4co8.A 5ilu.A
+DNMT1	Q24K09	1611.0	696-730	1136-1595	
+CYTH3	O43739	400.0	252-264,380-400	77-206	 4kax.B
+CRK	Q04929	305.0	225-297	133-193	 2l3p.A 2l3q.A 2l3s.A
+CAMK1	Q63450	374.0	285-316	20-276	 1a06.A 2l7l.B
+PLEKHM2	Q8IWE5	1019.0	604-1019	1-603	 3cxb.B 3hw2.B
+	Q8NQJ3	143.0	1-40	68-117	 2kb3.A 2kb4.A 4qcj.A
+	P41832	1953.0	1792-1826	174-696	 1ux5.A 1y64.B
+	P08638	886.0	604-741	857-886	
+MAPRE1	Q61166	268.0	185-255	14-116	 1v5k.A
+MYLK2	P07313	608.0	549-577	297-552	 2bbm.B 2bbn.B
+PHKG1	P00518	387.0	303-327	343-367	 1phk.A 1ql6.A 2phk.A
+PRKN	Q9WVS6	464.0	140-224,377-409	237-292,417-448	 1mg8.A 2zeq.A 3b1l.A
+PTK2	P34152	1052.0	35-355	390-680	 1k40.A
+SH3KBP1	Q8R550	709.0	381-390	311-372	 1wi7.A 2da9.A
+	P0A0J0	368.0	16-90	135-205,303-356	 4g6d.A 4g94.A
+WNK4	Q96J92	1243.0	466-489	174-432	
+	P07038	920.0	892-917	562-625	 7nxf.A
+APBB1IP	Q7Z5R6	666.0	30-70	170-220	 2mwn.A 3zdl.B
+STK38	Q15208	465.0	383-455	89-382	
+RASGRP2	Q7LDG7	609.0	337-551	154-336	 2ma2.A
+RASGRP1	O95267	797.0	468-609	205-436	 4l9m.A
+PRKCG	P05129	697.0	18-36	351-614	 2e73.A
+PLCB2	Q00722	1185.0	466-537	312-463,546-662	 2fju.B 2zkm.A
+PASK	Q96RG2	1323.0	183-200	999-1251	 1ll8.A
+NOTCH2	Q04721	2471.0	1425-1544	1545-1670	 5mwb.A
+MEIS1	O00470	390.0	148-191	272-334	 5ego.A
+MAP2K2	P36507	400.0	75-102	72-74,103-369	 1jky.B 4h3q.B
+HIPK2	Q9H2X6	1198.0	984-1198	199-527	 6p5s.A 7ncf.A
+HEXIM1	O94992	359.0	210-250	150-177	
+FLT4	P35916	1363.0	1174-1298	845-1173	 4bsj.A 4bsk.A
+ETS2	P15036	469.0	325-359	363-443	
+ELK1	P19419	428.0	351-399	5-86	
+DIAPH3	Q9NSV4	1193.0	16-361,1020-1060	540-1013	 5uwp.D 6x2y.D
+DAAM1	Q9Y4D1	1078.0	1027-1058	45-420	 2j1d.A
+CYTH1	Q15438	398.0	388-396	73-202	 1bc9.A
+CSNK1E	P49674	416.0	305-416	9-277	
+COQ8A	Q8NI60	647.0	276-279	329-518	 4ped.A 5i35.A
+CHMP6	Q96FZ7	201.0	168-201	1-145	 2k3w.B
+CHMP4A	Q9BY43	222.0	182-222	1-150	 3c3o.B
+CARD11	Q9BXL7	1154.0	448-666	18-110	 4lwd.A
+CAMKK1	Q8N5S9	505.0	435-440	128-409	
+CAMK2G	Q13555	558.0	283-292	14-272	 2v7o.A
+ARIH2	O95376	493.0	359-493	297-326	 7oni.B
+ARHGAP45	Q92619	1136.0	281-356	757-971	 3d25.C 3ft3.C
+ESPL1	Q14674	2120.0	711-723,955-974,1393-1400	667-1706,1707-2120	 7nj0.A 7nj1.A
+ANGPT1	B5XAZ0	145.0	116-120	1-115	
+	Q9M1V3	960.0	837-891	892-260	
+SH3GLB1	Q9Y371	365.0	299-365	1-269	
+FOXM1	Q08050	763.0	1-189	350-763	
+	Q72L95	423.0	1-73	234-423	 5x21.F 6cuu.F 6ovy.F 6ow3.F 6oy5.F 6oy6.F 6oy7.F 6p70.F 6p71.F
+SNORA8	Q9LF79	1074.0	43-54	433-464	 2m73.A 4aqr.C
+APAF1	O88879	1249.0	1-90	107-285,362-451	 3sfz.A 3shf.A
+	P28829	659.0	151-260	394-658	 1i35.A 1k8r.B
+	P14633	404.0	26-100	185-404	 3hqg.A
+	Q5Y4Y6	464.0	240-464	1-239	 5b5r.A 6cb8.A
+ITSN1	Q9Z0R4	1714.0	1151-1203	1230-1416	 3hs8.B
+JAK2	Q62120	1132.0	547-813	849-1124	
+MYLK2	Q9H1R3	596.0	537-565	285-540	 2lv6.B
+PPP5C	P53042	499.0	28-129	495-499,200-494	 4ja7.A 4ja9.A
+ROCK2	Q62868	1388.0	971-1047,1150-1349	93-354	 2rov.A 2row.A
+	P77994	399.0	1-99	352-379	 1tty.A 2k6x.A
+	D0ZVG2	700.0	217-381	404-700	
+DNAJC2	P32527	433.0	348-364	365-433	 2lwx.A 7x34.A 7x3k.A
+AIM2	Q91VJ1	354.0	1-113	144-341	 2n00.A
+RIGI	Q6Q899	926.0	794-925	1-172	 3tbk.A
+HIPK3	Q9H422	1215.0	984-1196	197-525	 7o7i.A 7o7j.A
+	D2AJU0	545.0	57-228	251-545	 6loj.A 6lol.A
+	Q8Y842	572.0	61-73	89-243	 3fi7.A 5jqc.A
+	Q28156	865.0	336-493	154-304	
+PLXND1	Q3UH93	1925.0	1294-1403,1527-1698	1404-1526,1699-1925	 5v6t.A
+	F1M391	379.0	340-379	153-339	
+SYK	P48025	629.0	107-166,259-364	365-625	 2lct.B 2mc1.B
+UNC5B	Q8K1S3	945.0	543-686	689-838,865-943	 6ool.A
+WNK2	Q9Y3S1	2297.0	488-511	195-453	 6elm.A 6fbk.A
+STK38L	Q9Y2H1	464.0	384-453	90-383	
+RASGRP4	Q8TDF6	673.0	386-593	201-385	
+PRKD3	O94806	890.0	416-532	576-832	 2d9z.A
+PRKCB	P05771	671.0	19-37	601-671	
+PAK2	Q13177	524.0	83-110	249-499	
+NOXA1	Q86UR1	476.0	399-458	1-314	
+MAP4K3	Q8IVH8	894.0	511-735	16-273	 5j5t.A
+FMNL2	Q96PY5	1086.0	1040-1079	23-469	 4yc7.A
+FMNL1	O95466	1100.0	1059-1090	27-468	
+FARP1	Q9Y4F1	1045.0	759-1029	540-730	
+EIF4G3	O43432	1585.0	619-630	699-1019	 1hu3.A
+DENND1B	Q6P3S1	775.0	423-775	14-395	
+DENND1A	Q8TEH3	1009.0	500-600	13-378	
+CAMK4	Q16566	473.0	305-321	46-300	 2w4o.A
+CAMK2B	Q13554	666.0	283-292	14-272	
+CAMK1G	Q96NX5	476.0	277-317	23-276	
+ARHGEF26	Q96DR7	871.0	376-391	439-623	 6mye.B
+ARHGEF25	Q86VW2	580.0	348-472	155-347	
+AKT3	Q9Y243	479.0	17-147	148-405	
+CDK5RAP2	Q96SN8	1893.0	1-77	97-160	
+KIF4A	O95239	1232.0	1115-1227	9-336	 6oyl.B
+MYO7A	Q13402	2215.0	1747-2205	65-741	 5mv9.A
+MERTK	Q24564	635.0	516-635	9-313	
+PREX2	Q70Z35	1606.0	1581-1606	23-361	 6bnm.A
+PDS5B	Q9NTI5	1447.0	1385-1447	1-1384	
+BABAM1	Q9NWV8	329.0	1-84	85-329	
+PLXNA3	P70208	1872.0	1244-1324,1450-1650	1325-1449,1651-1872	 3ig3.A
+YES1	P07947	543.0	158-255,256-276	91-152,500-543	 2hda.A
+	O81108	1014.0	1-50	51-1014	 2m7e.A
+	P19456	948.0	863-885,904-919	1-850,946-948	
+ELF3	P78545	371.0	130-159	273-355	 2e8p.A
+ELF5	Q9UKW6	265.0	1-42	173-254	 1wwx.A
+FGR	P09769	529.0	144-241,242-262	77-138,490-529	 7jt9.A
+FMNL3	Q6ZPF4	1028.0	968-1018	26-472	
+	Q83RJ4	571.0	58-260	279-571	 3cvr.A
+IRF7	P70434	457.0	279-240	1-151,422-457	
+KPNA6	O60684	536.0	1-57	147-239,316-404	 4uad.A 7rht.A
+NEK9	Q8K1R7	984.0	114-119	52-308	
+NOX5	Q96PH1	765.0	1-169	449-565	
+PPP3CA	P63328	521.0	407-414,467-487	56-340	 4orb.A
+	P0CE12	788.0	223-466	492-788	 3g06.A
+STIM2	Q9P246	746.0	67-102	136-204	 2l5y.A
+	O08722	945.0	541-687	688-828,853-942	 3g5b.A
+VAMP7	P51809	220.0	7-110	125-185	 2dmw.A
+YKT6	Q5EGY4	198.0	8-131	138-198	 3kyq.A
+ARHGEF9	O43307	516.0	8-67	103-287	 2ysq.A
+CAMK2D	Q6PHZ2	499.0	283-292	14-272	
+CCNT1	Q9XT26	727.0	335-727	1-334	
+CLIP1	Q922J3	1391.0	1370-1387	231-273	 2cp7.A
+DLG2	Q63622	852.0	193-279,421-501	662-837	
+	Q54KF1	1158.0	1134-1158	20-388	 2l1a.A
+	P37582	135.0	85-110	1-84	
+GRK5	P43249	590.0	563-590	186-448	 4wnk.A
+	P0AES5	875.0	838-875	1-450	
+IGF1R	Q60751	1373.0	931-962	1000-1276	
+IRF3	P70671	419.0	373-419	98-247	
+IRF4	Q64287	450.0	400-450	21-129	
+IRF7	Q92985	503.0	283-466	1-151,468-503	 2o61.C
+KPNA5	O15131	539.0	1-60	150-242,319-407	
+MSN	P26041	577.0	467-577	2-295	 4yl8.A
+NLRP3	Q8R4B8	1033.0	741-990	216-532	
+NSF	P46459	744.0	200-219	244-495	 6kzq.B
+OTUD7A	Q8TE49	926.0	202-209	210-374	 2l2d.A
+PACSIN2	Q9WVE8	486.0	426-486	11-282	
+PACSIN2	O13154	448.0	11-282	388-448	
+PAK1	P35465	544.0	70-149	269-520	 1e0a.B
+PAK2	Q64303	524.0	69-146	249-500	
+PAK3	Q61036	559.0	65-161	283-534	 1ees.B
+PAK5	Q9P286	719.0	60-180	449-700	
+	P14280	546.0	1-219	220-557	 1xg2.A
+PPP3CA	P63329	521.0	407-414,465-487	56-340	
+PRKG1	P00516	671.0	50-75	360-619	
+ERCC6	P40352	1085.0	12-65	309-518	 5vvr.M
+RAF1	P11345	648.0	51-186	349-609	 1rrb.A
+TLN2	Q9Y4G6	2542.0	1656-2345	88-406	 6u4k.A

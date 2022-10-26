@@ -136,8 +136,67 @@ from Bio.PDB.MMCIFParser import MMCIFParser
 #     for chain in model:
 #         print(chain.get_id())
 
-pdb_ids_chain = ['3a4z.A', '5g87.A', '9TYO.D']
+pdb_df = pd.read_csv('sample_data/proteins_pdb_w_chains_sample.tsv', sep='\t').astype('object')
 
-pdb_id = '3a4z'
+for i in range(len(pdb_df)):
 
-print(pdb_id in pdb_ids_chain)
+    #Extract the str of pdb_ids
+    pdb_ids_str = pdb_df.loc[i, 'PDB']
+
+    #Turn the string into a list
+    pdb_ids_w_chain = pdb_ids_str.strip().split(sep=' ')
+
+    #Empty dictionary to fill.
+    pdb_ids_dict = {}
+
+    for pdb_id in pdb_ids_w_chain:
+
+        #PDB ID (lowercase)
+        pdb = pdb_id[:4].lower()
+
+        #Chain label
+        chain = pdb_id[5]
+
+        #Add the PDB ID as a key and the chain label as a value.
+        if pdb not in pdb_ids_dict.keys():
+            pdb_ids_dict[pdb] = [chain]
+        else:
+            pdb_ids_dict[pdb].append(chain)
+
+    #Extract each PDB from the pdb_ids dict
+    for pdb_id in pdb_ids_dict.copy():
+            
+        #Determine whether there are one or more chains. If there are more than one chain, pop it out.
+        if len(pdb_ids_dict[pdb_id]) != 1:
+
+            #Remove the PDB ID from the pdb_ids_dict
+            remove_pdb = pdb_ids_dict.pop(pdb_id)
+
+    # Now we convert them back to strings and add it all together.
+    # Make a list of the values
+    values_list = list(pdb_ids_dict.values())
+
+    #Make a list of the keys
+    key_list = list(pdb_ids_dict.keys())
+
+    #Empty string to fill with my IDs.
+    unique_pdb_ids = ''
+
+    for n in range(len(pdb_ids_dict)):
+
+        #Get the value
+        chain = values_list[n][0]
+
+        #Get the key
+        key = key_list[n].lower()
+
+        # Put them together
+        pdb_id_chain_str = key + ':' + chain
+
+         #Append to my unique_pdb_ids string
+        unique_pdb_ids = unique_pdb_ids + ' ' + pdb_id_chain_str
+
+    #Make the value of PDB at the index i equal to our new string.
+    pdb_df.loc[i, 'PDB'] = unique_pdb_ids
+    
+pdb_df.to_csv('sample_data/proteins_pdb_unique_chains_sample.tsv', sep='\t', index=False)
