@@ -78,7 +78,7 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 
 rule convert_RCSB_cif_to_pdb:
     input:
-        'data/proteins_pdb_best.csv',
+        'data/proteins_pdb_best.tsv',
         'data/input/RCSB_cif_best/'
 
     output:
@@ -89,7 +89,7 @@ rule convert_RCSB_cif_to_pdb:
 
 rule convert_AF_cif_to_pdb:
     input:
-        'data/proteins_pdb_best.csv',
+        'data/proteins_pdb_best.tsv',
         'data/input/Alphafold_cif'
 
     output:
