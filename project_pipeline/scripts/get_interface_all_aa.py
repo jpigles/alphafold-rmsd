@@ -13,7 +13,7 @@ from Bio.PDB import MMCIFParser, NeighborSearch, Selection
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 import pandas as pd
 import numpy as np
-from project_pipeline.scripts.mutation_enrichment import string2range
+from scripts.mutation_enrichment import string2range
 
 # Open the data of proteins with an region_1
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t').astype('object')
