@@ -66,29 +66,30 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #     script:
 #         'scripts/best_pdb_aa.py'
 
-rule interface_residues:
-    input:
-        'data/proteins_pdb_best.tsv',
+# rule interface_residues:
+#     input:
+#         'data/proteins_pdb_best.tsv',
 
-    output:
-        'data/proteins_interface.tsv'
+#     output:
+#         'data/proteins_interface.tsv'
 
-    script:
-        'scripts/get_interface_all_aa.py'
+#     script:
+#         'scripts/get_interface_all_aa.py'
 
 rule convert_RCSB_cif_to_pdb:
     input:
-        'data/input/RCSB_cif_best/{sample}.cif'
+        'data/proteins_pdb_best.csv',
+        'data/input/RCSB_cif_best/'
 
     output:
-        'data/input/RCSB/pdbs/{sample}.pdb'    
+        'data/input/RCSB/pdbs/'    
 
-    shell:
-        "python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input} > {output} "
+    script:
+        "scripts/rcsb_cif_to_pdb.py"
 
 rule convert_AF_cif_to_pdb:
     input:
-        'data/proteins_pdb.csv',
+        'data/proteins_pdb_best.csv',
         'data/input/Alphafold_cif'
 
     output:
