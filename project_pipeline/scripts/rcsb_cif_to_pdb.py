@@ -21,7 +21,5 @@ for i in range(len(prot_df)):
     input_path = join(snakemake.input[1], f'{pdb}.cif')
     output_path = join(snakemake.output[0], f'{pdb}.pdb')
 
-    print(i)
-
-    #Convert the files
-    # stream = os.popen(f'python ../env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input_path} > {output_path}')
+    # Convert the files
+    stream = os.popen(f'python ../env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input_path} > {output_path}')
