@@ -22,4 +22,5 @@ for i in range(len(af_df)):
     output_path = join(snakemake.output[0], f'{pdb}.fasta', 'ranked_0.pdb')
 
     #Convert the files
+    print(f'Converting {uniprot}.cif to .pdb...')
     stream = os.popen(f'python ../env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input_path} > {output_path}')
