@@ -32,7 +32,7 @@ for item in range(len(df_prot)):
         
         pdb_ids_chains = df_prot.loc[item, 'PDB']
         
-        if pd.isna(pdb_ids):
+        if pd.isna(pdb_ids_chains):
             
             print('No structures found for %s' % uniprot)
             
@@ -57,4 +57,4 @@ for item in range(len(df_prot)):
             print('Downloading structures for %s' % uniprot)
 
             # Retrieve the PDB file from the PDB and save to the directory with the gene name
-            pdbl.download_pdb_files(pdb_ids, pdir=snakemake.output[item], file_format='mmCif')
+            pdbl.download_pdb_files(pdb_ids_no_chains, pdir=snakemake.output[item], file_format='mmCif')
