@@ -12,8 +12,11 @@ for i in range(len(af_df)):
     uniprot = af_df.loc[i, 'Uniprot_ID']
     
     #Make output dir
-    output_dir = os.mkdir(snakemake.output[0])
-
+    try:
+        output_dir = os.mkdir(snakemake.output[0])
+    except:
+        continue
+    
     #Define paths
     input_path = join(snakemake.input[1], f'{pdb}.cif')
     output_path = join(snakemake.output[0], f'{pdb}.pdb')

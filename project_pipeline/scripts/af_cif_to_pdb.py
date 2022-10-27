@@ -12,8 +12,11 @@ for i in range(len(af_df)):
     uniprot = af_df.loc[i, 'Uniprot_ID']
     
     #Make output dir
-    output_dir = os.mkdir(snakemake.output[0] + f'/{pdb}.fasta')
-
+    try:
+        output_dir = os.mkdir(snakemake.output[0] + f'/{pdb}.fasta')
+    except:
+        continue
+    
     #Define paths
     input_path = join(snakemake.input[1], f'F-{uniprot}-F1-model_v3.cif')
     output_path = join(snakemake.output[0], f'{pdb}.fasta', 'ranked_0.pdb')
