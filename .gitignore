@@ -2,3 +2,5 @@ project_pipeline/.snakemake/
 env/
 project_pipeline/data/input
 project_pipeline/data/output
+project_pipeline/sample_data/input/
+project_pipeline/sample_data/output/

@@ -26,21 +26,31 @@ Dibs (5)
 import sys, re, gc, os, io, importlib, numpy as np, matplotlib.pyplot as plt
 from Bio import SeqIO;from Bio.Seq import Seq;from Bio.SeqRecord import SeqRecord;from os.path import join;from biopandas.pdb import PandasPdb
 
-os.chdir('/media/fred/Local Disk/Projects/bioinfo/code')
+os.chdir('/media/fred/Local Disk/projects/bioinfo/code')
 
-pdb_fn_0='/media/fred/Local Disk/Projects/bioinfo/data/input/idr/pdbs/1YCQ.pdb'
-pdb_fn_1='/media/fred/Local Disk/Projects/bioinfo/data/input/idr/pdbs/2AZE.pdb'
+pdb_fn_0='/media/fred/Local Disk/projects/bioinfo/data/input/ds1/pdbs/1C8O.pdb'
+pdb_fn_1='/media/fred/Local Disk/projects/bioinfo/data/input/ds1/pdbs/1Q5W.pdb'
 
-link_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6/1YCQ.fasta/ranked_0.pdb'
-link_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6/2AZE.fasta/ranked_0.pdb'
-pred_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6/2AZE.fasta/ranked_0_removed_linker.pdb'
+pred_fn0='/media/fred/Local Disk/projects/bioinfo/data/output/ds1_af_full/poly_g_20_fasta/1C8O.fasta/ranked_0_removed_linker_aligned.pdb'
+pred_fn1='/media/fred/Local Disk/projects/bioinfo/data/output/ds1_af_full/poly_g_20_fasta/1Q5W.fasta/ranked_0_removed_linker_aligned.pdb'
 
-pred_fn_6f_0='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6_fasta/1YCQ.fasta/ranked_0_removed_linker.pdb'
+pdb_fn='../data/input/ds1/pdbs/1CF4.pdb'
+pred_fn='../data/output/ds1_af_full/poly_g_20_fasta/1CF4.fasta/ranked_0_removed_linker.pdb'
+exec_path='./pipeline'
 
-pred_fn_20_0='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_20/1YCQ.fasta/ranked_0_removed_linker.pdb'
-pred_fn_20_1='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_20/2AZE.fasta/ranked_0_removed_linker.pdb'
+pdb_fn='/media/fred/Local Disk/projects/bioinfo/data/input/ds1/pdbs/2AFF.pdb'
+pred_fn='/media/fred/Local Disk/projects/bioinfo/data/output/ds1_af_full/poly_g_20_fasta/2AFF.fasta/ranked_0_removed_linker.pdb'
 
-complex_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6/1YCQ.fasta/complex.pdb'
+link_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6/1YCQ.fasta/ranked_0.pdb'
+link_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6/2AZE.fasta/ranked_0.pdb'
+pred_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6/2AZE.fasta/ranked_0_removed_linker.pdb'
+
+pred_fn_6f_0='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6_fasta/1YCQ.fasta/ranked_0_removed_linker.pdb'
+
+pred_fn_20_0='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_20/1YCQ.fasta/ranked_0_removed_linker.pdb'
+pred_fn_20_1='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_20/2AZE.fasta/ranked_0_removed_linker.pdb'
+
+complex_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6/1YCQ.fasta/complex.pdb'
 
 sed -i -e 's/aria2c/wget/g' -e 's/--dir=/-P /g' -e 's/--preserve-permissions//g' scripts/*.sh
 
@@ -113,12 +123,12 @@ poly_g_link(indir, outdir, groups, n_g)
 model_name='native'
 chain_name='L'
 
-gt_fn='/media/fred/Local Disk/Projects/bioinfo/data/input/peptide/pdbs/1AWR.pdb'
-gt_fn='/media/fred/Local Disk/Projects/bioinfo/data/input/idr_84/pdbs/1YCQ.pdb'
-pred_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/peptide_af_full/poly_g_6/1AWR.fasta/ranked_0_removed_linker.pdb'
-pred_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_84_pf_full/poly_g_6/1YCQ.fasta/ranked_0.pdb'
-pred_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_84_pf_full/poly_g_6/1YCQ.fasta/ranked_0_removed_linker.pdb'
-pred_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_84_pf_full/poly_g_6/1YCQ.fasta/ranked_0_removed_linker_aligned.pdb'
+gt_fn='/media/fred/Local Disk/projects/bioinfo/data/input/peptide/pdbs/1AWR.pdb'
+gt_fn='/media/fred/Local Disk/projects/bioinfo/data/input/idr_84/pdbs/1YCQ.pdb'
+pred_fn='/media/fred/Local Disk/projects/bioinfo/data/output/peptide_af_full/poly_g_6/1AWR.fasta/ranked_0_removed_linker.pdb'
+pred_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_84_pf_full/poly_g_6/1YCQ.fasta/ranked_0.pdb'
+pred_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_84_pf_full/poly_g_6/1YCQ.fasta/ranked_0_removed_linker.pdb'
+pred_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_84_pf_full/poly_g_6/1YCQ.fasta/ranked_0_removed_linker_aligned.pdb'
 cmd.load(pred_fn,'pred')
 cmd.load(gt_fn,'native')
 cmd.create('tmp',f'all and model {model_name} and chain {chain_name}')
@@ -196,9 +206,9 @@ cmd.show_as(representation='cartoon',selection='native or pred')
 cmd.multisave('/home/fred/Downloads/tmp.pdb','native or pred',format='pdb')
 ** Sep 11
 *** Sun
-pdb_fn='/media/fred/Local Disk/Projects/bioinfo/data/input/idr/pdbs/1YCQ.pdb'
-in_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6_fasta/1YCQ.fasta/ranked_0_removed_linker.pdb'
-out_fn='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6_fasta/1YCQ.fasta/ranked_0_removed_linker_aligned.pdb'
+pdb_fn='/media/fred/Local Disk/projects/bioinfo/data/input/idr/pdbs/1YCQ.pdb'
+in_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6_fasta/1YCQ.fasta/ranked_0_removed_linker.pdb'
+out_fn='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6_fasta/1YCQ.fasta/ranked_0_removed_linker_aligned.pdb'
 seqs1=read_residue_from_pdb('../data/output/idr_af_full/poly_g_6_fasta/1YCQ.fasta/ranked_0_removed_linker.pdb')
 seqs2=read_residue_from_pdb('../data/input/idr/pdbs/1YCQ.pdb')
 ranges=find_prune_ranges_all_chains(seqs1, seqs2, chain_ids, prune_X=False)
@@ -218,19 +228,19 @@ def solve(fn):
     return set(df['residue_number'])
 ** Sep 18
 *** Fri
-pdb0='/media/fred/Local Disk/Projects/bioinfo/data/input/idr/pdbs/1H8B.pdb'
-pred06='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_6/1H8B.fasta/ranked_0_removed_linker.pdb'
-pred012='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_12/1H8B.fasta/ranked_0_removed_linker.pdb'
-pred024='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_24/1H8B.fasta/ranked_0_removed_linker.pdb'
-pred048='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_48/1H8B.fasta/ranked_0_removed_linker.pdb'
-pred096='/media/fred/Local Disk/Projects/bioinfo/data/output/idr_af_full/poly_g_96/1H8B.fasta/ranked_0_removed_linker.pdb'
+pdb0='/media/fred/Local Disk/projects/bioinfo/data/input/idr/pdbs/1H8B.pdb'
+pred06='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_6/1H8B.fasta/ranked_0_removed_linker.pdb'
+pred012='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_12/1H8B.fasta/ranked_0_removed_linker.pdb'
+pred024='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_24/1H8B.fasta/ranked_0_removed_linker.pdb'
+pred048='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_48/1H8B.fasta/ranked_0_removed_linker.pdb'
+pred096='/media/fred/Local Disk/projects/bioinfo/data/output/idr_af_full/poly_g_96/1H8B.fasta/ranked_0_removed_linker.pdb'
 
-pdb1='/media/fred/Local Disk/Projects/bioinfo/data/input/dibs/pdbs/5URN.pdb'
-pred16='/media/fred/Local Disk/Projects/bioinfo/data/output/dibs_af_full/poly_g_6/5URN.fasta/ranked_0_removed_linker.pdb'
-pred112='/media/fred/Local Disk/Projects/bioinfo/data/output/dibs_af_full/poly_g_12/5URN.fasta/ranked_0_removed_linker.pdb'
-pred124='/media/fred/Local Disk/Projects/bioinfo/data/output/dibs_af_full/poly_g_24/5URN.fasta/ranked_0_removed_linker.pdb'
-pred148='/media/fred/Local Disk/Projects/bioinfo/data/output/dibs_af_full/poly_g_48/5URN.fasta/ranked_0_removed_linker.pdb'
-pred196='/media/fred/Local Disk/Projects/bioinfo/data/output/dibs_af_full/poly_g_96/5URN.fasta/ranked_0_removed_linker.pdb'
+pdb1='/media/fred/Local Disk/projects/bioinfo/data/input/dibs/pdbs/5URN.pdb'
+pred16='/media/fred/Local Disk/projects/bioinfo/data/output/dibs_af_full/poly_g_6/5URN.fasta/ranked_0_removed_linker.pdb'
+pred112='/media/fred/Local Disk/projects/bioinfo/data/output/dibs_af_full/poly_g_12/5URN.fasta/ranked_0_removed_linker.pdb'
+pred124='/media/fred/Local Disk/projects/bioinfo/data/output/dibs_af_full/poly_g_24/5URN.fasta/ranked_0_removed_linker.pdb'
+pred148='/media/fred/Local Disk/projects/bioinfo/data/output/dibs_af_full/poly_g_48/5URN.fasta/ranked_0_removed_linker.pdb'
+pred196='/media/fred/Local Disk/projects/bioinfo/data/output/dibs_af_full/poly_g_96/5URN.fasta/ranked_0_removed_linker.pdb'
 
 ** Sep 25
 *** Wed
@@ -260,3 +270,63 @@ a='1PNB,1SSE,1S5R,1Q5W,1QFN,1J2J,1D5S,1C8O,1JGN,1CF4,1OZS,1PD7,1L4W,1ORY,1JMT,1U
 a='1XTG,7JYZ,7P9U,7NDX,2PHG,7E2H,7OYS,7P9U,2PHG,2BBN,7OVC,7EV8,7OYS,1XTG,7LJ0'
 b=a.split(',')
 exclude '2AUH','7NJ1'
+*** Wed
+a='1XTG,1YHN,2AFF,2BBN,2DOH,2DT7,2FHO,2FOT,2GGV,2GP9,2JMX,2JSS,2JU0,2K42,2KC8,2KDU,2KHW,2KJ4,2KJE,2LEH,2OFQ,2PHG,2PQ4,2RNR,2ROZ,2ZQP,3BZV,3CAA,3H8K,3HK3,3M51,3MN7,4LX3,4MMT,5GTU,5L0T,6LPH,6WUD,6XFL,7OVC,7OY3'
+
+exclude: 7P9U 7E2H (outofmeme), 3HM6 7A48 (amber err)
+** Oct 16
+*** Sun
+- ids and dibs record
+1CZY (peptide no X in sequence) (ing)
+common::protein::275
+model::folding::509
+2QTV, 4U7T >=1 residue without atom
+2QTV removed X runed (no error)
+2RSN rmsd value (no convergence)
+3DF0 time out
+
+- interface
+Interface residue selection on fasta prediction
+Why dist has to be large (probably because the bad prediction e.g. 2AZE, idr is very far from receptor)
+
+Coloring
+Interface vs non-interface (only needed when debugging interface selection)
+Idr vs receptor (save this coloring in complex file)
+
+          idr    receptor interface non-interfc
+native  yellow   purple    yellow     purple
+pred    orange    gray     orange     gray
+
+
+- ds1 record
+CPU err: 2AUH 7OS1 7NJ1 (no record)
+         7DHG (HMM oom)
+
+GPU err: 3HM6 (amber miniz err, one residue with no atoms)
+         7A48 (amber...)
+         7JQD (amber...)
+         7S5J (minimization failed after 100 attempts)
+GPU out of mem: 7P9U, 7E2H, 7DCP, 7VSI
+
+cpu exclude: '2AUH','7OS1','7NJ1'
+gpu exclude: '3HM6',7A48',7JQD','7S5J'
+
+GPU done: '1C8O,1CF4,1D5S,1J2J,1JGN,1JMT,1L4W,1ORY,1OZS,1PD7,1PNB,1Q5W,1QFN,1S5R,1SSE,1UEL,1WLP,1XR0,1XTG,1YHN,2AFF,2BBN,2DOH,2DT7,2FHO,2FOT,2GGV,2GP9,2JMX,2JSS,2JU0,2K42,2KC8,2KDU,2KHW,2KJ4,2KJE,2LEH,2OFQ,2PHG,2PQ4,2RNR,2ROZ,2ZQP,3BZV,3CAA,3H8K,3HK3,3M1F,3M51,3MN7,4LX3,4MMT,5GTU,5L0T,6LPH,6SBA,6WUD,6XFL,7B2B,7BY2,7CQP,7FB5,7OVC,7OY3'
+
+subseq err: '1JMT','2AFF','2DOH','2GP9','2ZQP','3HK3','3M51','3MN7','4LX3','6SB2','7BY2','7OY3'
+
+*** Wed
+- ds1 record
+rmsd err: 3M1F
+rmsd warning: 1JGN (CRYST1 record)
+              1YHN 2FOT 2RNR (no atoms selected)
+              2GGV 3H8K 5L0T (atom counts mismatch)
+
+After updating script (revert two chains)
+rmsd warning: 1JGN (CRYST1 record)
+              2FOT (no atoms selected)
+              2GGV 3H8K 5L0T (atom counts mismatch)
+*** Thu
+- ds1 record
+gpu done
+'7EV8,7JYZ,7LJ0,7LWB,7NDX,7PKU,7QV8,7TGG,7VLJ'

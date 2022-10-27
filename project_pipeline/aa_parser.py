@@ -1,5 +1,4 @@
 import os
-import csv
 import numpy as np
 
 from pathlib import Path
@@ -13,6 +12,7 @@ def add_cmd_line_args(parser):
     parser.add_argument('--pdb_cho', type=str, default='0')
     parser.add_argument('--operations', type=str, nargs='+')
 
+    parser.add_argument('--code_dir', type=str, required=True)
     parser.add_argument('--data_dir', type=str, required=True)
     parser.add_argument('--trail_id', type=str, default='trail_dum')
     parser.add_argument('--model_name', type=str, default='model_dum')
@@ -21,12 +21,12 @@ def add_cmd_line_args(parser):
     parser.add_argument('--n_seqs', type=int, default=2, help='number of sequences to predict')
     parser.add_argument('--interface_dist', type=int, default=6, help='dist in angstrom to define interface residues')
 
-    parser.add_argument('--pred_fn', type=str, default='ranked_0')
-
+    parser.add_argument('--dockq', action='store_true', default=False)
     parser.add_argument('--verbose', action='store_true', default=False)
-    parser.add_argument('--remove_x', action='store_true', default=False)
     parser.add_argument('--backbone', action='store_true', default=False)
     parser.add_argument('--from_fasta', action='store_true', default=False)
+    parser.add_argument('--prune_pdb_atoms', action='store_true', default=False,
+                        help='remove extra atoms from pdb file, currently only used for native pdb')
     parser.add_argument('--prune_and_renumber', action='store_true', default=False)
     parser.add_argument('--separate_fasta', action='store_true', default=False,
                         help='whether each monomer is stored in a single file or all monomers store in same fasta file')
@@ -52,28 +52,40 @@ def add_hardcoded_args(config):
 
     config['pred_fn_str'] = 'ranked_0.pdb'
     config['complex_fn_str'] = 'complex.pdb'
+    config['ranking_fn_str'] = 'ranking_debug.json'
     config['removed_linker_fn_str'] = 'ranked_0_removed_linker.pdb'
     config['aligned_fn_str'] = 'ranked_0_removed_linker_aligned.pdb'
 
     config['pdb_ids_fn_str'] = 'pdb_ids' + config['pdb_cho']
+    config['pdb_gpu_done_fn_str'] = 'pdb_gpu_done' + config['pdb_cho']
     config['pdb_exclude_fn_str'] = 'pdb_exclude' + config['pdb_cho']
     config['chain_names_fn_str'] = 'chain_names'+config['pdb_cho']+'.pkl'
     config['chain_start_resid_ids_fn_str'] = 'chain_start_ids'+config['pdb_cho']+'.pkl'
     config['gt_chain_bd_resid_ids_fn_str'] = 'gt_chain_bd_ids'+config['pdb_cho']+'.pkl'
 
     backbone_str = '' if not config['backbone'] else '_backbone'
-    config['rmsd_fn_str'] = f'rmsd{backbone_str}.csv'
-    #config['rmsd_names'] = ['pdb_id','rmsd_init','rmsd_r_super_idr','rmsd_idr_super_r','rmsd_interface_idr_super_r','rmsd_idr_align','rmsd_r_align']
-    config['rmsd_names'] = ['pdb_id','idr (super_r)','interface_idr (super_r)']
+    config['rmsd_fn_str'] = f'rmsd{backbone_str}'
+    if config['dockq']:
+        config['rmsd_names'] = ['pdb_id','irms','Lrms','dockQ']
+        config['rmsd_fn_str'] += '_dockq'
+    else:
+        config['rmsd_names'] = ['pdb_id','ligand (super r)','interface ligand (super r)']
+    config['rmsd_fn_str'] += '.csv'
 
+    # add range of atoms to prune
+    # hardcoded, corresponding to pdb_ids
+    config['prune_pdb_ids'] = ['3CAA']
+
+    # range is upper exclusive, 0-based
+    # atom id in pdb file is 1-based
+    # so need to subtract one
+    config['atom_prune_ranges'] = [ [[[1602,1608]]] ]
 
 def add_path(config):
+    input_dir = join(config['data_dir'], config['input_str'], config['experiment_id'])
 
-    # add dir
-    input_dir = join(config['data_dir'], config['input_str'], config['experiment_id']) #data/input/RCSB/
-
-    config['input_pdb_dir'] = join(input_dir, config['pdb_str']) #data/input/RCSB/pdbs
-    config['linked_fasta_dir'] = join(input_dir, config['linked_seq_dir_str']) #data/input/RCSB/poly_g_6
+    config['input_pdb_dir'] = join(input_dir, config['pdb_str'])
+    config['linked_fasta_dir'] = join(input_dir, config['linked_seq_dir_str'])
     config['source_fasta_dir'] = join(input_dir, config['source_fasta_dir_str'])
     config['output_dir'] = join(config['data_dir'], config['output_str'], config['experiment_id'] + '_' + config['model_name'], config['linked_seq_dir_str'])
 
@@ -85,6 +97,7 @@ def add_path(config):
 
     # add filenames
     config['pdb_ids_fn'] = join(input_dir, config['pdb_ids_fn_str']+'.npy')
+    config['pdb_gpu_done_fn'] = join(input_dir, config['pdb_gpu_done_fn_str']+'.npy')
     config['pdb_exclude_fn'] = join(input_dir, config['pdb_exclude_fn_str']+'.npy')
     config['rmsd_fn'] = join(config['output_dir'], config['rmsd_fn_str'])
     config['chain_names_fn'] = join(config['linked_fasta_dir'], config['chain_names_fn_str'])
@@ -93,22 +106,25 @@ def add_path(config):
 
 
 def select_pdb_ids(config):
-    #config['pdb_ids'] = ['1I8H']
-    #config['pdb_ids'] = ['1YCQ','2AZE'] #,'2RSN']
-    #config['pdb_ids'] = ['1AWR','1EG4','1ELW','1ER8','1JD5']
-    #config['pdb_ids'] = ['1YCQ','2AZE','2M3M','2QTV','2RSN','3DF0','4U7T']
+    # config['pdb_ids'] = ['1CF4']
+    # #config['pdb_ids'] = ['1C8O','1CF4','1D5S']
+    # #config['pdb_ids'] = ['2GGV','3H8K','5L0T']
+    # #config['pdb_ids'] = ['1JMT', '2AFF', '2DOH', '2GP9', '2ZQP', '3HK3', '3M51', '3MN7', '4LX3','6SBA','7BY2','7OY3']
 
+    # '''
     # fn = config['pdb_ids_fn']
     # excld_fn = config['pdb_exclude_fn']
+    # gpu_done_fn = config['pdb_gpu_done_fn']
 
-    # if exists(fn):
+    # if exists(gpu_done_fn):
+    #     pdb_ids = np.load(gpu_done_fn)
+    #     pdb_ids = np.sort(pdb_ids)
+    # elif exists(fn):
     #     pdb_ids = np.load(fn)
     #     if exists(excld_fn):
-    #         #exclude_ids = np.load(excld_fn)
-    #         #print(exclude_ids)
-    #         #exclude_ids = np.append(exclude_ids,['2M3M','4X34'])
-    #         #pdb_ids = np.array(list( set(pdb_ids) - set(exclude_ids) ))
-    #         pdb_ids = np.sort(pdb_ids)
+    #         exclude_ids = np.load(excld_fn)
+    #         pdb_ids = np.array(list( set(pdb_ids) - set(exclude_ids) ))
+    #     pdb_ids = np.sort(pdb_ids)
     # else:
     #     #if config['from_fasta']:
     #     #    all_pdb_ids = np.array(os.listdir(config['source_fasta_dir']))
@@ -119,6 +135,11 @@ def select_pdb_ids(config):
     #     pdb_ids = np.array([id.split(split_char)[0] for id in pdb_ids])
     #     pdb_ids = np.sort(pdb_ids)
     #     np.save(fn, pdb_ids)
+
+    # config['pdb_ids'] = pdb_ids
+    # print(f'selected proteins {pdb_ids}')
+    # '''
+
     pdb_ids = []
 
     with open(join(config['data_dir'], 'proteins_pdb_best.tsv')) as pdb_file:
@@ -129,7 +150,6 @@ def select_pdb_ids(config):
 
     config['pdb_ids'] = pdb_ids
     print(f'selected proteins {pdb_ids}')
-
 
 def parse_args(parser):
     print('=== Parsing ===')
