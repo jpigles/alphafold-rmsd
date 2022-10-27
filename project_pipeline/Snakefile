@@ -76,16 +76,16 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #     script:
 #         'scripts/get_interface_all_aa.py'
 
-rule convert_RCSB_cif_to_pdb:
-    input:
-        'data/proteins_pdb_best.tsv',
-        'data/input/RCSB_cif_best/'
+# rule convert_RCSB_cif_to_pdb:
+#     input:
+#         'data/proteins_pdb_best.tsv',
+#         'data/input/RCSB_cif_best/'
 
-    output:
-        directory('data/input/RCSB/pdbs/')
+#     output:
+#         directory('data/input/RCSB/pdbs/')
 
-    script:
-        "scripts/rcsb_cif_to_pdb.py"
+#     script:
+#         "scripts/rcsb_cif_to_pdb.py"
 
 rule convert_AF_cif_to_pdb:
     input:

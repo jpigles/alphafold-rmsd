@@ -136,10 +136,19 @@ from Bio.PDB.MMCIFParser import MMCIFParser
 #     for chain in model:
 #         print(chain.get_id() == 'A')
 
-# pdb_df = pd.read_csv('sample_data/proteins_pdb_w_chains_sample.tsv', sep='\t').astype('object')
+af_df = pd.read_csv('data/proteins_pdb_best.tsv', sep='\t').astype('object')
 
-prot_df = pd.read_csv('data/proteins_pdb_best.tsv', sep='\t').astype('object')
 
-unique_uniprot = prot_df['Uniprot_ID'].nunique()
-
-print(unique_uniprot)
+# Set up the appropriate pdb/uniprot relationship
+for i in range(len(af_df)):
+    pdb = af_df.loc[i, 'PDB ID']
+    uniprot = af_df.loc[i, 'Uniprot_ID']
+    
+    #Make output dir
+    print('/data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/')
+    if not os.path.exists('/data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/'):
+        try:
+            original_umask = os.umask(0)
+            os.makedirs('data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/', 0o0770)
+        finally:
+            os.umask(original_umask)

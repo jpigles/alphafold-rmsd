@@ -12,9 +12,16 @@ for i in range(len(af_df)):
     uniprot = af_df.loc[i, 'Uniprot_ID']
     
     #Make output dir
-    try:
-        output_dir = os.mkdir(snakemake.output[0] + f'{pdb}.fasta')
-    except:
+    # print(snakemake.output[0] + f'/{pdb}.fasta/')
+    if not os.path.exists('/data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/'):
+        try:
+            original_umask = os.umask(0)
+            os.makedirs('data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/', 0o0770)
+        except:
+            pass
+        finally:
+            os.umask(original_umask)
+    else:
         pass
 
     #Define paths
