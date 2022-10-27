@@ -87,16 +87,16 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #     script:
 #         "scripts/rcsb_cif_to_pdb.py"
 
-rule convert_AF_cif_to_pdb:
-    input:
-        'data/proteins_pdb_best.tsv',
-        'data/input/Alphafold_cif/'
+# rule convert_AF_cif_to_pdb:
+#     input:
+#         'data/proteins_pdb_best.tsv',
+#         'data/input/Alphafold_cif/'
 
-    output:
-        directory('data/output/RCSB_af_full/poly_g_6/')
+#     output:
+#         directory('data/output/RCSB_af_full/poly_g_6/')
 
-    script:
-        'scripts/af_cif_to_pdb.py'
+#     script:
+#         'scripts/af_cif_to_pdb.py'
 
 rule compare_structures_input:
     input:
@@ -104,7 +104,7 @@ rule compare_structures_input:
         'input' #args.input_pdb_dir# args.linker_fasta_dir.
 
     output:
-        'output' #args.output_dir
+        directory('output') #args.output_dir
 
     shell:
         "python aa_main.py --config configs/input.ini"

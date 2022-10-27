@@ -42,8 +42,8 @@ def add_hardcoded_args(config):
     config['gt_model_nm'] = 'native'
 
     config['pdb_str'] = 'pdbs'
-    config['input_str'] = snakemake.input[1]
-    config['output_str'] = snakemake.output[0]
+    config['input_str'] = 'input'
+    config['output_str'] = 'output'
 
     config['source_fasta_dir_str'] = 'source_fasta'
     config['linked_seq_dir_str'] = 'poly_g_' + str(config['n_g'])
@@ -121,7 +121,7 @@ def select_pdb_ids(config):
     #     np.save(fn, pdb_ids)
     pdb_ids = []
 
-    with open(join(config['data_dir'], snakemake.input[0])) as pdb_file:
+    with open(join(config['data_dir'], 'proteins_pdb_best.tsv')) as pdb_file:
         reader = csv.DictReader(pdb_file, delimiter='\t')
         for row in reader:
             pdb_ids.append(row['PDB ID'])
