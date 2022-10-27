@@ -79,10 +79,10 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 rule convert_RCSB_cif_to_pdb:
     input:
         'data/proteins_pdb_best.tsv',
-        'data/input/RCSB_cif_best/'
+        directory('data/input/RCSB_cif_best/')
 
     output:
-        'data/input/RCSB/pdbs/'    
+        directory('data/input/RCSB/pdbs/')
 
     script:
         "scripts/rcsb_cif_to_pdb.py"
@@ -90,10 +90,10 @@ rule convert_RCSB_cif_to_pdb:
 rule convert_AF_cif_to_pdb:
     input:
         'data/proteins_pdb_best.tsv',
-        'data/input/Alphafold_cif'
+        directory('data/input/Alphafold_cif')
 
     output:
-        'data/output/RCSB_af_full/poly_g_6'
+        directory('data/output/RCSB_af_full/poly_g_6')
 
     script:
         'scripts/af_cif_to_pdb.py'
