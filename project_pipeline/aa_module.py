@@ -125,14 +125,14 @@ class pipeline:
                 pred_fn = join(dir, self.aligned_fn_str)
             else:
                 pred_fn = join(dir, self.removed_linker_fn_str)
-            ret = utils.find_residue_diff_in_atom_counts(pdb_fn, pred_fn)
+            ret = aa_utils.find_residue_diff_in_atom_counts(pdb_fn, pred_fn)
             print(ret)
 
     def prune_extra_atoms(self):
         ''' prune_pdb_ids and prune_ranges are hardcoded in parser.py '''
         for pdb_id, rnge in zip(self.prune_pdb_ids, self.atom_prune_ranges):
             fn = join(self.input_pdb_dir, pdb_id + '.pdb')
-            utils.prune_pdb_atoms(fn, rnge)
+            aa_utils.prune_pdb_atoms(fn, rnge)
 
     #def plot_metrics(self):
 
@@ -175,7 +175,7 @@ class pipeline:
                 (pdb_id, gt_pdb_fn, pred_pdb_fn, complex_fn, self.verbose)
             cur_metrics.insert(0, pdb_id)
 
-        variables = utils.get_metric_plot_variables(pdb_id, gt_pdb_fn, pred_pdb_fn, complex_fn,
+        variables = aa_utils.get_metric_plot_variables(pdb_id, gt_pdb_fn, pred_pdb_fn, complex_fn,
                                                     ranking_fn, chain_id, self.interface_dist)
         print(variables)
         cur_metrics = np.append(cur_metrics, variables)
@@ -205,7 +205,7 @@ class pipeline:
             else:
                 metrics.append(cur_metrics)
             '''
-        utils.write_to_csv(metrics, self.rmsd_fn)
+        aa_utils.write_to_csv(metrics, self.rmsd_fn)
         print('pdbs failed: ', failed_pdbs)
 
         if not self.dockq:
@@ -231,22 +231,22 @@ class pipeline:
         poly_g = 'G' * self.n_g
         chain_start_ids = {}
         for fasta_group in fasta_groups:
-            utils.poly_g_link(self.source_fasta_dir, self.linked_fasta_dir, chain_start_ids, fasta_group, poly_g, self.n_g)
+            aa_utils.poly_g_link(self.source_fasta_dir, self.linked_fasta_dir, chain_start_ids, fasta_group, poly_g, self.n_g)
         return chain_start_ids
 
     def read_bd_resid_id_all(self):
         res = {}
         for id in self.pdb_ids:
             fn = join(self.input_pdb_dir, id + '.pdb')
-            utils.read_chain_bd_resid_id_from_pdb(fn, id, res)
+            aa_utils.read_chain_bd_resid_id_from_pdb(fn, id, res)
         return res
 
     def read_chain_names_all(self, gt_model_nm='native'):
         chain_names = {}
         for pdb_id in self.pdb_ids:
             fn = join(self.input_pdb_dir, pdb_id + '.pdb')
-            chain_name = utils.read_chain_name_from_pdb(fn)
-            utils.assign_receptor_ligand_chain(fn, chain_name)
+            chain_name = aa_utils.read_chain_name_from_pdb(fn)
+            aa_utils.assign_receptor_ligand_chain(fn, chain_name)
             chain_names[pdb_id] = chain_name
         return chain_names
 
@@ -262,7 +262,7 @@ class pipeline:
 
         for id in self.pdb_ids:
             in_fn = join(self.input_pdb_dir, id + '.pdb')
-            seqs = utils.read_residue_from_pdb(in_fn)
+            seqs = aa_utils.read_residue_from_pdb(in_fn)
             fasta = reduce(lambda acc, seq: acc + seq + linker, seqs, '')[:-self.n_g]
             if 'X' in fasta or 'x' in fasta:
                 continue
@@ -275,7 +275,7 @@ class pipeline:
             start_ids.append(len(fasta) + self.n_g + 1) # for ease of removal
 
             out_fn = join(self.linked_fasta_dir, id + '.fasta')
-            utils.save_fasta(fasta, out_fn)
+            aa_utils.save_fasta(fasta, out_fn)
             chain_start_resid_ids[id] = start_ids
 
         np.save(self.pdb_ids_fn, np.array(valid_ids))
@@ -303,7 +303,7 @@ class pipeline:
         chain_start_ids = self.chain_start_ids[pdb_id]
         gt_chain_bd_ids = self.gt_chain_bd_ids[pdb_id]
 
-        residues = utils.read_residue_from_pdb(pred_fn)[0]
+        residues = aa_utils.read_residue_from_pdb(pred_fn)[0]
         for i in range(1, len(chain_start_ids)-1):
             id = chain_start_ids[i] - 1 # 1-based to 0-based
             assert(residues[id - self.n_g : id] == 'G' * self.n_g)
@@ -372,10 +372,10 @@ class pipeline:
         ppdb.to_pdb(pred_removed_linker_fn)
 
     def remove_extra_residue_and_renumber(self, pdb_id, aligned_fn, removed_linker_fn, gt_pdb_fn, pred_removed_linker_fn):
-        seqs1 = utils.read_residue_from_pdb(removed_linker_fn)
-        seqs2 = utils.read_residue_from_pdb(gt_pdb_fn)
-        ranges = utils.find_prune_ranges_all_chains(seqs1, seqs2, self.chain_ids[pdb_id])
-        utils.prune_renumber_seq_given_ranges(pred_removed_linker_fn, aligned_fn,
+        seqs1 = aa_utils.read_residue_from_pdb(removed_linker_fn)
+        seqs2 = aa_utils.read_residue_from_pdb(gt_pdb_fn)
+        ranges = aa_utils.find_prune_ranges_all_chains(seqs1, seqs2, self.chain_ids[pdb_id])
+        aa_utils.prune_renumber_seq_given_ranges(pred_removed_linker_fn, aligned_fn,
                                               self.chain_ids[pdb_id], ranges[0], self.gt_chain_bd_ids[pdb_id])
 
     def calculate_rmsd(self, pdb_id, gt_pdb_fn, pred_pdb_fn, complex_fn, verbose=False):
@@ -384,13 +384,13 @@ class pipeline:
               assume chain_names[-1] is the target chain (e.g. peptide or idr)
         '''
         rmsds = []
-        utils.load_and_select \
+        aa_utils.load_and_select \
             (self.interface_dist, gt_pdb_fn, pred_pdb_fn,
              self.chain_ids[pdb_id], backbone=self.backbone,
              remove_hydrogen=self.remove_hydrogen)
 
         # superimpose receptor chains and calculate rmsd for ligand
-        utils.superimpose_receptors(complex_fn)
+        aa_utils.superimpose_receptors(complex_fn)
         rmsd = cmd.rms_cur('native_L','pred_L')
         rmsds.append(rmsd)
 
@@ -415,6 +415,6 @@ class pipeline:
         for id in args.pdb_ids:
             pdb_fn = join(args.input_pdb_dir, id + '.pdb')
             pred_fn = join(args.output_dir, id + '.fasta', args.pred_fn)
-            seq_1 = utils.read_residue_from_pdb(pdb_fn)
-            seq_2 = utils.read_residue_from_pdb(pred_fn)
+            seq_1 = aa_utils.read_residue_from_pdb(pdb_fn)
+            seq_2 = aa_utils.read_residue_from_pdb(pred_fn)
             assert(seq_1 == seq_2)

@@ -9,7 +9,7 @@ def prune_extra_atoms(args):
     ''' Remove extra atoms from pdb file.
         Currently only used on native pdb.
     '''
-    pipeline = module.pipeline('init_atom_prune', args)
+    pipeline = aa_module.pipeline('init_atom_prune', args)
     pipeline.prune_extra_atoms()
 
 def process_input(args):
@@ -18,7 +18,7 @@ def process_input(args):
         Also store residue id where each single chain starts
           and chain name of each protein
     '''
-    pipeline = module.pipeline('init_input_procs', args)
+    pipeline = aa_module.pipeline('init_input_procs', args)
     pipeline.process_input()
 
 
@@ -28,7 +28,7 @@ def process_input_from_fasta(args):
         Also store residue id where each single chain starts
           and chain name of each protein
     '''
-    pipeline = module.pipeline('init_input_procs_fasta', args)
+    pipeline = aa_module.pipeline('init_input_procs_fasta', args)
     pipeline.process_input_from_fasta()
 
 
@@ -37,17 +37,17 @@ def process_output(args):
           residue number as per gt pdb
         Calculate rmsd and export to csv file
     '''
-    pipeline = module.pipeline('init_output_procs', args)
+    pipeline = aa_module.pipeline('init_output_procs', args)
     pipeline.process_output()
 
 def locate_extra_atoms(args):
     ''' Locate extra atoms in gt pdb files '''
-    pipeline = module.pipeline('init_atom_locating', args)
+    pipeline = aa_module.pipeline('init_atom_locating', args)
     pipeline.locate_extra_atoms()
 
 def plot_metrics(args):
     ''' plot metrics against specified variables '''
-    pipeline = module.pipeline('init_metric_plotting', args)
+    pipeline = aa_module.pipeline('init_metric_plotting', args)
     pipeline.plot_metrics()
 
 
