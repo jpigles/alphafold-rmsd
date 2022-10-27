@@ -126,8 +126,8 @@ for i in range(len(df_prot)):
                             
                     # Save the results in the appropriate columns of df_prot
                     if len(interface_res) > 0 and len(interacting_pairs) > 0:    
-                        df_prot.loc[i, 'Interacting residue pairs'] = interacting_pairs
-                        df_prot.loc[i, 'Interface Residues'] = interface_res
+                        df_prot.loc[i, 'Interacting residue pairs'] = str(interacting_pairs)
+                        df_prot.loc[i, 'Interface Residues'] = str(interface_res)
                         df_prot.loc[i, 'Number Interface Residues'] = len(interface_res)
                         
                     else: 
