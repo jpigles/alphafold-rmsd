@@ -23,15 +23,15 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #         'scripts/get_pdb_ids_aa.py'
 
 #        
-rule prune_ids:
-    input:
-        'data/proteins_pdb_w_chains.tsv'
+# rule prune_ids:
+#     input:
+#         'data/proteins_pdb_w_chains.tsv'
 
-    output:
-        'data/proteins_pdb_unique_chains.tsv'
+#     output:
+#         'data/proteins_pdb_unique_chains.tsv'
 
-    script:
-        'scripts/prune_pdb_ids.py'
+#     script:
+#         'scripts/prune_pdb_ids.py'
 
 
 # rule pdb_files:
