@@ -1,13 +1,16 @@
 import pandas as pd
 
 
-df_samples = pd.read_csv('data/proteins_pdb.csv', sep = ',')
+df_samples = pd.read_csv('data/proteins_pdb.tsv', sep = '\t')
 #change sample names to use Uniprot accession codes, not gene names.
 uniprot_id = list(df_samples['Uniprot_ID'])
+
+updated_df_samples = pd.read_csv('data/proteins_pdb_no_na.tsv', sep='\t')
+updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #Establishing the end directory
 # rule all:
 #     input:
-        # Here I place my final analysis. What is my final analysis?
+#         Here I place my final analysis. What is my final analysis?
 
 # rule pdb_ids:
 #     input:
@@ -25,67 +28,90 @@ uniprot_id = list(df_samples['Uniprot_ID'])
 #         'data/proteins_pdb_w_chains.tsv'
 
 #     output:
-#         'data/proteins_pdb.tsv'
+#         'data/proteins_pdb_unique_chains.tsv'
 
 #     script:
 #         'scripts/prune_pdb_ids.py'
 
 
-rule pdb_files:
+# rule pdb_files:
+#     input:
+#         'data/proteins_pdb_unique_chains.tsv'
+
+#     output:
+#         directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
+
+#     script:
+#         'scripts/get_pdb_files_aa.py'
+
+# rule drop_na:
+#     input:
+#         'data/proteins_pdb_unique_chains.tsv'
+#     output:
+#         'data/proteins_pdb_no_na.tsv'
+#     script:
+#         'scripts/drop_na_aa.py'
+
+
+# rule best_pdb_files:
+#     input:
+#         'data/proteins_pdb_no_na.tsv',
+#         expand('data/input/RCSB_cif/{protein}/', protein = updated_uniprot_id)
+
+#     output:
+#         'data/proteins_pdb_summary.tsv',
+#         'data/proteins_pdb_best.tsv',
+#         directory('data/input/RCSB_cif_best')
+
+#     script:
+#         'scripts/best_pdb_aa.py'
+
+# rule interface_residues:
+#     input:
+#         'data/proteins_pdb_best.tsv',
+
+#     output:
+#         'data/proteins_interface.tsv'
+
+#     script:
+#         'scripts/get_interface_all_aa.py'
+
+# rule convert_RCSB_cif_to_pdb:
+#     input:
+#         'data/proteins_pdb_best.tsv',
+#         'data/input/RCSB_cif_best/'
+
+#     output:
+#         directory('data/input/RCSB/pdbs/')
+
+#     script:
+#         "scripts/rcsb_cif_to_pdb.py"
+
+# rule convert_AF_cif_to_pdb:
+#     input:
+#         'data/proteins_pdb_best.tsv',
+#         'data/input/Alphafold_cif/'
+
+#     output:
+#         directory('data/output/RCSB_af_full/poly_g_6/')
+
+#     script:
+#         'scripts/af_cif_to_pdb.py'
+
+rule compare_structures_input:
     input:
-        'data/proteins_pdb.tsv'
+        'proteins_pdb_best.tsv', #args.pdb_ids
+        'input' #args.input_pdb_dir# args.linker_fasta_dir.
 
     output:
-        directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
-
-    script:
-        'scripts/get_pdb_files_aa.py'
-
-
-rule best_pdb_files:
-    input:
-        'data/proteins_pdb.tsv',
-        expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id)
-
-    output:
-        'data/proteins_pdb_best.tsv',
-        'data/input/RCSB_cif_best'
-
-    script:
-        'scripts/best_pdb_aa.py'
-
-rule interface_residues:
-    input:
-        'data/proteins_pdb_best.tsv',
-
-    output:
-        'data/proteins_interface.tsv'
-
-    script:
-        'get_interface_all_aa.py'
-
-rule convert_RCSB_cif_to_pdb:
-    input:
-        'data/input/RCSB_cif_best/{sample}.cif'
-
-    output:
-        'data/input/RCSB/pdbs/{sample}.pdb'    
+        directory('output') #args.output_dir
 
     shell:
-        "python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input} > {output} "
+        "python aa_main.py --config configs/input.ini"
+#           Do I have to specify the scripts that will be used for this? Or will this automatically run it?
 
-rule convert_AF_cif_to_pdb:
-    input:
-        'data/proteins_pdb.csv',
-        'data/input/Alphafold_cif'
 
-    output:
-        'data/output/RCSB_af_full/poly_g_6'
-
-    script:
-        'scripts/af_cif_to_pdb.py'
-
-rule compare_structures:
+rule compare_structures_output:
     input:
         'proteins_pdb_best.tsv', #args.pdb_ids
         'input' #args.input_pdb_dir# args.linker_fasta_dir.
@@ -94,5 +120,4 @@ rule compare_structures:
         'output' #args.output_dir
 
     shell:
-        "python aa_main.py --config configs/test.ini"
-#           Do I have to specify the scripts that will be used for this? Or will this automatically run it? 
+        "python aa_main.py --config configs/output.ini"

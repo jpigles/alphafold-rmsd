@@ -3,8 +3,10 @@
 import requests
 import os
 from os.path import join
-import pandas
+import pandas as pd
 from scripts.mutation_enrichment import string2range
+from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+from Bio.PDB.MMCIFParser import MMCIFParser
 
 # n_g = 6
 # fastas = []
@@ -119,3 +121,34 @@ from scripts.mutation_enrichment import string2range
 # pruned_list = prune_extra_chains(id_list)
 
 # print(pruned_list)
+
+# df_prot = pd.read_csv('data/proteins_pdb.tsv', sep='\t').astype('object')
+
+# print(df_prot.loc[313, 'PDB'])
+
+# mmcif_dict = MMCIF2Dict('data/input/RCSB_cif/P04637/6xre.cif')
+
+# parser = MMCIFParser(QUIET=True)
+
+# structure = parser.get_structure('6xre', 'data/input/RCSB_cif/P04637/6xre.cif')
+
+# for model in structure:
+#     for chain in model:
+#         print(chain.get_id() == 'A')
+
+af_df = pd.read_csv('data/proteins_pdb_best.tsv', sep='\t').astype('object')
+
+
+# Set up the appropriate pdb/uniprot relationship
+for i in range(len(af_df)):
+    pdb = af_df.loc[i, 'PDB ID']
+    uniprot = af_df.loc[i, 'Uniprot_ID']
+    
+    #Make output dir
+    print('/data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/')
+    if not os.path.exists('/data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/'):
+        try:
+            original_umask = os.umask(0)
+            os.makedirs('data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/', 0o0770)
+        finally:
+            os.umask(original_umask)

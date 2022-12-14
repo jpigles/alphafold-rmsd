@@ -30,21 +30,24 @@ for item in range(len(df_prot)):
         except:
             continue
         
-        pdb_ids = df_prot.loc[item, 'PDB']
+        pdb_ids_chains = df_prot.loc[item, 'PDB']
         
-        if pd.isna(pdb_ids):
+        if pd.isna(pdb_ids_chains):
             
             print('No structures found for %s' % uniprot)
             
         else:
             
-            #The separator for the PDB IDs I have in my file is a space. I can reconfigure this to make it a comma.
-            pdb_ids_lower = pdb_ids.split(sep = ',')
+            #The pdb ids will have their chains attached here (format example: 5ecy.A)
+            pdb_ids_chains_list = pdb_ids_chains.split(sep = ' ')
 
-            pdb_ids = []
-            for pdb_id_lower in pdb_ids_lower:
-                pdb_id = pdb_id_lower.upper()
-                pdb_ids.append(pdb_id)
+            #empty list to store pdb ids without chains
+            pdb_ids_no_chains = []
+
+            #Remove the chains from the PDB ids
+            for pdb_id in pdb_ids_chains_list:
+                pdb_id_only = pdb_id[:4]
+                pdb_ids_no_chains.append(pdb_id_only)
 
             # pdb_ids = [i[:-2] for i in pdb_ids] #Does this get rid of the comma?
 
@@ -54,4 +57,4 @@ for item in range(len(df_prot)):
             print('Downloading structures for %s' % uniprot)
 
             # Retrieve the PDB file from the PDB and save to the directory with the gene name
-            pdbl.download_pdb_files(pdb_ids, pdir=snakemake.output[item], file_format='mmCif')
+            pdbl.download_pdb_files(pdb_ids_no_chains pdir=snakemake.output[item], file_format='mmCif')

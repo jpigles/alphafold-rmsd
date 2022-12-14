@@ -12,11 +12,22 @@ for i in range(len(af_df)):
     uniprot = af_df.loc[i, 'Uniprot_ID']
     
     #Make output dir
-    output_dir = os.mkdir(snakemake.output[0] + f'/{pdb}.fasta')
+    # print(snakemake.output[0] + f'/{pdb}.fasta/')
+    if not os.path.exists('/data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/'):
+        try:
+            original_umask = os.umask(0)
+            os.makedirs('data/output/RCSB_af_full/poly_g_6' + '/' + pdb + '.fasta/', 0o0770)
+        except:
+            pass
+        finally:
+            os.umask(original_umask)
+    else:
+        pass
 
     #Define paths
     input_path = join(snakemake.input[1], f'F-{uniprot}-F1-model_v3.cif')
     output_path = join(snakemake.output[0], f'{pdb}.fasta', 'ranked_0.pdb')
 
     #Convert the files
-    stream = os.popen(f'python ./env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input_path} > {output_path}')
+    print(f'Converting {uniprot}.cif to .pdb...')
+    stream = os.popen(f'python ../env/lib/python3.9/site-packages/pdbtools/pdb_fromcif.py {input_path} > {output_path}')

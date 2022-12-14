@@ -1,10 +1,16 @@
 
-import project_pipeline.aa_module as aa_module
+import aa_module
 import argparse
 import configargparse
 
-from parser import parse_args
+from aa_parser import parse_args
 
+def prune_extra_atoms(args):
+    ''' Remove extra atoms from pdb file.
+        Currently only used on native pdb.
+    '''
+    pipeline = aa_module.pipeline('init_atom_prune', args)
+    pipeline.prune_extra_atoms()
 
 def process_input(args):
     ''' Combine multi chains with poly-g linker
@@ -25,12 +31,6 @@ def process_input_from_fasta(args):
     pipeline = aa_module.pipeline('init_input_procs_fasta', args)
     pipeline.process_input_from_fasta()
 
-    '''
-    We end up with a dictionary of starting IDs (the number of the sequence that the chain starts at) for each chain in each PDB file, 
-    border residues for each chain in each PDB file, and the identity of each chain (A, B, ...) in each PDB file, in binary files. Then we also get the
-    fasta files that contain the "full" sequence patched together with poly-G linkers.
-    '''
-
 
 def process_output(args):
     ''' Remove linker from predicted pdb and reorder
@@ -40,13 +40,22 @@ def process_output(args):
     pipeline = aa_module.pipeline('init_output_procs', args)
     pipeline.process_output()
 
+def locate_extra_atoms(args):
+    ''' Locate extra atoms in gt pdb files '''
+    pipeline = aa_module.pipeline('init_atom_locating', args)
+    pipeline.locate_extra_atoms()
+
+def plot_metrics(args):
+    ''' plot metrics against specified variables '''
+    pipeline = aa_module.pipeline('init_metric_plotting', args)
+    pipeline.plot_metrics()
+
 
 if __name__ == "__main__":
 
-    parser = configargparse.ArgumentParser() #Creates the ArgumentParser object using a package that has more support for config files.
-    config = parse_args(parser) #This is the parse_args() method, so it will inspect the command line and convert the arguments into the proper types. Also note that this uses the function from parser.py and not from the argparse package.
-    # This config now contains additional command line args, hardcoded arg values, and a defined path.
-    args = argparse.Namespace(**config) #** is unpacking config. Normally it would be a dictionary, but this stores everything in Namespace in a different way. So when we run $python main.py --config config/test.ini, it knows how to interpret those commands. I think.
+    parser = configargparse.ArgumentParser()
+    config = parse_args(parser)
+    args = argparse.Namespace(**config)
 
     for operation in args.operations:
         if operation == 'process_input':
@@ -56,5 +65,11 @@ if __name__ == "__main__":
                 process_input(args)
         elif operation == 'process_output':
             process_output(args)
+        elif operation == 'locate_extra_atoms':
+            locate_extra_atoms(args)
+        elif operation == 'prune_extra_atoms':
+            prune_extra_atoms(args)
+        elif operation == 'plot_metrics':
+            plot_metrics(args)
         elif operation == 'assert_fasta':
             assert_fasta(args)

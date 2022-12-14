@@ -18,6 +18,7 @@ import numpy as np
 import re
 from mutation_enrichment import string2range
 import shutil
+import os
 
 # path = 'C:\\Users\\Jorge Holguin\\Documents\\UBC\\4. Fourth Year\\BIOC 448\\Data\\Structures\\Data Files\\'
 # path_IAS = '../data/protein_list_pdb.tsv'
@@ -63,7 +64,12 @@ for i in range(len(df_prot)):
     
         # Iterate through all the PDB files and determine the number of residues inside
         # the IAS and the Domain that are present in each PDB file
-        for pdb in pdb_ids:
+        for pdb_id in pdb_ids:
+
+            #Separate the PDB ID and the chain
+            pdb = pdb_id[:4]
+
+            chain_id = pdb_id[5]
         
             # To load a PDB file make a parser object
             parser = MMCIFParser(QUIET=True)
@@ -84,80 +90,96 @@ for i in range(len(df_prot)):
             # Iterate through all the models in the structure object (useful only for NMR structures)
             for model in structure:
                 
-                for chain in model:
-                
-                    # Get all the residues in the chain A
-                    residues = chain.get_residues()
-                    
-                    # Set all the counters to zero
-                    count_res = 0
-                    count_res_region_1 = 0
-                    count_res_region_2 = 0
-                    count_dis_res_region_1 = 0
-                    count_dis_res_region_2 = 0
-    
-                    # Iterate through all the residues in the chain and determine
-                    # whether they belong to the IAS or to the Domain. Also determine 
-                    # the number of disordered residues in the IAS and in the Domain
-                    for residue in residues:
-                        count_res = count_res + 1                    
+                    for chain in model:
+
+                        #Determine the current chain in the structure
+                        current_chain = chain.get_id()
                         
-                        # Amino acid residues have an empty space in position zero
-                        # of the id
-                        if residue.get_id()[0] == ' ':
-                            # The sequence position of the amino acid residue is stored
-                            # in position 1 of the id
-                            if residue.get_id()[1] in region_1_res:
-                                # print(residue.get_id()[1])
-                                count_res_region_1 = count_res_region_1 + 1
+                        #Only act on the chain relevant to our protein of interest.
+                        if current_chain == chain_id:
+
+                            print(f'We want {chain_id}. Currently analyzing {current_chain}.')
                                 
-                                if residue.is_disordered() == 1:
-                                    count_dis_res_region_1 = count_dis_res_region_1 + 1
+                            # Get all the residues in the chain A
+                            residues = chain.get_residues()
+                            
+                            # Set all the counters to zero
+                            count_res = 0
+                            count_res_region_1 = 0
+                            count_res_region_2 = 0
+                            count_dis_res_region_1 = 0
+                            count_dis_res_region_2 = 0
+            
+                            # Iterate through all the residues in the chain and determine
+                            # whether they belong to the IAS or to the Domain. Also determine 
+                            # the number of disordered residues in the IAS and in the Domain
+                            for residue in residues:
+                                count_res = count_res + 1                    
                                 
-                            elif residue.get_id()[1] in region_2_res:
-                                count_res_region_2 = count_res_region_2 + 1
-                                
-                                if residue.is_disordered() == 1:
-                                    count_dis_res_region_2 = count_dis_res_region_2 + 1
+                                # Amino acid residues have an empty space in position zero
+                                # of the id
+                                if residue.get_id()[0] == ' ':
+                                    # The sequence position of the amino acid residue is stored
+                                    # in position 1 of the id
+                                    if residue.get_id()[1] in region_1_res:
+                                        # print(residue.get_id()[1])
+                                        count_res_region_1 = count_res_region_1 + 1
+                                        
+                                        if residue.is_disordered() == 1:
+                                            count_dis_res_region_1 = count_dis_res_region_1 + 1
+                                        
+                                    elif residue.get_id()[1] in region_2_res:
+                                        count_res_region_2 = count_res_region_2 + 1
+                                        
+                                        if residue.is_disordered() == 1:
+                                            count_dis_res_region_2 = count_dis_res_region_2 + 1
+                            
+                            # Calculate the percentage of residues in the PDB structure that
+                            # occur within the IAS or the Domain
+                            percent_in_region_1 = (count_res_region_1/len(region_1_res))*100
+                            percent_in_region_2 = (count_res_region_2/len(region_2_res))*100
+                            percent_dis_in_region_1 = (count_dis_res_region_1/len(region_1_res))*100
+                            percent_dis_in_region_2 = (count_dis_res_region_2/len(region_2_res))*100
+                            
+                            # Create a new dataframe with the results
+                            df_pdb_part1 = pd.DataFrame({'Gene_name': df_prot.loc[i, 'Gene_name'],
+                                                    'Uniprot_ID': df_prot.loc[i, 'Uniprot_ID'],
+                                                    'Protein_length': df_prot.loc[i, 'Protein_length'],
+                                                    'region_1': df_prot.loc[i, 'region_1'],
+                                                    'region_2': df_prot.loc[i, 'region_2'],
+                                                    'region_1_len': len(region_1_res),
+                                                    'region_2_len': len(region_2_res),
+                                                    'PDB ID': pdb, 
+                                                    'PDB Length': count_res, 
+                                                    'Resolution': resolution, 
+                                                    'Model': model.get_id(), 
+                                                    'Chain': chain.get_id(),
+                                                    'PDB residues in region_1': count_res_region_1,
+                                                    'PDB residues in region_2': count_res_region_2,
+                                                    'Percent residues in region_1': percent_in_region_1,
+                                                    'Percent residues in region_2': percent_in_region_2}, index=[0])
+                                                
+                            #Concatenate the new dataframe with the main dataframe. 
+                            df_pdb = pd.concat([df_pdb, df_pdb_part1], ignore_index=True)
+                        
+                        else:
+                            continue
                     
-                    # Calculate the percentage of residues in the PDB structure that
-                    # occur within the IAS or the Domain
-                    percent_in_region_1 = (count_res_region_1/len(region_1_res))*100
-                    percent_in_region_2 = (count_res_region_2/len(region_2_res))*100
-                    percent_dis_in_region_1 = (count_dis_res_region_1/len(region_1_res))*100
-                    percent_dis_in_region_2 = (count_dis_res_region_2/len(region_2_res))*100
-                    
-                    # Append the results to the df_pdb
-                    df_pdb = df_pdb.append({'Gene_name': df_prot.loc[i, 'Gene_name'],
-                                            'Uniprot_ID': df_prot.loc[i, 'Uniprot_ID'],
-                                            'Protein_length': df_prot.loc[i, 'Protein_length'],
-                                            'region_1': df_prot.loc[i, 'region_1'],
-                                            'region_2': df_prot.loc[i, 'region_2'],
-                                            'region_1_len': len(region_1_res),
-                                            'region_2_len': len(region_2_res),
-                                            'PDB ID': pdb, 
-                                            'PDB Length': count_res, 
-                                            'Resolution': resolution, 
-                                            'Model': model.get_id(), 
-                                            'Chain': chain.get_id(),
-                                            'PDB residues in region_1': count_res_region_1,
-                                            'PDB residues in region_2': count_res_region_2,
-                                            'Percent residues in region_1': percent_in_region_1,
-                                            'Percent residues in region_2': percent_in_region_2}, ignore_index=True)
                 
 # Store the files where more than 80% of the IAS and the Domain exist in the structure
 df_pdb_best = df_pdb.loc[(df_pdb['Percent residues in region_1'] > 80.0) & (df_pdb['Percent residues in region_2'] > 80.0)].reset_index(drop = True)
 
 # Save the file with all the pdb files
-# df_pdb.to_csv(path + 'pdb_summary.tsv', sep = '\t', index = False)
+df_pdb.to_csv(snakemake.output[0], sep = '\t', index = False)
 
 #Copy the best files into a new directory
+rcsb_best_dir = os.mkdir(snakemake.output[2])
 for i in range(len(df_pdb_best)):
-    uniprot = df_pdb_best[i, 'Uniprot_ID']
-    pdb = df_pdb_best[i, 'PDB ID']
+    uniprot = df_pdb_best.loc[i, 'Uniprot_ID']
+    pdb = df_pdb_best.loc[i, 'PDB ID']
     all_pdbs_path = join('data/input/RCSB_cif', uniprot, pdb + '.cif')
-    best_pdbs_path = join(snakemake.output[1], pdb + '.cif')
-    shutil.copy(all_pdbs_path, best_pdbs_path)
+    best_pdbs_path = join(snakemake.output[2], pdb + '.cif')
+    shutil.copyfile(all_pdbs_path, best_pdbs_path)
 
 # Save the file with all the best pdb files
-df_pdb_best.to_csv(snakemake.output[0], sep = '\t', index = False)
+df_pdb_best.to_csv(snakemake.output[1], sep = '\t', index = False)
