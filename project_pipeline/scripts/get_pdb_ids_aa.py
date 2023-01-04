@@ -24,7 +24,7 @@ for i in range(len(df_prot)):
     url = 'https://search.rcsb.org/rcsbsearch/v2/query'
     
     # Query text to request all the PDB IDs associated to a Uniprot_ID
-    # Taken from https://www.rcsb.org/pdb/software/rest.do
+    # Taken from https://search.rcsb.org/index.html#search-services
     query_text = {
   "query": {
     "type": "group",
