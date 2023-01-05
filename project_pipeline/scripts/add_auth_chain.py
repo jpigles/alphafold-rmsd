@@ -7,10 +7,13 @@ auth_chains = []
 
 for i in range(len(df)):
 
-    # select PDB and file path
+    # select PDB, file path, and chain
     pdb = df.loc[i, 'PDB']
     cif_path = (f'../data/input/RCSB_cif/{pdb}.cif')
+    chain = df.loc[i, 'Chain']
 
     # Initialize PandasMmcif object and load mmcif file
     pmcif = PandasMmcif()
     pred = pmcif.read_mmcif(cif_path)
+
+
