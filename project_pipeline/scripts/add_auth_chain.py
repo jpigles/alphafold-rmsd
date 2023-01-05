@@ -1,7 +1,7 @@
 from biopandas.mmcif import PandasMmcif
 import pandas as pd
 
-df = pd.read_csv('../data/proteins_pdb_best.tsv', sep='\t').astype('object')
+df = pd.read_csv('../sample_data/proteins_pdb_best.csv', sep=',').astype('object')
 
 df_label = df.rename(columns={'Chain': 'Label_chain'})
 
@@ -22,4 +22,6 @@ for i in range(len(df)):
     auth_chain = df_one_chain.loc[0, 'auth_asym_id']
     auth_chains = auth_chains.append(auth_chain)
 
+df_auth = df_label.insert(13, 'Auth_chain', auth_chains)
 
+df_auth.to_csv('../sample_data/proteins_auth_chains.tsv', sep='\t', index=False)
