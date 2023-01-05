@@ -19,7 +19,7 @@ for i in range(len(df)):
 
     #Filter to only our label chain and select author
     df_one_chain = df_label['label_asym_id']==lbl_chain
-    auth_chain = df_one_chain.iloc[0, 'auth_asym_id']
+    auth_chain = df_one_chain.loc[0, 'auth_asym_id']
     auth_chains = auth_chains.append(auth_chain)
 
 
