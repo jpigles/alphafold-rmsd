@@ -1,7 +1,7 @@
 from biopandas.mmcif import PandasMmcif
 import pandas as pd
 
-df = pd.read_csv('../sample_data/proteins_pdb_best.csv', sep=',').astype('object')
+df = pd.read_csv('./sample_data/proteins_pdb_best.csv', sep=',').astype('object')
 
 df_label = df.rename(columns={'Chain': 'Label_chain'})
 
@@ -9,8 +9,9 @@ auth_chains = []
 for i in range(len(df)):
 
     # select PDB, file path, and chain
-    pdb = df_label.loc[i, 'PDB']
-    cif_path = (f'../data/input/RCSB_cif/{pdb}.cif')
+    pdb = df_label.loc[i, 'PDB ID']
+    uniprot_id = df_label.loc[i, 'Uniprot_ID']
+    cif_path = (f'./data/input/RCSB_cif/{pdb}.cif')
     lbl_chain = df_label.loc[i, 'Label_chain']
 
     # Initialize PandasMmcif object and load mmcif file
@@ -24,4 +25,4 @@ for i in range(len(df)):
 
 df_auth = df_label.insert(13, 'Auth_chain', auth_chains)
 
-df_auth.to_csv('../sample_data/proteins_auth_chains.tsv', sep='\t', index=False)
+df_auth.to_csv('./sample_data/proteins_auth_chains.tsv', sep='\t', index=False)
