@@ -20,10 +20,10 @@ for i in range(len(df)):
     pred = pmcif.df['ATOM']
 
     #Filter to only our label chain and select author
-    df_one_chain = pred['label_asym_id']==lbl_chain
-    auth_chain = df_one_chain.loc[0, 'auth_asym_id']
-    auth_chains = auth_chains.append(auth_chain)
+    auth_asym_df = pred.loc[pred['label_asym_id']==lbl_chain, 'auth_asym_id']
+    auth_chain = auth_asym_df.iloc[0]
+    auth_chains.append(auth_chain)
 
-df_auth = df_label.insert(13, 'Auth_chain', auth_chains)
+df_label.insert(12, 'Auth_chain', auth_chains)
 
-df_auth.to_csv('./sample_data/proteins_auth_chains.tsv', sep='\t', index=False)
+df_label.to_csv('./sample_data/proteins_auth_chains.tsv', sep='\t', index=False)
