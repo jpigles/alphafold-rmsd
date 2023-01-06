@@ -10,8 +10,7 @@ for i in range(len(df)):
 
     # select PDB, file path, and chain
     pdb = df_label.loc[i, 'PDB ID']
-    uniprot_id = df_label.loc[i, 'Uniprot_ID']
-    cif_path = (f'./data/input/RCSB_cif/{uniprot_id}/{pdb}.cif')
+    cif_path = (f'./data/input/RCSB_cif_best/{pdb}.cif')
     lbl_chain = df_label.loc[i, 'Label_chain']
 
     # Initialize PandasMmcif object and load mmcif file
@@ -26,4 +25,4 @@ for i in range(len(df)):
 
 df_label.insert(12, 'Auth_chain', auth_chains)
 
-df_label.to_csv('./sample_data/proteins_auth_chains.tsv', sep='\t', index=False)
+df_label.to_csv('./sample_data/proteins_pdb_best.csv', sep=',', index=False)
