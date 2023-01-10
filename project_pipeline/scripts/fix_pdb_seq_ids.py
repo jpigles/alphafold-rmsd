@@ -1,12 +1,13 @@
-import json
 import requests
 
 uniprot = 'Q16644'
 
-url = f'https://www.ebi.ac.uk/pdbe/graph-api/uniprot/:{uniprot}'
+url = f'https://www.ebi.ac.uk/pdbe/graph-api/uniprot/{uniprot}'
 
-req = requests.post(url=url)
+req = requests.get(url=url)
 
-result = json.loads(req)
+print(req.status_code)
 
-print(result)
+req_json = req.json()
+
+print(req_json)
