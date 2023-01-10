@@ -10,4 +10,6 @@ print(req.status_code)
 
 req_json = req.json()
 
-print(req_json)
+#To access our chain of interest, an example splice can be seen below
+
+print(req_json[uniprot]['mappings'][0]['segments'][0]['chains'])
