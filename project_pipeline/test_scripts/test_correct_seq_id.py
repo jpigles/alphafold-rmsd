@@ -65,7 +65,7 @@ for i in range(len(pdb_list)):
     offsets.append(offset)
 
     # fix pdb sequence ids
-    fixed_pdb = fix_seq_id(pdb_id, path, auth_chain, offset)
+    fixed_pdb = fix_seq_id(pdb_id, path, out_path, auth_chain, offset)
     print(fixed_pdb)
 
 # Add offsets to file
