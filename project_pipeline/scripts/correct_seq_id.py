@@ -9,8 +9,9 @@ uniprot = 'Q16644'
 # Load list of pdb files
 pdb_list = pd.read_csv('./project_pipeline/data/proteins_pdb_best.tsv', sep = '\t').astype('object')
 
-def pdbe_req(ent_id, pdb_id, url):
+def pdbe_req(ent_id, pdb_id):
     # Send request for pdb id
+    url = f'https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/uniprot_mapping/{pdb_id}/{ent_id}'
     print(f'Trying {pdb_id}...')
     req = requests.get(url=url)
     print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
@@ -23,10 +24,9 @@ for i in range(len(pdb_list)):
     # Info needed for get request
     ent_id = pdb_list.loc[i, 'Entity_id']
     pdb_id = pdb_list.loc[i, 'PDB ID']
-    url = f'https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/uniprot_mapping/{pdb_id}/{ent_id}'
 
     # send request
-    req_status, req_json = pdbe_req(ent_id, pdb_id, url)
+    req_status, req_json = pdbe_req(ent_id, pdb_id)
     if req_status != 200:
         continue
 
