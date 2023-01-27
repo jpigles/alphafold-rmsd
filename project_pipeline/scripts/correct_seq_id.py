@@ -29,6 +29,14 @@ for i in range(len(pdb_list)):
     else:
         req_json = req.json()
 
+        # Extract uniprot and startIndex ids, get offset (defined as author start - uniprot start)
+        startIndex = req_json[pdb_id]['data'][0]['residues'][0]['startIndex']
+        unpStart = req_json[pdb_id]['data'][0]['residues'][0]['unpStartIndex']
+        offset = startIndex - unpStart
+        offsets = offsets.append(offset)
+
+    
+
 for i in range(len(pdb_list)):
     pdb_id = pdb_list.loc(i, 'PDB ID')
 
