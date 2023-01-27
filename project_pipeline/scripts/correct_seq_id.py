@@ -17,6 +17,14 @@ def pdbe_req(ent_id, pdb_id):
     print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
     return req.status_code, req.json()
 
+def get_offset(json):
+    startIndex = json[pdb_id]['data'][0]['residues'][0]['startIndex']
+    unpStart = json[pdb_id]['data'][0]['residues'][0]['unpStartIndex']
+    offset = startIndex - unpStart
+    print(f'For {pdb_id}, the offset is {offset}')
+    return offset
+
+
 # Get offset between author and uniprot seq id
 offsets = []
 for i in range(len(pdb_list)):
@@ -24,21 +32,18 @@ for i in range(len(pdb_list)):
     # Info needed for get request
     ent_id = pdb_list.loc[i, 'Entity_id']
     pdb_id = pdb_list.loc[i, 'PDB ID']
+    
+    # Info needed for pdb object
+    path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
+    auth_chain = pdb_list.loc[i, 'Auth_chain']
 
     # send request
     req_status, req_json = pdbe_req(ent_id, pdb_id)
     if req_status != 200:
         continue
 
-    startIndex = req_json[pdb_id]['data'][0]['residues'][0]['startIndex']
-    unpStart = req_json[pdb_id]['data'][0]['residues'][0]['unpStartIndex']
-    offset = startIndex - unpStart
-    offsets = offsets.append(offset)
-    print(f'For {pdb_id}, the offset is {offset}')
-
-    # Info needed for pdb object
-    path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
-    auth_chain = pdb_list.loc[i, 'Auth_chain']
+    offset = get_offset(req_json)
+    offsets.append(offset)
 
     #initiate Pandas object
     ppdb = PandasPdb()
