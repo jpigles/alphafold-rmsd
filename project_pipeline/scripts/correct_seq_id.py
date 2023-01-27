@@ -1,7 +1,6 @@
 from biopandas.pdb import PandasPdb
 import pandas as pd
 import requests
-uniprot = 'Q16644'
 
 #To access our chain of interest, an example splice can be seen below
 # print(req_json[uniprot]['mappings'][0]['segments'][0]['chains'])
