@@ -34,10 +34,17 @@ for i in range(len(pdb_list)):
     offsets = offsets.append(offset)
     print(f'For {pdb_id}, the offset is {offset}')
 
+    # Info needed for pdb object
+    path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
+    auth_chain = pdb_list.loc[i, 'Auth_chain']
+
     #initiate Pandas object
     ppdb = PandasPdb()
-
-
+    _ = ppdb.read_pdb(path)
+    pred = ppdb.df['ATOM']
+    
+    # Select only our desired chain
+    pred_auth_chain = pred[pred['chain_id']==auth_chain]
 
 
     
