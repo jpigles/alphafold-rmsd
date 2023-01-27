@@ -6,7 +6,7 @@ import requests
 # print(req_json[uniprot]['mappings'][0]['segments'][0]['chains'])
 
 # Load list of pdb files
-pdb_list = pd.read_csv('./project_pipeline/data/proteins_pdb_best.tsv', sep = '\t').astype('object')
+pdb_list = pd.read_csv('./data/proteins_pdb_best.tsv', sep = '\t').astype('object')
 
 def pdbe_req(ent_id, pdb_id):
     # Send request for pdb id
