@@ -9,6 +9,13 @@ uniprot = 'Q16644'
 # Load list of pdb files
 pdb_list = pd.read_csv('./project_pipeline/data/proteins_pdb_best.tsv', sep = '\t').astype('object')
 
+def pdbe_req(ent_id, pdb_id, url):
+    # Send request for pdb id
+    print(f'Trying {pdb_id}...')
+    req = requests.get(url=url)
+    print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
+    return req.status_code, req.json()
+
 # Get offset between author and uniprot seq id
 offsets = []
 for i in range(len(pdb_list)):
@@ -18,15 +25,10 @@ for i in range(len(pdb_list)):
     pdb_id = pdb_list.loc[i, 'PDB ID']
     url = f'https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/uniprot_mapping/{pdb_id}/{ent_id}'
 
-    # Send requests
-    print(f'Trying {pdb_id}...')
-    req = requests.get(url=url)
-    print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
-    if req.status_code != 200:
+    # send request
+    req_status, req_json = pdbe_req(ent_id, pdb_id, url)
+    if req_status != 200:
         continue
-    
-    # Extract uniprot and startIndex ids, get offset (defined as author start - uniprot start)
-    req_json = req.json()
 
     startIndex = req_json[pdb_id]['data'][0]['residues'][0]['startIndex']
     unpStart = req_json[pdb_id]['data'][0]['residues'][0]['unpStartIndex']
@@ -42,12 +44,12 @@ for i in range(len(pdb_list)):
     ppdb = PandasPdb()
     _ = ppdb.read_pdb(path)
     pred = ppdb.df['ATOM']
-    
+
     # Select only our desired chain
-    pred_auth_chain = pred[pred['chain_id']==auth_chain]
+    pred_auth = pred[pred['chain_id']==auth_chain]
 
-
-    
+    for i in range(len(pred_auth)):
+        
 
 for i in range(len(pdb_list)):
     pdb_id = pdb_list.loc(i, 'PDB ID')
