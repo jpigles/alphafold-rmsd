@@ -24,6 +24,17 @@ def get_offset(json):
     print(f'For {pdb_id}, the offset is {offset}')
     return offset
 
+def fix_seq_id(fp, chain):
+    #initiate Pandas object
+    ppdb = PandasPdb()
+    _ = ppdb.read_pdb(fp)
+    pred = ppdb.df['ATOM']
+
+    # Select only our desired chain
+    pred_auth = pred[pred['chain_id']==chain]
+
+    for i in range(len(pred_auth)):
+        
 
 # Get offset between author and uniprot seq id
 offsets = []
@@ -42,19 +53,12 @@ for i in range(len(pdb_list)):
     if req_status != 200:
         continue
 
+    # Get offset
     offset = get_offset(req_json)
     offsets.append(offset)
 
-    #initiate Pandas object
-    ppdb = PandasPdb()
-    _ = ppdb.read_pdb(path)
-    pred = ppdb.df['ATOM']
-
-    # Select only our desired chain
-    pred_auth = pred[pred['chain_id']==auth_chain]
-
-    for i in range(len(pred_auth)):
-        
+    # fix pdb sequence ids
+    fixed_pdb = fix_seq_id(path, auth_chain)
 
 for i in range(len(pdb_list)):
     pdb_id = pdb_list.loc(i, 'PDB ID')
