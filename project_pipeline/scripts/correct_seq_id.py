@@ -24,15 +24,13 @@ def get_offset(json):
     print(f'For {pdb_id}, the offset is {offset}')
     return offset
 
-def fix_seq_id(fp, chain, offset):
-    #initiate Pandas object
+def fix_seq_id(pdb, fp, chain, offset):
+    # initiate Pandas object
     ppdb = PandasPdb()
     _ = ppdb.read_pdb(fp)
     pred = ppdb.df['ATOM']
 
-    # Select only our desired chain
-    
-
+    # Replace residue numbers in our chain of interest
     for i in range(len(pred)):
         if pred.loc[i, 'chain_id']==chain:
             res_num = pred.loc[i, 'residue_number']
@@ -40,6 +38,10 @@ def fix_seq_id(fp, chain, offset):
             pred.loc[i, 'residue_number'] = new_res_num
         else:
             continue
+    
+    pred.to_pdb(path=fp, records=None, gz=False, append_newline=True)
+
+    return f'Successfully fixed {pdb}'
 
 # Get offset between author and uniprot seq id
 offsets = []
@@ -63,9 +65,5 @@ for i in range(len(pdb_list)):
     offsets.append(offset)
 
     # fix pdb sequence ids
-    fixed_pdb = fix_seq_id(path, auth_chain, offset)
-
-for i in range(len(pdb_list)):
-    pdb_id = pdb_list.loc(i, 'PDB ID')
-
-    pdb_df = ppdb.read_csv(f'./project_pipeline/data/input/RCSB_best/{pdb_id}.pdb')
+    fixed_pdb = fix_seq_id(pdb_id, path, auth_chain, offset)
+    print(fixed_pdb)
