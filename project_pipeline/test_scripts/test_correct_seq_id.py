@@ -60,15 +60,18 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
     pred = ppdb.df['ATOM']
 
     # Replace residue numbers in our chain of interest
-    for i in range(len(pred)):
-        if pred.loc[i, 'chain_id']==chain:
-            res_num = pred.loc[i, 'residue_number']
-            new_res_num = res_num - offset
-            pred.loc[i, 'residue_number'] = new_res_num
-        else:
-            continue
+    if offset == 'Null':
+        return 'No offset to fix with'
+    else:
+        for i in range(len(pred)):
+            if pred.loc[i, 'chain_id']==chain:
+                res_num = pred.loc[i, 'residue_number']
+                new_res_num = res_num - offset
+                pred.loc[i, 'residue_number'] = new_res_num
+            else:
+                continue
     
-    pred.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
+    ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
 
     return f'Successfully fixed {pdb}'
 
