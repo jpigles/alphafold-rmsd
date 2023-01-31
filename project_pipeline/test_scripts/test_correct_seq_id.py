@@ -1,6 +1,7 @@
 from biopandas.pdb import PandasPdb
 import pandas as pd
 import requests
+import csv
 
 #To access our chain of interest, an example splice can be seen below
 # print(req_json[uniprot]['mappings'][0]['segments'][0]['chains'])
@@ -100,4 +101,9 @@ for i in range(len(pdb_list)):
 
 # Add offsets to file
 pdb_list.insert(18, 'Auth_offset', offsets)
-pdb_list.to_csv('./sample_data/sample_proteins_pdb_best.tsv', sep = '\t', index=False)
+pdb_list.to_csv('./sample_data/sample_proteins_offset.tsv', sep = '\t', index=False)
+
+with open('null_offset_pdbs.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    for pdb in null_pdbs:
+        writer.writerow(pdb)
