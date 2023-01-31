@@ -17,9 +17,10 @@ def pdbe_req(pdb_id):
     print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
     return req.status_code, req.json()
 
-# List of pdbs with no available author residue numbers via PDBe
-null_pdbs = []
 def get_offset(json, pdb, uniprot):
+
+    # List of pdbs with no available author residue numbers via PDBe
+    nulls = []
     # The UniProt sequence is always taken from the UniProt-defined canonical sequence (first isoform)
     unpStart = json[pdb]['UniProt'][uniprot]['mappings'][0]['unp_start']
     unpEnd = json[pdb]['UniProt'][uniprot]['mappings'][0]['unp_end']
@@ -47,10 +48,10 @@ def get_offset(json, pdb, uniprot):
                 except TypeError:
                     print('No available author numbers')
                     offset = 'Null'
-                    null_pdbs = null_pdbs.append(pdb)
+                    nulls.append(pdb)
 
     print(f'For {pdb_id}, the offset is {offset}')
-    return offset
+    return offset, nulls
 
 def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
     # initiate Pandas object
@@ -74,6 +75,8 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
 # Get offset between author and uniprot seq id
 offsets = []
 
+# List of pdbs with no available author residue numbers via PDBe
+null_pdbs = []
 for i in range(len(pdb_list)):
 
     # Info needed for get request
@@ -92,8 +95,9 @@ for i in range(len(pdb_list)):
         continue
 
     # Get offset
-    offset = get_offset(req_json, pdb_id, uniprot_id)
+    offset, nulls = get_offset(req_json, pdb_id, uniprot_id)
     offsets.append(offset)
+    null_pdbs = null_pdbs + nulls
 
     # fix pdb sequence ids
     fixed_pdb = fix_seq_id(pdb_id, path, out_path, auth_chain, offset)
