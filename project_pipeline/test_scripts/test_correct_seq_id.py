@@ -9,37 +9,37 @@ import csv
 # Load list of pdb files
 pdb_list = pd.read_csv('./sample_data/sample_proteins_pdb_best.tsv', sep = '\t').astype('object')
 
-def pdbe_req(ent_id, pdb_id):
+def pdbe_req(pdb_id):
     # Send request for pdb id
-    url = f'https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/uniprot_mapping/{pdb_id}/{ent_id}'
+    url = f'https://www.ebi.ac.uk/pdbe/graph-api/mappings/all_isoforms/{pdb_id}'
     print(f'Trying {pdb_id}...')
     req = requests.get(url=url)
     print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
     return req.status_code, req.json()
 
 def get_offset(json, pdb, uniprot):
-    # The Uniprot sequence is always taken from the Uniprot-defined canonical sequence (first isoform)
-    unpStart = json[pdb]['Uniprot'][uniprot]['mappings'][0]['unp_start']
-    unpEnd = json[pdb]['Uniprot'][uniprot]['mappings'][0]['unp_end']
+    # The UniProt sequence is always taken from the UniProt-defined canonical sequence (first isoform)
+    unpStart = json[pdb]['UniProt'][uniprot]['mappings'][0]['unp_start']
+    unpEnd = json[pdb]['UniProt'][uniprot]['mappings'][0]['unp_end']
     # There's no way to know which author_provided number will be available, if any, so
     # we try both isoforms
     try:
-        auth_start = json[pdb]['Uniprot'][uniprot]['mappings'][0]['start']['author_residue_number']
+        auth_start = json[pdb]['UniProt'][uniprot]['mappings'][0]['start']['author_residue_number']
         offset = auth_start - unpStart
         print('Auth_start was successful')
     except TypeError:
         try:
-            auth_end = json[pdb]['Uniprot'][uniprot]['mappings'][0]['end']['author_residue_number']
+            auth_end = json[pdb]['UniProt'][uniprot]['mappings'][0]['end']['author_residue_number']
             offset = auth_end - unpEnd
             print('Auth_end was successful')
         except TypeError:
             try:
-                auth_start_2 = json[pdb]['Uniprot'][uniprot + '-2']['mappings'][0]['start']['author_residue_number']
+                auth_start_2 = json[pdb]['UniProt'][uniprot + '-2']['mappings'][0]['start']['author_residue_number']
                 offset = auth_start - unpStart
                 print('Auth_start_2 was successful')
             except TypeError:
                 try:
-                    auth_end_2 = json[pdb]['Uniprot'][uniprot + '-2']['mappings'][0]['end']['author_residue_number']
+                    auth_end_2 = json[pdb]['UniProt'][uniprot + '-2']['mappings'][0]['end']['author_residue_number']
                     offset = auth_end - unpEnd
                     print('Auth_end_2 was successful')
                 except TypeError:
@@ -87,7 +87,7 @@ for i in range(len(pdb_list)):
     auth_chain = pdb_list.loc[i, 'Auth_chain']
 
     # send request
-    req_status, req_json = pdbe_req(ent_id, pdb_id)
+    req_status, req_json = pdbe_req(pdb_id)
     if req_status != 200:
         continue
 
