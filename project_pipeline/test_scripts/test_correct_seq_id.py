@@ -16,10 +16,36 @@ def pdbe_req(ent_id, pdb_id):
     print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
     return req.status_code, req.json()
 
-def get_offset(json):
-    startIndex = json[pdb_id]['data'][0]['residues'][0]['startIndex']
-    unpStart = json[pdb_id]['data'][0]['residues'][0]['unpStartIndex']
-    offset = startIndex - unpStart
+def get_offset(json, pdb, uniprot):
+    # The Uniprot sequence is always taken from the Uniprot-defined canonical sequence (first isoform)
+    unpStart = json[pdb]['Uniprot'][uniprot]['mappings'][0]['unp_start']
+    unpEnd = json[pdb]['Uniprot'][uniprot]['mappings'][0]['unp_end']
+    # There's no way to know which author_provided number will be available, if any, so
+    # we try both isoforms
+    try:
+        auth_start = json[pdb]['Uniprot'][uniprot]['mappings'][0]['start']['author_residue_number']
+        offset = auth_start - unpStart
+        print('Auth_start was successful')
+    except TypeError:
+        try:
+            auth_end = json[pdb]['Uniprot'][uniprot]['mappings'][0]['end']['author_residue_number']
+            offset = auth_end - unpEnd
+            print('Auth_end was successful')
+        except TypeError:
+            try:
+                auth_start_2 = json[pdb]['Uniprot'][uniprot + '-2']['mappings'][0]['start']['author_residue_number']
+                offset = auth_start - unpStart
+                print('Auth_start_2 was successful')
+            except TypeError:
+                try:
+                    auth_end_2 = json[pdb]['Uniprot'][uniprot + '-2']['mappings'][0]['end']['author_residue_number']
+                    offset = auth_end - unpEnd
+                    print('Auth_end_2 was successful')
+                except TypeError:
+                    print('No available author numbers')
+                    offset = 'Null'
+                    null_pdbs = null_pdbs.append(pdb)
+
     print(f'For {pdb_id}, the offset is {offset}')
     return offset
 
@@ -44,11 +70,15 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
 
 # Get offset between author and uniprot seq id
 offsets = []
+
+# List of pdbs with no available author residue numbers via PDBe
+null_pdbs = []
 for i in range(len(pdb_list)):
 
     # Info needed for get request
     ent_id = pdb_list.loc[i, 'Entity_id']
     pdb_id = pdb_list.loc[i, 'PDB ID']
+    uniprot_id = pdb_list.loc[i, 'Uniprot_ID']
     
     # Info needed for pdb object
     path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
@@ -61,7 +91,7 @@ for i in range(len(pdb_list)):
         continue
 
     # Get offset
-    offset = get_offset(req_json)
+    offset = get_offset(req_json, pdb_id, uniprot_id)
     offsets.append(offset)
 
     # fix pdb sequence ids
