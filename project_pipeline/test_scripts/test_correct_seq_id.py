@@ -17,6 +17,8 @@ def pdbe_req(pdb_id):
     print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
     return req.status_code, req.json()
 
+# List of pdbs with no available author residue numbers via PDBe
+null_pdbs = []
 def get_offset(json, pdb, uniprot):
     # The UniProt sequence is always taken from the UniProt-defined canonical sequence (first isoform)
     unpStart = json[pdb]['UniProt'][uniprot]['mappings'][0]['unp_start']
@@ -72,8 +74,6 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
 # Get offset between author and uniprot seq id
 offsets = []
 
-# List of pdbs with no available author residue numbers via PDBe
-null_pdbs = []
 for i in range(len(pdb_list)):
 
     # Info needed for get request
