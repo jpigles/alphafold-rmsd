@@ -28,6 +28,7 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
 
     # Replace residue numbers in our chain of interest
     if offset == 0:
+        ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
         return f'No fix needed for {pdb}'
     else:
         for i in range(len(pred)):
