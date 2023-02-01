@@ -1,68 +1,68 @@
 from biopandas.pdb import PandasPdb
 import pandas as pd
-import requests
+from pdbecif.mmcif_io import CifFileReader
 
-#To access our chain of interest, an example splice can be seen below
-# print(req_json[uniprot]['mappings'][0]['segments'][0]['chains'])
+# Load list of our best pdb files
+pdbs_df = pd.read_csv('./data/proteins_pdb_no_offset.tsv', sep = '\t').astype('object')
 
-# Load list of pdb files
-pdb_list = pd.read_csv('./data/proteins_pdb_best.tsv', sep = '\t').astype('object')
+def get_offset(fp, pdb):
+    # initiate reader object
+    cfr = CifFileReader()
+    cif_obj = cfr.read(fp, output='cif_wrapper')
+    cif_data = list(cif_obj.values())[0]
+    
+    # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
+    auth_start = int(cif_data._struct_ref_seq.pdbx_auth_seq_align_beg[0])
+    unp_start = int(cif_data._struct_ref_seq.db_align_beg[0])
+    offset = auth_start - unp_start
 
-def pdbe_req(ent_id, pdb_id):
-    # Send request for pdb id
-    url = f'https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/uniprot_mapping/{pdb_id}/{ent_id}'
-    print(f'Trying {pdb_id}...')
-    req = requests.get(url=url)
-    print('Status: {status} for PDB {pdb}'.format(status=req.status_code, pdb=pdb_id))
-    return req.status_code, req.json()
-
-def get_offset(json):
-    startIndex = json[pdb_id]['data'][0]['residues'][0]['startIndex']
-    unpStart = json[pdb_id]['data'][0]['residues'][0]['unpStartIndex']
-    offset = startIndex - unpStart
-    print(f'For {pdb_id}, the offset is {offset}')
+    print(f'Offset for {pdb}: {offset}')
     return offset
 
-def fix_seq_id(pdb, fp, chain, offset):
+def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
     # initiate Pandas object
     ppdb = PandasPdb()
-    _ = ppdb.read_pdb(fp)
+    _ = ppdb.read_pdb(in_fp)
     pred = ppdb.df['ATOM']
 
     # Replace residue numbers in our chain of interest
-    for i in range(len(pred)):
-        if pred.loc[i, 'chain_id']==chain:
-            res_num = pred.loc[i, 'residue_number']
-            new_res_num = res_num - offset
-            pred.loc[i, 'residue_number'] = new_res_num
-        else:
-            continue
+    if offset == 0:
+        return f'No fix needed for {pdb}'
+    else:
+        for i in range(len(pred)):
+            if pred.loc[i, 'chain_id']==chain:
+                res_num = pred.loc[i, 'residue_number']
+                new_res_num = res_num - offset
+                pred.loc[i, 'residue_number'] = new_res_num
+            else:
+                continue
     
-    pred.to_pdb(path=fp, records=None, gz=False, append_newline=True)
+    ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
 
     return f'Successfully fixed {pdb}'
 
 # Get offset between author and uniprot seq id
 offsets = []
-for i in range(len(pdb_list)):
 
-    # Info needed for get request
-    ent_id = pdb_list.loc[i, 'Entity_id']
-    pdb_id = pdb_list.loc[i, 'PDB ID']
+for i in range(len(pdbs_df)):
+
+    # Info needed for opening cif file
+    pdb_id = pdbs_df.loc[i, 'PDB ID']
+    cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
     
     # Info needed for pdb object
-    path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
-    auth_chain = pdb_list.loc[i, 'Auth_chain']
-
-    # send request
-    req_status, req_json = pdbe_req(ent_id, pdb_id)
-    if req_status != 200:
-        continue
+    pdb_path = f'./data/input/RCSB/auth_pdbs/{pdb_id}.pdb'
+    out_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
+    auth_chain = pdbs_df.loc[i, 'Auth_chain']
 
     # Get offset
-    offset = get_offset(req_json)
+    offset= get_offset(cif_path, pdb_id)
     offsets.append(offset)
 
     # fix pdb sequence ids
-    fixed_pdb = fix_seq_id(pdb_id, path, auth_chain, offset)
+    fixed_pdb = fix_seq_id(pdb_id, pdb_path, out_path, auth_chain, offset)
     print(fixed_pdb)
+
+# Add offsets to file
+pdbs_df.insert(18, 'Auth_offset', offsets)
+pdbs_df.to_csv('./data/proteins_pdb_best.tsv', sep = '\t', index=False)
