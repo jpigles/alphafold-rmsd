@@ -1,2 +1,4 @@
 Dana, Gutmanas et al., Nucleic Acids Research 47, D482 (2019) (for SIFTS)
 Velankar et al., Nucleic Acids Research 41, D483 (2013) (for SIFTS)
+
+PDBeCIF: an open‑source mmCIF/CIF parsing and processing package. Glen van Ginkel, Lukáš Pravda, José M. Dana, Mihaly Varadi, Peter Keller, Stephen Anyango and Sameer Velankar. BMC Bioinformatics (2021) 22:383. DOI: 10.1186/s12859-021-04271-9 (for PBDeCif python package)
