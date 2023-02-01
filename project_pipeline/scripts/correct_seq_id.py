@@ -5,9 +5,7 @@ from pdbecif.mmcif_io import CifFileReader
 # Load list of our best pdb files
 pdbs_df = pd.read_csv('./data/proteins_pdb_no_offset.tsv', sep = '\t').astype('object')
 
-# Designate pdb ids, auth_chains, and file locations
-pdb_id = pdbs_df.loc[i, 'PDB ID']
-auth_chain = pdbs_df.loc[i, 'Auth_chain']
+# Designate file locations
 cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
 pdb_path = f'./data/input/RCSB/offset_pdbs/{pdb_id}.pdb'
 out_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
@@ -54,6 +52,10 @@ offsets = []
 
 # Run through main list and fix pdb files
 for i in range(len(pdbs_df)):
+    # Define pdbs to work with and auth_chains in pdb files
+    pdb_id = pdbs_df.loc[i, 'PDB ID']
+    auth_chain = pdbs_df.loc[i, 'Auth_chain']
+    
     # Get offset
     offset= get_offset(cif_path, pdb_id)
     offsets.append(offset)
