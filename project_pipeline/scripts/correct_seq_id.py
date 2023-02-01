@@ -9,7 +9,7 @@ pdbs_df = pd.read_csv('./data/proteins_pdb_no_offset.tsv', sep = '\t').astype('o
 pdb_id = pdbs_df.loc[i, 'PDB ID']
 auth_chain = pdbs_df.loc[i, 'Auth_chain']
 cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
-pdb_path = f'./data/input/RCSB/auth_pdbs/{pdb_id}.pdb'
+pdb_path = f'./data/input/RCSB/offset_pdbs/{pdb_id}.pdb'
 out_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
 
 # Functions start here
