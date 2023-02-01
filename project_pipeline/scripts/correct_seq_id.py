@@ -5,6 +5,14 @@ from pdbecif.mmcif_io import CifFileReader
 # Load list of our best pdb files
 pdbs_df = pd.read_csv('./data/proteins_pdb_no_offset.tsv', sep = '\t').astype('object')
 
+# Designate pdb ids, auth_chains, and file locations
+pdb_id = pdbs_df.loc[i, 'PDB ID']
+auth_chain = pdbs_df.loc[i, 'Auth_chain']
+cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
+pdb_path = f'./data/input/RCSB/auth_pdbs/{pdb_id}.pdb'
+out_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
+
+# Functions start here
 def get_offset(fp, pdb):
     # initiate reader object
     cfr = CifFileReader()
@@ -44,17 +52,8 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
 # Get offset between author and uniprot seq id
 offsets = []
 
+# Run through main list and fix pdb files
 for i in range(len(pdbs_df)):
-
-    # Info needed for opening cif file
-    pdb_id = pdbs_df.loc[i, 'PDB ID']
-    cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
-    
-    # Info needed for pdb object
-    pdb_path = f'./data/input/RCSB/auth_pdbs/{pdb_id}.pdb'
-    out_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
-    auth_chain = pdbs_df.loc[i, 'Auth_chain']
-
     # Get offset
     offset= get_offset(cif_path, pdb_id)
     offsets.append(offset)
