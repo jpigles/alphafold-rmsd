@@ -16,6 +16,8 @@ for i in range(len(pdb_list)):
     label_chain = pdb_list.loc(i, 'Label_chain')
     gt_path = f'./sample_data/input/sample_pdbs/{pdb}.pdb'
     pred_path = f'./data/output/RCSB_af_full/poly_g_6_fasta/{pdb}.fasta/ranked_0.pdb'
+    gt_out_path = f'./sample_data/input/sample_pdbs_trim/{pdb}.pdb'
+    pred_out_path = f'./sample_data/output/ds1_af_full/poly_g_20_fasta/{pdb}.fasta/ranked_0.pdb'
 
     # gt model
     ppdb = PandasPdb()
@@ -48,6 +50,8 @@ for i in range(len(pdb_list)):
 
     assert len(pred_trim) == gt
 
+    new_gt = gt.to_csv(gt_out_path, sep='\t', index=False)
+    new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
         # # pred_chain = pred.loc[pred['chain_id'] == gt_chain_id]
 # # pred_residue = pred_chain.loc[pred_chain['residue_number'] == gt_residue_number]
 # # pred_atom = pred_residue.loc[pred_residue['atom_name'] == gt_atom_name]
