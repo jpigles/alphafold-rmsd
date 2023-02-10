@@ -39,13 +39,11 @@ for i in range(len(pdb_list)):
     for atom in range(len(gt)):
         # Define minimum  parameters to select unique rows
         gt_atom_name = gt.loc[atom, 'atom_name']
-        gt_chain_id = gt.loc[atom, 'chain_id']
         gt_residue_name = gt.loc[atom, 'residue_name']
         gt_residue_number = gt.loc[atom, 'residue_number']
 
         # Look for matching row in pred
-        pred_row = pred.loc[(pred['atom_name'] == gt_atom_name) & (pred['residue_number'] == gt_residue_number) 
-                            & (pred['chain_id'] == gt_chain_id) & (pred['residue_name'] == gt_residue_name)]
+        pred_row = pred.loc[(pred['atom_name'] == gt_atom_name) & (pred['residue_number'] == gt_residue_number) & (pred['residue_name'] == gt_residue_name)]
         if pred_row.empty != True:
             present_atoms.append(pred_row.index)
 
@@ -57,7 +55,7 @@ for i in range(len(pdb_list)):
     # Create new pred data frame exclusively with atoms present in gt
     pred_trim = pred.drop(index=na_atoms)
 
-    print(pred_trim)
+    print(len(gt), len(pred_trim))
     # assert len(pred_trim) == len(gt)
 
     # print(f'Success! Creating trimmed files for {pdb}...')
