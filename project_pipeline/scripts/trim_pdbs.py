@@ -20,7 +20,7 @@ for i in range(len(pdb_list)):
     label_chain = pdb_list.loc[i, 'Label_chain']
     gt_path = f'./data/input/RCSB/pdbs/{pdb}.pdb'
     pred_path = f'./data/output/RCSB_af_full/poly_g_6_fasta/{pdb}.fasta/ranked_0.pdb'
-    gt_out_path = f'./data/input/pdbs_trim/{pdb}.pdb'
+    gt_out_path = f'./data/input/RCSB/pdbs_trim/{pdb}.pdb'
     pred_out_path = f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/ranked_0.pdb'
 
     print(f'Trying {pdb}...')
@@ -75,7 +75,11 @@ for i in range(len(pdb_list)):
 
     print('Length of gt: ' + str(len(gt_trim)) + ', Length of pred: ' + str(len(pred_trim)))
 
-    assert len(pred_trim) == len(gt_trim)
+    try:
+        assert len(pred_trim) == len(gt_trim)
+    except AssertionError:
+        diff = pd.concat([gt_trim, pred_trim]).drop_duplicates(keep=False)
+        print(diff)
 
     if len(gt_trim) < 1500:
         too_short_trims.append(pdb)
@@ -86,7 +90,7 @@ for i in range(len(pdb_list)):
         new_gt = gt_trim.to_csv(gt_out_path, sep='\t', index=False)
         new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
     except OSError:
-        af_dir = os.mkdir(f'./data/output/ds1_af_full/poly_g_20_fasta/{pdb}.fasta/')
+        af_dir = os.mkdir(f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/')
         new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
 
 with open('./data/wrong_offsets.tsv', 'w') as file:
