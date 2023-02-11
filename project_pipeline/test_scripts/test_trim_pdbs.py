@@ -2,10 +2,11 @@ from biopandas.pdb import PandasPdb
 import pandas as pd
 import numpy as np
 import os
+import csv
 
 pdb_list = pd.read_csv('./sample_data/sample_proteins_pdb_best.tsv', sep='\t').astype('object')
 
-
+too_short_trims = []
 for i in range(len(pdb_list)):
     # skip extra rows for NMR files
     model = pdb_list.loc[i, 'Model']
@@ -76,11 +77,21 @@ for i in range(len(pdb_list)):
 
     assert len(pred_trim) == len(gt_trim)
 
+    if len(gt_trim) < 1000:
+        too_short_trims.append(pdb)
+
     print(f'Success! Creating trimmed files for {pdb}...')
     # Make directory for specific pdb
     try:
-        new_gt = gt.to_csv(gt_out_path, sep='\t', index=False)
+        new_gt = gt_trim.to_csv(gt_out_path, sep='\t', index=False)
         new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
     except OSError:
         af_dir = os.mkdir(f'./sample_data/output/ds1_af_full/poly_g_20_fasta/{pdb}.fasta/')
         new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
+
+with open('./sample_data/wrong_offsets.tsv', 'w',  newline='') as file:
+    fields = ['Incorrect_pdbs']
+    writer = csv.writer(file)
+    
+    writer.writerow(fields)
+    writer.writerows(too_short_trims)
