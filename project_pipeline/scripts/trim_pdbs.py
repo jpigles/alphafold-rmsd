@@ -45,10 +45,12 @@ for i in range(len(pdb_list)):
                 'HE3', 'HB', 'HG11', 'HG12', 'HG13', 'HG21', 'HG22', 'HG23', 'HE', 'HH11', 'HH12', 'HH21',
                 'HH22', 'HE21', 'HE22', 'HD1', 'HZ', 'HH', 'HG1', 'HD21', 'HD22', 'HG', 'HD11', 'HD12', 
                 'HD13', 'HD23', 'HZ1', 'HZ2', 'HZ3', 'HH2']
+    # Define possible alternate conformations
+    alt_locations = ['B', 'C', 'D', 'E']
 
     for atom in range(len(gt)):
         # Define rows to be skipped (hydrogens or alternate conformations)
-        if gt.loc[atom, 'atom_name'] in hydrogens or gt.loc[atom, 'alt_loc'] == 'B':
+        if gt.loc[atom, 'atom_name'] in hydrogens or gt.loc[atom, 'alt_loc'] in alt_locations:
             extra_atoms_gt.append(atom)
             continue
 
@@ -78,8 +80,13 @@ for i in range(len(pdb_list)):
     try:
         assert len(pred_trim) == len(gt_trim)
     except AssertionError:
-        diff = pd.concat([gt_trim, pred_trim]).drop_duplicates(keep=False)
+        gt_sim = gt_trim.drop(['atom_number', 'x_coord', 'y_coord', 'z_coord', 'occupancy', 'b_factor', 'segment_id', 'element_symbol', 'charge', 'line_idx'], axis=1)
+        pred_sim = pred_trim.drop(['atom_number', 'x_coord', 'y_coord', 'z_coord', 'occupancy', 'b_factor', 'segment_id', 'element_symbol', 'charge', 'line_idx'], axis=1)
+        diff = pd.concat([gt_sim, pred_sim]).drop_duplicates(keep=False)
+        diff.to_csv('./data/AssertionError.tsv', sep='\t')
         print(diff)
+        print('AssertionError! Check file')
+        break
 
     if len(gt_trim) < 1500:
         too_short_trims.append(pdb)
