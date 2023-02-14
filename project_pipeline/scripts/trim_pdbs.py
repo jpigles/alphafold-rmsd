@@ -30,6 +30,7 @@ for i in range(len(pdb_list)):
     gt_file = ppdb.read_pdb(gt_path)
     gt_all_chains = gt_file.df['ATOM']
     gt = gt_all_chains[gt_all_chains['chain_id'] == auth_chain]
+    gt = gt.reset_index()
 
     pred_file = ppdb.read_pdb(pred_path)
     pred = pred_file.df['ATOM']
