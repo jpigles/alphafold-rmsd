@@ -6,7 +6,7 @@ import csv
 
 pdb_list = pd.read_csv('./data/proteins_pdb_best.tsv', sep='\t').astype('object')
 
-too_short_trims = []
+trim_values = []
 for i in range(len(pdb_list)):
     # skip extra rows for NMR files
     model = pdb_list.loc[i, 'Model']
@@ -35,7 +35,7 @@ for i in range(len(pdb_list)):
     pred_file = ppdb.read_pdb(pred_path)
     pred = pred_file.df['ATOM']
 
-    print(len(gt), len(pred))
+    print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
 
     # Create list of rows that are present in both gt and pred based on row indices of pred
     present_atoms_pred = []
@@ -76,7 +76,7 @@ for i in range(len(pdb_list)):
     pred_trim = pred.drop(index=na_atoms)
     gt_trim = gt.drop(index=extra_atoms_gt)
 
-    print('Length of gt: ' + str(len(gt_trim)) + ', Length of pred: ' + str(len(pred_trim)))
+    print('Length of gt_trim: ' + str(len(gt_trim)) + ', Length of pred_trim: ' + str(len(pred_trim)))
 
     try:
         assert len(pred_trim) == len(gt_trim)
@@ -89,8 +89,16 @@ for i in range(len(pdb_list)):
         print('AssertionError! Check file')
         break
 
-    if len(gt_trim) < 1500:
-        too_short_trims.append(pdb)
+    gt_perc = len(gt_trim) / len(gt)
+    pred_perc = len(pred_trim) / len(pred)
+    trim_values_dict = {'PDB': pdb,
+                        'gt_len': len(gt),
+                        'gt_trim_len': len(gt_trim),
+                        'pred_len': len(pred),
+                        'pred_trim_len': len(pred_trim),
+                        'gt_perc': gt_perc,
+                        'trim_perc': pred_perc}
+    trim_values.append(trim_values_dict)
 
     print(f'Success! Creating trimmed files for {pdb}...')
     # Make directory for specific pdb
@@ -101,9 +109,10 @@ for i in range(len(pdb_list)):
         af_dir = os.mkdir(f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/')
         new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
 
-with open('./data/wrong_offsets.tsv', 'w') as file:
-    fields = ['Incorrect_pdbs']
-    writer = csv.writer(file)
+with open('./data/trim_values.tsv', 'w') as file:
+    fields = ['PDB', 'gt_len', 'gt_trim_len', 'pred_len', 'pred_trim_len', 'gt_perc', 'trim_perc']
+    writer = csv.DictWriter(file, fieldnames=fields)
     
-    writer.writerow(fields)
-    writer.writerows(too_short_trims)
+    writer.writeheader()
+    for item in trim_values:
+        writer.writerow(item)
