@@ -26,13 +26,13 @@ for i in range(len(pdb_list)):
     print(f'Trying {pdb}...')
 
     # gt model
-    ppdb = PandasPdb()
-    gt_file = ppdb.read_pdb(gt_path)
+    gt_file = PandasPdb().read_pdb(gt_path)
     gt_all_chains = gt_file.df['ATOM']
     gt = gt_all_chains[gt_all_chains['chain_id'] == auth_chain]
     gt = gt.reset_index()
 
-    pred_file = ppdb.read_pdb(pred_path)
+
+    pred_file = PandasPdb().read_pdb(pred_path)
     pred = pred_file.df['ATOM']
 
     print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
@@ -76,6 +76,10 @@ for i in range(len(pdb_list)):
     pred_trim = pred.drop(index=na_atoms)
     gt_trim = gt.drop(index=extra_atoms_gt)
 
+    # Quirk of PandasPDB means I have to save the trims to ppdb.df['ATOM']
+    gt_file.df['ATOM'] = gt_trim
+    pred_file.df['ATOM'] = pred_trim
+
     print('Length of gt_trim: ' + str(len(gt_trim)) + ', Length of pred_trim: ' + str(len(pred_trim)))
 
     try:
@@ -103,15 +107,15 @@ for i in range(len(pdb_list)):
     print(f'Success! Creating trimmed files for {pdb}...')
     # Make directory for specific pdb
     try:
-        new_gt = gt_trim.to_csv(gt_out_path, sep='\t', index=False)
-        new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
+        new_gt = gt_file.to_pdb(gt_out_path, records=['ATOM'], gz=False, append_newline=True)
+        new_pred = pred_file.to_pdb(pred_out_path, records=['ATOM'], gz=False, append_newline=True)
     except OSError:
         af_dir = os.mkdir(f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/')
-        new_pred = pred_trim.to_csv(pred_out_path, sep='\t', index=False)
+        new_pred = pred_file.to_pdb(pred_out_path, records=['ATOM'], gz=False, append_newline=True)
 
 with open('./data/trim_values.tsv', 'w') as file:
     fields = ['PDB', 'gt_len', 'gt_trim_len', 'pred_len', 'pred_trim_len', 'gt_perc', 'trim_perc']
-    writer = csv.DictWriter(file, fieldnames=fields)
+    writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
     
     writer.writeheader()
     for item in trim_values:
