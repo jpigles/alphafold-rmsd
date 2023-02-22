@@ -1,14 +1,11 @@
 from biopandas.pdb import PandasPdb
 import pandas as pd
 from pdbecif.mmcif_io import CifFileReader
-import csv
-
-#To access our chain of interest, an example splice can be seen below
-# print(req_json[uniprot]['mappings'][0]['segments'][0]['chains'])
 
 # Load list of our best pdb files
-pdbs_df = pd.read_csv('./sample_data/sample_proteins_pdb_best.tsv', sep = '\t').astype('object')
+pdbs_df = pd.read_csv('./data/trim_values.csv', sep = ',').astype('object')
 
+# Functions start here
 def get_offset(fp, pdb):
     # initiate reader object
     cfr = CifFileReader()
@@ -31,6 +28,7 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
 
     # Replace residue numbers in our chain of interest
     if offset == 0:
+        ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
         return f'No fix needed for {pdb}'
     else:
         for i in range(len(pred)):
@@ -48,19 +46,19 @@ def fix_seq_id(pdb, in_fp, out_fp, chain, offset):
 # Get offset between author and uniprot seq id
 offsets = []
 
+# Run through main list and fix pdb files
 for i in range(len(pdbs_df)):
-
-    # Info needed for opening cif file
-    pdb_id = pdbs_df.loc[i, 'PDB ID']
-    cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
-    
-    # Info needed for pdb object
-    pdb_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
-    out_path = f'./sample_data/input/sample_pdbs/{pdb_id}.pdb'
+    # Define pdbs to work with and auth_chains in pdb files
+    pdb_id = pdbs_df.loc[i, 'PDB']
     auth_chain = pdbs_df.loc[i, 'Auth_chain']
 
+    # Designate file locations
+    cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
+    pdb_path = f'./data/input/RCSB/offset_pdbs/{pdb_id}.pdb'
+    out_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
+
     # Get offset
-    offset= get_offset(cif_path, pdb_id)
+    offset = get_offset(cif_path, pdb_id)
     offsets.append(offset)
 
     # fix pdb sequence ids
@@ -68,5 +66,5 @@ for i in range(len(pdbs_df)):
     print(fixed_pdb)
 
 # Add offsets to file
-pdbs_df.insert(18, 'Auth_offset', offsets)
-pdbs_df.to_csv('./sample_data/sample_proteins_offset.tsv', sep = '\t', index=False)
+pdbs_df.insert(8, 'Auth_offset', offsets)
+pdbs_df.to_csv('./sample_data/minor_offset_proteins_pdb_best.tsv', sep = '\t', index=False)
