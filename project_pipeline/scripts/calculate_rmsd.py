@@ -10,35 +10,37 @@ def load_and_select(gt_fn, pred_fn, region1, region2):
         # select region1 and region2
         cmd.select(f'{obj}_1', f'{obj} and {region1}')
         cmd.select(f'{obj}_2', f'{obj} and {region2}')
+        cmd.color('red', f'{obj}_1')
+        cmd.color('green',f'{obj}_2')
 
-        # color 
-        cmd.color('yellow', f'{obj}_interface_R')
-        cmd.color('blue',f'{obj}_interface_L')ibitory domain) and region2 ("functional" domain)
-
-def superimpose_receptors(complex_fn):
-    # superimpose receptor chains and calculate rmsd for idr, assume existence of corresp sels
-    super = cmd.super('native_R','pred_R')
-    cmd.color('purple','native_R')
-    cmd.color('yellow','native_L')
-    cmd.color('gray','pred_R')
-    cmd.color('orange','pred_L')
-    cmd.multisave(complex_fn, 'all', format='pdb')
+def superimpose_region(region_num, complex_fn):
+    # superimpose given region and calculate rmsd
+    super = cmd.super('native_2','pred_2')
+    cmd.color('purple','native_2')
+    cmd.color('yellow','native_1')
+    cmd.color('gray','pred_2')
+    cmd.color('orange','pred_1')
+    
 
 # First define what those regions are.
 # superimpose receptor chains and calculate rmsd for ligand
-def calculate_rmsd(self, pdb_id, gt_pdb_fn, pred_pdb_fn, complex_fn, verbose=False):
-        ''' Calculate rmsd between gt and pred
-              superimpose pred onto gt (with receptor only)
-              assume chain_names[-1] is the target chain (e.g. peptide or idr)
+def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region1, region2, verbose=False):
+        '''Calculate rmsd between gt and pred regions and whole proteins
+            Region1 is autoinhibitory region, region2 is domain
         '''
+        
+        # Rmsds are in order of whole protein, region2, region1
         rmsds = []
-        aa_utils.load_and_select \
-            (self.interface_dist, gt_pdb_fn, pred_pdb_fn,
-             self.chain_ids[pdb_id], backbone=self.backbone,
-             remove_hydrogen=self.remove_hydrogen)
-        aa_utils.superimpose_receptors(complex_fn)
+        load_and_select \
+            (gt_pdb_fn, pred_pdb_fn,
+            region1, region2)
+
+        # Superimpose region2 (domains) and calculate rmsd for whole protein and only region2
+        superimpose_region(2, complex_fn)`
+        cmd.multisave(complex_fn, 'all', format='pdb')
         rmsd = cmd.rms_cur('native_L','pred_L')
         rmsds.append(rmsd)
+
 
         # save two objects after superimposing receptor chain
         cmd.color('gray','native')
