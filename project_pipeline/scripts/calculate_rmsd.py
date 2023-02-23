@@ -15,6 +15,15 @@ def load_and_select(gt_fn, pred_fn, region1, region2):
         cmd.color('yellow', f'{obj}_interface_R')
         cmd.color('blue',f'{obj}_interface_L')ibitory domain) and region2 ("functional" domain)
 
+def superimpose_receptors(complex_fn):
+    # superimpose receptor chains and calculate rmsd for idr, assume existence of corresp sels
+    super = cmd.super('native_R','pred_R')
+    cmd.color('purple','native_R')
+    cmd.color('yellow','native_L')
+    cmd.color('gray','pred_R')
+    cmd.color('orange','pred_L')
+    cmd.multisave(complex_fn, 'all', format='pdb')
+
 # First define what those regions are.
 # superimpose receptor chains and calculate rmsd for ligand
 def calculate_rmsd(self, pdb_id, gt_pdb_fn, pred_pdb_fn, complex_fn, verbose=False):
