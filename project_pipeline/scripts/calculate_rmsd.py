@@ -1,7 +1,8 @@
 from pymol import cmd
 import pandas as pd
+import csv
 
-# Load and select native and pred pdbs.
+pdb_df = pd.read_csv('./data/proteins_pdb_best.tsv', sep='\t').astype('object')
 
 def replace_commas(region):
     cmd_region = region
@@ -12,6 +13,7 @@ def replace_commas(region):
 
 
 def load_and_select(gt_fn, pred_fn, region1, region2):
+    # Load and select native and pred pdbs
     cmd.delete('all')
     cmd.load(gt_fn, 'native')
     cmd.load(pred_fn, 'pred')
@@ -69,14 +71,34 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region1, region2, verbose
     if verbose: print(rmsds)
     return rmsds
 
-pdb_df = pd.read_csv('./data/proteins_pdb_best.tsv', sep='\t').astype('object')
-
+rmsd_info = []
 for i in range(len(pdb_df)):
     # Define pdb, filenames, region1, region2
     pdb = pdb_df.loc[i, 'PDB ID']
     uniprot = pdb_df.loc[i, 'Uniprot_ID']
     region_1 = replace_commas(pdb_df.loc[i, 'region_1'])
     region_2 = replace_commas(pdb_df.loc[i, 'region_2'])
+    percent_reg1 = pdb_df.loc[i, 'Percent residues in region_1']
+    percent_reg2 = pdb_df.loc[i, 'Percent residues in region_2']
     gt_fn = f'./data/input/RCSB/pdbs_trim/{pdb}.pdb'
     pred_fn = f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/ranked_0.pdb'
     complex_fn = f'./data/output/RCSB_af_full/complex/{pdb}.pdb'
+
+    rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1, region_2)
+
+    rmsd_dic = {'UniProt': uniprot,
+                'PDB': pdb,
+                'complex_rmsd': rmsds[0],
+                'region1_rmsd': rmsds[2],
+                'region2_rmsd': rmsds[1],
+                'Percent residues in region_1': percent_reg1,
+                'Percent residues in region_2': percent_reg2}
+    rmsd_info.append(rmsd_dic)
+
+with open('./data/rmsds.tsv', 'w') as file:
+    fields = ['Uniprot', 'PDB', 'complex_rmsd', 'region1_rmsd', 'region2_rmsd', 'Percent residues in region_1', 'Percent residues in region_2']
+    writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
+    
+    writer.writeheader()
+    for item in rmsd_info:
+        writer.writerow(item)
