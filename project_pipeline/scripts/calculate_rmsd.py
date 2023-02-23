@@ -2,6 +2,15 @@ from pymol import cmd
 import pandas as pd
 
 # Load and select native and pred pdbs.
+
+def replace_commas(region):
+    cmd_region = region
+    if ',' in cmd_region:
+        cmd_region = cmd_region.replace(',', '+')
+        
+    return cmd_region
+
+
 def load_and_select(gt_fn, pred_fn, region1, region2):
     cmd.delete('all')
     cmd.load(gt_fn, 'native')
@@ -60,3 +69,14 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region1, region2, verbose
     if verbose: print(rmsds)
     return rmsds
 
+pdb_df = pd.read_csv('./data/proteins_pdb_best.tsv', sep='\t').astype('object')
+
+for i in range(len(pdb_df)):
+    # Define pdb, filenames, region1, region2
+    pdb = pdb_df.loc[i, 'PDB ID']
+    uniprot = pdb_df.loc[i, 'Uniprot_ID']
+    region_1 = replace_commas(pdb_df.loc[i, 'region_1'])
+    region_2 = replace_commas(pdb_df.loc[i, 'region_2'])
+    gt_fn = f'./data/input/RCSB/pdbs_trim/{pdb}.pdb'
+    pred_fn = f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/ranked_0.pdb'
+    complex_fn = f'./data/output/RCSB_af_full/complex/{pdb}.pdb'
