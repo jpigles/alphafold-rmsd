@@ -18,7 +18,7 @@ def superimpose_region(region_num):
     super = cmd.super(f'native_{region_num}',f'pred_{region_num}')
     cmd.color('purple','native_2')
     cmd.color('yellow','native_1')
-    cmd.color('gray','pred_2')
+    cmd.color('blue','pred_2')
     cmd.color('orange','pred_1')
     
 
@@ -36,11 +36,19 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region1, region2, verbose
             region1, region2)
 
         # Superimpose region2 (domains) and calculate rmsd for whole protein and only region2. Save complex based on region2 alignment.
-        superimpose_region(2)`
+        superimpose_region(2)
         cmd.multisave(complex_fn, 'all', format='pdb')
-        rmsd = cmd.rms_cur('native_L','pred_L')
+        # Calculate rmsd of whole protein
+        rmsd = cmd.rms_cur('native','pred')
+        rmsds.append(rmsd)
+        # Calculate rmsd of region2
+        rmsd = cmd.rmsd_cur('native_2, pred_2')
         rmsds.append(rmsd)
 
+        # Superimpose region1 (autoinhibitory regions) and calculate rmsd
+        superimpose_region(1)
+        rmsd = cmd.rms_cur('native_1', 'pred_1')
+        rmsds.append(rmsd)
 
         # save two objects after superimposing receptor chain
         cmd.color('gray','native')
@@ -48,10 +56,6 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region1, region2, verbose
         for obj in ['native','pred']:
             cmd.color('yellow', f'{obj}_interface_R')
             cmd.color('blue',f'{obj}_interface_L')
-
-        # calculate rmsd for interface idr only
-        rmsd = cmd.rms_cur('native_interface_L','pred_interface_L')
-        rmsds.append(rmsd)
 
         rmsds = [round(rmsd,3) for rmsd in rmsds]
         if verbose: print(rmsds)
