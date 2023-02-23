@@ -13,9 +13,9 @@ def load_and_select(gt_fn, pred_fn, region1, region2):
         cmd.color('red', f'{obj}_1')
         cmd.color('green',f'{obj}_2')
 
-def superimpose_region(region_num, complex_fn):
+def superimpose_region(region_num):
     # superimpose given region and calculate rmsd
-    super = cmd.super('native_2','pred_2')
+    super = cmd.super(f'native_{region_num}',f'pred_{region_num}')
     cmd.color('purple','native_2')
     cmd.color('yellow','native_1')
     cmd.color('gray','pred_2')
@@ -35,8 +35,8 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region1, region2, verbose
             (gt_pdb_fn, pred_pdb_fn,
             region1, region2)
 
-        # Superimpose region2 (domains) and calculate rmsd for whole protein and only region2
-        superimpose_region(2, complex_fn)`
+        # Superimpose region2 (domains) and calculate rmsd for whole protein and only region2. Save complex based on region2 alignment.
+        superimpose_region(2)`
         cmd.multisave(complex_fn, 'all', format='pdb')
         rmsd = cmd.rms_cur('native_L','pred_L')
         rmsds.append(rmsd)
