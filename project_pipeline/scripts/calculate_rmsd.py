@@ -9,12 +9,18 @@ def create_region_dict(region, region_num):
     For instance, if domain 1 has 123-222,333-444, then make dict {1.0: 123-222+333-444, 1.1: 123-222, 1.2: 333-444}.
     #.0 always contains the full number of regions.'''
     full_region = region.strip()
-    anchor_region = region.strip()
+    region_dict = {f'{region_num}.0': full_region}
     if ',' in region:
         full_region = region.replace(',', '+')
-        anchor_region = region.split(',')[0]
+        region_dict[f'{region_num}.0'] = full_region
+        regions_list = region.split(',')
+        for i in range(len(regions_list)):
+            subregion = i + 1
+            region_dict[f'{region_num}.{subregion}'] = regions_list[i]
+
+
         
-    return full_region, anchor_region
+    return region_dict
 
 
 def load_and_select(gt_fn, pred_fn, region_1, region_2, region1_anchor, region2_anchor):
