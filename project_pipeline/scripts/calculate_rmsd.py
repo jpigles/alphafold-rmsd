@@ -9,8 +9,8 @@ def replace_commas(region):
         First, create full_region which just replaces the comma with + (from ###-###,###-### to ###-###+###-###)
         Second, create anchor_region, which is just the first section (from 111-111,222-222 to 111-111) which will be used to superimpose
         If no commas, full_region and anchor_region are the same'''
-    full_region = region
-    anchor_region = region
+    full_region = region.strip()
+    anchor_region = region.strip()
     if ',' in region:
         full_region = region.replace(',', '+')
         anchor_region = region.split(',')[0]
@@ -35,7 +35,12 @@ def load_and_select(gt_fn, pred_fn, region_1, region_2, region1_anchor, region2_
 
 def superimpose_region(region_num):
     # superimpose given region and calculate rmsd
-    super = cmd.super(f'native{region_num}_anchor',f'pred{region_num}_anchor')
+    try:
+        super = cmd.super(f'native{region_num}_anchor',f'pred{region_num}_anchor')
+    except pymol.CmdException:
+        print(f'Region {region_num} missing')
+        return False
+
     cmd.color('purple','native_2')
     cmd.color('yellow','native_1')
     cmd.color('blue','pred_2')
@@ -65,8 +70,11 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2, regio
     rmsds.append(rmsd)
 
     # Superimpose region1 (autoinhibitory regions) and calculate rmsd
-    superimpose_region(1)
-    rmsd = cmd.rms_cur('native_1', 'pred_1')
+    region1_sup = superimpose_region(1)
+    if region1_sup == False:
+        rmsd = 0
+    else:
+        rmsd = cmd.rms_cur('native_1', 'pred_1')
     rmsds.append(rmsd)
 
     # save two objects after superimposing region1
@@ -107,7 +115,7 @@ for i in range(len(pdb_df)):
     rmsd_info.append(rmsd_dic)
 
 with open('./data/rmsds.tsv', 'w') as file:
-    fields = ['Uniprot', 'PDB', 'complex_rmsd', 'region1_rmsd', 'region2_rmsd', 'Percent residues in region_1', 'Percent residues in region_2']
+    fields = ['UniProt', 'PDB', 'complex_rmsd', 'region1_rmsd', 'region2_rmsd', 'Percent residues in region_1', 'Percent residues in region_2']
     writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
     
     writer.writeheader()
