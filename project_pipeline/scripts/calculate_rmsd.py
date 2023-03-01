@@ -24,7 +24,7 @@ def create_region_dict(region, region_num):
     return region_dict
 
 
-def load_and_select(gt_fn, pred_fn, region_1, region_2, region1_anchor, region2_anchor):
+def load_and_select(gt_fn, pred_fn, region_1, region_2):
     # Load and select native and pred pdbs
     cmd.delete('all')
     cmd.load(gt_fn, 'native')
@@ -32,12 +32,13 @@ def load_and_select(gt_fn, pred_fn, region_1, region_2, region1_anchor, region2_
 
     for obj in ['native','pred']:
         # select region1 and region2
-        cmd.select(f'{obj}_1', f'{obj} and resi {region_1}')
-        cmd.select(f'{obj}_2', f'{obj} and resi {region_2}')
-        cmd.select(f'{obj}1_anchor', f'{obj} and resi {region1_anchor}')
-        cmd.select(f'{obj}2_anchor', f'{obj} and resi {region2_anchor}')
-        cmd.color('red', f'{obj}_1')
-        cmd.color('green',f'{obj}_2')
+        for key in region_1.keys:
+            # example: native_1.1, native and resi 111-222
+            resi_range = region_1[key]
+            cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
+        for key in region_2.keys:
+            resi_range = region_2[key]
+            cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
 
 def superimpose_region(region_num):
     # superimpose given region and calculate rmsd
@@ -53,7 +54,7 @@ def superimpose_region(region_num):
     cmd.color('orange','pred_1')
     
 
-def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2, region1_anchor, region2_anchor, verbose=False):
+def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2, verbose=False):
     '''Calculate rmsd between gt and pred regions and whole proteins
         Region1 is autoinhibitory region, region2 is domain
     '''
@@ -62,8 +63,7 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2, regio
     rmsds = []
     load_and_select \
         (gt_pdb_fn, pred_pdb_fn,
-        region_1, region_2, 
-        region1_anchor, region2_anchor)
+        region_1, region_2)
 
     # Superimpose region2 (domains) and calculate rmsd for whole protein and only region2. Save complex based on region2 alignment.
     superimpose_region(2)
@@ -108,7 +108,7 @@ for i in range(len(pdb_df)):
     complex_fn = f'./data/output/RCSB_af_full/complex/{pdb}.pdb'
     
     print(f'Trying {pdb}...')
-    rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1, region_2, region1_anchor, region2_anchor)
+    rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
     
     rmsd_dic = {'UniProt': uniprot,
                 'PDB': pdb,
