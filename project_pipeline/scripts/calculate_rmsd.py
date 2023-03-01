@@ -4,11 +4,10 @@ import csv
 
 pdb_df = pd.read_csv('./data/proteins_pdb_best.tsv', sep='\t').astype('object')
 
-def replace_commas(region):
-    '''If a region has several sections, do two things
-        First, create full_region which just replaces the comma with + (from ###-###,###-### to ###-###+###-###)
-        Second, create anchor_region, which is just the first section (from 111-111,222-222 to 111-111) which will be used to superimpose
-        If no commas, full_region and anchor_region are the same'''
+def create_region_dict(region, region_num):
+    '''Create a dictionary containing an ID for every region in the domain
+    For instance, if domain 1 has 123-222,333-444, then make dict {1.0: 123-222+333-444, 1.1: 123-222, 1.2: 333-444}.
+    #.0 always contains the full number of regions.'''
     full_region = region.strip()
     anchor_region = region.strip()
     if ',' in region:
@@ -93,8 +92,8 @@ for i in range(len(pdb_df)):
     # Define pdb, filenames, region1, region2
     pdb = pdb_df.loc[i, 'PDB ID']
     uniprot = pdb_df.loc[i, 'Uniprot_ID']
-    region_1, region1_anchor = replace_commas(pdb_df.loc[i, 'region_1'])
-    region_2, region2_anchor = replace_commas(pdb_df.loc[i, 'region_2'])
+    region_1, region1_anchor = create_region_dict(pdb_df.loc[i, 'region_1'], 1)
+    region_2, region2_anchor = create_region_dict(pdb_df.loc[i, 'region_2'], 2)
     percent_reg1 = pdb_df.loc[i, 'Percent residues in region_1']
     percent_reg2 = pdb_df.loc[i, 'Percent residues in region_2']
     gt_fn = f'./data/input/RCSB/pdbs_trim/{pdb}.pdb'
