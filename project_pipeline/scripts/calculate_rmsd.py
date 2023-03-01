@@ -9,17 +9,18 @@ def create_region_dict(region, region_num):
     For instance, if domain 1 has 123-222,333-444, then make dict {1.0: 123-222+333-444, 1.1: 123-222, 1.2: 333-444}.
     #.0 always contains the full number of regions.'''
     full_region = region.strip()
+    # Each dict will have at least one entry.
     region_dict = {f'{region_num}.0': full_region}
     if ',' in region:
         full_region = region.replace(',', '+')
+        # Substitute full_region in the dict to one with + in place of ,
         region_dict[f'{region_num}.0'] = full_region
         regions_list = region.split(',')
         for i in range(len(regions_list)):
+            # Make subregions 1-indexed to preserve #.0 as full.
             subregion = i + 1
             region_dict[f'{region_num}.{subregion}'] = regions_list[i]
 
-
-        
     return region_dict
 
 
@@ -98,8 +99,8 @@ for i in range(len(pdb_df)):
     # Define pdb, filenames, region1, region2
     pdb = pdb_df.loc[i, 'PDB ID']
     uniprot = pdb_df.loc[i, 'Uniprot_ID']
-    region_1, region1_anchor = create_region_dict(pdb_df.loc[i, 'region_1'], 1)
-    region_2, region2_anchor = create_region_dict(pdb_df.loc[i, 'region_2'], 2)
+    region_1_dict = create_region_dict(pdb_df.loc[i, 'region_1'], 1)
+    region_2_dict = create_region_dict(pdb_df.loc[i, 'region_2'], 2)
     percent_reg1 = pdb_df.loc[i, 'Percent residues in region_1']
     percent_reg2 = pdb_df.loc[i, 'Percent residues in region_2']
     gt_fn = f'./data/input/RCSB/pdbs_trim/{pdb}.pdb'
