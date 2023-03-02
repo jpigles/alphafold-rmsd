@@ -32,11 +32,11 @@ def load_and_select(gt_fn, pred_fn, region_1, region_2):
 
     for obj in ['native','pred']:
         # select region1 and region2
-        for key in region_1.keys:
+        for key in region_1:
             # example: native_1.1, native and resi 111-222
             resi_range = region_1[key]
             cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
-        for key in region_2.keys:
+        for key in region_2:
             resi_range = region_2[key]
             cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
 
@@ -46,9 +46,9 @@ def align_and_calculate(align_reg_key, comp_region_key):
     rmsds = []
     try:
         align = cmd.align(f'native_{align_reg_key}', f'pred_{align_reg_key}')
-        rmsd = cmd.cur_rms(f'native_{align_reg_key}', f'pred_{align_reg_key}')
+        rmsd = cmd.rms_cur(f'native_{align_reg_key}', f'pred_{align_reg_key}')
         rmsds.append(round(rmsd, 3))
-        rmsd = cmd.cur_rms(f'native_{comp_region_key}', f'pred_{comp_region_key}')
+        rmsd = cmd.rms_cur(f'native_{comp_region_key}', f'pred_{comp_region_key}')
         rmsds.append(round(rmsd, 3))
         return rmsds
 
@@ -76,15 +76,15 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
     rmsds['complex_rmsd'] = rmsd
 
     # Superimpose each region and calculate rmsds
-    for key in region_1.keys:
-        if len(region_1.keys) > 1 and '.0' in key:
+    for key in region_1:
+        if len(region_1) > 1 and '.0' in key:
             continue
         two_rmsds = align_and_calculate(key, '2.0')
         rmsds[key + '_aligned'] = two_rmsds[0]
         rmsds[key + '_comp'] = two_rmsds[1]
 
-    for key in region_2.keys:
-        if len(region_2.keys) > 1 and '.0' in key:
+    for key in region_2:
+        if len(region_2) > 1 and '.0' in key:
             continue
         two_rmsds = align_and_calculate(key, '1.0')
         rmsds[key + '_aligned'] = two_rmsds[0]
@@ -139,7 +139,7 @@ for i in range(len(pdb_df)):
 with open('./data/rmsds.tsv', 'w') as file:
     fields = ['UniProt', 'PDB', 'complex_rmsd', '1.0_aligned', '1.0_comp',
                 '1.1_aligned', '1.1_comp', '1.2_aligned', '1.2_comp', '2.0_aligned', '2.0_comp',
-                '2.1_aligned', '2.1_comp', '2.2_aligned', '2.2_comp', '2.3_aligned', '2.3_comp'
+                '2.1_aligned', '2.1_comp', '2.2_aligned', '2.2_comp', '2.3_aligned', '2.3_comp',
                 'Percent residues in region_1', 'Percent residues in region_2']
     writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
     
