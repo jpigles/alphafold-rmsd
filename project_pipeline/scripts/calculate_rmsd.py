@@ -73,7 +73,7 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
     cmd.multisave(complex_fn, 'all', format='pdb')
     # Calculate rmsd of whole protein
     rmsd = cmd.rms_cur('native','pred')
-    rmsds['complex_rmsd'] = rmsd
+    rmsds['complex_rmsd'] = round(rmsd, 3)
 
     # Superimpose each region and calculate rmsds
     for key in region_1:
