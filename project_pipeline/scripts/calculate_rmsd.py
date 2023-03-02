@@ -54,7 +54,7 @@ def align_and_calculate(align_reg_key, comp_region_key):
 
     except pymol.CmdException:
         print(f'Region {align_reg_key} missing')
-        rmsds = [0, 0]
+        rmsds = [-1, -1]
         return rmsds
 
 def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
@@ -111,21 +111,21 @@ for i in range(len(pdb_df)):
     # Define default values for columns to retain number of columns per row
     rmsd_dic = {'UniProt': uniprot,
                 'PDB': pdb,
-                'complex_rmsd': 'NA',
-                '1.0_aligned': 'NA',
-                '1.0_comp': 'NA',
-                '1.1_aligned': 'NA',
-                '1.1_comp': 'NA',
-                '1.2_aligned': 'NA',
-                '1.2_comp': 'NA',
-                '2.0_aligned': 'NA',
-                '2.0_comp': 'NA',
-                '2.1_aligned': 'NA',
-                '2.1_comp': 'NA',
-                '2.2_aligned': 'NA',
-                '2.2_comp': 'NA',
-                '2.3_aligned': 'NA',
-                '2.3_comp': 'NA',
+                'complex_rmsd': 0,
+                '1.0_aligned': 0,
+                '1.0_comp': 0,
+                '1.1_aligned': 0,
+                '1.1_comp': 0,
+                '1.2_aligned': 0,
+                '1.2_comp': 0,
+                '2.0_aligned': 0,
+                '2.0_comp': 0,
+                '2.1_aligned': 0,
+                '2.1_comp': 0,
+                '2.2_aligned': 0,
+                '2.2_comp': 0,
+                '2.3_aligned': 0,
+                '2.3_comp': 0,
                 'Percent residues in region_1': percent_reg1,
                 'Percent residues in region_2': percent_reg2}
 
