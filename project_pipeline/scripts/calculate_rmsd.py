@@ -40,58 +40,57 @@ def load_and_select(gt_fn, pred_fn, region_1, region_2):
             resi_range = region_2[key]
             cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
 
-def superimpose_region(region_num):
-    # superimpose given region and calculate rmsd
+def align_and_calculate(align_reg_key, comp_region_key):
+    # superimpose aligned region and calculate two rmsds: One for aligned region and one for complementary region (for example, rmsd for "aligned" region 1.1 
+    # and complementary region 2.0)
+    rmsds = []
     try:
-        super = cmd.super(f'native{region_num}_anchor',f'pred{region_num}_anchor')
+        align = cmd.align(f'native_{align_reg_key}', f'pred_{align_reg_key}')
+        rmsd = cmd.cur_rms(f'native_{align_reg_key}', f'pred_{align_reg_key}')
+        rmsds.append(rmsd)
+        rmsd = cmd.cur_rms(f'native_{comp_region_key}', f'pred_{comp_region_key}')
+        rmsds.append(rmsd)
+        return rmsds
+
     except pymol.CmdException:
-        print(f'Region {region_num} missing')
-        return False
+        print(f'Region {align_reg_key} missing')
+        rmsds = [0, 0]
+        return rmsds
 
-    cmd.color('purple','native_2')
-    cmd.color('yellow','native_1')
-    cmd.color('blue','pred_2')
-    cmd.color('orange','pred_1')
-    
-
-def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2, verbose=False):
+def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
     '''Calculate rmsd between gt and pred regions and whole proteins
         Region1 is autoinhibitory region, region2 is domain
     '''
     
-    # Rmsds are in order of whole protein, region2, region1
-    rmsds = []
+    # Rmsds is a dict of variable size with format {'complex_rmsd': ####, '1.0_aligned': ###, '1.0_comp': ###, ...}. Size based on number subregions.
+    rmsds = {}
     load_and_select \
         (gt_pdb_fn, pred_pdb_fn,
         region_1, region_2)
 
-    # Superimpose region2 (domains) and calculate rmsd for whole protein and only region2. Save complex based on region2 alignment.
-    superimpose_region(2)
+    # Superimpose entirety of proteins
+    align = cmd.align('native', 'pred')
     cmd.multisave(complex_fn, 'all', format='pdb')
     # Calculate rmsd of whole protein
     rmsd = cmd.rms_cur('native','pred')
-    rmsds.append(rmsd)
-    # Calculate rmsd of region2
-    rmsd = cmd.rms_cur('native_2', 'pred_2')
-    rmsds.append(rmsd)
+    rmsds['complex_rmsd'] = rmsd
 
-    # Superimpose region1 (autoinhibitory regions) and calculate rmsd
-    region1_sup = superimpose_region(1)
-    if region1_sup == False:
-        rmsd = 0
-    else:
-        rmsd = cmd.rms_cur('native_1', 'pred_1')
-    rmsds.append(rmsd)
+    # Superimpose each region and calculate rmsds
+    for key in region_1.keys:
+        if len(region_1.keys) > 1 and '.0' in key:
+            continue
+        two_rmsds = align_and_calculate(key, '2.0')
+        rmsds[key + '_aligned'] = two_rmsds[0]
+        rmsds[key + '_comp'] = two_rmsds[1]
 
-    # save two objects after superimposing region1
-    cmd.color('gray','native')
-    cmd.color('red','pred')
-    for obj in ['native','pred']:
-        cmd.color('yellow', f'{obj}_1')
-        cmd.color('blue',f'{obj}_1')
+    for key in region_2.keys:
+        if len(region_2.keys) > 1 and '.0' in key:
+            continue
+        two_rmsds = align_and_calculate(key, '1.0')
+        rmsds[key + '_aligned'] = two_rmsds[0]
+        rmsds[key + '_comp'] = two_rmsds[1]
 
-    rmsds = [round(rmsd,3) for rmsd in rmsds]
-    if verbose: print(rmsds)
+    rmsds = [round(rmsd,3) for rmsd in rmsds.values]
     return rmsds
 
 rmsd_info = []
