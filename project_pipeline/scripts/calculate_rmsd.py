@@ -47,9 +47,9 @@ def align_and_calculate(align_reg_key, comp_region_key):
     try:
         align = cmd.align(f'native_{align_reg_key}', f'pred_{align_reg_key}')
         rmsd = cmd.cur_rms(f'native_{align_reg_key}', f'pred_{align_reg_key}')
-        rmsds.append(rmsd)
+        rmsds.append(round(rmsd, 3))
         rmsd = cmd.cur_rms(f'native_{comp_region_key}', f'pred_{comp_region_key}')
-        rmsds.append(rmsd)
+        rmsds.append(round(rmsd, 3))
         return rmsds
 
     except pymol.CmdException:
@@ -90,7 +90,6 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
         rmsds[key + '_aligned'] = two_rmsds[0]
         rmsds[key + '_comp'] = two_rmsds[1]
 
-    rmsds = [round(rmsd,3) for rmsd in rmsds.values]
     return rmsds
 
 rmsd_info = []
@@ -108,19 +107,40 @@ for i in range(len(pdb_df)):
     
     print(f'Trying {pdb}...')
     rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
-    
+
+    # Define default values for columns to retain number of columns per row
     rmsd_dic = {'UniProt': uniprot,
                 'PDB': pdb,
-                'complex_rmsd': rmsds[0],
-                'region1_rmsd': rmsds[2],
-                'region2_rmsd': rmsds[1],
+                'complex_rmsd': 'NA',
+                '1.0_aligned': 'NA',
+                '1.0_comp': 'NA',
+                '1.1_aligned': 'NA',
+                '1.1_comp': 'NA',
+                '1.2_aligned': 'NA',
+                '1.2_comp': 'NA',
+                '2.0_aligned': 'NA',
+                '2.0_comp': 'NA',
+                '2.1_aligned': 'NA',
+                '2.1_comp': 'NA',
+                '2.2_aligned': 'NA',
+                '2.2_comp': 'NA',
+                '2.3_aligned': 'NA',
+                '2.3_comp': 'NA',
                 'Percent residues in region_1': percent_reg1,
                 'Percent residues in region_2': percent_reg2}
+
+    for key in rmsds:
+        if key in rmsd_dic:
+            rmsd_dic[key] = rmsds[key]
+
     print('Success! Writing rmsds')
     rmsd_info.append(rmsd_dic)
 
 with open('./data/rmsds.tsv', 'w') as file:
-    fields = ['UniProt', 'PDB', 'complex_rmsd', 'region1_rmsd', 'region2_rmsd', 'Percent residues in region_1', 'Percent residues in region_2']
+    fields = ['UniProt', 'PDB', 'complex_rmsd', '1.0_aligned', '1.0_comp',
+                '1.1_aligned', '1.1_comp', '1.2_aligned', '1.2_comp', '2.0_aligned', '2.0_comp',
+                '2.1_aligned', '2.1_comp', '2.2_aligned', '2.2_comp', '2.3_aligned', '2.3_comp'
+                'Percent residues in region_1', 'Percent residues in region_2']
     writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
     
     writer.writeheader()
