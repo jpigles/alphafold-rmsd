@@ -136,11 +136,32 @@ for i in range(len(pdb_df)):
     print('Success! Writing rmsds')
     rmsd_info.append(rmsd_dic)
 
+for item in rmsd_info:
+    if item['1.0_aligned'] == 0:
+        item['1_aligned'] = (item['1.1_aligned'] + item['1.2_aligned']) / 2
+        item['1_comp'] = (item['1.1_comp'] + item['1.2_comp']) / 2
+    else:
+        item['1_aligned'] = item['1.0_aligned']
+        item['1_comp'] = item['1.0_comp']
+
+for item in rmsd_info:
+    if item['2.0_aligned'] == 0 and item['2.3_aligned'] == 0:
+        item['2_aligned'] = (item['2.1_aligned'] + item['2.2_aligned']) / 2
+        item['2_comp'] = (item['2.1_comp'] + item['2.2_comp']) / 2
+    elif item['2.0_aligned'] == 0 and item['2.3_aligned'] != 0:
+        item['2_aligned'] = (item['2.1_aligned'] + item['2.2_aligned'] + item['2.3_aligned']) / 3
+        item['2_comp'] = (item['2.1_comp'] + item['2.2_comp'] + item['2.3_comp']) / 3
+    else:
+        item['2_aligned'] = item['2.0_aligned']
+        item['2_comp'] = item['2.0_comp']
+
+
 with open('./data/rmsds.tsv', 'w') as file:
     fields = ['UniProt', 'PDB', 'complex_rmsd', '1.0_aligned', '1.0_comp',
                 '1.1_aligned', '1.1_comp', '1.2_aligned', '1.2_comp', '2.0_aligned', '2.0_comp',
                 '2.1_aligned', '2.1_comp', '2.2_aligned', '2.2_comp', '2.3_aligned', '2.3_comp',
-                'Percent residues in region_1', 'Percent residues in region_2']
+                'Percent residues in region_1', 'Percent residues in region_2', '1_aligned', '1_comp',
+                '2_aligned', '2_comp']
     writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
     
     writer.writeheader()
