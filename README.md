@@ -7,3 +7,6 @@ For every pdb file with NMR as the method of collection, the first model was cho
 There are quite a few things I may need to go back and fix, and could potentially add for reference.
     - 3nhn is missing residues 425-514, which are defined in its 2nd range in proteins_pdb_best.tsv (alongside 76-136), but these missing residues were not taken into account by the quality control test. Uncertain why. I may have to go modify that code. In addition, that range is perhaps not what should have been included. In SRC, another kinase with SH2 and SH3 domains, we were more concerned with the C-terminus, which in HCK is 515-526.
     - I could include experimental structures with one region present and one region missing. It would still give a (partial) estimation of AlphaFold2's efficacy.
+    - Could add 2BDW (C. elegans CamKII). It's got the full structure of the protein in autoinhibited form. We have 2wel, which is human.
+    - LRR domain may not actually be involved in autoinhibition in the NLRP3 inflammasome (6NPY). 6NPY is the inactive conformation, uncertain if it's autoinhibited. 
+    - 1wao (P53041) was missed and it contains a nearly-whole protein.
