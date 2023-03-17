@@ -23,7 +23,13 @@ for i in range(len(df_prot)):
   url = 'https://search.rcsb.org/rcsbsearch/v2/query'
     
   pdb_ids = utils.query_rcsb(uniprot_id, url)
-  df_prot[i, 'PDB'] = pdb_ids
+
+  # If received NaN from query, then drop row. Else, prune chains.
+  if type(pdb_ids) == float:
+    df_prot = df_prot.drop(index=[i])
+  else:
+    pdb_ids_pruned = utils.prune_extra_chains(pdb_ids)
+    df_prot.loc[i, 'PDB'] = pdb_ids_pruned
         
 # Save the df_prot as a tsv file
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
