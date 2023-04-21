@@ -19,6 +19,7 @@ There are quite a few things I may need to go back and fix, and could potentiall
     - 4CKI is missing for P07949.
     - 4CKJ is in the "open", active position, while the AF prediction is in the "closed", autoinhibited position (10.1016/j.molcel.2014.01.015)
     - 1PKG (active) is missing from P10721.
-    - The autoinhibitory region of Heat shock cognate 71 kDa protein acts on its nucleolar targeting signal and not on its active site (very interesting).
+    - The autoinhibitory region of Heat shock cognate 71 kDa protein (P11142) acts on its nucleolar targeting signal and not on its active site (very interesting). It's difficult to say whether the protein is in the autoinhibited or active forms based on the given structures, although we may assume that it is autoinhibited because nucleolar localization due to heat shock is initiated by phosphorylation, possibly of Thr265. In our models, we only have a phosphate in the active site at the phosphate binding pocket.
+    - 2Y1M and 2Y1N are missing for P22681, even though they're the full protein :/. 
 
 THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
