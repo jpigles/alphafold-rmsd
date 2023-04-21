@@ -16,5 +16,9 @@ There are quite a few things I may need to go back and fix, and could potentiall
     - 6LOJ has the active form of IpaH9.8-LRR (compared to autoinhibited full-length 6LOL).
     - Should look into 5E7J (active form of O00571).
     - 2R09 and 2R0D are missing for O08967.
+    - 4CKI is missing for P07949.
+    - 4CKJ is in the "open", active position, while the AF prediction is in the "closed", autoinhibited position (10.1016/j.molcel.2014.01.015)
+    - 1PKG (active) is missing from P10721.
+    - The autoinhibitory region of Heat shock cognate 71 kDa protein acts on its nucleolar targeting signal and not on its active site (very interesting).
 
 THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
