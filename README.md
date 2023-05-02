@@ -21,5 +21,11 @@ There are quite a few things I may need to go back and fix, and could potentiall
     - 1PKG (active) is missing from P10721.
     - The autoinhibitory region of Heat shock cognate 71 kDa protein (P11142) acts on its nucleolar targeting signal and not on its active site (very interesting). It's difficult to say whether the protein is in the autoinhibited or active forms based on the given structures, although we may assume that it is autoinhibited because nucleolar localization due to heat shock is initiated by phosphorylation, possibly of Thr265. In our models, we only have a phosphate in the active site at the phosphate binding pocket.
     - 2Y1M and 2Y1N are missing for P22681, even though they're the full protein :/. 
+    - I am entirely missing P63086 (MAPK1 for Rattus norvegicus) and P63085 (MAPK1 for Mus musculus). I really think I should have these...
+    - CRKII (P46108) and CrkL (P46109) are weird. The binding site of the SH2 domain in CrkL is occluded compared to CRKII, but phosphorylation leads to further inhibition (same as CRKII). Meanwhile, the binding site of the SH3 domain is entirely open in CrkL and can interact with ligands at any time. In this sense, it is hard to characterize CrkL as "autoinhibited" versus "active".
+    - 2AYN is missing for P54578.
+    - 2J0L is missing for Q00944
+    - P49137 is missing 1NY3 and 1NXK (active forms) and 1KWP (autoinhibited form).
+
 
 THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
