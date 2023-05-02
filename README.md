@@ -26,6 +26,11 @@ There are quite a few things I may need to go back and fix, and could potentiall
     - 2AYN is missing for P54578.
     - 2J0L is missing for Q00944
     - P49137 is missing 1NY3 and 1NXK (active forms) and 1KWP (autoinhibited form).
+    - 4D7Q is chimeric.
+    - Can also pull 5UPD for Q9BZ95.
+    - Can add Q96L73 with autoinhibited structure 3OOI (PMID 21196496). 
+    - Can add Q96028 with autoinhibited structure 5LSU (PMID 27571355).
+    - For Q9UM73, 5IUI is in the "dfg-in" conformation (appears to be the autoinhibited conformation) and 5IUG is in the "dfg-out" conformation. 5IUG is missing density for region 1, but it's not too bad: ~ 70%.
 
 
 THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
