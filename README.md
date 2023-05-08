@@ -16,8 +16,7 @@ There are quite a few things I may need to go back and fix, and could potentiall
     - 6LOJ has the active form of IpaH9.8-LRR (compared to autoinhibited full-length 6LOL).
     - Should look into 5E7J (active form of O00571).
     - 2R09 and 2R0D are missing for O08967.
-    - 4CKI is missing for P07949.
-    - 4CKJ is in the "open", active position, while the AF prediction is in the "closed", autoinhibited position (10.1016/j.molcel.2014.01.015)
+    - 4CKI is missing for P07949. Also, the inhibitory section appears to be wrong. Instead of 900-909, it's more like 730-740 (see 24560924 and the open GRL vs closed GRL). Although, I'm thoroughly confused, because I'm seeing conflicting information about the same conformation. 4CKJ is in the "open", active position with its GRL, but 2IVT is supposedly in the active conformation while still having the GRL be in the closed conformation.(10.1016/j.molcel.2014.01.015). I will probably go with the "closed" conformer (and the AF model) being auto-inhibited and the "open" conformer being active, but 2IVT can be considered "active" (see 2pvf for active comparison and 2psq for apo/autoinhibited). In fact, I think the 4CKJ authors got it wrong; both the open and closed GRL are active, while the AF model shows the autoinhibited form (which is taken by 2psq)
     - 1PKG (active) is missing from P10721.
     - The autoinhibitory region of Heat shock cognate 71 kDa protein (P11142) acts on its nucleolar targeting signal and not on its active site (very interesting). It's difficult to say whether the protein is in the autoinhibited or active forms based on the given structures, although we may assume that it is autoinhibited because nucleolar localization due to heat shock is initiated by phosphorylation, possibly of Thr265. In our models, we only have a phosphate in the active site at the phosphate binding pocket.
     - 2Y1M and 2Y1N are missing for P22681, even though they're the full protein :/. 
