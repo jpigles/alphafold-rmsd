@@ -5,7 +5,7 @@ import numpy as np
 def query_rcsb(uniprot_id, url):
     
     # Query test for pdb files associated with given UniProt accession number.
-    query_text = {
+  query_text = {
   "query": {
     "type": "group",
     "logical_operator": "and",
@@ -36,25 +36,25 @@ def query_rcsb(uniprot_id, url):
   "return_type": "polymer_instance"
     }
     
-    print("Querying RCSB PDB REST API for Uniprot_ID: %s" % uniprot_id)
+  print("Querying RCSB PDB REST API for Uniprot_ID: %s" % uniprot_id)
     
-    header = {'Content-Type': 'application/x-www-form-urlencoded'}
+  header = {'Content-Type': 'application/x-www-form-urlencoded'}
     
-    response = requests.post(url, json=query_text)
+  response = requests.post(url, json=query_text)
 
-    # In format 4CJ0 1P3I ...
-    pdb_str = ''
+  # In format 4CJ0 1P3I ...
+  pdb_str = ''
 
-    if response.status_code == 200:
+  if response.status_code == 200:
         response_dic = response.json()
         for n in range(len(response_dic['result_set'])):
             pdb_str = pdb_str + response_dic['result_set'][n]['identifier'] + ' '
         
-    else:
+  else:
         pdb_str = np.nan
         print("Failed to retrieve results for Uniprot_ID: %s" % uniprot_id)
 
-    return pdb_str
+  return pdb_str
 
 
 def prune_extra_chains(pdb_ids_str):
@@ -114,3 +114,17 @@ def prune_extra_chains(pdb_ids_str):
 
     #Make the value of PDB at the index i equal to our new string.
     return unique_pdb_ids
+
+def remove_chains(pdb_ids):
+  #The pdb ids will have their chains attached here (format example: 5ecy.A)
+  pdb_ids_chains_list = pdb_ids_chains.split(sep = ' ')
+
+  #empty list to store pdb ids without chains
+  pdb_ids_no_chains = []
+
+  #Remove the chains from the PDB ids
+  for pdb_id in pdb_ids_chains_list:
+      pdb_id_only = pdb_id[:4]
+      pdb_ids_no_chains.append(pdb_id_only)
+  
+  return pdb_ids_no_chains

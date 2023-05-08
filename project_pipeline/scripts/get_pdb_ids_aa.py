@@ -51,19 +51,9 @@ for i in range(len(df_prot)):
         continue
     
     pdb_ids_chains = df_prot.loc[i, 'PDB']
-        
-    #The pdb ids will have their chains attached here (format example: 5ecy.A)
-    pdb_ids_chains_list = pdb_ids_chains.split(sep = ' ')
-
-    #empty list to store pdb ids without chains
-    pdb_ids_no_chains = []
-
-    #Remove the chains from the PDB ids
-    for pdb_id in pdb_ids_chains_list:
-        pdb_id_only = pdb_id[:4]
-        pdb_ids_no_chains.append(pdb_id_only)
-
-    # pdb_ids = [i[:-2] for i in pdb_ids] #Does this get rid of the comma?
+    
+    # Remove chains from the PDB IDs
+    pdb_ids_no_chains = utils.remove_chains(pdb_ids_chains)
 
     # A PDB list object that allows to download PDB files
     pdbl = PDBList(verbose=False)
