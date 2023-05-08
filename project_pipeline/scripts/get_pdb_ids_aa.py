@@ -4,11 +4,15 @@ Created on Thu May 14 11:18:27 2020
 
 @author: Jorge Holguin
 """
- 
+
+from Bio.PDB.PDBList import PDBList
 import pandas as pd
 import numpy as np
 import utils
+import os
 
+# Define the download path for the CIF files
+cif_path = 'data/input/RCSB_cif/'
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
 # df_prot = pd.read_csv('../data/protein_list.tsv', sep = '\t')
 
@@ -33,3 +37,38 @@ for i in range(len(df_prot)):
         
 # Save the df_prot as a tsv file
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
+
+# Download the pdb files
+for i in range(len(df_prot)):
+    uniprot = df_prot.loc[i, 'Uniprot_ID']
+    uniprot_path = cif_path + uniprot + '/'
+    
+    # Try to make a new directory with the gene name. If such a directory
+    # already exists then continue
+    try:
+        os.mkdir(uniprot_path)
+    except:
+        continue
+    
+    pdb_ids_chains = df_prot.loc[i, 'PDB']
+        
+    #The pdb ids will have their chains attached here (format example: 5ecy.A)
+    pdb_ids_chains_list = pdb_ids_chains.split(sep = ' ')
+
+    #empty list to store pdb ids without chains
+    pdb_ids_no_chains = []
+
+    #Remove the chains from the PDB ids
+    for pdb_id in pdb_ids_chains_list:
+        pdb_id_only = pdb_id[:4]
+        pdb_ids_no_chains.append(pdb_id_only)
+
+    # pdb_ids = [i[:-2] for i in pdb_ids] #Does this get rid of the comma?
+
+    # A PDB list object that allows to download PDB files
+    pdbl = PDBList(verbose=False)
+
+    print('Downloading structures for %s' % uniprot)
+
+    # Retrieve the PDB file from the PDB and save to the directory with the gene name
+    pdbl.download_pdb_files(pdb_ids_no_chains, pdir=uniprot_path, file_format='mmCif')
