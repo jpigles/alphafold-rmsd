@@ -1,71 +1,69 @@
 import pandas as pd
 
 
-df_samples = pd.read_csv('data/proteins_pdb.tsv', sep = '\t')
-#change sample names to use Uniprot accession codes, not gene names.
-uniprot_id = list(df_samples['Uniprot_ID'])
-
-updated_df_samples = pd.read_csv('data/proteins_pdb_no_na.tsv', sep='\t')
-updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #Establishing the end directory
 # rule all:
 #     input:
 #         Here I place my final analysis. What is my final analysis?
 
-# rule pdb_ids:
-#     input:
-#         'data/proteins.tsv'
+#determine pdb ids and chains.
+rule pdb_ids:
+    input:
+        'data/proteins.tsv'
         
-#     output:
-#         'data/proteins_pdb_w_chains.tsv'
+    output:
+        'data/proteins_pdb_w_chains.tsv'
         
-#     script:
-#         'scripts/get_pdb_ids_aa.py'
+    script:
+        'scripts/get_pdb_ids_aa.py'
 
-#        
-# rule prune_ids:
-#     input:
-#         'data/proteins_pdb_w_chains.tsv'
+# Can merge this step into the above step.
+rule prune_ids:
+    input:
+        'data/proteins_pdb_w_chains.tsv'
 
-#     output:
-#         'data/proteins_pdb_unique_chains.tsv'
+    output:
+        'data/proteins_pdb_unique_chains.tsv'
 
-#     script:
-#         'scripts/prune_pdb_ids.py'
+    # Rewrite this script so that it doesn't remove pdbs with more than one chain for our desired protein.
+    script:
+        'scripts/prune_pdb_ids.py' #<- DEPRECATED, REMOVE
+
+# Can also merge this step into the first step. 
+rule pdb_files:
+    input:
+        'data/proteins_pdb_unique_chains.tsv'
+
+    output:
+        directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
+
+    script:
+        'scripts/get_pdb_files_aa.py'`
+
+# Merge this into the first step, barely takes any effort.
+rule drop_na:
+    input:
+        'data/proteins_pdb_unique_chains.tsv'
+    output:
+        'data/proteins_pdb_no_na.tsv'
+    script:
+        'scripts/drop_na_aa.py'
 
 
-# rule pdb_files:
-#     input:
-#         'data/proteins_pdb_unique_chains.tsv'
+rule best_pdb_files:
+    input:
+        'data/proteins_pdb_no_na.tsv',
+        expand('data/input/RCSB_cif/{protein}/', protein = updated_uniprot_id)
 
-#     output:
-#         directory(expand('data/input/RCSB_cif/{protein}/', protein = uniprot_id))
+    output:
+        'data/proteins_pdb_summary.tsv',
+        'data/proteins_pdb_best.tsv',
+        directory('data/input/RCSB_cif_best')
 
-#     script:
-#         'scripts/get_pdb_files_aa.py'
+    script:
+        'scripts/best_pdb_aa.py'
 
-# rule drop_na:
-#     input:
-#         'data/proteins_pdb_unique_chains.tsv'
-#     output:
-#         'data/proteins_pdb_no_na.tsv'
-#     script:
-#         'scripts/drop_na_aa.py'
-
-
-# rule best_pdb_files:
-#     input:
-#         'data/proteins_pdb_no_na.tsv',
-#         expand('data/input/RCSB_cif/{protein}/', protein = updated_uniprot_id)
-
-#     output:
-#         'data/proteins_pdb_summary.tsv',
-#         'data/proteins_pdb_best.tsv',
-#         directory('data/input/RCSB_cif_best')
-
-#     script:
-#         'scripts/best_pdb_aa.py'
-
+# Don't need this 
 # rule interface_residues:
 #     input:
 #         'data/proteins_pdb_best.tsv',
@@ -76,6 +74,7 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #     script:
 #         'scripts/get_interface_all_aa.py'
 
+# May not need this. If needed, could bundle into above step.
 # rule convert_RCSB_cif_to_pdb:
 #     input:
 #         'data/proteins_pdb_best.tsv',
@@ -87,6 +86,7 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #     script:
 #         "scripts/rcsb_cif_to_pdb.py"
 
+# Again, same as above.
 # rule convert_AF_cif_to_pdb:
 #     input:
 #         'data/proteins_pdb_best.tsv',
@@ -98,6 +98,7 @@ updated_uniprot_id = list(updated_df_samples['Uniprot_ID'])
 #     script:
 #         'scripts/af_cif_to_pdb.py'
 
+# Will probably have to reconfigure this.
 rule compare_structures_input:
     input:
         'proteins_pdb_best.tsv', #args.pdb_ids

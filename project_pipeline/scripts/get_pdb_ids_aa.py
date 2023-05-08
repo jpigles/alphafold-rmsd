@@ -33,4 +33,3 @@ for i in range(len(df_prot)):
         
 # Save the df_prot as a tsv file
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
-        
