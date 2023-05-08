@@ -19,6 +19,8 @@ df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
 # Create a column to store the PDB IDs for each protein
 df_prot['PDB'] = ''
 
+print('Querying RCSB for PDB IDs.')
+
 # Iterate through the rows of df_prot
 for i in range(len(df_prot)):
     
@@ -37,6 +39,8 @@ for i in range(len(df_prot)):
         
 # Save the df_prot as a tsv file
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
+
+print('Successfully saved file. Proceeding to download structures.')
 
 # Download the pdb files
 for i in range(len(df_prot)):
