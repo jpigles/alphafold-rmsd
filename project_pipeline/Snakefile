@@ -17,18 +17,6 @@ rule pdb_ids:
     script:
         'scripts/get_pdb_ids_aa.py'
 
-# Can merge this step into the above step.
-rule prune_ids:
-    input:
-        'data/proteins_pdb_w_chains.tsv'
-
-    output:
-        'data/proteins_pdb_unique_chains.tsv'
-
-    # Rewrite this script so that it doesn't remove pdbs with more than one chain for our desired protein.
-    script:
-        'scripts/prune_pdb_ids.py' #<- DEPRECATED, REMOVE
-
 # Can also merge this step into the first step. 
 rule pdb_files:
     input:
@@ -39,15 +27,6 @@ rule pdb_files:
 
     script:
         'scripts/get_pdb_files_aa.py'`
-
-# Merge this into the first step, barely takes any effort.
-rule drop_na:
-    input:
-        'data/proteins_pdb_unique_chains.tsv'
-    output:
-        'data/proteins_pdb_no_na.tsv'
-    script:
-        'scripts/drop_na_aa.py'
 
 
 rule best_pdb_files:
