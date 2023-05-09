@@ -115,16 +115,16 @@ def prune_extra_chains(pdb_ids_str):
     #Make the value of PDB at the index i equal to our new string.
     return unique_pdb_ids
 
-def remove_chains(pdb_ids):
+def remove_chains(pdb_ids_chains):
   #The pdb ids will have their chains attached here (format example: 5ecy.A)
-  pdb_ids_chains_list = pdb_ids_chains.split(sep = ' ')
+  pdb_ids_chains_list = pdb_ids_chains.split(sep=' ')
 
   #empty list to store pdb ids without chains
   pdb_ids_no_chains = []
 
   #Remove the chains from the PDB ids
   for pdb_id in pdb_ids_chains_list:
-      pdb_id_only = pdb_id[:4]
+      pdb_id_only = pdb_id.split(sep='.')[0]
       pdb_ids_no_chains.append(pdb_id_only)
   
   return pdb_ids_no_chains
