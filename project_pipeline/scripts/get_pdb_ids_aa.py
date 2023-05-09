@@ -37,15 +37,7 @@ for i in range(len(df_prot)):
     pdb_ids_pruned = utils.prune_extra_chains(pdb_ids)
     df_prot.loc[i, 'PDB'] = pdb_ids_pruned
 
-# Make a new dataframe with each PDB ID in a separate row
-df_prot = df_prot.explode('PDB').reset_index(drop = True)
-# Split PDB ID and chain into separate columns
-df_prot[['PDB ID', 'Chain']] = df_prot['PDB'].str.split('.', expand = True)
-
-# Save the df_prot as a tsv file
-df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
-
-print('Successfully saved file. Proceeding to download structures.')
+print('Successfully retrieved IDs. Proceeding to download structures.')
 
 # Download the pdb files
 for i in range(len(df_prot)):
@@ -71,5 +63,11 @@ for i in range(len(df_prot)):
 
     # Retrieve the PDB file from the PDB and save to the directory with the gene name
     pdbl.download_pdb_files(pdb_ids_no_chains, pdir=uniprot_path, file_format='mmCif')
+
+# Make a new dataframe with each PDB ID in a separate row and chains in their own column
+df_prot = utils.expand_on_pdbs(df_prot)
+
+# Save the df_prot as a tsv file
+df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
 
 # Correct the offset and re-write the CIF files

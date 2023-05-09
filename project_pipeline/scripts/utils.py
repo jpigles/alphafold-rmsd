@@ -128,3 +128,11 @@ def remove_chains(pdb_ids_chains):
       pdb_ids_no_chains.append(pdb_id_only)
   
   return pdb_ids_no_chains
+
+def expand_on_pdbs(df):
+  # Explode PDB column
+  df = df.explode('PDB').reset_index(drop = True)
+  # Split PDB ID and chain into separate columns
+  df[['PDB ID', 'Chain']] = df['PDB'].str.split('.', expand = True)
+
+  return df
