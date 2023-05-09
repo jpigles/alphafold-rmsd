@@ -1,3 +1,4 @@
+from pdbecif.mmcif_io import CifFileReader
 import requests
 import pandas as pd
 import numpy as np
@@ -135,7 +136,7 @@ def expand_on_pdbs(df):
   # Explode PDB column
   df = df.explode('PDB').reset_index(drop = True)
   # Split PDB ID and chain into separate columns
-  df[['PDB ID', 'Chain']] = df['PDB'].str.split(sep='.', expand = True)
+  df[['PDB ID', 'Label_chain']] = df['PDB'].str.split(sep='.', expand = True)
 
   return df
 
@@ -152,3 +153,26 @@ def get_offset(fp, pdb):
 
   print(f'Offset for {pdb}: {offset}')
   return offset
+
+def fix_offset(pdb, in_fp, out_fp, chain, offset):
+    # initiate Pandas object
+    ppdb = PandasPdb()
+    _ = ppdb.read_pdb(in_fp)
+    pred = ppdb.df['ATOM']
+
+    # Replace residue numbers in our chain of interest
+    if offset == 0:
+        ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
+        return f'No fix needed for {pdb}'
+    else:
+        for i in range(len(pred)):
+            if pred.loc[i, 'chain_id']==chain:
+                res_num = pred.loc[i, 'residue_number']
+                new_res_num = res_num - offset
+                pred.loc[i, 'residue_number'] = new_res_num
+            else:
+                continue
+    
+    ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
+
+    return f'Successfully fixed {pdb}'

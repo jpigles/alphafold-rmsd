@@ -31,6 +31,7 @@ def get_pdb_ids(df):
     return df
 
 def download_pdb_files(df, path):
+    '''Downloads the PDB files for each protein in the dataframe and saves them in a directory with the Uniprot ID.'''
     for i in range(len(df)):
         uniprot = df.loc[i, 'Uniprot_ID']
         uniprot_path = path + uniprot + '/'
@@ -56,4 +57,19 @@ def download_pdb_files(df, path):
         pdbl.download_pdb_files(pdb_ids_no_chains, pdir=uniprot_path, file_format='mmCif')
 
 def correct_offset(df, path):
-    
+
+    offsets = []
+
+    for i in range(len(df_prot)):
+        # Designate values for retrieval
+        uniprot = df.loc[i, 'Uniprot_ID']
+        pdb_id = df_prot.loc[i, 'PDB']
+  
+        # Designate file locations. Note that we will be overwriting the CIF files
+        cif_path = path + uniprot + '/' + pdb_id + '.cif'
+
+        # Get the offset
+        offset = utils.get_offset(cif_path, pdb_id)
+        offsets.append(offset)
+
+        fixed_pdb = utils.fix_offset(pdb_id, cif_path, )
