@@ -9,6 +9,7 @@ from Bio.PDB.PDBList import PDBList
 import pandas as pd
 import numpy as np
 import utils
+import main
 import os
 
 # Define the download path for the CIF files
@@ -16,53 +17,13 @@ cif_path = 'data/input/RCSB_cif/'
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
 # df_prot = pd.read_csv('../data/protein_list.tsv', sep = '\t')
 
-# Create a column to store the PDB IDs for each protein
-df_prot['PDB'] = ''
-
 print('Querying RCSB for PDB IDs.')
 
-# Iterate through the rows of df_prot
-for i in range(len(df_prot)):
-    
-  # Define UniProt ID and URL
-  uniprot_id = df_prot.loc[i, 'Uniprot_ID']
-  url = 'https://search.rcsb.org/rcsbsearch/v2/query'
-    
-  pdb_ids = utils.query_rcsb(uniprot_id, url)
-
-  # If received NaN from query, then drop row. Else, prune chains.
-  if type(pdb_ids) == float:
-    df_prot = df_prot.drop(index=[i])
-  else:
-    pdb_ids_pruned = utils.prune_extra_chains(pdb_ids)
-    df_prot.loc[i, 'PDB'] = pdb_ids_pruned
-
+df_prot = main.get_pdb_ids(df_prot)
 print('Successfully retrieved IDs. Proceeding to download structures.')
 
 # Download the pdb files
-for i in range(len(df_prot)):
-    uniprot = df_prot.loc[i, 'Uniprot_ID']
-    uniprot_path = cif_path + uniprot + '/'
-    
-    # Try to make a new directory with the gene name. If such a directory
-    # already exists then continue
-    try:
-        os.mkdir(uniprot_path)
-    except:
-        continue
-    
-    pdb_ids_chains = df_prot.loc[i, 'PDB']
-    
-    # Remove chains from the PDB IDs
-    pdb_ids_no_chains = utils.remove_chains(pdb_ids_chains)
-
-    # A PDB list object that allows to download PDB files
-    pdbl = PDBList(verbose=False)
-
-    print('Downloading structures for %s' % uniprot)
-
-    # Retrieve the PDB file from the PDB and save to the directory with the gene name
-    pdbl.download_pdb_files(pdb_ids_no_chains, pdir=uniprot_path, file_format='mmCif')
+df_prot = main.download_pdb_files(df_prot, cif_path)
 
 # Make a new dataframe with each PDB ID in a separate row and chains in their own column
 df_prot = utils.expand_on_pdbs(df_prot)
@@ -71,3 +32,9 @@ df_prot = utils.expand_on_pdbs(df_prot)
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
 
 # Correct the offset and re-write the CIF files
+for i in range(len(df_prot)):
+  # Designate PDB ID
+  pdb_id = df_prot.loc[i, 'PDB']
+  
+  # Designate file locations. Note that we will be overwriting the CIF files
+  cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'

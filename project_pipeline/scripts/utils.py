@@ -130,9 +130,25 @@ def remove_chains(pdb_ids_chains):
   return pdb_ids_no_chains
 
 def expand_on_pdbs(df):
+  # Convert PDB column to list-like
+  df['PDB'] = df['PDB'].str.split(sep=' ')
   # Explode PDB column
   df = df.explode('PDB').reset_index(drop = True)
   # Split PDB ID and chain into separate columns
-  df[['PDB ID', 'Chain']] = df['PDB'].str.split('.', expand = True)
+  df[['PDB ID', 'Chain']] = df['PDB'].str.split(sep='.', expand = True)
 
   return df
+
+def get_offset(fp, pdb):
+  # initiate reader object
+  cfr = CifFileReader()
+  cif_obj = cfr.read(fp, output='cif_wrapper')
+  cif_data = list(cif_obj.values())[0]
+  
+  # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
+  auth_start = int(cif_data._struct_ref_seq.pdbx_auth_seq_align_beg[0])
+  unp_start = int(cif_data._struct_ref_seq.db_align_beg[0])
+  offset = auth_start - unp_start
+
+  print(f'Offset for {pdb}: {offset}')
+  return offset
