@@ -12,10 +12,12 @@ rule pdb_ids:
         'data/proteins.tsv'
         
     output:
-        'data/proteins_pdb_w_chains.tsv'
+        'data/proteins_by_pdb.tsv'
         
     script:
         'scripts/get_pdb_ids_aa.py'
+
+# Now we have to correct offset
 
 rule best_pdb_files:
     input:
