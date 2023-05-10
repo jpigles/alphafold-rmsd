@@ -154,24 +154,28 @@ def get_offset(fp, pdb):
   print(f'Offset for {pdb}: {offset}')
   return offset
 
-def fix_offset(pdb, in_fp, out_fp, chain, offset):
-    # initiate Pandas object
-    ppdb = PandasPdb()
-    _ = ppdb.read_pdb(in_fp)
-    pred = ppdb.df['ATOM']
-
+def fix_offset(pdb, fp, chain, offset):
+    
     # Replace residue numbers in our chain of interest
     if offset == 0:
-        ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
         return f'No fix needed for {pdb}'
     else:
-        for i in range(len(pred)):
-            if pred.loc[i, 'chain_id']==chain:
-                res_num = pred.loc[i, 'residue_number']
+        # Read in the CIF file
+        cfr = CifFileReader()
+        cif_obj = cfr.read(fp, output='cif_dictionary', only=['_atom_site'])
+        # Convert to a Pandas DataFrame
+        df = pd.DataFrame.from_dict(cif_obj[pdb.upper()]['_atom_site'])
+        # Replace residue numbers
+        for i in range(len(df)):
+            if df.loc[i, 'chain_id']==chain:
+                res_num = df.loc[i, 'residue_number']
                 new_res_num = res_num - offset
-                pred.loc[i, 'residue_number'] = new_res_num
+                df.loc[i, 'residue_number'] = new_res_num
             else:
                 continue
+        # Convert back to mmCIF-like dictionary
+        cif_dict = df.to_dict(orient='list')
+
     
     ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
 

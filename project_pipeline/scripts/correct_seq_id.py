@@ -58,7 +58,7 @@ for i in range(len(pdbs_df)):
     out_path = f'./data/input/RCSB/pdbs/{pdb_id}.pdb'
 
     # Get offset
-    offset= get_offset(cif_path, pdb_id)
+    offset = get_offset(cif_path, pdb_id)
     offsets.append(offset)
 
     # fix pdb sequence ids

@@ -32,9 +32,4 @@ df_prot = utils.expand_on_pdbs(df_prot)
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
 
 # Correct the offset and re-write the CIF files
-for i in range(len(df_prot)):
-  # Designate PDB ID
-  pdb_id = df_prot.loc[i, 'PDB']
-  
-  # Designate file locations. Note that we will be overwriting the CIF files
-  cif_path = f'./data/input/RCSB_cif_best/{pdb_id}.cif'
+
