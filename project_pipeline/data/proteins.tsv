@@ -1,4 +1,4 @@
-Gene_name	Uniprot_ID	Protein_length	region_1	region_2
+gene_name	uniprot	protein_length	region_1	region_2
 Nos1	P29476	1429	815-870	757-949
 PTPN1	P18031	435	353-387	2-277
 EGFR	P00533	1210	166-309,482-618	712-979

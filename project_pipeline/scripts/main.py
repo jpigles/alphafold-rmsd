@@ -12,11 +12,11 @@ def get_pdb_ids(df):
     '''Retrieves PDB IDs for each protein in the dataframe in the form of ID.chain (e.g. 1A2K.A)'''
 
     # Create a column to store the PDB IDs for each protein
-    df['PDB'] = ''
+    df['pdb'] = ''
 
     for i in range(len(df)):
         # Define UniProt ID and URL
-        uniprot_id = df.loc[i, 'Uniprot_ID']
+        uniprot_id = df.loc[i, 'uniprot']
         url = 'https://search.rcsb.org/rcsbsearch/v2/query'
     
         pdb_ids = utils.query_rcsb(uniprot_id, url)
@@ -26,14 +26,14 @@ def get_pdb_ids(df):
             df = df.drop(index=[i])
         else:
             pdb_ids_pruned = utils.prune_extra_chains(pdb_ids)
-            df.loc[i, 'PDB'] = pdb_ids_pruned
+            df.loc[i, 'pdb'] = pdb_ids_pruned
     
     return df
 
 def download_pdb_files(df, path):
     '''Downloads the PDB files for each protein in the dataframe and saves them in a directory with the Uniprot ID.'''
     for i in range(len(df)):
-        uniprot = df.loc[i, 'Uniprot_ID']
+        uniprot = df.loc[i, 'uniprot']
         uniprot_path = path + uniprot + '/'
         
         # Try to make a new directory with the gene name. If such a directory
@@ -43,7 +43,7 @@ def download_pdb_files(df, path):
         except:
             continue
         
-        pdb_ids_chains = df.loc[i, 'PDB']
+        pdb_ids_chains = df.loc[i, 'pdb']
         
         # Remove chains from the PDB IDs
         pdb_ids_no_chains = utils.remove_chains(pdb_ids_chains)
@@ -62,8 +62,8 @@ def correct_offset(df, path):
 
     for i in range(len(df)):
         # Designate values for retrieval
-        uniprot = df.loc[i, 'Uniprot_ID']
-        pdb_id = df.loc[i, 'PDB']
+        uniprot = df.loc[i, 'uniprot']
+        pdb_id = df.loc[i, 'pdb']
   
         # Designate file locations. Note that we will be overwriting the CIF files
         cif_path = path + uniprot + '/' + pdb_id + '.cif'

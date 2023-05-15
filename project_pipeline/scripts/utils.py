@@ -132,11 +132,11 @@ def remove_chains(pdb_ids_chains):
 
 def expand_on_pdbs(df):
   # Convert PDB column to list-like
-  df['PDB'] = df['PDB'].str.split(sep=' ')
+  df['pdb'] = df['pdb'].str.split(sep=' ')
   # Explode PDB column
-  df = df.explode('PDB').reset_index(drop = True)
+  df = df.explode('pdb').reset_index(drop = True)
   # Split PDB ID and chain into separate columns
-  df[['PDB ID', 'Label_chain']] = df['PDB'].str.split(sep='.', expand = True)
+  df[['pdb', 'label_chain']] = df['pdb'].str.split(sep='.', expand = True)
 
   return df
 
