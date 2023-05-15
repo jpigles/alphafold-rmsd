@@ -3,6 +3,8 @@
 Created on Thu May 14 11:18:27 2020
 
 @author: Jorge Holguin
+
+Edited by Brooks Perkins-Jechow
 """
 
 from Bio.PDB.PDBList import PDBList
