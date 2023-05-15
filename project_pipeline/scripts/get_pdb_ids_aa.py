@@ -28,8 +28,9 @@ df_prot = main.download_pdb_files(df_prot, cif_path)
 # Make a new dataframe with each PDB ID in a separate row and chains in their own column
 df_prot = utils.expand_on_pdbs(df_prot)
 
-# Save the df_prot as a tsv file
-df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
+# Fix any offsets between the UniProt sequence and the PDB sequence in the CIF files
+df_prot = main.correct_offset(df_prot)
 
-# Correct the offset and re-write the CIF files
+# Save the dataframe as a tsv file
+df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
 

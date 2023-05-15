@@ -72,4 +72,11 @@ def correct_offset(df, path):
         offset = utils.get_offset(cif_path, pdb_id)
         offsets.append(offset)
 
+        # Fix the offset
         fixed_pdb = utils.fix_offset(pdb_id, cif_path, offset)
+        print(fixed_pdb)
+
+    # Add column with offset values
+    df.insert(len(df.columns), 'auth_offset', offsets)
+
+    return df
