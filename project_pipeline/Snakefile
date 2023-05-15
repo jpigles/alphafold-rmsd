@@ -18,9 +18,9 @@ rule pdb_ids:
         'scripts/get_pdb_ids.py'
 
 
-rule best_pdb_files:
+rule interface_analysis:
     input:
-        'data/proteins_pdb_no_na.tsv',
+        'data/proteins_by_pdb.tsv',
 
     output:
         'data/proteins_pdb_summary.tsv',
@@ -28,7 +28,7 @@ rule best_pdb_files:
         directory('data/input/RCSB_cif_best')
 
     script:
-        'scripts/best_pdb_aa.py'
+        'scripts/interface_analysis.py'
 
 # Don't need this 
 # rule interface_residues:

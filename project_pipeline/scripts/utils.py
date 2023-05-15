@@ -1,4 +1,6 @@
 from pdbecif.mmcif_io import CifFileReader, CifFileWriter
+from Bio.PDB.MMCIFParser import MMCIFParser
+from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 import requests
 import pandas as pd
 import numpy as np
@@ -182,3 +184,114 @@ def fix_offset(pdb, fp, chain, offset):
         cfw.write(cif_obj)
 
         return f'Successfully fixed {pdb}'
+    
+def string2range(x):
+    
+    """
+    This function takes in a `string` representing a region of interest in a
+    protein. The region of interest can be a single region or multiple regions
+    of a protein. Returns a range for single regions or a list of ranges for
+    multiple regions.
+    
+    Parameters:
+    
+        x (string): String containing a region or several regions of interest in a 
+            protein.
+            Format of x: single region -> 'start-end'
+                         multiple regions -> 'start1-end1,start2-end2'
+                     
+    Returns:
+    
+        range or list of ranges: For single region proteins a range is returned. For 
+            multiple region proteins a list of ranges is returned
+
+            Format: single region -> range(start, end+1)
+                    multiple region -> [range(start1, end1+1), range(start2, end2+1)]
+    """
+    # Handle instances with more than one range
+    if ',' in x:
+        list_temp = x.split(sep = ',') #list_temp = ['123-456,' '789-1111']
+        for y in range(len(list_temp)): 
+            list_temp[y] = list_temp[y].split(sep = '-') #list_temp[y] = [['123', '456'], ['789', '1111']]
+        for y in range(len(list_temp)): 
+            for x in range(len(list_temp[y])):
+                list_temp[y][x] = int(list_temp[y][x]) #turns each list item into an integer
+
+        # Make a range object with the bounds of the range. Note to the 
+        # end a 1 has to be added in order to include the last position in the range
+        for y in range(len(list_temp)): #[1, 2] where 1=[123, 456] and 2=[789, 1111]
+            for x in range(len(list_temp[y])): #[123, 456]       
+                list_temp[y] = list(range(list_temp[y][x], list_temp[y][x+1]+1)) #list_temp[0][0] = [123], list_temp[0][0+1]+1 or [456] + 1 = [457]
+                break
+
+        return list(set([item for sublist in list_temp for item in sublist]))
+
+    # Handle instances with only one range
+    else:
+        list_temp = x.split(sep = '-')
+        for y in range(len(list_temp)):
+            list_temp[y] = int(list_temp[y]) #
+
+        # Make a range object with the bounds of the region. Note to the 
+        # end a 1 has to be added in order to include the last position in the range
+        return list(range(list_temp[0], list_temp[1]+1))
+    
+def get_structure_dict(pdb, path):
+    # To load a PDB file make a parser object
+    parser = MMCIFParser(QUIET=True)
+            
+    # Then make a structure object
+    structure = parser.get_structure(pdb, path + pdb + '.cif')
+            
+    # Make an MMCIFDict object to grab more information form the .cif files
+    mmcif_dict = MMCIF2Dict((path + pdb + '.cif'))
+
+    return structure, mmcif_dict
+
+
+def count_residues(region1, region2, structure, chain):
+    for model in structure:
+        
+        for chain in model:
+
+            #Determine the current chain in the structure
+            current_chain = chain.get_id()
+            
+            #Only act on the chain relevant to our protein of interest.
+            if current_chain == chain:
+
+                print(f'We want {chain}. Currently analyzing {current_chain}.')
+                    
+                # Get all the residues in the chain A
+                residues = chain.get_residues()
+                
+                # Set all the counters to zero
+                count_res = 0
+                count_res_region_1 = 0
+                count_res_region_2 = 0
+
+                # Iterate through all the residues in the chain and determine
+                # whether they belong to the IAS or to the Domain.
+                for residue in residues:
+                    count_res = count_res + 1                    
+                    
+                    # Amino acid residues have an empty space in position zero
+                    # of the id
+                    if residue.get_id()[0] == ' ':
+                        # The sequence position of the amino acid residue is stored
+                        # in position 1 of the id
+                        if residue.get_id()[1] in region1:
+                            # print(residue.get_id()[1])
+                            count_res_region_1 = count_res_region_1 + 1
+
+                        elif residue.get_id()[1] in region2:
+                            count_res_region_2 = count_res_region_2 + 1
+
+                return count_res_region_1, count_res_region_2
+            
+def calculate_domain_completeness(region1, region2, count_in_region1, count_in_region2):
+    # Calculate the percentage of residues in the IAS and in the Domain
+    percent_in_region_1 = (count_in_region1/len(region1))*100
+    percent_in_region_2 = (count_in_region2/len(region2))*100
+
+    return percent_in_region_1, percent_in_region_2

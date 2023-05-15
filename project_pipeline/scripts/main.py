@@ -80,3 +80,33 @@ def correct_offset(df, path):
     df.insert(len(df.columns), 'auth_offset', offsets)
 
     return df
+
+def find_domain_completeness(df, path):
+
+    # Convert the domain region strings to ranges or lists of ranges
+    df['region_1 search'] = df['region_1'].apply(lambda x: utils.string2range(x))
+    df['region_2 search'] = df['region_2'].apply(lambda x: utils.string2range(x))
+
+    for i in range(len(df)):
+    
+        # Define values for retrieval
+        region_1_res = df.loc[i, 'region_1 search']
+        region_2_res = df.loc[i, 'region_2 search']
+        pdb = df.loc[i, 'pdb']
+        uniprot = df.loc[i, 'uniprot']
+        path_uniprot = path + uniprot + '/'
+        chain = df.loc[i, 'chain']
+
+        # Get structure and dictionary objects
+        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot)
+
+        if mmcif_dict['_exptl.method'][0] == 'X-RAY DIFFRACTION':
+            resolution = float(mmcif_dict["_refine.ls_d_res_high"][0])
+        elif mmcif_dict['_exptl.method'][0] == 'SOLUTION NMR':
+            resolution = np.nan
+
+        # Count number of residues in each region
+        count_res_reg_1, count_res_reg_2 = utils.count_residues(region_1_res, region_2_res, structure, chain)
+
+        # Calculate the percentage of residues in each region
+        percent_reg_1, percent_reg_2 = utils.calculate_domain_completeness(region_1_res, region_2_res, count_res_reg_1, count_res_reg_2)
