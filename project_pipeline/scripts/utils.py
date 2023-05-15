@@ -262,6 +262,8 @@ def count_residues(region1, region2, structure, chain):
 
                 print(f'We want {chain}. Currently analyzing {current_chain}.')
                     
+                # Get the model ID for later use
+                model_id = model.get_id()
                 # Get all the residues in the chain A
                 residues = chain.get_residues()
                 
@@ -287,7 +289,10 @@ def count_residues(region1, region2, structure, chain):
                         elif residue.get_id()[1] in region2:
                             count_res_region_2 = count_res_region_2 + 1
 
-                return count_res_region_1, count_res_region_2
+                return count_res_region_1, count_res_region_2, count_res, model_id
+            
+            else:
+                continue
             
 def calculate_domain_completeness(region1, region2, count_in_region1, count_in_region2):
     # Calculate the percentage of residues in the IAS and in the Domain

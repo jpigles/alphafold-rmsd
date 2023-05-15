@@ -83,6 +83,11 @@ def correct_offset(df, path):
 
 def find_domain_completeness(df, path):
 
+    # Create a new empty dataframe to store the results
+    df_domain = pd.DataFrame(columns = ['gene_name', 'uniprot', 'protein_length', 'region_1', 'region_2', 'region_1_len', 
+                                 'region_2_len', 'pdb', 'pdb_length', 'resolution',
+                                 'model', 'chain', 'auth_offset', 'pdb residues in region_1', 'pdb residues in region_2', 
+                                 'percent_region_1', 'percent_region_2'])
     # Convert the domain region strings to ranges or lists of ranges
     df['region_1 search'] = df['region_1'].apply(lambda x: utils.string2range(x))
     df['region_2 search'] = df['region_2'].apply(lambda x: utils.string2range(x))
@@ -106,7 +111,29 @@ def find_domain_completeness(df, path):
             resolution = np.nan
 
         # Count number of residues in each region
-        count_res_reg_1, count_res_reg_2 = utils.count_residues(region_1_res, region_2_res, structure, chain)
+        count_res_reg_1, count_res_reg_2, count_res, model_id = utils.count_residues(region_1_res, region_2_res, structure, chain)
 
         # Calculate the percentage of residues in each region
         percent_reg_1, percent_reg_2 = utils.calculate_domain_completeness(region_1_res, region_2_res, count_res_reg_1, count_res_reg_2)
+
+        df_domain_part_1 = pd.DataFrame({'gene_name': df.loc[i, 'Gene_name'],
+                                'uniprot': df.loc[i, 'Uniprot_ID'],
+                                'protein_length': df.loc[i, 'Protein_length'],
+                                'region_1': df.loc[i, 'region_1'],
+                                'region_2': df.loc[i, 'region_2'],
+                                'region_1_len': len(region_1_res),
+                                'region_2_len': len(region_2_res),
+                                'pdb': pdb, 
+                                'pdb_length': count_res, 
+                                'resolution': resolution, 
+                                'model': model_id, 
+                                'chain': chain,
+                                'auth_offset': df.loc[i, 'auth_offset'],
+                                'pdb residues in region_1': count_res_reg_1,
+                                'pdb residues in region_2': count_res_reg_2,
+                                'percent_region_1': percent_reg_1,
+                                'percent_region_2': percent_reg_2}, index=[0])
+        
+        df_domain = df_domain.concat(df_domain_part_1, ignore_index=True)
+
+    return df_domain
