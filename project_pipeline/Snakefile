@@ -15,14 +15,12 @@ rule pdb_ids:
         'data/proteins_by_pdb.tsv'
         
     script:
-        'scripts/get_pdb_ids_aa.py'
+        'scripts/get_pdb_ids.py'
 
-# Now we have to correct offset
 
 rule best_pdb_files:
     input:
         'data/proteins_pdb_no_na.tsv',
-        expand('data/input/RCSB_cif/{protein}/', protein = updated_uniprot_id)
 
     output:
         'data/proteins_pdb_summary.tsv',
