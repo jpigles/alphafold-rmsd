@@ -1,4 +1,4 @@
-from pdbecif.mmcif_io import CifFileReader
+from pdbecif.mmcif_io import CifFileReader, CifFileWriter
 import requests
 import pandas as pd
 import numpy as np
@@ -175,8 +175,10 @@ def fix_offset(pdb, fp, chain, offset):
                 continue
         # Convert back to mmCIF-like dictionary
         cif_dict = df.to_dict(orient='list')
+        cif_obj[pdb.upper()]['_atom_site'] = cif_dict
 
-    
-    ppdb.to_pdb(path=out_fp, records=None, gz=False, append_newline=True)
+        # Write to file
+        cfw = CifFileWriter(fp)
+        cfw.write(cif_obj)
 
-    return f'Successfully fixed {pdb}'
+        return f'Successfully fixed {pdb}'
