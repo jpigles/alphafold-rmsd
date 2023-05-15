@@ -136,7 +136,7 @@ def expand_on_pdbs(df):
   # Explode PDB column
   df = df.explode('pdb').reset_index(drop = True)
   # Split PDB ID and chain into separate columns
-  df[['pdb', 'label_chain']] = df['pdb'].str.split(sep='.', expand = True)
+  df[['pdb', 'chain']] = df['pdb'].str.split(sep='.', expand = True)
 
   return df
 
