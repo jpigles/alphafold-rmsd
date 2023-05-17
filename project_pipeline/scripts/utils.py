@@ -1,6 +1,7 @@
 from pdbecif.mmcif_io import CifFileReader, CifFileWriter
 from Bio.PDB.MMCIFParser import MMCIFParser
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+from Bio.PDB import MMCIFParser, NeighborSearch, Selection
 import requests
 import pandas as pd
 import numpy as np
@@ -8,56 +9,56 @@ import numpy as np
 def query_rcsb(uniprot_id, url):
     
     # Query test for pdb files associated with given UniProt accession number.
-  query_text = {
-  "query": {
-    "type": "group",
-    "logical_operator": "and",
-    "nodes": [
-      {
-        "type": "terminal",
-        "service": "text",
-        "parameters": {
-          "operator": "exact_match",
-          "value": uniprot_id,
-          "attribute": "rcsb_polymer_entity_container_identifiers.reference_sequence_identifiers.database_accession"
+    query_text = {
+    "query": {
+      "type": "group",
+      "logical_operator": "and",
+      "nodes": [
+        {
+          "type": "terminal",
+          "service": "text",
+          "parameters": {
+            "operator": "exact_match",
+            "value": uniprot_id,
+            "attribute": "rcsb_polymer_entity_container_identifiers.reference_sequence_identifiers.database_accession"
+          }
+        },
+        {
+          "type": "terminal",
+          "service": "text",
+          "parameters": {
+            "operator": "exact_match",
+            "value": "UniProt",
+            "attribute": "rcsb_polymer_entity_container_identifiers.reference_sequence_identifiers.database_name"
+          }
         }
-      },
-      {
-        "type": "terminal",
-        "service": "text",
-        "parameters": {
-          "operator": "exact_match",
-          "value": "UniProt",
-          "attribute": "rcsb_polymer_entity_container_identifiers.reference_sequence_identifiers.database_name"
-        }
+      ]
+    },
+    "request_options": {
+      "return_all_hits": True
+    },
+    "return_type": "polymer_instance"
       }
-    ]
-  },
-  "request_options": {
-    "return_all_hits": True
-  },
-  "return_type": "polymer_instance"
-    }
-    
-  print("Querying RCSB PDB REST API for Uniprot_ID: %s" % uniprot_id)
-    
-  header = {'Content-Type': 'application/x-www-form-urlencoded'}
-    
-  response = requests.post(url, json=query_text)
+      
+    print("Querying RCSB PDB REST API for Uniprot_ID: %s" % uniprot_id)
+      
+    header = {'Content-Type': 'application/x-www-form-urlencoded'}
+      
+    response = requests.post(url, json=query_text)
 
-  # In format 4CJ0 1P3I ...
-  pdb_str = ''
+    # In format 4CJ0 1P3I ...
+    pdb_str = ''
 
-  if response.status_code == 200:
-        response_dic = response.json()
-        for n in range(len(response_dic['result_set'])):
-            pdb_str = pdb_str + response_dic['result_set'][n]['identifier'] + ' '
-        
-  else:
-        pdb_str = np.nan
-        print("Failed to retrieve results for Uniprot_ID: %s" % uniprot_id)
+    if response.status_code == 200:
+          response_dic = response.json()
+          for n in range(len(response_dic['result_set'])):
+              pdb_str = pdb_str + response_dic['result_set'][n]['identifier'] + ' '
+          
+    else:
+          pdb_str = np.nan
+          print("Failed to retrieve results for Uniprot_ID: %s" % uniprot_id)
 
-  return pdb_str
+    return pdb_str
 
 
 def prune_extra_chains(pdb_ids_str):
@@ -119,42 +120,42 @@ def prune_extra_chains(pdb_ids_str):
     return unique_pdb_ids
 
 def remove_chains(pdb_ids_chains):
-  #The pdb ids will have their chains attached here (format example: 5ecy.A)
-  pdb_ids_chains_list = pdb_ids_chains.split(sep=' ')
+    #The pdb ids will have their chains attached here (format example: 5ecy.A)
+    pdb_ids_chains_list = pdb_ids_chains.split(sep=' ')
 
-  #empty list to store pdb ids without chains
-  pdb_ids_no_chains = []
+    #empty list to store pdb ids without chains
+    pdb_ids_no_chains = []
 
-  #Remove the chains from the PDB ids
-  for pdb_id in pdb_ids_chains_list:
-      pdb_id_only = pdb_id.split(sep='.')[0]
-      pdb_ids_no_chains.append(pdb_id_only)
-  
-  return pdb_ids_no_chains
+    #Remove the chains from the PDB ids
+    for pdb_id in pdb_ids_chains_list:
+        pdb_id_only = pdb_id.split(sep='.')[0]
+        pdb_ids_no_chains.append(pdb_id_only)
+    
+    return pdb_ids_no_chains
 
 def expand_on_pdbs(df):
-  # Convert PDB column to list-like
-  df['pdb'] = df['pdb'].str.split(sep=' ')
-  # Explode PDB column
-  df = df.explode('pdb').reset_index(drop = True)
-  # Split PDB ID and chain into separate columns
-  df[['pdb', 'chain']] = df['pdb'].str.split(sep='.', expand = True)
+    # Convert PDB column to list-like
+    df['pdb'] = df['pdb'].str.split(sep=' ')
+    # Explode PDB column
+    df = df.explode('pdb').reset_index(drop = True)
+    # Split PDB ID and chain into separate columns
+    df[['pdb', 'chain']] = df['pdb'].str.split(sep='.', expand = True)
 
-  return df
+    return df
 
 def get_offset(fp, pdb):
-  # initiate reader object
-  cfr = CifFileReader()
-  cif_obj = cfr.read(fp, output='cif_wrapper')
-  cif_data = list(cif_obj.values())[0]
-  
-  # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
-  auth_start = int(cif_data._struct_ref_seq.pdbx_auth_seq_align_beg[0])
-  unp_start = int(cif_data._struct_ref_seq.db_align_beg[0])
-  offset = auth_start - unp_start
+    # initiate reader object
+    cfr = CifFileReader()
+    cif_obj = cfr.read(fp, output='cif_wrapper')
+    cif_data = list(cif_obj.values())[0]
+    
+    # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
+    auth_start = int(cif_data._struct_ref_seq.pdbx_auth_seq_align_beg[0])
+    unp_start = int(cif_data._struct_ref_seq.db_align_beg[0])
+    offset = auth_start - unp_start
 
-  print(f'Offset for {pdb}: {offset}')
-  return offset
+    print(f'Offset for {pdb}: {offset}')
+    return offset
 
 def fix_offset(pdb, fp, chain, offset):
     
@@ -256,7 +257,7 @@ def get_structure_dict(pdb, path):
     return structure, mmcif_dict
 
 
-def count_residues(region1, region2, structure, chain):
+def count_domain_residues(region1, region2, structure, chain):
     for model in structure:
         
         for chain in model:
@@ -307,3 +308,85 @@ def calculate_domain_completeness(region1, region2, count_in_region1, count_in_r
     percent_in_region_2 = (count_in_region2/len(region2))*100
 
     return percent_in_region_1, percent_in_region_2
+
+def get_domain_residues(region1, region2, structure, model, chain):
+    # Iterate through all the models in the structure
+    for model in structure:
+        
+        # Analyze only the model that corresponds to the current row in df_prot
+        if model.get_id() == model:
+        
+            for chain in model:
+                
+                # Analyze only the chain that corresponds to the current row in df_prot
+                if chain.get_id() == chain:
+                
+                    # Get all the atoms in the chain
+                    atom_list = Selection.unfold_entities(chain, "A")
+                    
+                    # Make an empty list to store the atoms in the region_1 and in region_2
+                    atoms_ns = []
+                    
+                    # Iterate through all the atoms in the chain and append the ones that occur inside
+                    # the region_1 or the region_2 to the list
+                    for atom in atom_list:
+                        
+                        # Get the parent residue for the atom
+                        res = atom.get_parent()
+                        
+                        # Make sure the residue is an amino acid
+                        if res.get_id()[0] == ' ':
+                            
+                            # Check whether the residue lies inside the region_1 or the region_2 and append
+                            # the atoms of these residues into a list
+                            if res.get_id()[1] in region1:
+                                atoms_ns.append(atom)
+                                
+                            elif res.get_id()[1] in region2:
+                                atoms_ns.append(atom)
+
+                    return atoms_ns
+                
+def domain_neighborsearch(df, region1, region2, atoms):
+    # Make an NeighborSearch object with all the atoms inside the region_1 and the region_2        
+    ns = NeighborSearch(atoms)
+      
+    # Search for all the interacting residues in the region_1 and in the region_2
+    # with atoms that are within a 6.5 A radius 
+    ns_all = ns.search_all(6.5, 'R')
+    
+    # Make a set to store the residues at the interface
+    interface_res = set()
+    
+    # Save the interacting residue pairs as a list of tuples
+    interacting_pairs = []
+    
+    # Iterate thorugh all the interacting residue pairs and append those that have a residue
+    # in the region_1 and another in the region_2 to a list. Save the residue positions in a set
+    for pairs in ns_all:
+        
+        res_0 = pairs[0].get_id()[1]
+        res_1 = pairs[1].get_id()[1]
+        
+        if res_0 in region1 and res_1 in region2:
+            interface_res.add(res_0)
+            interface_res.add(res_1)
+            interacting_pairs.append((res_0, res_1))
+            
+        elif res_1 in region1 and res_0 in region2:
+            interface_res.add(res_0)
+            interface_res.add(res_1)
+            interacting_pairs.append((res_0, res_1))
+            
+    # Save the results in the appropriate columns of df_prot
+    if len(interface_res) > 0 and len(interacting_pairs) > 0:    
+        df.loc[i, 'Interacting residue pairs'] = str(interacting_pairs)
+        df.loc[i, 'Interface Residues'] = str(interface_res)
+        df.loc[i, 'Number Interface Residues'] = len(interface_res)
+        
+    else: 
+        df.loc[i, 'Interacting residue pairs'] = np.nan
+        df.loc[i, 'Interface Residues'] = np.nan
+        df.loc[i, 'Number Interface Residues'] = np.nan
+    
+    return df

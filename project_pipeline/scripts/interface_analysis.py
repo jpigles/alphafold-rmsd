@@ -26,6 +26,7 @@ df_prot = main.find_domain_completeness(df_prot, cif_in_path)
 
 df_list = main.save_domain_quality_files(df_prot, snakemake.output[0], snakemake.output[1], snakemake.output[2], snakemake.output[3], snakemake.output[4])
 
+# Copy the files for each dataframe into new folders
 print('Found best files. Copying...')
 for i in range(len(df_list)):
     copy_result = main.copy_best_files(df_list[i], cif_in_path, cif_out_paths_list[i])

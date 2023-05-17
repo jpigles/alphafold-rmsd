@@ -117,7 +117,7 @@ def find_domain_completeness(df, path):
             resolution = np.nan
 
         # Count number of residues in each region
-        count_res_reg_1, count_res_reg_2, count_res, model_id = utils.count_residues(region_1_res, region_2_res, structure, chain)
+        count_res_reg_1, count_res_reg_2, count_res, model_id = utils.count_domain_residues(region_1_res, region_2_res, structure, chain)
 
         # Calculate the percentage of residues in each region
         percent_reg_1, percent_reg_2 = utils.calculate_domain_completeness(region_1_res, region_2_res, count_res_reg_1, count_res_reg_2)
@@ -174,3 +174,35 @@ def copy_best_files(df, inpath, outpath):
 
     return f'Successfully copied files into {outpath}'
 
+def get_interfaces(df, path):
+    '''
+    Finds the residues involved in the interface between the two domains.
+    '''
+
+    # Define columns for new stats
+    df['PDB Mutations'] = ''
+    df['Interacting residue pairs'] = ''
+    df['Interface Residues'] = ''
+    df['Number Interface Residues'] = ''
+
+    df = utils.region_search_range(df)
+
+    for i in range(len(df)):
+
+        # Define values for retrieval 
+        region_1_res = df.loc[i, 'region_1 search']
+        region_2_res = df.loc[i, 'region_2 search']
+        pdb = df.loc[i, 'pdb']
+        uniprot = df.loc[i, 'uniprot']
+        path_uniprot = path + uniprot + '/'
+        chain = df.loc[i, 'chain']
+        model = df.loc[i, 'model']
+
+        # Get structure and dictionary objects
+        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot)
+
+        atoms_ns = utils.get_domain_residues(region_1_res, region_2_res, structure, model, chain)
+
+        interface_df = utils.domain_neighborsearch(df, region_1_res, region_2_res, atoms_ns)
+
+        
