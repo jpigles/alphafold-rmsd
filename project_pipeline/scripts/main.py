@@ -1,7 +1,9 @@
 from Bio.PDB.PDBList import PDBList
 import pandas as pd
 import numpy as np
+from os.path import join
 import utils
+import shutil
 import os
 
 
@@ -81,6 +83,10 @@ def correct_offset(df, path):
 
     return df
 
+
+###########
+# Rule interface_analysis functions
+
 def find_domain_completeness(df, path):
 
     # Create a new empty dataframe to store the results
@@ -88,9 +94,9 @@ def find_domain_completeness(df, path):
                                  'region_2_len', 'pdb', 'pdb_length', 'resolution',
                                  'model', 'chain', 'auth_offset', 'pdb residues in region_1', 'pdb residues in region_2', 
                                  'percent_region_1', 'percent_region_2'])
+    
     # Convert the domain region strings to ranges or lists of ranges
-    df['region_1 search'] = df['region_1'].apply(lambda x: utils.string2range(x))
-    df['region_2 search'] = df['region_2'].apply(lambda x: utils.string2range(x))
+    df = utils.region_search_range(df)
 
     for i in range(len(df)):
     
@@ -156,5 +162,15 @@ def save_domain_quality_files(df, path1, path2, path3, path4, path5):
     df_prot_both_60 = df.loc[(df['Percent residues in region_1'] > 60.0) & (df['Percent residues in region_2'] > 60.0)].reset_index(drop = True)
     df_prot_both_60.to_csv(path5, sep='\t', index=False)
 
+    return list(df_prot_both_80, df_prot_1_80, df_prot_2_80, df_prot_both_60)
 
-def copy_best_files()
+def copy_best_files(df, inpath, outpath):
+    for i in range(len(df)):
+        uniprot = df.loc[i, 'uniprot']
+        pdb = df.loc[i, 'pdb']
+        all_pdbs_path = join(inpath, uniprot, pdb + '.cif')
+        best_pdbs_path = join(outpath, pdb + '.cif')
+        shutil.copyfile(all_pdbs_path, best_pdbs_path)
+
+    return f'Successfully copied files into {outpath}'
+

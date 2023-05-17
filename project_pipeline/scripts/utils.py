@@ -236,6 +236,13 @@ def string2range(x):
         # end a 1 has to be added in order to include the last position in the range
         return list(range(list_temp[0], list_temp[1]+1))
     
+def region_search_range(df):
+    # Convert the domain region strings to ranges or lists of ranges
+    df['region_1 search'] = df['region_1'].apply(lambda x: string2range(x))
+    df['region_2 search'] = df['region_2'].apply(lambda x: string2range(x))
+
+    return df
+    
 def get_structure_dict(pdb, path):
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)
