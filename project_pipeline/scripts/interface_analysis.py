@@ -17,3 +17,8 @@ Columns of data frame after this step: ['gene_name', 'uniprot', 'protein_length'
                                  'percent_region_1', 'percent_region_2']
 '''
 df_prot = main.find_domain_completeness(df_prot, cif_path)
+
+# Save several data frames with differentiating quality of domains: both domains with 80% of residues, domain 1 with 80% of residues,
+# domain 2 with 80% of residues, and both domains with 60% of residues
+
+main.save_domain_quality_files(df_prot, snakemake.output[0], snakemake.output[1], snakemake.output[2], snakemake.output[3], snakemake.output[4])

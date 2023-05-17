@@ -24,8 +24,10 @@ rule interface_analysis:
 
     output:
         'data/proteins_pdb_summary.tsv',
-        'data/proteins_pdb_best.tsv',
-        directory('data/input/RCSB_cif_best')
+        'data/proteins_pdb_both_80.tsv',
+        'data/proteins_pdb_1_80.tsv',
+        'data/proteins_pdb_2_80.tsv',
+        'data/proteins_pdb_both_60.tsv'
 
     script:
         'scripts/interface_analysis.py'

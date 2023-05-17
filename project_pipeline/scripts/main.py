@@ -137,3 +137,24 @@ def find_domain_completeness(df, path):
         df_domain = df_domain.concat(df_domain_part_1, ignore_index=True)
 
     return df_domain
+
+def save_domain_quality_files(df, path1, path2, path3, path4, path5):
+    '''
+    Save several copies of the dataframe with different filters based on the percentage of residues in the inhibitory and active domains.
+    '''
+    df.to_csv(path1, sep='\t', index=False)
+
+    df_prot_both_80 = df.loc[(df['Percent residues in region_1'] > 80.0) & (df['Percent residues in region_2'] > 80.0)].reset_index(drop = True)
+    df_prot_both_80.to_csv(path2, sep='\t', index=False)
+
+    df_prot_1_80 = df.loc[(df['Percent residues in region_1'] > 80.0)].reset_index(drop = True)
+    df_prot_1_80.to_csv(path3, sep='\t', index=False)
+
+    df_prot_2_80 = df.loc[(df['Percent residues in region_2'] > 80.0)].reset_index(drop = True)
+    df_prot_2_80.to_csv(path4, sep='\t', index=False)
+
+    df_prot_both_60 = df.loc[(df['Percent residues in region_1'] > 60.0) & (df['Percent residues in region_2'] > 60.0)].reset_index(drop = True)
+    df_prot_both_60.to_csv(path5, sep='\t', index=False)
+
+
+def copy_best_files()
