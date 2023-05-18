@@ -35,16 +35,6 @@ rule interface_analysis:
     script:
         'scripts/interface_analysis.py'
 
-# Don't need this 
-# rule interface_residues:
-#     input:
-#         'data/proteins_pdb_best.tsv',
-
-#     output:
-#         'data/proteins_interface.tsv'
-
-#     script:
-#         'scripts/get_interface_all_aa.py'
 
 # May not need this. If needed, could bundle into above step.
 # rule convert_RCSB_cif_to_pdb:
