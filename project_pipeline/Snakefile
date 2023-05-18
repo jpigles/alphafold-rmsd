@@ -15,7 +15,7 @@ rule pdb_ids:
         'data/proteins_by_pdb.tsv'
         
     script:
-        'scripts/get_pdb_ids.py'
+        'scripts/pdb_ids.py'
 
 
 rule interface_analysis:
