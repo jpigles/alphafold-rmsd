@@ -6,7 +6,7 @@ import pandas as pd
 #     input:
 #         Here I place my final analysis. What is my final analysis?
 
-#determine pdb ids and chains.
+# Determine pdb ids and chains.
 rule pdb_ids:
     input:
         'data/proteins.tsv'
@@ -17,7 +17,9 @@ rule pdb_ids:
     script:
         'scripts/pdb_ids.py'
 
-
+# Determine the pdb files where both domains are at least 80% complete, where domain 1 is at least 80% complete, 
+# where domain 2 is at least 80% complete, and where both domains are at least 60% complete. Determine the residues in each interface
+# that are interacting using the 60% complete pdb files.
 rule interface_analysis:
     input:
         'data/proteins_by_pdb.tsv',
