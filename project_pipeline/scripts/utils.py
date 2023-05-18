@@ -379,14 +379,20 @@ def domain_neighborsearch(df, region1, region2, atoms):
             interacting_pairs.append((res_0, res_1))
             
     # Save the results in the appropriate columns of df_prot
-    if len(interface_res) > 0 and len(interacting_pairs) > 0:    
-        df.loc[i, 'Interacting residue pairs'] = str(interacting_pairs)
-        df.loc[i, 'Interface Residues'] = str(interface_res)
-        df.loc[i, 'Number Interface Residues'] = len(interface_res)
+    if len(interface_res) > 0 and len(interacting_pairs) > 0:
+        return str(interacting_pairs), str(interface_res), len(interface_res)  
         
     else: 
-        df.loc[i, 'Interacting residue pairs'] = np.nan
-        df.loc[i, 'Interface Residues'] = np.nan
-        df.loc[i, 'Number Interface Residues'] = np.nan
+        return np.nan, np.nan, np.nan
     
-    return df
+def to_string(x):
+    x = str(x)
+    
+    if x == 'nan':
+        return np.nan
+    elif '{' in x:
+        x = x.replace('{', '').replace('}', '').replace(' ', '')
+        return x
+    elif '[' in x:
+        x = x.replace('[', '').replace(']', '').replace(' ', '')
+        return x

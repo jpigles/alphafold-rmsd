@@ -193,16 +193,87 @@ def get_interfaces(df, path):
         region_1_res = df.loc[i, 'region_1 search']
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
-        uniprot = df.loc[i, 'uniprot']
-        path_uniprot = path + uniprot + '/'
         chain = df.loc[i, 'chain']
         model = df.loc[i, 'model']
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, path)
 
+        # Get mutations
+        df.loc[i, 'PDB Mutations'] = mmcif_dict['_entity.pdbx_mutation'][0]
+
+        # Get residues in domains for Neighborsearch
         atoms_ns = utils.get_domain_residues(region_1_res, region_2_res, structure, model, chain)
 
-        interface_df = utils.domain_neighborsearch(df, region_1_res, region_2_res, atoms_ns)
+        # Get interacting residues
+        interacting_pairs, interface_res, len_interface_res = utils.domain_neighborsearch(df, region_1_res, region_2_res, atoms_ns)
 
+        df.loc[i, 'Interacting residue pairs'] = interacting_pairs
+        df.loc[i, 'Interface Residues'] = interface_res
+        df.loc[i, 'Number Interface Residues'] = len_interface_res
+
+    return df
+
+def largest_interface(df):
+    ''' 
+    Go through all the proteins in df_prot and determine the pdb file with the greatest 
+    number of interface residues between the region_1 and the region_2
+    '''
+
+    # Convert the int values to numpy.int64 (this is required for the .idxmax method to be applied)
+    df.loc[:, 'Number Interface Residues'] = pd.to_numeric(df['Number Interface Residues'])
+
+    # Make a new column to flag the rows to keep
+    df['Keep'] = ''
+
+    # Get all the Uniprot_IDs
+    proteins = set(df['Uniprot_ID'])
+
+    # Iterate through all the proteins
+    for protein in proteins:
         
+        print('Determining the interface residues for', protein)
+        
+        # Grab all the instances of each protein in df_prot
+        df_temp = df.loc[df['Uniprot_ID'] == protein]
+        
+        # Grab the intances of each protein in df_prot with no mutations
+        df_temp_no_mut = df_temp.loc[df_temp['PDB Mutations'] == '?']
+        
+        # Grab all the intances of each protein with mutations
+        df_temp_mut = df_temp.loc[df_temp['PDB Mutations'] != '?']
+        
+        # From the PDB entries with no mutations, select the one with the largest 
+        # number of residues at the interface
+        if len(df_temp_no_mut) > 0 :
+            # Get the index of the max value in the Number Interface Residues column
+            max_index_no_mut = df_temp_no_mut['Number Interface Residues'].idxmax(skipna = True)
+            
+            # Set the row with the max index to True in the Keep column of df_prot
+            df.loc[max_index_no_mut, 'Keep'] = True
+        
+        # If all the PDB entries have mutations, select the one with the largest
+        # number of residues at the interface
+        elif len(df_temp_mut) > 0:
+            # Get the index of the max value in the Number Interface Residues column
+            max_index_mut = df_temp_mut['Number Interface Residues'].idxmax(skipna = True)
+            
+            # Set the row with the max index to True in the Keep column of df_prot
+            df.loc[max_index_mut, 'Keep'] = True
+
+    # Make a new df with the proteins with the highest number of interface residues
+    df_prot_keep = df.loc[df['Keep'] == True]
+
+    df_prot_result = df.copy()
+    df_prot_keep_result = df_prot_keep.copy()
+
+    df_prot_result.loc[:,'Interface Residues'] = df_prot_result['Interface Residues'].apply(utils.to_string)    
+
+    df_prot_keep_result.loc[:, 'Interface Residues'] = df_prot_keep_result['Interface Residues'].apply(utils.to_string)
+
+    df_prot_keep_result.loc[:, 'Interacting residue pairs'] = df_prot_keep_result['Interacting residue pairs'].apply(utils.to_string)
+
+    df_prot_keep_result = df_prot_keep_result.dropna(subset = ['Uniprot_ID']).reset_index(drop = True)
+    df_prot_keep_result = df_prot_keep_result.drop(['region_1 search', 'region_2 search', 'Keep'], axis = 'columns')
+
+    return df_prot_keep_result
