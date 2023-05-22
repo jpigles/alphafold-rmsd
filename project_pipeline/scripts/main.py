@@ -2,6 +2,7 @@ from Bio.PDB.PDBList import PDBList
 import pandas as pd
 import numpy as np
 from os.path import join
+from pymol import cmd
 import utils
 import shutil
 import os
@@ -277,3 +278,90 @@ def largest_interface(df):
     df_prot_keep_result = df_prot_keep_result.drop(['region_1 search', 'region_2 search', 'Keep'], axis = 'columns')
 
     return df_prot_keep_result
+
+def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
+    '''Calculate rmsd between gt and pred regions and whole proteins
+        Region1 is autoinhibitory region, region2 is domain
+    '''
+    
+    # Rmsds is a dict of variable size with format {'complex_rmsd': ####, '1.0_aligned': ###, '1.0_comp': ###, ...}. Size based on number subregions.
+    rmsds = {}
+    utils.load_and_select \
+        (gt_pdb_fn, pred_pdb_fn,
+        region_1, region_2)
+
+    # Superimpose entirety of proteins
+    align = cmd.align('native', 'pred')
+    cmd.multisave(complex_fn, 'all', format='pdb')
+    # Calculate rmsd of whole protein
+    rmsd = cmd.rms_cur('native','pred')
+    rmsds['complex_rmsd'] = round(rmsd, 3)
+
+    # Superimpose each region and calculate rmsds
+    for key in region_1:
+        if len(region_1) > 1 and '.0' in key:
+            continue
+        two_rmsds = utils.align_and_calculate(key, '2.0')
+        rmsds[key + '_aligned'] = two_rmsds[0]
+        rmsds[key + '_comp'] = two_rmsds[1]
+
+    for key in region_2:
+        if len(region_2) > 1 and '.0' in key:
+            continue
+        two_rmsds = utils.align_and_calculate(key, '1.0')
+        rmsds[key + '_aligned'] = two_rmsds[0]
+        rmsds[key + '_comp'] = two_rmsds[1]
+
+    return rmsds
+
+def get_rmsds(df):
+    '''
+    Calculate rmsds for each protein in df, aligning first on the autoinhibitory region (region 1) and then on the active region (region 2). Regions with
+    multiple subregions are aligned and calculated separately, and then the average is taken.
+    '''
+    rmsd_info = []
+    for i in range(len(df)):
+        # Define pdb, filenames, region1, region2
+        pdb = df.loc[i, 'PDB ID']
+        uniprot = df.loc[i, 'Uniprot_ID']
+        region_1_dict = utils.create_region_dict(df.loc[i, 'region_1'], 1)
+        region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
+        percent_reg1 = df.loc[i, 'Percent residues in region_1']
+        percent_reg2 = df.loc[i, 'Percent residues in region_2']
+        gt_fn = f'./data/input/RCSB/pdbs_trim/{pdb}.pdb'
+        pred_fn = f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/ranked_0.pdb'
+        complex_fn = f'./data/output/RCSB_af_full/complex/{pdb}.pdb'
+
+        print(f'Trying {pdb}...')
+        rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
+
+        # Define default values for columns to retain number of columns per row
+        rmsd_dic = {'UniProt': uniprot,
+                    'PDB': pdb,
+                    'complex_rmsd': 0,
+                    '1.0_aligned': 0,
+                    '1.0_comp': 0,
+                    '1.1_aligned': 0,
+                    '1.1_comp': 0,
+                    '1.2_aligned': 0,
+                    '1.2_comp': 0,
+                    '2.0_aligned': 0,
+                    '2.0_comp': 0,
+                    '2.1_aligned': 0,
+                    '2.1_comp': 0,
+                    '2.2_aligned': 0,
+                    '2.2_comp': 0,
+                    '2.3_aligned': 0,
+                    '2.3_comp': 0,
+                    'Percent residues in region_1': percent_reg1,
+                    'Percent residues in region_2': percent_reg2}
+
+        for key in rmsds:
+            if key in rmsd_dic:
+                rmsd_dic[key] = rmsds[key]
+
+        print('Success! Writing rmsds')
+        rmsd_info.append(rmsd_dic)
+
+    final_rmsds = utils.get_region_averages(rmsd_info)
+    return final_rmsds

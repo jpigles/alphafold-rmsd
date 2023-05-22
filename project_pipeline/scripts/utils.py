@@ -2,9 +2,10 @@ from pdbecif.mmcif_io import CifFileReader, CifFileWriter
 from Bio.PDB.MMCIFParser import MMCIFParser
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 from Bio.PDB import MMCIFParser, NeighborSearch, Selection
-import requests
+from pymol import cmd
 import pandas as pd
 import numpy as np
+import requests
 
 def query_rcsb(uniprot_id, url):
     
@@ -396,3 +397,81 @@ def to_string(x):
     elif '[' in x:
         x = x.replace('[', '').replace(']', '').replace(' ', '')
         return x
+    
+def create_region_dict(region, region_num):
+    '''Create a dictionary containing an ID for every region in the domain
+    For instance, if domain 1 has 123-222,333-444, then make dict {1.0: 123-222+333-444, 1.1: 123-222, 1.2: 333-444}.
+    #.0 always contains the full number of regions.'''
+    full_region = region.strip()
+    # Each dict will have at least one entry.
+    region_dict = {f'{region_num}.0': full_region}
+    if ',' in region:
+        full_region = region.replace(',', '+')
+        # Substitute full_region in the dict to one with + in place of ,
+        region_dict[f'{region_num}.0'] = full_region
+        regions_list = region.split(',')
+        for i in range(len(regions_list)):
+            # Make subregions 1-indexed to preserve #.0 as full.
+            subregion = i + 1
+            region_dict[f'{region_num}.{subregion}'] = regions_list[i]
+
+    return region_dict
+    
+def load_and_select(gt_fn, pred_fn, region_1, region_2):
+    # Load and select native and pred pdbs
+    cmd.delete('all')
+    cmd.load(gt_fn, 'native')
+    cmd.load(pred_fn, 'pred')
+
+    for obj in ['native','pred']:
+        # select region1 and region2
+        for key in region_1:
+            # example: native_1.1, native and resi 111-222
+            resi_range = region_1[key]
+            cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
+        for key in region_2:
+            resi_range = region_2[key]
+            cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
+
+def align_and_calculate(align_reg_key, comp_region_key):
+    # superimpose aligned region and calculate two rmsds: One for aligned region and one for complementary region (for example, rmsd for "aligned" region 1.1 
+    # and complementary region 2.0)
+    rmsds = []
+    try:
+        align = cmd.align(f'native_{align_reg_key}', f'pred_{align_reg_key}')
+        rmsd = cmd.rms_cur(f'native_{align_reg_key}', f'pred_{align_reg_key}')
+        rmsds.append(round(rmsd, 3))
+        rmsd = cmd.rms_cur(f'native_{comp_region_key}', f'pred_{comp_region_key}')
+        rmsds.append(round(rmsd, 3))
+        return rmsds
+
+    except pymol.CmdException:
+        print(f'Region {align_reg_key} missing')
+        rmsds = [-1, -1]
+        return rmsds
+    
+def get_region_averages(rmsds):
+    '''
+    If there are multiple regions in a domain, calculate their average rmsd.
+    '''
+
+    for item in rmsds:
+        if item['1.0_aligned'] == 0:
+            item['1_aligned'] = (item['1.1_aligned'] + item['1.2_aligned']) / 2
+            item['1_comp'] = (item['1.1_comp'] + item['1.2_comp']) / 2
+        else:
+            item['1_aligned'] = item['1.0_aligned']
+            item['1_comp'] = item['1.0_comp']
+
+    for item in rmsds:
+        if item['2.0_aligned'] == 0 and item['2.3_aligned'] == 0:
+            item['2_aligned'] = (item['2.1_aligned'] + item['2.2_aligned']) / 2
+            item['2_comp'] = (item['2.1_comp'] + item['2.2_comp']) / 2
+        elif item['2.0_aligned'] == 0 and item['2.3_aligned'] != 0:
+            item['2_aligned'] = (item['2.1_aligned'] + item['2.2_aligned'] + item['2.3_aligned']) / 3
+            item['2_comp'] = (item['2.1_comp'] + item['2.2_comp'] + item['2.3_comp']) / 3
+        else:
+            item['2_aligned'] = item['2.0_aligned']
+            item['2_comp'] = item['2.0_comp']
+
+    return rmsds

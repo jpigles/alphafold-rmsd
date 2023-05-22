@@ -61,26 +61,12 @@ rule interface_analysis:
 #         'scripts/af_cif_to_pdb.py'
 
 # Will probably have to reconfigure this.
-rule compare_structures_input:
+rule calculate_rmsds:
     input:
-        'proteins_pdb_best.tsv', #args.pdb_ids
-        'input' #args.input_pdb_dir# args.linker_fasta_dir.
+        'data/proteins_pdb_both_60.tsv'
 
     output:
-        directory('output') #args.output_dir
+        'data/rmsds.tsv'
 
-    shell:
-        "python aa_main.py --config configs/input.ini"
-#           Do I have to specify the scripts that will be used for this? Or will this automatically run it?
-
-
-rule compare_structures_output:
-    input:
-        'proteins_pdb_best.tsv', #args.pdb_ids
-        'input' #args.input_pdb_dir# args.linker_fasta_dir.
-
-    output:
-        'output' #args.output_dir
-
-    shell:
-        "python aa_main.py --config configs/output.ini"
+    script:
+        'scripts/calculate_rmsd.py'
