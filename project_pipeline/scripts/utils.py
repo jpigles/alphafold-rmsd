@@ -150,9 +150,9 @@ def get_offset(fp, pdb):
     cif_data = list(cif_obj.values())[0]
     
     # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
-    auth_start = int(cif_data._struct_ref_seq.pdbx_auth_seq_align_beg[0])
+    pdb_start = int(cif_data._struct_ref_seq.seq_align_beg[0])
     unp_start = int(cif_data._struct_ref_seq.db_align_beg[0])
-    offset = auth_start - unp_start
+    offset = pdb_start - unp_start
 
     print(f'Offset for {pdb}: {offset}')
     return offset
@@ -170,10 +170,10 @@ def fix_offset(pdb, fp, chain, offset):
         df = pd.DataFrame.from_dict(cif_obj[pdb.upper()]['_atom_site'])
         # Replace residue numbers
         for i in range(len(df)):
-            if df.loc[i, 'chain_id']==chain:
-                res_num = df.loc[i, 'residue_number']
+            if df.loc[i, 'label_asym_id']==chain:
+                res_num = df.loc[i, 'label_seq_id']
                 new_res_num = res_num - offset
-                df.loc[i, 'residue_number'] = new_res_num
+                df.loc[i, 'label_seq_id'] = new_res_num
             else:
                 continue
         # Convert back to mmCIF-like dictionary
