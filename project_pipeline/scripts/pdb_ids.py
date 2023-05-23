@@ -28,14 +28,11 @@ print('Successfully retrieved IDs. Proceeding to download structures.')
 main.download_pdb_files(df_prot, cif_path)
 
 # Make a new dataframe with each PDB ID in a separate row and chains in their own column
-df_prot = utils.expand_on_pdbs(df_prot)
-
-# Save an intermediary version of the dataframe to a file to assist in debugging
-df_prot.to_csv(snakemake.output[0], sep='\t', index=False)
+df_pdb = utils.expand_on_pdbs(df_prot)
 
 # Fix any offsets between the UniProt sequence and the PDB sequence in the CIF files
-df_prot = main.correct_offset(df_prot, cif_path)
+df_offsets = main.correct_offset(df_pdb, cif_path)
 
 # Save the dataframe as a tsv file
-df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
+df_offsets.to_csv(snakemake.output[0], sep = '\t', index = False)
 
