@@ -25,7 +25,7 @@ df_prot = main.get_pdb_ids(df_prot)
 print('Successfully retrieved IDs. Proceeding to download structures.')
 
 # Download the pdb files
-df_prot = main.download_pdb_files(df_prot, cif_path)
+main.download_pdb_files(df_prot, cif_path)
 
 # Make a new dataframe with each PDB ID in a separate row and chains in their own column
 df_prot = utils.expand_on_pdbs(df_prot)
