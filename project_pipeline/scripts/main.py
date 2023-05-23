@@ -30,7 +30,8 @@ def get_pdb_ids(df):
         else:
             pdb_ids_pruned = utils.prune_extra_chains(pdb_ids)
             df.loc[i, 'pdb'] = pdb_ids_pruned
-    
+            
+    df.reset_index(drop=True, inplace=True)
     return df
 
 def download_pdb_files(df, path):
