@@ -69,6 +69,7 @@ def correct_offset(df, path):
         # Designate values for retrieval
         uniprot = df.loc[i, 'uniprot']
         pdb_id = df.loc[i, 'pdb']
+        chain = df.loc[i, 'chain']
   
         # Designate file locations. Note that we will be overwriting the CIF files
         cif_path = path + uniprot + '/' + pdb_id + '.cif'
@@ -78,7 +79,7 @@ def correct_offset(df, path):
         offsets.append(offset)
 
         # Fix the offset
-        fixed_pdb = utils.fix_offset(pdb_id, cif_path, offset)
+        fixed_pdb = utils.fix_offset(pdb_id, cif_path, chain, offset)
         print(fixed_pdb)
 
     # Add column with offset values
