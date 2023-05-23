@@ -29,7 +29,7 @@ def get_pdb_ids(df):
             df = df.drop(index=[i])
         else:
             pdb_ids_pruned = utils.prune_extra_chains(pdb_ids)
-            df.loc[i, 'pdb'] = pdb_ids_pruned
+            df.loc[i, 'pdb'] = pdb_ids_pruned.strip()
 
     df.reset_index(drop=True, inplace=True)
     return df
