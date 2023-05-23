@@ -1,10 +1,6 @@
-import pandas as pd
-
-
-#Establishing the end directory
-# rule all:
-#     input:
-#         Here I place my final analysis. What is my final analysis?
+rule all:
+    input:
+        'data/figures/rmsd_plot.png'
 
 # Determine pdb ids and chains.
 rule pdb_ids:
@@ -70,3 +66,13 @@ rule calculate_rmsds:
 
     script:
         'scripts/calculate_rmsd.py'
+
+rule rmsd_plot:
+    input:
+        'data/rmsds.tsv'
+
+    output:
+        'data/figures/rmsd_plot.png'
+
+    script:
+        'scripts/rmsd_plot.py'
