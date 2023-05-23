@@ -172,9 +172,9 @@ def fix_offset(pdb, fp, chain, offset):
         # Replace residue numbers
         for i in range(len(df)):
             if df.loc[i, 'label_asym_id']==chain:
-                res_num = df.loc[i, 'label_seq_id']
+                res_num = int(df.loc[i, 'label_seq_id'])
                 new_res_num = res_num - offset
-                df.loc[i, 'label_seq_id'] = new_res_num
+                df.loc[i, 'label_seq_id'] = str(new_res_num)
             else:
                 continue
         # Convert back to mmCIF-like dictionary
