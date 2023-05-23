@@ -30,12 +30,13 @@ def get_pdb_ids(df):
         else:
             pdb_ids_pruned = utils.prune_extra_chains(pdb_ids)
             df.loc[i, 'pdb'] = pdb_ids_pruned
-            
+
     df.reset_index(drop=True, inplace=True)
     return df
 
 def download_pdb_files(df, path):
     '''Downloads the PDB files for each protein in the dataframe and saves them in a directory with the Uniprot ID.'''
+
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
         uniprot_path = path + uniprot + '/'
@@ -45,8 +46,8 @@ def download_pdb_files(df, path):
         try:
             os.mkdir(uniprot_path)
         except:
-            continue
-        
+            print('Directory already exists.')
+
         pdb_ids_chains = df.loc[i, 'pdb']
         
         # Remove chains from the PDB IDs
