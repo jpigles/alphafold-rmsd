@@ -144,7 +144,7 @@ def find_domain_completeness(df, path):
                                 'percent_region_1': percent_reg_1,
                                 'percent_region_2': percent_reg_2}, index=[0])
         
-        df_domain = df_domain.concat(df_domain_part_1, ignore_index=True)
+        df_domain = pd.concat([df_domain, df_domain_part_1], axis=0, ignore_index=True)
 
     return df_domain
 

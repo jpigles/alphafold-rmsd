@@ -166,7 +166,7 @@ def fix_offset(pdb, fp, chain, offset):
     else:
         # Read in the CIF file
         cfr = CifFileReader()
-        cif_obj = cfr.read(fp, output='cif_dictionary', only=['_atom_site'])
+        cif_obj = cfr.read(fp, output='cif_dictionary')
         # Convert to a Pandas DataFrame
         df = pd.DataFrame.from_dict(cif_obj[pdb.upper()]['_atom_site'])
         # Replace residue numbers
