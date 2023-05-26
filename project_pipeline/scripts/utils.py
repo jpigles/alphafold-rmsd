@@ -253,12 +253,22 @@ def get_structure_dict(pdb, path):
     structure = parser.get_structure(pdb, path + pdb + '.cif')
             
     # Make an MMCIFDict object to grab more information form the .cif files
-    mmcif_dict = MMCIF2Dict((path + pdb + '.cif'))
+    mmcif_dict = MMCIF2Dict(path + pdb + '.cif')
 
     return structure, mmcif_dict
 
 
 def count_domain_residues(region1, region2, structure, chain):
+    '''
+    Count the number of residues in the domain and in the IAS.
+    '''
+
+     # Set all the counters to zero
+    count_res = 0
+    count_res_region_1 = 0
+    count_res_region_2 = 0
+    model_id = ''
+
     for model in structure:
         
         for chain in model:
@@ -276,11 +286,6 @@ def count_domain_residues(region1, region2, structure, chain):
                 # Get all the residues in the chain A
                 residues = chain.get_residues()
                 
-                # Set all the counters to zero
-                count_res = 0
-                count_res_region_1 = 0
-                count_res_region_2 = 0
-
                 # Iterate through all the residues in the chain and determine
                 # whether they belong to the IAS or to the Domain.
                 for residue in residues:
@@ -298,10 +303,10 @@ def count_domain_residues(region1, region2, structure, chain):
                         elif residue.get_id()[1] in region2:
                             count_res_region_2 = count_res_region_2 + 1
 
-                return count_res_region_1, count_res_region_2, count_res, model_id
-            
             else:
                 continue
+
+    return count_res_region_1, count_res_region_2, count_res, model_id
             
 def calculate_domain_completeness(region1, region2, count_in_region1, count_in_region2):
     # Calculate the percentage of residues in the IAS and in the Domain
