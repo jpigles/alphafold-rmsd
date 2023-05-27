@@ -403,6 +403,77 @@ def to_string(x):
         x = x.replace('[', '').replace(']', '').replace(' ', '')
         return x
     
+def compare_atoms(gt_df, pred_df):
+
+    present_atoms_pred = []
+    extra_atoms_gt = []
+
+    # Define atom_names for hydrogens
+    hydrogens = ['HA', 'HB1', 'HB2', 'HB3', 'H', 'HA2', 'HA3', 'HG2', 'HG3', 'HD2', 'HD3', 'HE1', 'HE2',
+                'HE3', 'HB', 'HG11', 'HG12', 'HG13', 'HG21', 'HG22', 'HG23', 'HE', 'HH11', 'HH12', 'HH21',
+                'HH22', 'HE21', 'HE22', 'HD1', 'HZ', 'HH', 'HG1', 'HD21', 'HD22', 'HG', 'HD11', 'HD12', 
+                'HD13', 'HD23', 'HZ1', 'HZ2', 'HZ3', 'HH2']
+    # Define possible alternate conformations
+    alt_locations = ['B', 'C', 'D', 'E']
+
+    for atom in range(len(gt_df)):
+        # Define rows to be skipped (hydrogens or alternate conformations)
+        if gt_df.loc[atom, 'label_atom_id'] in hydrogens or gt_df.loc[atom, 'label_alt_id'] in alt_locations:
+            extra_atoms_gt.append(atom)
+            continue
+
+        # Define minimum  parameters to select unique rows
+        gt_atom_name = gt_df.loc[atom, 'label_atom_id']
+        gt_residue_name = gt_df.loc[atom, 'label_comp_id']
+        gt_residue_number = gt_df.loc[atom, 'label_seq_id']
+
+        # Look for matching row in pred
+        pred_row = pred_df.loc[(pred_df['label_atom_id'] == gt_atom_name) & (pred_df['label_seq_id'] == gt_residue_number) & (pred_df['label_comp_id'] == gt_residue_name)]
+        if pred_row.empty != True:
+            present_atoms_pred.append(pred_row.index)
+        else:
+            extra_atoms_gt.append(atom)
+
+    return present_atoms_pred, extra_atoms_gt
+
+def drop_unshared_atoms(gt_df, pred_df, present_atoms_pred, extra_atoms_gt):
+    # Select all rows in pred not present in gt
+    total_atoms = list(pred_df.index)
+    na_atoms_array = np.setdiff1d(total_atoms, present_atoms_pred)
+    na_atoms = sorted(na_atoms_array)
+
+    # Create new pred data frame exclusively with atoms present in gt
+    pred_trim = pred_df.drop(index=na_atoms)
+    gt_trim = gt_df.drop(index=extra_atoms_gt)
+
+    return gt_trim, pred_trim
+
+def assert_equal_size(gt_trim_df, pred_trim_df):
+    try:
+        assert len(pred_trim_df) == len(gt_trim_df)
+        return True
+    except AssertionError:
+        gt_sim = gt_trim_df.drop(['atom_number', 'x_coord', 'y_coord', 'z_coord', 'occupancy', 'b_factor', 'segment_id', 'element_symbol', 'charge', 'line_idx'], axis=1)
+        pred_sim = pred_trim_df.drop(['atom_number', 'x_coord', 'y_coord', 'z_coord', 'occupancy', 'b_factor', 'segment_id', 'element_symbol', 'charge', 'line_idx'], axis=1)
+        diff = pd.concat([gt_sim, pred_sim]).drop_duplicates(keep=False)
+        diff.to_csv('./data/AssertionError.tsv', sep='\t')
+        print(diff)
+        print('AssertionError! Check file')
+        return False
+    
+def trim_stats(pdb, gt, gt_trim, pred, pred_trim):
+    gt_perc = len(gt_trim) / len(gt)
+    pred_perc = len(pred_trim) / len(pred)
+    trim_values_dict = {'PDB': pdb,
+                        'gt_len': len(gt),
+                        'gt_trim_len': len(gt_trim),
+                        'pred_len': len(pred),
+                        'pred_trim_len': len(pred_trim),
+                        'gt_perc': gt_perc,
+                        'trim_perc': pred_perc}
+    
+    return trim_values_dict
+    
 def create_region_dict(region, region_num):
     '''Create a dictionary containing an ID for every region in the domain
     For instance, if domain 1 has 123-222,333-444, then make dict {1.0: 123-222+333-444, 1.1: 123-222, 1.2: 333-444}.

@@ -1,3 +1,4 @@
+from pdbecif.mmcif_io import CifFileReader, CifFileWriter
 from Bio.PDB.PDBList import PDBList
 import pandas as pd
 import numpy as np
@@ -281,6 +282,74 @@ def largest_interface(df):
     df_prot_keep_result = df_prot_keep_result.drop(['region_1 search', 'region_2 search', 'Keep'], axis = 'columns')
 
     return df_prot_keep_result
+
+def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
+
+    trim_values = []
+    for i in range(len(df)):
+        # skip extra rows for NMR files
+        model = df.loc[i, 'model']
+        if model != 0:
+            continue
+        
+        # Define parameters for selecting files
+        uniprot = df.loc[i, 'uniprot']
+        pdb = df.loc[i, 'pdb']
+        label_chain = df.loc[i, 'label_chain']
+        gt_fn = gt_path_in + f'{pdb}.cif'
+        gt_fn_out = gt_path_out + f'{pdb}.cif'
+        pred_fn = pred_path_in + f'F-{uniprot}-F1-model_v3.cif'
+        pred_fn_out = pred_path_out + f'{pdb}_AF.cif'
+
+        print(f'Trying {pdb}...')
+
+        # Initiate reader object
+        cfr = CifFileReader()
+
+        # Create dataframe with gt atoms in desired chain
+        gt_obj = cfr.read(gt_fn, output='cif_dictionary')
+        gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
+        gt = gt_all_chains[gt_all_chains['chain_id'] == label_chain].reset_index(drop=True)
+
+        # Create dataframe with pred atoms (pred file only contains our desired chain)
+        pred_obj = cfr.read(pred_fn, output='cif_dictionary')
+        pred = pd.DataFrame.from_dict(pred_obj[pdb.upper()]['_atom_site'])
+
+        print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
+
+        # Find common atoms between files
+        atoms_pred, extra_atoms_gt = utils.find_common_atoms(gt, pred)
+
+        # Trim the files
+        gt_trim, pred_trim = utils.trim_files(gt, pred, atoms_pred, extra_atoms_gt)
+
+        print('Length of gt_trim: ' + str(len(gt_trim)) + ', Length of pred_trim: ' + str(len(pred_trim)))
+        
+        # Convert back to mmCIF-like dictionary
+        gt_dict = gt_trim.to_dict(orient='list')
+        gt_obj[pdb.upper()]['_atom_site'] = gt_dict
+
+        pred_dict = pred_trim.to_dict(orient='list')
+        pred_obj[pdb.upper()]['_atom_site'] = pred_dict
+
+        # Check whether the trimmed files are the same length
+        assertion = utils.assert_equal_size(gt_trim, pred_trim)
+
+        if assertion == True:
+            print('Trimmed files are the same length')
+        else:
+            break
+
+        # Compile some information on the trimmed files
+        trim_values_dict = utils.trim_stats(pdb, gt, gt_trim, pred, pred_trim)
+        trim_values.append(trim_values_dict)
+
+        print(f'Success! Creating trimmed files for {pdb}...')
+        # Write trimmed files
+        CifFileWriter(gt_fn_out).write(gt_obj)
+        CifFileWriter(pred_fn_out).write(pred_obj)
+
+    return trim_values
 
 def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
     '''Calculate rmsd between gt and pred regions and whole proteins
