@@ -386,7 +386,7 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
 
     return rmsds
 
-def get_rmsds(df):
+def get_rmsds(df, gt_path, pred_path, complex_path):
     '''
     Calculate rmsds for each protein in df, aligning first on the autoinhibitory region (region 1) and then on the active region (region 2). Regions with
     multiple subregions are aligned and calculated separately, and then the average is taken.
@@ -400,9 +400,9 @@ def get_rmsds(df):
         region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
         percent_reg1 = df.loc[i, 'percent_region_1']
         percent_reg2 = df.loc[i, 'percent_region_2']
-        gt_fn = f'./data/input/RCSB/pdbs_trim/{pdb}.pdb'
-        pred_fn = f'./data/output/RCSB_af_full/af_trim/{pdb}.fasta/ranked_0.pdb'
-        complex_fn = f'./data/output/RCSB_af_full/complex/{pdb}.pdb'
+        gt_fn = gt_path + f'{pdb}.cif'
+        pred_fn = pred_path + f'{pdb}_AF.cif'
+        complex_fn = complex_path + f'{pdb}.pdb'
 
         print(f'Trying {pdb}...')
         rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)

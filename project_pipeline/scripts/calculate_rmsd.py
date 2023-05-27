@@ -4,13 +4,14 @@ import csv
 import main
 
 gt_in_path = './data/input/RCSB_cif_best/'
-gt_out_path = './data/input/RCSB_cif_trim/'
+gt_trim_path = './data/input/RCSB_cif_trim/'
 pred_in_path = './data/input/Alphafold_cif/'
-pred_out_path = './data/input/Alphafold_cif_trim/'
+pred_trim_path = './data/input/Alphafold_cif_trim/'
+complex_path = './data/output/complexes/'
 df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 
 # First we trim the files
-trim_values = main.trim_cifs(df, gt_in_path, gt_out_path, pred_in_path, pred_out_path)
+trim_values = main.trim_cifs(df, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
 
 # Save the trim values
 with open('./data/trim_values.tsv', 'w') as file:
@@ -20,11 +21,9 @@ with open('./data/trim_values.tsv', 'w') as file:
     writer.writeheader()
     for item in trim_values:
         writer.writerow(item)
-# Then we calculate the rmsd
 
-# Then we get the rmsd info
-
-rmsd_info = main.get_rmsds(pdb_df)
+# Calculate and save the rmsd info
+rmsd_info = main.get_rmsds(df, gt_trim_path, pred_trim_path, complex_path)
 
 with open(snakemake.output[0], 'w') as file:
     fields = ['UniProt', 'PDB', 'complex_rmsd', '1.0_aligned', '1.0_comp',
