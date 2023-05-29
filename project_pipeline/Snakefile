@@ -13,6 +13,16 @@ rule pdb_ids:
     script:
         'scripts/pdb_ids.py'
 
+rule fix_offset:
+    input:
+        'data/proteins_by_pdb.tsv'
+        
+    output:
+        'data/offset_fixed_proteins_by_pdb.tsv'
+        
+    script:
+        'scripts/fix_offset.py'
+
 # Determine the pdb files where both domains are at least 80% complete, where domain 1 is at least 80% complete, 
 # where domain 2 is at least 80% complete, and where both domains are at least 60% complete. Determine the residues in each interface
 # that are interacting using the 60% complete pdb files.
