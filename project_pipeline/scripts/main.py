@@ -300,7 +300,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         # Define parameters for selecting files
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
-        label_chain = df.loc[i, 'label_chain']
+        chain = df.loc[i, 'chain']
         gt_fn = gt_path_in + f'{pdb}.cif'
         gt_fn_out = gt_path_out + f'{pdb}.cif'
         pred_fn = pred_path_in + f'F-{uniprot}-F1-model_v3.cif'
@@ -314,7 +314,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         # Create dataframe with gt atoms in desired chain
         gt_obj = cfr.read(gt_fn, output='cif_dictionary')
         gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
-        gt = gt_all_chains[gt_all_chains['chain_id'] == label_chain].reset_index(drop=True)
+        gt = gt_all_chains[gt_all_chains['chain_id'] == chain].reset_index(drop=True)
 
         # Create dataframe with pred atoms (pred file only contains our desired chain)
         pred_obj = cfr.read(pred_fn, output='cif_dictionary')
