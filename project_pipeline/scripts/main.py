@@ -318,7 +318,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
         # Create dataframe with pred atoms (pred file only contains our desired chain)
         pred_obj = cfr.read(pred_fn, output='cif_dictionary')
-        pred = pd.DataFrame.from_dict(pred_obj[pdb.upper()]['_atom_site'])
+        pred = pd.DataFrame.from_dict(pred_obj[f'AF-{uniprot}-F1']['_atom_site'])
 
         print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
 
@@ -327,7 +327,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         atoms_pred, extra_atoms_gt = utils.compare_atoms(gt, pred)
 
         # Trim the files
-        gt_trim, pred_trim = utils.trim_files(gt, pred, atoms_pred, extra_atoms_gt)
+        gt_trim, pred_trim = utils.drop_unshared_atoms(gt, pred, atoms_pred, extra_atoms_gt)
 
         print('Length of gt_trim: ' + str(len(gt_trim)) + ', Length of pred_trim: ' + str(len(pred_trim)))
         
@@ -336,7 +336,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         gt_obj[pdb.upper()]['_atom_site'] = gt_dict
 
         pred_dict = pred_trim.to_dict(orient='list')
-        pred_obj[pdb.upper()]['_atom_site'] = pred_dict
+        pred_obj[f'AF-{uniprot}-F1']['_atom_site'] = pred_dict
 
         # Check whether the trimmed files are the same length
         assertion = utils.assert_equal_size(gt_trim, pred_trim)
