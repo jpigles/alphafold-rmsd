@@ -153,21 +153,26 @@ def save_domain_quality_files(df, path1, path2, path3, path4, path5):
     '''
     Save several copies of the dataframe with different filters based on the percentage of residues in the inhibitory and active domains.
     '''
+    df_list = []
     df.to_csv(path1, sep='\t', index=False)
 
     df_prot_both_80 = df.loc[(df['percent_region_1'] > 80.0) & (df['percent_region_2'] > 80.0)].reset_index(drop = True)
     df_prot_both_80.to_csv(path2, sep='\t', index=False)
+    df_list.append(df_prot_both_80)
 
     df_prot_1_80 = df.loc[(df['percent_region_1'] > 80.0)].reset_index(drop = True)
     df_prot_1_80.to_csv(path3, sep='\t', index=False)
+    df_list.append(df_prot_1_80)
 
     df_prot_2_80 = df.loc[(df['percent_region_2'] > 80.0)].reset_index(drop = True)
     df_prot_2_80.to_csv(path4, sep='\t', index=False)
+    df_list.append(df_prot_2_80)
 
     df_prot_both_60 = df.loc[(df['percent_region_1'] > 60.0) & (df['percent_region_2'] > 60.0)].reset_index(drop = True)
     df_prot_both_60.to_csv(path5, sep='\t', index=False)
+    df_list.append(df_prot_both_60)
 
-    return list(df_prot_both_80, df_prot_1_80, df_prot_2_80, df_prot_both_60)
+    return df_list
 
 def copy_best_files(df, inpath, outpath):
     for i in range(len(df)):
