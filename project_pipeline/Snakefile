@@ -62,6 +62,7 @@ rule calculate_rmsds:
         'data/proteins_pdb_both_60.tsv'
 
     output:
+        'data/trim_values.tsv',
         'data/rmsds.tsv'
 
     script:
