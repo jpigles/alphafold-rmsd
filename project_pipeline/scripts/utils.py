@@ -326,7 +326,8 @@ def get_domain_residues(region1, region2, structure, label_model, label_chain):
                 
                 # Analyze only the chain that corresponds to the current row in df_prot
                 if chain.get_id() == label_chain:
-                
+
+                    print(f'Looking at chain {label_chain} for interface')
                     # Get all the atoms in the chain
                     atom_list = Selection.unfold_entities(chain, "A")
                     
