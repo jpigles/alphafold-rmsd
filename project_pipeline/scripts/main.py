@@ -314,7 +314,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         # Create dataframe with gt atoms in desired chain
         gt_obj = cfr.read(gt_fn, output='cif_dictionary')
         gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
-        gt = gt_all_chains[gt_all_chains['chain_id'] == chain].reset_index(drop=True)
+        gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
 
         # Create dataframe with pred atoms (pred file only contains our desired chain)
         pred_obj = cfr.read(pred_fn, output='cif_dictionary')
@@ -323,7 +323,8 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
 
         # Find common atoms between files
-        atoms_pred, extra_atoms_gt = utils.find_common_atoms(gt, pred)
+        print(f'Comparing files for {pdb}...')
+        atoms_pred, extra_atoms_gt = utils.compare_atoms(gt, pred)
 
         # Trim the files
         gt_trim, pred_trim = utils.trim_files(gt, pred, atoms_pred, extra_atoms_gt)
