@@ -258,7 +258,7 @@ def get_structure_dict(pdb, path):
     return structure, mmcif_dict
 
 
-def count_domain_residues(region1, region2, structure, chain):
+def count_domain_residues(region1, region2, structure, label_chain):
     '''
     Count the number of residues in the domain and in the IAS.
     '''
@@ -277,9 +277,9 @@ def count_domain_residues(region1, region2, structure, chain):
             current_chain = chain.get_id()
             
             #Only act on the chain relevant to our protein of interest.
-            if current_chain == chain:
+            if current_chain == label_chain:
 
-                print(f'We want {chain}. Currently analyzing {current_chain}.')
+                print(f'We want {label_chain}. Currently analyzing {current_chain}.')
                     
                 # Get the model ID for later use
                 model_id = model.get_id()
@@ -315,17 +315,17 @@ def calculate_domain_completeness(region1, region2, count_in_region1, count_in_r
 
     return percent_in_region_1, percent_in_region_2
 
-def get_domain_residues(region1, region2, structure, model, chain):
+def get_domain_residues(region1, region2, structure, label_model, label_chain):
     # Iterate through all the models in the structure
     for model in structure:
         
         # Analyze only the model that corresponds to the current row in df_prot
-        if model.get_id() == model:
+        if model.get_id() == label_model:
         
             for chain in model:
                 
                 # Analyze only the chain that corresponds to the current row in df_prot
-                if chain.get_id() == chain:
+                if chain.get_id() == label_chain:
                 
                     # Get all the atoms in the chain
                     atom_list = Selection.unfold_entities(chain, "A")
