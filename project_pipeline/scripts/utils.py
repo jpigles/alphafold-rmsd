@@ -6,6 +6,14 @@ from pymol import cmd
 import pandas as pd
 import numpy as np
 import requests
+import os
+
+def make_dirs(paths):
+    for path in paths:
+        try:
+            os.mkdir(path)
+        except FileExistsError:
+            print('Folder already exists!')
 
 def query_rcsb(uniprot_id, url):
     

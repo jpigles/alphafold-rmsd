@@ -2,6 +2,7 @@ from pymol import cmd
 import pandas as pd
 import csv
 import main
+import utils
 
 gt_in_path = './data/input/RCSB_cif_best/'
 gt_trim_path = './data/input/RCSB_cif_trim/'
@@ -10,6 +11,8 @@ pred_trim_path = './data/input/Alphafold_cif_trim/'
 complex_path = './data/output/complexes/'
 df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 
+# Make the directories
+utils.make_dirs([gt_trim_path, pred_trim_path, complex_path])
 # First we trim the files
 trim_values = main.trim_cifs(df, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
 
