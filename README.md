@@ -31,5 +31,11 @@ There are quite a few things I may need to go back and fix, and could potentiall
     - Can add Q96028 with autoinhibited structure 5LSU (PMID 27571355).
     - For Q9UM73, 5IUI is in the "dfg-in" conformation (appears to be the autoinhibited conformation) and 5IUG is in the "dfg-out" conformation. 5IUG is missing density for region 1, but it's not too bad: ~ 70%.
 
+------
+Notes for correcting mmcif files.
+- 2ptk has the incorrect db_align_begin. It's 80 when it should be 81.
+- 2rgn is chimeric. Exclude.
+- 3ig3, df_align_beg is wrong, auth_seq_align_beg is correct. Change to that.
+
 
 THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
