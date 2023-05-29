@@ -29,10 +29,10 @@ with open(snakemake.output[0], 'w') as file:
 rmsd_info = main.get_rmsds(df, gt_trim_path, pred_trim_path, complex_path)
 
 with open(snakemake.output[1], 'w') as file:
-    fields = ['UniProt', 'PDB', 'complex_rmsd', '1.0_aligned', '1.0_comp',
+    fields = ['uniprot', 'pdb', 'complex_rmsd', '1.0_aligned', '1.0_comp',
                 '1.1_aligned', '1.1_comp', '1.2_aligned', '1.2_comp', '2.0_aligned', '2.0_comp',
                 '2.1_aligned', '2.1_comp', '2.2_aligned', '2.2_comp', '2.3_aligned', '2.3_comp',
-                'Percent residues in region_1', 'Percent residues in region_2', '1_aligned', '1_comp',
+                'percent_region_1', 'percent_region_2', '1_aligned', '1_comp',
                 '2_aligned', '2_comp']
     writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
     
