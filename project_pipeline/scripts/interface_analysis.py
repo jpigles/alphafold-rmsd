@@ -27,7 +27,7 @@ df_prot = main.find_domain_completeness(df_prot, all_cif_path)
 df_list = main.save_domain_quality_files(df_prot, snakemake.output[0], snakemake.output[1], snakemake.output[2], snakemake.output[3], snakemake.output[4])
 
 # Merge the dataframes into one and save all files into one folder
-dfs_merged = pd.concat(df_list).drop_duplicates().reset_index(drop = True)
+dfs_merged = pd.concat(df_list).drop_duplicates(keep='first').reset_index(drop = True)
 
 # Copy the files for each dataframe into new folders
 print('Found best files. Copying...')
