@@ -1,4 +1,3 @@
-from pymol import cmd
 import pandas as pd
 import csv
 import main

@@ -1,9 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
-import seaborn as sns
-import matplotlib as mpl
-import numpy as np
 
 df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 

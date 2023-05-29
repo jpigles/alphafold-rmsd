@@ -7,12 +7,9 @@ Created on Thu May 14 11:18:27 2020
 Edited by Brooks Perkins-Jechow
 """
 
-from Bio.PDB.PDBList import PDBList
 import pandas as pd
-import numpy as np
 import utils
 import main
-import os
 
 # Define the download path for the CIF files
 cif_path = 'data/input/RCSB_cif/'
