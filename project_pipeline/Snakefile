@@ -28,7 +28,7 @@ rule fix_offset:
 # that are interacting using the 60% complete pdb files.
 rule interface_analysis:
     input:
-        'data/proteins_by_pdb.tsv',
+        'data/offset_fixed_proteins_by_pdb.tsv',
 
     output:
         'data/proteins_pdb_summary.tsv',
