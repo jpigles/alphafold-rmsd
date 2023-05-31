@@ -318,8 +318,9 @@ def count_domain_residues(region1, region2, structure, label_chain):
             
 def calculate_domain_completeness(region1, region2, count_in_region1, count_in_region2):
     # Calculate the percentage of residues in the IAS and in the Domain
-    percent_in_region_1 = (count_in_region1/len(region1))*100
-    percent_in_region_2 = (count_in_region2/len(region2))*100
+    percent_in_region_1 = (count_in_region1/len(region1))*100 if len(region1) else 0
+    
+    percent_in_region_2 = (count_in_region2/len(region2))*100 if len(region2) else 0
 
     return percent_in_region_1, percent_in_region_2
 
