@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from os.path import join
 from pymol import cmd
+import pymol
 import utils
 import shutil
 import os
@@ -398,27 +399,30 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
         (gt_pdb_fn, pred_pdb_fn,
         region_1, region_2)
 
-    # Superimpose entirety of proteins
-    align = cmd.align('native', 'pred')
-    cmd.multisave(complex_fn, 'all', format='pdb')
-    # Calculate rmsd of whole protein
-    rmsd = cmd.rms_cur('native','pred')
-    rmsds['complex_rmsd'] = round(rmsd, 3)
+    try:
+        # Superimpose entirety of proteins
+        align = cmd.align('native', 'pred')
+        cmd.multisave(complex_fn, 'all', format='pdb')
+        # Calculate rmsd of whole protein
+        rmsd = cmd.rms_cur('native','pred')
+        rmsds['complex_rmsd'] = round(rmsd, 3)
 
-    # Superimpose each region and calculate rmsds
-    for key in region_1:
-        if len(region_1) > 1 and '.0' in key:
-            continue
-        two_rmsds = utils.align_and_calculate(key, '2.0')
-        rmsds[key + '_aligned'] = two_rmsds[0]
-        rmsds[key + '_comp'] = two_rmsds[1]
+        # Superimpose each region and calculate rmsds
+        for key in region_1:
+            if len(region_1) > 1 and '.0' in key:
+                continue
+            two_rmsds = utils.align_and_calculate(key, '2.0')
+            rmsds[key + '_aligned'] = two_rmsds[0]
+            rmsds[key + '_comp'] = two_rmsds[1]
 
-    for key in region_2:
-        if len(region_2) > 1 and '.0' in key:
-            continue
-        two_rmsds = utils.align_and_calculate(key, '1.0')
-        rmsds[key + '_aligned'] = two_rmsds[0]
-        rmsds[key + '_comp'] = two_rmsds[1]
+        for key in region_2:
+            if len(region_2) > 1 and '.0' in key:
+                continue
+            two_rmsds = utils.align_and_calculate(key, '1.0')
+            rmsds[key + '_aligned'] = two_rmsds[0]
+            rmsds[key + '_comp'] = two_rmsds[1]
+    except pymol.CmdException:
+        print('Pymol error')
 
     return rmsds
 
