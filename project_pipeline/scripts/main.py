@@ -350,10 +350,13 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         trim_values_dict = utils.trim_stats(pdb, gt, gt_trim, pred, pred_trim)
         trim_values.append(trim_values_dict)
 
-        print(f'Success! Creating trimmed files for {pdb}...')
-        # Write trimmed files
-        CifFileWriter(gt_fn_out).write(gt_obj)
-        CifFileWriter(pred_fn_out).write(pred_obj)
+        if len(gt_trim) == 0:
+            print(f'No common atoms found for {pdb}. Skipping...')
+        else:
+            print(f'Success! Creating trimmed files for {pdb}...')
+            # Write trimmed files
+            CifFileWriter(gt_fn_out).write(gt_obj)
+            CifFileWriter(pred_fn_out).write(pred_obj)
 
     return trim_values
 
