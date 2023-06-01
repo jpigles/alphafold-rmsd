@@ -310,7 +310,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
             cfr = CifFileReader()
 
             # Get gt dataframe
-            gt_obj = cfr.read(gt_fn, output='cif_dictionary')
+            gt_obj = cfr.read(gt_fn, output='cif_dictionary', ignore=['_struct_conn'])
             gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
             gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
 
@@ -334,7 +334,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
             cfr = CifFileReader()
 
             # Create dataframe with gt atoms in desired chain
-            gt_obj = cfr.read(gt_fn, output='cif_dictionary')
+            gt_obj = cfr.read(gt_fn, output='cif_dictionary', ignore=['_struct_conn'])
             gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
             gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
 
