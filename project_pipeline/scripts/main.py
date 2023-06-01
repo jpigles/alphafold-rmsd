@@ -293,10 +293,6 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
     trim_values = []
     for i in range(len(df)):
-        # skip extra rows for NMR files
-        model = df.loc[i, 'model']
-        if model != 0:
-            continue
         
         # Define parameters for selecting files
         uniprot = df.loc[i, 'uniprot']
