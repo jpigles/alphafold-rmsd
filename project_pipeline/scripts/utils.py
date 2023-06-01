@@ -3,6 +3,7 @@ from Bio.PDB.MMCIFParser import MMCIFParser
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 from Bio.PDB import MMCIFParser, NeighborSearch, Selection
 from pymol import cmd
+import pymol
 import pandas as pd
 import numpy as np
 import requests
@@ -427,8 +428,8 @@ def compare_atoms(gt_df, pred_df):
     alt_locations = ['B', 'C', 'D', 'E']
 
     for atom in range(len(gt_df)):
-        # Define rows to be skipped (hydrogens or alternate conformations)
-        if gt_df.loc[atom, 'label_atom_id'] in hydrogens or gt_df.loc[atom, 'label_alt_id'] in alt_locations:
+        # Define rows to be skipped (hydrogens, alternate conformations, or extra NMR models)
+        if gt_df.loc[atom, 'label_atom_id'] in hydrogens or gt_df.loc[atom, 'label_alt_id'] in alt_locations or gt_df.loc[atom, 'pdbx_PDB_model_num'] != 1:
             extra_atoms_gt.append(atom)
             continue
 
@@ -463,8 +464,8 @@ def assert_equal_size(gt_trim_df, pred_trim_df):
         assert len(pred_trim_df) == len(gt_trim_df)
         return True
     except AssertionError:
-        gt_sim = gt_trim_df.drop(['atom_number', 'x_coord', 'y_coord', 'z_coord', 'occupancy', 'b_factor', 'segment_id', 'element_symbol', 'charge', 'line_idx'], axis=1)
-        pred_sim = pred_trim_df.drop(['atom_number', 'x_coord', 'y_coord', 'z_coord', 'occupancy', 'b_factor', 'segment_id', 'element_symbol', 'charge', 'line_idx'], axis=1)
+        gt_sim = gt_trim_df.drop(['id', 'Cartn_x', 'Cartn_y', 'Cartzn_z', 'occupancy', 'B_iso_or_equiv', 'type_symbol', 'pdbx_formal_charge'], axis=1)
+        pred_sim = pred_trim_df.drop(['id', 'Cartn_x', 'Cartn_y', 'Cartzn_z', 'occupancy', 'B_iso_or_equiv', 'type_symbol', 'pdbx_formal_charge'], axis=1)
         diff = pd.concat([gt_sim, pred_sim]).drop_duplicates(keep=False)
         diff.to_csv('./data/AssertionError.tsv', sep='\t')
         print(diff)
