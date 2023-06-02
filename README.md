@@ -36,6 +36,8 @@ Notes for correcting mmcif files.
 - 2ptk has the incorrect db_align_begin. It's 80 when it should be 81.
 - 2rgn is chimeric. Exclude.
 - 3ig3, df_align_beg is wrong, auth_seq_align_beg is correct. Change to that.
+- 6yr5 only has 14 amino acids. Removed from proteins_by_pdb.
+- 2d9f has the second isoform as per Uniprot, so it is one amino acid off from the Alphafold file (AF G183 -> 2d9f G183,S184)
 
 
 THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
