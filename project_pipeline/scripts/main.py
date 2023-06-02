@@ -440,11 +440,10 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
         pred_fn = pred_path + f'{pdb}_AF.cif'
         complex_fn = complex_path + f'{pdb}.pdb'
 
-        print(f'Trying {pdb}...')
-        rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
+        if not os.path.isfile(gt_fn) and not os.path.isfile(pred_fn):
+            print('No files found for ' + pdb + '. Skipping...')
 
-        # Define default values for columns to retain number of columns per row
-        rmsd_dic = {'uniprot': uniprot,
+            rmsd_dic = {'uniprot': uniprot,
                     'pdb': pdb,
                     'complex_rmsd': 0,
                     '1.0_aligned': 0,
@@ -463,13 +462,40 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                     '2.3_comp': 0,
                     'percent_region_1': percent_reg1,
                     'percent_region_2': percent_reg2}
+            
+            rmsd_info.append(rmsd_dic)
 
-        for key in rmsds:
-            if key in rmsd_dic:
-                rmsd_dic[key] = rmsds[key]
+        else:
+            print(f'Trying {pdb}...')
+            rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
 
-        print('Success! Writing rmsds')
-        rmsd_info.append(rmsd_dic)
+            # Define default values for columns to retain number of columns per row
+            rmsd_dic = {'uniprot': uniprot,
+                        'pdb': pdb,
+                        'complex_rmsd': 0,
+                        '1.0_aligned': 0,
+                        '1.0_comp': 0,
+                        '1.1_aligned': 0,
+                        '1.1_comp': 0,
+                        '1.2_aligned': 0,
+                        '1.2_comp': 0,
+                        '2.0_aligned': 0,
+                        '2.0_comp': 0,
+                        '2.1_aligned': 0,
+                        '2.1_comp': 0,
+                        '2.2_aligned': 0,
+                        '2.2_comp': 0,
+                        '2.3_aligned': 0,
+                        '2.3_comp': 0,
+                        'percent_region_1': percent_reg1,
+                        'percent_region_2': percent_reg2}
+
+            for key in rmsds:
+                if key in rmsd_dic:
+                    rmsd_dic[key] = rmsds[key]
+
+            print('Success! Writing rmsds')
+            rmsd_info.append(rmsd_dic)
 
     final_rmsds = utils.get_region_averages(rmsd_info)
     return final_rmsds
