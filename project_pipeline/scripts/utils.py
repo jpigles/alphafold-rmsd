@@ -429,7 +429,7 @@ def compare_atoms(gt_df, pred_df):
 
     for atom in range(len(gt_df)):
         # Define rows to be skipped (hydrogens, alternate conformations, or extra NMR models)
-        if gt_df.loc[atom, 'label_atom_id'] in hydrogens or gt_df.loc[atom, 'label_alt_id'] in alt_locations or gt_df.loc[atom, 'pdbx_PDB_model_num'] != 1:
+        if gt_df.loc[atom, 'label_atom_id'] in hydrogens or gt_df.loc[atom, 'label_alt_id'] in alt_locations or gt_df.loc[atom, 'pdbx_PDB_model_num'] != '1':
             extra_atoms_gt.append(atom)
             continue
 
