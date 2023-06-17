@@ -77,7 +77,7 @@ def correct_offset(df, path):
         cif_path = path + uniprot + '/' + pdb_id + '.cif'
 
         # Get the offset
-        offset = utils.get_offset(cif_path, pdb_id)
+        offset = utils.get_offset(cif_path, pdb_id, chain)
         offsets.append(offset)
 
         # Fix the offset
