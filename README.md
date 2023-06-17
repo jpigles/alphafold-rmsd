@@ -35,9 +35,15 @@ There are quite a few things I may need to go back and fix, and could potentiall
 Notes for correcting mmcif files.
 - 2ptk has the incorrect db_align_begin. It's 80 when it should be 81.
 - 2rgn is chimeric. Exclude.
-- 3ig3, df_align_beg is wrong, auth_seq_align_beg is correct. Change to that.
+- 3ig3, db_align_beg is wrong, auth_seq_align_beg is correct. Change to that.
 - 6yr5 only has 14 amino acids. Removed from proteins_by_pdb.
-- 2d9f has the second isoform as per Uniprot, so it is one amino acid off from the Alphafold file (AF G183 -> 2d9f G183,S184)
+- 2d9f has the second isoform as per Uniprot, so it is one amino acid off from the Alphafold file (AF G183 -> 2d9f G183,S184). db_align_beg is 84, seq_align_beg is 1.
+- 1a0n seq_align_beg = 1, db_align_beg = 80.
+- 6amv contains a non-canonical sequence, P00519-2, but this difference only extends until residue 45. Afterwards they're the same. seq_align_beg = 46, db_align_beg = 27.
+- 6amw same as 6amv.
+- 1hct, db_align_beg = 144.
+- In the case of 7epu, it's using the sequence information for the wrong chain. I'll have to fix my code to account for that. This may fix some other ones.
+
 
 
 THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
