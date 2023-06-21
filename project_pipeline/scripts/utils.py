@@ -82,10 +82,10 @@ def prune_extra_chains(pdb_ids_str):
     for pdb_id in pdb_ids_w_chain:
 
         #PDB ID (lowercase)
-        pdb = pdb_id[:4].lower()
+        pdb = pdb_id.split('.')[0].lower()
 
         #Chain label
-        chain = pdb_id[5]
+        chain = pdb_id.split('.')[1]
 
         #Add the PDB ID as a key and the chain label as a value.
         if pdb not in pdb_ids_dict.keys():
