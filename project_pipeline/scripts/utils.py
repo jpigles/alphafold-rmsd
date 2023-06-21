@@ -282,41 +282,48 @@ def count_domain_residues(region1, region2, structure, label_chain):
     model_id = ''
 
     for model in structure:
+
+        model_id = model.get_id()
+
+        if model_id == '0':
         
-        for chain in model:
+            for chain in model:
 
-            #Determine the current chain in the structure
-            current_chain = chain.get_id()
-            
-            #Only act on the chain relevant to our protein of interest.
-            if current_chain == label_chain:
-
-                print(f'We want {label_chain}. Currently analyzing {current_chain}.')
-                    
-                # Get the model ID for later use
-                model_id = model.get_id()
-                # Get all the residues in the chain A
-                residues = chain.get_residues()
+                #Determine the current chain in the structure
+                current_chain = chain.get_id()
                 
-                # Iterate through all the residues in the chain and determine
-                # whether they belong to the IAS or to the Domain.
-                for residue in residues:
-                    count_res = count_res + 1                    
-                    
-                    # Amino acid residues have an empty space in position zero
-                    # of the id
-                    if residue.get_id()[0] == ' ':
-                        # The sequence position of the amino acid residue is stored
-                        # in position 1 of the id
-                        if residue.get_id()[1] in region1:
-                            # print(residue.get_id()[1])
-                            count_res_region_1 = count_res_region_1 + 1
+                #Only act on the chain relevant to our protein of interest.
+                if current_chain == label_chain:
 
-                        elif residue.get_id()[1] in region2:
-                            count_res_region_2 = count_res_region_2 + 1
+                    print(f'We want {label_chain}. Currently analyzing {current_chain}.')
+                        
+                    # Get the model ID for later use
+                    model_id = model.get_id()
+                    # Get all the residues in the chain A
+                    residues = chain.get_residues()
+                    
+                    # Iterate through all the residues in the chain and determine
+                    # whether they belong to the IAS or to the Domain.
+                    for residue in residues:
+                        count_res = count_res + 1                    
+                        
+                        # Amino acid residues have an empty space in position zero
+                        # of the id
+                        if residue.get_id()[0] == ' ':
+                            # The sequence position of the amino acid residue is stored
+                            # in position 1 of the id
+                            if residue.get_id()[1] in region1:
+                                # print(residue.get_id()[1])
+                                count_res_region_1 = count_res_region_1 + 1
+
+                            elif residue.get_id()[1] in region2:
+                                count_res_region_2 = count_res_region_2 + 1
 
             else:
                 continue
+        
+        else:
+            continue
 
     return count_res_region_1, count_res_region_2, count_res, model_id
             
