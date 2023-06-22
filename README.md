@@ -42,7 +42,24 @@ Notes for correcting mmcif files.
 - 6amv contains a non-canonical sequence, P00519-2, but this difference only extends until residue 45. Afterwards they're the same. seq_align_beg = 46, db_align_beg = 27.
 - 6amw same as 6amv.
 - 1hct, db_align_beg = 144.
-- In the case of 7epu, it's using the sequence information for the wrong chain. I'll have to fix my code to account for that. This may fix some other ones.
+- In the case of 7epu, it's using the sequence information for the wrong chain. ~~I'll have to fix my code to account for that. This may fix some other ones.~~ This has been done
+- 2mf9 has sequence Q14318-2.
+- 4u5w has the same issue as 7epu. Should be fixed next run.
+- 7tfc had an issue where the first chain returned in the query was 7tfc.AA, which meant that the chain was selected as 'A' due to slicing [:4]. Resolved by using .split() to select pdb id and chain.
+- 8gae (P53041) has the same issue as 7epu. Should be fixed next run.
+- 8gft (P53041) has the same issue as 7epu. Should be fixed next run.
+- For 2m0v, I discovered that the calculations for percent completeness in each region was counting the region in every entity in the NMR files, thus greatly over-representing the completeness (it was 2000 in some cases). I changed the script to only select model 0 in each file, but I'm not sure if this will cause problems later.
+- 4m8t, the author sequence is correct, the database is off by one. 
+- 4mao, same as 4m8t.
+- 6nr0, author sequence is correct.
+- 6zei _very annoyingly_ has two different proteins under chain A, so even if I use the chain to find the index of the seq_begin, I will _still_ get the wrong seq_begin. So I switched to using the UniProt ID to get the index. Hopefully this is more robust. And actually, besides that fact, we only have 16 amino acids from our protein of interest, so it's pretty useless anyway. It appears to be a chimeric protein. Unfortunately, it will always get past the percent counting step, but what can you do.
+- 6zeg is the same situation as 6zei.
+- 7w3b has the same issue as 7epu. Should be fixed. In addition, changing to UniProt as our index finder is more robust here as well, as the chain is listed as "x" under strand_id but is given as UA in the query and also in the actual data.
+- 3bhh is completely correct, and the full structure is there, so I'm not sure what's going on with the trim_values Looks like it got corrected twice for some reason. 
+- 1na6, author_seq is correct.
+- 2ptk, author_seq is correct.
+
+
 
 
 
