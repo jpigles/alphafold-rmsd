@@ -153,14 +153,14 @@ def expand_on_pdbs(df):
 
     return df
 
-def get_offset(fp, pdb, chain):
+def get_offset(fp, pdb, uniprot):
     # initiate reader object
     cfr = CifFileReader()
     cif_obj = cfr.read(fp, output='cif_wrapper')
     cif_data = list(cif_obj.values())[0]
     
     # Find the index of the chain of interest
-    index = cif_data._struct_ref_seq.pdbx_strand_id.index(chain)
+    index = cif_data._struct_ref_seq.pdbx_db_accession.index(uniprot)
 
     # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
     pdb_start = int(cif_data._struct_ref_seq.seq_align_beg[index])
