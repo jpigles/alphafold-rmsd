@@ -58,6 +58,10 @@ Notes for correcting mmcif files.
 - 3bhh is completely correct, and the full structure is there, so I'm not sure what's going on with the trim_values Looks like it got corrected twice for some reason. 
 - 1na6, author_seq is correct.
 - 2ptk, author_seq is correct.
+- 7wjq, same issue as 7epu.
+- 2xp2, auth_seq is correct. db_seq is _way_ off.
+- 2dx1, both db_seq and auth_seq are wrong. Difference between db and seq_align_beg is 129.
+- 4ped, auth_seq is correct.
 
 
 
