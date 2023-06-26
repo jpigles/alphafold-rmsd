@@ -59,9 +59,14 @@ Notes for correcting mmcif files.
 - 1na6, author_seq is correct.
 - 2ptk, author_seq is correct.
 - 7wjq, same issue as 7epu.
-- 2xp2, auth_seq is correct. db_seq is _way_ off.
-- 2dx1, both db_seq and auth_seq are wrong. Difference between db and seq_align_beg is 129.
+- 2xp2, auth_seq is correct. db_align_beg is _way_ off.
+- 2dx1, both db_align_beg and auth_seq are wrong. Difference between db and seq_align_beg is 129.
 - 4ped, auth_seq is correct.
+- 2yfx, auth_seq is correct.
+- 1p14, db_align_beg should start at 1004.
+- 2ojj, db_align_beg should start at 42.
+- 2oji, same as 2ojj.
+- 6u2g, because we have two Uniprot numbers in the same file that we are accessing, the second time we fix the offset for the file, we overwrite the first offset file. Fixed this by making file name "pdb_uniprot.cif". 
 
 
 
