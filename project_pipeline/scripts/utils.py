@@ -257,12 +257,12 @@ def region_search_range(df):
 
     return df
     
-def get_structure_dict(pdb, path):
+def get_structure_dict(pdb, path, uniprot):
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)
             
     # Then make a structure object
-    structure = parser.get_structure(pdb, path + pdb + '.cif')
+    structure = parser.get_structure(pdb, path + pdb + "_" + uniprot + '.cif')
             
     # Make an MMCIFDict object to grab more information form the .cif files
     mmcif_dict = MMCIF2Dict(path + pdb + '.cif')
@@ -374,7 +374,7 @@ def get_domain_residues(region1, region2, structure, label_model, label_chain):
 
                     return atoms_ns
                 
-def domain_neighborsearch(df, region1, region2, atoms):
+def domain_neighborsearch(region1, region2, atoms):
     # Make an NeighborSearch object with all the atoms inside the region_1 and the region_2        
     ns = NeighborSearch(atoms)
       

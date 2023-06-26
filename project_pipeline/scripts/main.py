@@ -74,7 +74,7 @@ def correct_offset(df, path):
         chain = df.loc[i, 'chain']
   
         # Designate file locations. Note that we will be overwriting the CIF files
-        cif_path = path + uniprot + '/' + pdb_id + '.cif'
+        cif_path = path + uniprot + '/' + pdb_id + "_" + uniprot + '.cif'
 
         # Get the offset
         offset = utils.get_offset(cif_path, pdb_id, uniprot)
@@ -115,7 +115,7 @@ def find_domain_completeness(df, path):
         chain = df.loc[i, 'chain']
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot, uniprot)
 
         if mmcif_dict['_exptl.method'][0] == 'X-RAY DIFFRACTION':
             resolution = float(mmcif_dict["_refine.ls_d_res_high"][0])
@@ -179,8 +179,8 @@ def copy_best_files(df, inpath, outpath):
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
-        all_pdbs_path = join(inpath, uniprot, pdb + '.cif')
-        best_pdbs_path = join(outpath, pdb + '.cif')
+        all_pdbs_path = join(inpath, uniprot, pdb + "_" + uniprot + '.cif')
+        best_pdbs_path = join(outpath, pdb + "_" + uniprot + '.cif')
         shutil.copyfile(all_pdbs_path, best_pdbs_path)
 
     return f'Successfully copied files into {outpath}'
@@ -204,11 +204,12 @@ def get_interfaces(df, path):
         region_1_res = df.loc[i, 'region_1 search']
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
+        uniprot = df.loc[i, 'uniprot']
         chain = df.loc[i, 'chain']
         model = df.loc[i, 'model']
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, path)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, path, uniprot)
 
         # Get mutations
         df.loc[i, 'pdb_mutations'] = mmcif_dict['_entity.pdbx_mutation'][0]
@@ -217,7 +218,7 @@ def get_interfaces(df, path):
         atoms_ns = utils.get_domain_residues(region_1_res, region_2_res, structure, model, chain)
 
         # Get interacting residues
-        interacting_pairs, interface_res, len_interface_res = utils.domain_neighborsearch(df, region_1_res, region_2_res, atoms_ns)
+        interacting_pairs, interface_res, len_interface_res = utils.domain_neighborsearch(region_1_res, region_2_res, atoms_ns)
 
         df.loc[i, 'interacting_residue_pairs'] = interacting_pairs
         df.loc[i, 'interface_residues'] = interface_res
@@ -298,10 +299,10 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
-        gt_fn = gt_path_in + f'{pdb}.cif'
-        gt_fn_out = gt_path_out + f'{pdb}.cif'
+        gt_fn = gt_path_in + f'{pdb}_{uniprot}.cif'
+        gt_fn_out = gt_path_out + f'{pdb}_{uniprot}.cif'
         pred_fn = pred_path_in + f'F-{uniprot}-F1-model_v3.cif'
-        pred_fn_out = pred_path_out + f'{pdb}_AF.cif'
+        pred_fn_out = pred_path_out + f'{pdb}_{uniprot}_AF.cif'
 
         # Check if trimmed files already exist to save time
         if os.path.isfile(gt_fn_out) and os.path.isfile(pred_fn_out):
@@ -436,9 +437,9 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
         region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
         percent_reg1 = df.loc[i, 'percent_region_1']
         percent_reg2 = df.loc[i, 'percent_region_2']
-        gt_fn = gt_path + f'{pdb}.cif'
-        pred_fn = pred_path + f'{pdb}_AF.cif'
-        complex_fn = complex_path + f'{pdb}.pdb'
+        gt_fn = gt_path + f'{pdb}_{uniprot}.cif'
+        pred_fn = pred_path + f'{pdb}_{uniprot}_AF.cif'
+        complex_fn = complex_path + f'{pdb}_{uniprot}.pdb'
 
         if not os.path.isfile(gt_fn) and not os.path.isfile(pred_fn):
             print('No files found for ' + pdb + '. Skipping...')
