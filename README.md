@@ -67,6 +67,26 @@ Notes for correcting mmcif files.
 - 2ojj, db_align_beg should start at 42.
 - 2oji, same as 2ojj.
 - 6u2g, because we have two Uniprot numbers in the same file that we are accessing, the second time we fix the offset for the file, we overwrite the first offset file. Fixed this by making file name "pdb_uniprot.cif". 
+- 3vd8 is the same issue as 6zei.
+- 2ojg, same as 2ojj.
+- 3gjx has the wrong chain listed in pdbx_strand_id (real chain is B and it has C listed), so selecting by Uniprot id as per 6zei fix should correct it.
+- 5xzc is same issue as 6u2g, so it should be corrected.
+- 3nby same issues as 3gjx.
+- 7us1, auth_seq is correct, but I also had to fix pdbx_db_accession to match the Uniprot id.
+- 1s9j, auth_seq is correct.
+- 2v7o, wrong Uniprot id in pdbx_db_accession (apparently an older entry that was merged into the current entry). 
+- 2vgq is chimeric, remove. (Could I automate removal of chimeric entries?)
+- 2wel, db_align_beg should start at 13.
+- 2vn9, fixed as per 6zei.
+- 2c0t, fixed as per 6zei. 
+- 2c0i, db_align_beg should be 81.
+- 2c0o, same as 2c0i.
+- 2jam, fixed as per 6zei.
+- 2b4s, same as 6u2g. 
+- 5tj4 is chimeric, remove.
+- Not sure what went wrong with 2w4o. 
+- 1qkr, auth_seq is correct. 
+
 
 
 
