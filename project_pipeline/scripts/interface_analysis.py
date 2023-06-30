@@ -45,6 +45,10 @@ df_60_interacting = main.get_interfaces(df_60, best_cif_path)
 print('Finding largest interfaces...')
 df_60_largest_interfaces = main.largest_interface(df_60_interacting)
 
-# Save the dataframe with the interacting residues
+# Save the dataframe with all interfaces
+print('Saving all interfaces...')
+df_60_interacting.to_csv(snakemake.output[5], sep = '\t', index = False)
+
+# Save the dataframe with the most interacting residues
 print('Saving interfaces...')
-df_60_largest_interfaces.to_csv(snakemake.output[5], sep = '\t', index = False)
+df_60_largest_interfaces.to_csv(snakemake.output[6], sep = '\t', index = False)
