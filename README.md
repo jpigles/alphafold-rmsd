@@ -86,7 +86,25 @@ Notes for correcting mmcif files.
 - 5tj4 is chimeric, remove.
 - Not sure what went wrong with 2w4o. 
 - 1qkr, auth_seq is correct. 
-
+- 4r7h, auth_seq is correct. 
+- 7m8e, incorrect Uniprot ID. C3TR27 should be P60240.
+- 5tib is chimeric, remove
+- 4s20, fixed as per 6zei.
+- 5tj2 is chimeric, remove.
+- 4d7r is chimeric, remove.
+- 2src, db_align_beg should start on 86.
+- 1ksw, db_align_beg should start on 86.
+- 2h8h, db_align_beg should start on 2.
+- 4wxx, auth_seq is correct.
+- 1jpa, db_align_beg should start on 587. 
+- 8a8m, fixed as per 6zei.
+- 1fmk, db_align_beg should start on 86.
+- 6nif is chimeric, remove.
+- 6nbs, seq_align_beg should start on 8.
+- 1opl, db_align_beg should start on -18.
+- 4nif, same problem as 6u2g. Should be fixed this run.
+- 2fo0 has the same issue as 6AMV. On the first row, change db_align_beg to 43 and the Uniprot ID from P00519-2 to P00519.
+- 4zh2, fixed as per 6zei.
 
 
 
