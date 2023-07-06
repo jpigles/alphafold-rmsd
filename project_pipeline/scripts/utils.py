@@ -159,13 +159,16 @@ def get_offset(fp, pdb, uniprot):
     cif_obj = cfr.read(fp, output='cif_wrapper')
     cif_data = list(cif_obj.values())[0]
     
-    # Find the index of the chain of interest
-    index = cif_data._struct_ref_seq.pdbx_db_accession.index(uniprot)
+    # Find the index of the chain of interest. If it doesn't exist, return 0.
+    try:
+        index = cif_data._struct_ref_seq.pdbx_db_accession.index(uniprot)
 
-    # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
-    pdb_start = int(cif_data._struct_ref_seq.seq_align_beg[index])
-    unp_start = int(cif_data._struct_ref_seq.db_align_beg[index])
-    offset = pdb_start - unp_start
+        # Extract the auth_seq start and db_seq start (from Uniprot) from the cif file
+        pdb_start = int(cif_data._struct_ref_seq.seq_align_beg[index])
+        unp_start = int(cif_data._struct_ref_seq.db_align_beg[index])
+        offset = pdb_start - unp_start
+    except ValueError:
+        offset = 0
 
     print(f'Offset for {pdb}: {offset}')
     return offset
