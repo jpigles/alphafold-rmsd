@@ -265,7 +265,7 @@ def get_structure_dict(pdb, path, uniprot):
     parser = MMCIFParser(QUIET=True)
             
     # Then make a structure object
-    structure = parser.get_structure(pdb, path + pdb + "_" + uniprot + '.cif')
+    structure = parser.get_structure(pdb, path + pdb + '.cif')
             
     # Make an MMCIFDict object to grab more information form the .cif files
     mmcif_dict = MMCIF2Dict(path + pdb + '.cif')
