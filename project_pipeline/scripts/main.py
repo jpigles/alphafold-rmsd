@@ -74,7 +74,7 @@ def correct_offset(df, path):
         chain = df.loc[i, 'chain']
   
         # Designate file locations. Note that we will be overwriting the CIF files
-        cif_path = path + uniprot + '/' + pdb_id + "_" + uniprot + '.cif'
+        cif_path = path + uniprot + '/' + pdb_id + '.cif'
 
         # Get the offset
         offset = utils.get_offset(cif_path, pdb_id, uniprot)
@@ -179,9 +179,9 @@ def copy_best_files(df, inpath, outpath):
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
-        all_pdbs_path = join(inpath, uniprot, pdb + "_" + uniprot + '.cif')
+        source_pdbs_path = join(inpath, uniprot, pdb + '.cif')
         best_pdbs_path = join(outpath, pdb + "_" + uniprot + '.cif')
-        shutil.copyfile(all_pdbs_path, best_pdbs_path)
+        shutil.copyfile(source_pdbs_path, best_pdbs_path)
 
     return f'Successfully copied files into {outpath}'
 
