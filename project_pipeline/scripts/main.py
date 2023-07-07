@@ -114,8 +114,10 @@ def find_domain_completeness(df, path):
         path_uniprot = path + uniprot + '/'
         chain = df.loc[i, 'chain']
 
+        print('Analyzing %s' % pdb)
+
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot, uniprot)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot)
 
         if mmcif_dict['_exptl.method'][0] == 'X-RAY DIFFRACTION':
             resolution = float(mmcif_dict["_refine.ls_d_res_high"][0])

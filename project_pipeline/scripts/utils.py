@@ -260,7 +260,7 @@ def region_search_range(df):
 
     return df
     
-def get_structure_dict(pdb, path, uniprot):
+def get_structure_dict(pdb, path):
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)
             
@@ -288,7 +288,7 @@ def count_domain_residues(region1, region2, structure, label_chain):
 
         model_id = model.get_id()
 
-        if model_id == '0':
+        if model_id == 0:
         
             for chain in model:
 
