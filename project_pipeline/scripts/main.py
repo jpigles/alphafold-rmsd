@@ -178,6 +178,9 @@ def save_domain_quality_files(df, path1, path2, path3, path4, path5):
     return df_list
 
 def copy_best_files(df, inpath, outpath):
+    # Make sure the output directory exists
+    utils.make_dirs([outpath])
+
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
@@ -211,7 +214,7 @@ def get_interfaces(df, path):
         model = df.loc[i, 'model']
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, path, uniprot)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, path)
 
         # Get mutations
         df.loc[i, 'pdb_mutations'] = mmcif_dict['_entity.pdbx_mutation'][0]
