@@ -260,15 +260,15 @@ def region_search_range(df):
 
     return df
     
-def get_structure_dict(pdb, path):
+def get_structure_dict(pdb, fn, path):
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)
             
     # Then make a structure object
-    structure = parser.get_structure(pdb, path + pdb + '.cif')
+    structure = parser.get_structure(pdb, path + fn)
             
     # Make an MMCIFDict object to grab more information form the .cif files
-    mmcif_dict = MMCIF2Dict(path + pdb + '.cif')
+    mmcif_dict = MMCIF2Dict(path + fn)
 
     return structure, mmcif_dict
 

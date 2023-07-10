@@ -113,11 +113,12 @@ def find_domain_completeness(df, path):
         uniprot = df.loc[i, 'uniprot']
         path_uniprot = path + uniprot + '/'
         chain = df.loc[i, 'chain']
+        fn = pdb + '.cif'
 
         print('Analyzing %s' % pdb)
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, path_uniprot)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path_uniprot)
 
         if mmcif_dict['_exptl.method'][0] == 'X-RAY DIFFRACTION':
             resolution = float(mmcif_dict["_refine.ls_d_res_high"][0])
@@ -212,9 +213,10 @@ def get_interfaces(df, path):
         uniprot = df.loc[i, 'uniprot']
         chain = df.loc[i, 'chain']
         model = df.loc[i, 'model']
+        fn = pdb + '_' + uniprot + '.cif'
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, path)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path)
 
         # Get mutations
         df.loc[i, 'pdb_mutations'] = mmcif_dict['_entity.pdbx_mutation'][0]
