@@ -99,12 +99,70 @@ Notes for correcting mmcif files.
 - 1jpa, db_align_beg should start on 587. 
 - 8a8m, fixed as per 6zei.
 - 1fmk, db_align_beg should start on 86.
-- 6nif is chimeric, remove.
+- 6nif is a fusion protein, remove.
 - 6nbs, seq_align_beg should start on 8.
 - 1opl, db_align_beg should start on -18.
 - 4nif, same problem as 6u2g. Should be fixed this run.
 - 2fo0 has the same issue as 6AMV. On the first row, change db_align_beg to 43 and the Uniprot ID from P00519-2 to P00519.
 - 4zh2, fixed as per 6zei.
+- 4zh3, fixed as per 6zei.
+- 4zh4, fixed as per 6zei.
+- 6nyb, fixed as per 6u2g.
+- 5d7q, auth_seq is correct.
+- 5dlq, fixed as per 6zei.
+- 7w39, fixed as per 6zei. 
+- 6vie, fixed as per 6zei.
+- 7nj0, fixed as per 6zei. It's a fusion protein, but the first protein only makes up 2% of the overall chain. I'll see what the complex looks like and decide from that.
+- 2onl, chains are labeled wrong (P49137 should be chains B and D but is chains C and D) but should be fixed as per 6zei.
+- 8dso, fixed as per 6u2g.
+- 6boj, fixed as per 6u2g.
+- 1tr2, auth_seq is correct.
+- 2rgn, fixed as per 6zei. 
+- 4mne, fixed as per 6u2g.
+- 7w3j, fixed as per 6zei.
+- 1st6, auth_seq is correct.
+- 6q0j, fixed as per 6u2g.
+- 6q0t, fixed as per 6u2g.
+- 1gnv, problem is that auth_seq correctly skips 9 residues, but seq_align_beg does not. Auth_seq goes from 74 to 84, seq_align_beg goes from 74 to 75. Not certain if there's a real fix to that. db_align_beg is also incorrect. I think I'll go with the larger fragment. Fixed db_align_beg on first row to 117.
+- 3h2u, auth_seq is correct.
+- 6nji, like 1gnv, skips a few residues, but the second fragment is very small. First row db_align_beg starts at 380.
+- 8ej4, fixed as per 6u2g.
+- 6njj fixed as per 6nji.
+- 6njh fixed as per 6nji.
+- 6pp9 fixed as per 6u2g.
+- 7m0x fixed as per 6u2g.
+- 6v2w fixed as per 6u2g.
+- 7m0u fixed as per 6u2g.
+- 7m0z fixed as per 6u2g.
+- 6pst, last row incorrect Uniprot ID fixed.
+- 7m0v fixed as per 6u2g.
+- 7m0y fixed as per 6u2g.
+- 1g83, auth_seq is correct.
+- 2ayo, db_align_beg starts at 91.
+- 2ayn, same as 2ayo.
+- 1k78, fixed as per 6zei.
+- 6t58 is a fusion protein, best to eliminate it.
+- 2xkx is just... one row per amino acid? What? Eliminate it.
+- 3fi7, same issue as 1gnv. Second fragment is larger, keep it. Second row db_align_beg starts at 64.
+- 6fek, auth_seq (which is correct) skips from 825 to 841 but seq_align_beg goes 126 to 127. Uncertain how or if I should fix this.
+- 3krj, fusion protein, best to eliminate.
+- 4zyn, seq_align_beg skips from 78 to 100, but auth_seq skips from 73 to 140. Not sure what's going on there.
+- 7syf is a fusion protein, remove
+- 7am4, auth_seq skips from 75 to 85 but seq_align_beg stays consistent (75 to 76).
+- 7am8, same as 7am4.
+- 7am3, same as 7am4.
+- 5ox2, same as 7am4.
+- 7am5, same as 7am4.
+- 7am7, same as 7am4.
+- 7am6, same as 7am4.
+- 1dui, same as 7am4.
+- 1sue, same as 7am4.
+- 1gns, similar issue. seq_align_beg goes 71 to 72 while auth_seq goes 74 to 84.
+- 1sua, same as 7am4.
+- 7apj is chimeric, remove.
+- 3t6p, seq_align_beg goes from 99 to 113, auth_seq goes from 362 to 386 (263 difference to 273 difference).
+- 6lvs, seq_align_beg goes 144 to 156, auth_seq goes 219 to 240. I wrote a short script to fix all of the weird skip files listed above.
+- 7dwb has 7 added amino acids, 173 to 180. According to paper, it's an inserted Strep-tag. 
 
 
 
