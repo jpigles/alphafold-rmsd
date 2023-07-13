@@ -575,3 +575,12 @@ def get_region_averages(rmsds):
             item['2_comp'] = item['2.0_comp']
 
     return rmsds
+
+def common_member(a, b):
+    a_set = set(a)
+    b_set = set(b)
+
+    if (a_set & b_set):
+        return list((a_set & b_set))
+    else:
+        return []

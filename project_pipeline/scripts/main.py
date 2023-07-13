@@ -507,3 +507,27 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
 
     final_rmsds = utils.get_region_averages(rmsd_info)
     return final_rmsds
+
+def calculate_disorder(df):
+    # Calculate percent disorder of region 1 for each protein
+
+    df = utils.region_search_range(df)
+
+    for i in range(len(df)):
+        uniprot = df.iloc[i, 'uniprot']
+        region_1_res = df.iloc[i, 'region_1_search']
+        disorder_residues = []
+
+        with open(f'./data/disorder_stats/sp{uniprot}.fasta.espritz', 'r') as f:
+            residues = f.readlines()
+
+            for residue in residues:
+                if residue[0] == 'D':
+                    disorder_residues.append(residues.index(residue) + 1)
+        
+        common_residues = utils.common_member(region_1_res, disorder_residues)
+        percent_disorder = len(common_residues) / len(region_1_res)
+
+        df.loc[i, 'percent_disorder'] = percent_disorder
+    
+    return df
