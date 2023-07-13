@@ -508,6 +508,21 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
     final_rmsds = utils.get_region_averages(rmsd_info)
     return final_rmsds
 
+def two_state_proteins(df):
+    # Create categories for faster computation
+    df_cat = df.astype({'uniprot': 'category', 'conformation': 'category'})
+
+    # Find number of counts of open and closed for each UniProt ID.
+    conf_cat = df_cat.groupby(['uniprot', 'conformation'], observed=True).size().reset_index(name='counts')
+
+    # Find UniProt IDs with both open and closed conformations
+    uniprot_cat = conf_cat.groupby('uniprot').size().reset_index(name='counts')
+
+    # Create list of UniProt IDs with both open and closed conformations
+    two_conf = uniprot_cat[uniprot_cat['counts'] == 2]['UniProt'].tolist()
+
+    return two_conf
+
 def calculate_disorder(df):
     # Calculate percent disorder of region 1 for each protein
 
@@ -528,6 +543,6 @@ def calculate_disorder(df):
         common_residues = utils.common_member(region_1_res, disorder_residues)
         percent_disorder = len(common_residues) / len(region_1_res)
 
-        df.loc[i, 'percent_disorder'] = percent_disorder
+        df.loc[i, 'percent_disorder_1'] = percent_disorder
     
     return df
