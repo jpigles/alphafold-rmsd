@@ -164,6 +164,7 @@ Notes for correcting mmcif files.
 - 6lvs, seq_align_beg goes 144 to 156, auth_seq goes 219 to 240. I wrote a short script to fix all of the weird skip files listed above.
 - 7dwb has 7 added amino acids, 173 to 180. According to paper, it's an inserted Strep-tag. 
 
+For Espritz, I used the Disprot prediction type and the Best Sw decision threshold.
 
 
 
