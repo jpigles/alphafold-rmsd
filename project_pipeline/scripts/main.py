@@ -546,3 +546,40 @@ def calculate_disorder(df):
         df.loc[i, 'percent_disorder_1'] = percent_disorder
     
     return df
+
+def mean_plddt(df, path):
+    # Calculate mean plDDT for our region of interest.
+
+    # Turn region ranges into list of residues
+    df = utils.region_search_range(df)
+
+    for i in range(len(df)):
+        uniprot = df.loc[i, 'uniprot']
+        pdb = df.loc[i, 'pdb']
+        fn = f'F-{uniprot}-F1-model_v3.cif'
+        region_1_res = df.loc[i, 'region_1_search']
+        region_2_res = df.loc[i, 'region_2_search']
+
+        # Read in AF cif file
+        cfr = CifFileReader()
+        cif_obj = cfr.read(path + fn, output='cif_wrapper')
+        cif_data = list(cif_obj.values())[0]
+
+        # Create lists of residue plDDT values.
+        region_1_plddt = []
+        region_2_plddt = []
+
+        for i in range(len(cif_data._ma_qa_metric_local.label_seq_id)):
+            if cif_data._ma_qa_metric_local.label_seq_id[i] in region_1_res:
+                region_1_plddt.append(cif_data._ma_qa_metric_local.metric_id[i])
+            elif cif_data._ma_qa_metric_local.label_seq_id[i] in region_2_res:
+                region_2_plddt.append(cif_data._ma_qa_metric_local.metric_id[i])
+
+        # Calculate mean plDDT for each region
+        region_1_mean = np.mean(region_1_plddt)
+        region_2_mean = np.mean(region_2_plddt)
+
+        df.loc[i, 'region_1_mean_plddt'] = region_1_mean
+        df.loc[i, 'region_2_mean_plddt'] = region_2_mean
+
+    return df

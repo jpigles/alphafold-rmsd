@@ -2,6 +2,12 @@ import pandas as pd
 import main
 
 df = pd.read_csv('.data/input/rmsds.tsv', sep='\t').astype('object')
+df_2 = pd.read_csv('.data/input/proteins_pdb_both_60.tsv', sep='\t').astype('object')
+af_path = '.data/input/Alphafold_cif/'
+
+# Trim df_2 down some
+df_2 = df_2[['uniprot', 'region_1', 'region_2', 'pdb', 'percent_region_1', 'percent_region_2']]
+
 
 # Categorize proteins that have both open and closed structures
 two_conf = main.two_state_proteins(df)
@@ -35,3 +41,8 @@ for i in range(len(df_disorder_1)):
 
 # Correlate RMSD of AR and AlphaFold confidence scores for the AR. 
 # plDDT score per residue is given under _ma_qa_metric_local.metric_value
+df_mean_plddt = main.mean_plddt(df_2, af_path)
+
+# Merge df_disorder_1 and df_mean_plddt
+df_disorder_1 = df_disorder_1.merge(df_mean_plddt, how='left', on=['uniprot', 'pdb'])
+df_disorder_1.to_csv('.data/disorder.tsv', sep='\t', index=False)
