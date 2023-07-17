@@ -509,6 +509,9 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
     return final_rmsds
 
 def two_state_proteins(df):
+    # Find proteins with both open and closed conformations
+    print('filtering for proteins with both open and closed conformations...')
+
     # Create categories for faster computation
     df_cat = df.astype({'uniprot': 'category', 'conformation': 'category'})
 
@@ -519,18 +522,20 @@ def two_state_proteins(df):
     uniprot_cat = conf_cat.groupby('uniprot').size().reset_index(name='counts')
 
     # Create list of UniProt IDs with both open and closed conformations
-    two_conf = uniprot_cat[uniprot_cat['counts'] == 2]['UniProt'].tolist()
+    two_conf = uniprot_cat[uniprot_cat['counts'] == 2]['uniprot'].tolist()
 
     return two_conf
 
 def calculate_disorder(df):
     # Calculate percent disorder of region 1 for each protein
 
+    print('Calculating disorder...')
+
     df = utils.region_search_range(df)
 
     for i in range(len(df)):
-        uniprot = df.iloc[i, 'uniprot']
-        region_1_res = df.iloc[i, 'region_1_search']
+        uniprot = df.loc[i, 'uniprot']
+        region_1_res = df.loc[i, 'region_1 search']
         disorder_residues = []
 
         with open(f'./data/disorder_stats/sp{uniprot}.fasta.espritz', 'r') as f:
@@ -545,20 +550,22 @@ def calculate_disorder(df):
 
         df.loc[i, 'percent_disorder_1'] = percent_disorder
     
+    df.drop(columns=['region_1 search'], inplace=True)
     return df
 
 def mean_plddt(df, path):
     # Calculate mean plDDT for our region of interest.
 
+    print('Calculating mean plDDT...')
+
     # Turn region ranges into list of residues
-    df = utils.region_search_range(df)
+    df = utils.region_search_range(df).reset_index(drop=True)
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
-        pdb = df.loc[i, 'pdb']
         fn = f'F-{uniprot}-F1-model_v3.cif'
-        region_1_res = df.loc[i, 'region_1_search']
-        region_2_res = df.loc[i, 'region_2_search']
+        region_1_res = df.loc[i, 'region_1 search']
+        region_2_res = df.loc[i, 'region_2 search']
 
         # Read in AF cif file
         cfr = CifFileReader()
@@ -569,17 +576,18 @@ def mean_plddt(df, path):
         region_1_plddt = []
         region_2_plddt = []
 
-        for i in range(len(cif_data._ma_qa_metric_local.label_seq_id)):
-            if cif_data._ma_qa_metric_local.label_seq_id[i] in region_1_res:
-                region_1_plddt.append(cif_data._ma_qa_metric_local.metric_id[i])
-            elif cif_data._ma_qa_metric_local.label_seq_id[i] in region_2_res:
-                region_2_plddt.append(cif_data._ma_qa_metric_local.metric_id[i])
+        for n in range(len(cif_data._ma_qa_metric_local.label_seq_id)):
+            if int(cif_data._ma_qa_metric_local.label_seq_id[n]) in region_1_res:
+                region_1_plddt.append(float(cif_data._ma_qa_metric_local.metric_value[n]))
+            elif int(cif_data._ma_qa_metric_local.label_seq_id[n]) in region_2_res:
+                region_2_plddt.append(float(cif_data._ma_qa_metric_local.metric_value[n]))
 
         # Calculate mean plDDT for each region
         region_1_mean = np.mean(region_1_plddt)
         region_2_mean = np.mean(region_2_plddt)
 
-        df.loc[i, 'region_1_mean_plddt'] = region_1_mean
-        df.loc[i, 'region_2_mean_plddt'] = region_2_mean
+        df.loc[i, 'region_1_mean_plddt'] = round(region_1_mean, 3)
+        df.loc[i, 'region_2_mean_plddt'] = round(region_2_mean, 3)
 
+    df.drop(columns=['region_1 search', 'region_2 search'], inplace=True)
     return df
