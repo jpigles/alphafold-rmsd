@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 import requests
 import os
+import json
 
 def make_dirs(paths):
     for path in paths:
@@ -584,3 +585,91 @@ def common_member(a, b):
         return list((a_set & b_set))
     else:
         return []
+    
+def region_bounds(x):
+    """
+    This function takes in a `string` representing a region of interest in a
+    protein. The region of interest can be a single region or multiple regions
+    of a protein. Returns the bounds of the regions in list form.
+    
+    Parameters:
+    
+        x (string): String containing a region or several regions of interest in a 
+            protein.
+            Format of x: single region -> 'start-end'
+                         multiple regions -> 'start1-end1,start2-end2'
+                     
+    Returns:
+    
+        region boundaries in list form
+
+            Format: single region -> [start, end+1]
+                    multiple region -> [[start1, end1+1], [start2, end2+1]]
+    """
+    # Handle instances with more than one range
+    if ',' in x:
+        list_temp = x.split(sep = ',') #list_temp = ['123-456,' '789-1111']
+        for y in range(len(list_temp)): 
+            list_temp[y] = list_temp[y].split(sep = '-') #list_temp[y] = [['123', '456'], ['789', '1111']]
+        for y in range(len(list_temp)): 
+            for x in range(len(list_temp[y])):
+                list_temp[y][x] = int(list_temp[y][x]) #turns each list item into an integer
+
+        # Make a range object with the bounds of the range. Note to the 
+        # end a 1 has to be added in order to include the last position in the range
+        for y in range(len(list_temp)): #[1, 2] where 1=[123, 456] and 2=[789, 1111]
+            for x in range(len(list_temp[y])): #[123, 456]       
+                list_temp[y] = [list_temp[y][x], list_temp[y][x+1]+1] #list_temp[0][0] = [123], list_temp[0][0+1]+1 or [456] + 1 = [457]
+                break
+
+        return list_temp
+
+    # Handle instances with only one range
+    else:
+        list_temp = x.split(sep = '-')
+        for y in range(len(list_temp)):
+            list_temp[y] = int(list_temp[y]) #
+
+        # Make a range object with the bounds of the region. Note to the 
+        # end a 1 has to be added in order to include the last position in the range
+        return [list_temp[0], list_temp[1]+1]
+    
+def pae_from_json(path, fn):
+    '''Read in the json file, which is in the format:
+    [{"predicted_aligned_error":[[0, 1, 3, 5, 19, ...], [0, 4, 12, 38, ...], ...]}]
+    '''
+
+    f = open(path + fn)
+    data = json.load(f)
+    data = data[0]
+    pae = data['predicted_aligned_error']
+    array = np.array(pae)
+
+    return array
+
+
+def calculate_pae_mean(prot_array, reg_a, reg_b):
+    '''
+    Gives the mean pae for all regions of interest compared against all regions of interest (reg1 to reg1, reg1 to reg2, reg2 to reg2)
+    Reg_a and Reg_b are given as arrays.
+    '''
+
+    '''
+    Method proceeds like this:
+    Let's say we're handed reg1 from a protein, which is "1-2, 3-4". It's given to us in the form:
+    reg_a = [[1, 2], [3, 4]], reg_b = [[1, 2], [3, 4]]]
+    So we perform:
+    mean(prot_array[1:3, 1:3]) + mean(prot_array[1:3, 3:5]) + mean(prot_array[3:5, 1:3]) + mean(prot_array[3:5, 3:5]). Then take mean of all that.
+    '''
+
+    # First is reg1 on reg1
+    means = []
+    for i in range(len(reg_a)):
+        for n in range(len(reg_b)):
+            sub_array = prot_array[i[0]:i[1]+1, n[0]:n[1]+1]
+            sub_mean = np.mean(sub_array)
+            means.append(sub_mean)
+
+    mean = np.mean(means)
+
+    return (mean)

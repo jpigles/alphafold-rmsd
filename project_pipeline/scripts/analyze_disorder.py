@@ -44,5 +44,8 @@ for i in range(len(df_disorder_1)):
 # plDDT score per residue is given under _ma_qa_metric_local.metric_value
 df_mean_plddt = main.mean_plddt(df_disorder_1, af_path)
 
-# Merge df_disorder_1 and df_mean_plddt
-df_mean_plddt.to_csv('./data/disorder.tsv', sep='\t', index=False)
+# Calculate mean predicted aligned error for each region compared against itself and the other region
+df_mean_pae = main.mean_paes(df_mean_plddt, af_path)
+
+# Save file
+df_mean_pae.to_csv('./data/disorder.tsv', sep='\t', index=False)
