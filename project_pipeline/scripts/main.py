@@ -548,7 +548,7 @@ def calculate_disorder(df):
         common_residues = utils.common_member(region_1_res, disorder_residues)
         percent_disorder = len(common_residues) / len(residues)
 
-        df.loc[i, 'percent_disorder_1'] = percent_disorder
+        df.loc[i, 'percent_disorder_1'] = round(percent_disorder, 3)
     
     df.drop(columns=['region_1 search'], inplace=True)
     return df
