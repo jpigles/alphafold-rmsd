@@ -632,7 +632,7 @@ def region_bounds(x):
 
         # Make a range object with the bounds of the region. Note to the 
         # end a 1 has to be added in order to include the last position in the range
-        return [list_temp[0], list_temp[1]+1]
+        return [[list_temp[0], list_temp[1]+1]]
     
 def pae_from_json(path, fn):
     '''Read in the json file, which is in the format:
@@ -666,7 +666,11 @@ def calculate_pae_mean(prot_array, reg_a, reg_b):
     means = []
     for i in range(len(reg_a)):
         for n in range(len(reg_b)):
-            sub_array = prot_array[i[0]:i[1]+1, n[0]:n[1]+1]
+            a_start = reg_a[i][0]
+            a_end = reg_a[i][1]
+            b_start = reg_b[n][0]
+            b_end = reg_b[n][1]
+            sub_array = prot_array[a_start:a_end, b_start:b_end]
             sub_mean = np.mean(sub_array)
             means.append(sub_mean)
 

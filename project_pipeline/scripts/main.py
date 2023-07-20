@@ -546,7 +546,7 @@ def calculate_disorder(df):
                     disorder_residues.append(residues.index(residue) + 1)
         
         common_residues = utils.common_member(region_1_res, disorder_residues)
-        percent_disorder = len(common_residues) / len(region_1_res)
+        percent_disorder = len(common_residues) / len(residues)
 
         df.loc[i, 'percent_disorder_1'] = percent_disorder
     
@@ -622,8 +622,8 @@ def mean_paes(df, path):
         mean22 = utils.calculate_pae_mean(prot_array, reg2_array, reg2_array)
         
 
-        df.loc[i, 'mean_pae_1_1'] = mean11
-        df.loc[i, 'mean_pae_1_2'] = mean12
-        df.loc[i, 'mean_pae_2_2'] = mean22
+        df.loc[i, 'mean_pae_1_1'] = round(mean11, 3)
+        df.loc[i, 'mean_pae_1_2'] = round(mean12, 3)
+        df.loc[i, 'mean_pae_2_2'] = round(mean22, 3)
     
     return df
