@@ -31,6 +31,7 @@ rule interface_analysis:
         'data/offset_fixed_proteins_by_pdb.tsv',
 
     output:
+        'data/trim_values.tsv',
         'data/proteins_pdb_summary.tsv',
         'data/proteins_pdb_both_80.tsv',
         'data/proteins_pdb_1_80.tsv',
@@ -73,7 +74,6 @@ rule calculate_rmsds:
         'data/proteins_pdb_both_60.tsv'
 
     output:
-        'data/trim_values.tsv',
         'data/rmsds.tsv'
 
     script:

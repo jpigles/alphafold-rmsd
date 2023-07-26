@@ -111,14 +111,13 @@ def find_domain_completeness(df, path):
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
-        path_uniprot = path + uniprot + '/'
         chain = df.loc[i, 'chain']
-        fn = pdb + '.cif'
+        fn = f'{pdb}_{uniprot}.cif'
 
         print('Analyzing %s' % pdb)
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path_uniprot)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path)
 
         if mmcif_dict['_exptl.method'][0] == 'X-RAY DIFFRACTION':
             resolution = float(mmcif_dict["_refine.ls_d_res_high"][0])
@@ -306,7 +305,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
-        gt_fn = gt_path_in + f'{pdb}_{uniprot}.cif'
+        gt_fn = gt_path_in +  f'{uniprot}/{pdb}.cif'
         gt_fn_out = gt_path_out + f'{pdb}_{uniprot}.cif'
         pred_fn = pred_path_in + f'F-{uniprot}-F1-model_v3.cif'
         pred_fn_out = pred_path_out + f'{pdb}_{uniprot}_AF.cif'
