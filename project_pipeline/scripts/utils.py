@@ -177,31 +177,30 @@ def get_offset(fp, pdb, uniprot):
 def fix_offset(pdb, fp, chain, offset):
     
     # Replace residue numbers in our chain of interest
-    if offset == 0:
-        return f'No fix needed for {pdb}'
-    else:
-        # Read in the CIF file
-        cfr = CifFileReader()
-        cif_obj = cfr.read(fp, output='cif_dictionary')
-        # Convert to a Pandas DataFrame
-        df = pd.DataFrame.from_dict(cif_obj[pdb.upper()]['_atom_site'])
-        # Replace residue numbers
-        for i in range(len(df)):
-            if df.loc[i, 'label_asym_id']==chain:
-                res_num = int(df.loc[i, 'label_seq_id'])
-                new_res_num = res_num - offset
-                df.loc[i, 'label_seq_id'] = str(new_res_num)
-            else:
-                continue
-        # Convert back to mmCIF-like dictionary
-        cif_dict = df.to_dict(orient='list')
-        cif_obj[pdb.upper()]['_atom_site'] = cif_dict
 
-        # Write to file
-        cfw = CifFileWriter(fp)
-        cfw.write(cif_obj)
+    # Read in the CIF file
+    cfr = CifFileReader()
+    cif_obj = cfr.read(fp, output='cif_dictionary')
+    # Convert to a Pandas DataFrame
+    df = pd.DataFrame.from_dict(cif_obj[pdb.upper()]['_atom_site'])
+    # Replace residue numbers
+    for i in range(len(df)):
+        if df.loc[i, 'label_asym_id']==chain:
+            res_num = int(df.loc[i, 'label_seq_id'])
+            new_res_num = res_num - offset
+            df.loc[i, 'label_seq_id'] = str(new_res_num)
+            df.loc[i, 'auth_seq_id'] = str(new_res_num)
+        else:
+            continue
+    # Convert back to mmCIF-like dictionary
+    cif_dict = df.to_dict(orient='list')
+    cif_obj[pdb.upper()]['_atom_site'] = cif_dict
 
-        return f'Successfully fixed {pdb}'
+    # Write to file
+    cfw = CifFileWriter(fp)
+    cfw.write(cif_obj)
+
+    return f'Successfully fixed {pdb}'
     
 def string2range(x):
     
