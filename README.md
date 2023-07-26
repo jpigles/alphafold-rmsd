@@ -124,7 +124,7 @@ Notes for correcting mmcif files.
 - 6q0j, fixed as per 6u2g.
 - 6q0t, fixed as per 6u2g.
 - 1gnv, problem is that auth_seq correctly skips 9 residues, but seq_align_beg does not. Auth_seq goes from 74 to 84, seq_align_beg goes from 74 to 75. Not certain if there's a real fix to that. db_align_beg is also incorrect. I think I'll go with the larger fragment. Fixed db_align_beg on first row to 117.
-- 3h2u, auth_seq is correct.
+- 3h2u, auth_seq is correct. Also fixed B4DTM7 to P18206
 - 6nji, like 1gnv, skips a few residues, but the second fragment is very small. First row db_align_beg starts at 380.
 - 8ej4, fixed as per 6u2g.
 - 6njj fixed as per 6nji.
@@ -146,9 +146,9 @@ Notes for correcting mmcif files.
 - 3fi7, same issue as 1gnv. Second fragment is larger, keep it. Second row db_align_beg starts at 64.
 - 6fek, auth_seq (which is correct) skips from 825 to 841 but seq_align_beg goes 126 to 127. Uncertain how or if I should fix this.
 - 3krj, fusion protein, best to eliminate.
-- 4zyn, seq_align_beg skips from 78 to 100, but auth_seq skips from 73 to 140. Not sure what's going on there.
+- 4zyn, seq_align_beg skips from 78 to 100, but auth_seq skips from 73 to 140. Change db_align_beg to 46.
 - 7syf is a fusion protein, remove
-- 7am4, auth_seq skips from 75 to 85 but seq_align_beg stays consistent (75 to 76).
+- 7am4, auth_seq skips from 75 to 85 but seq_align_beg stays consistent (75 to 76). Change db_align_beg to 10.
 - 7am8, same as 7am4.
 - 7am3, same as 7am4.
 - 5ox2, same as 7am4.
@@ -157,11 +157,11 @@ Notes for correcting mmcif files.
 - 7am6, same as 7am4.
 - 1dui, same as 7am4.
 - 1sue, same as 7am4.
-- 1gns, similar issue. seq_align_beg goes 71 to 72 while auth_seq goes 74 to 84.
+- 1gns, similar issue. seq_align_beg goes 71 to 72 while auth_seq goes 74 to 84. Change db_align_beg to 13.
 - 1sua, same as 7am4.
 - 7apj is chimeric, remove.
-- 3t6p, seq_align_beg goes from 99 to 113, auth_seq goes from 362 to 386 (263 difference to 273 difference).
-- 6lvs, seq_align_beg goes 144 to 156, auth_seq goes 219 to 240. I wrote a short script to fix all of the weird skip files listed above.
+- 3t6p, seq_align_beg goes from 99 to 113, auth_seq goes from 362 to 386 (263 difference to 273 difference). Change db_align_beg to 275.
+- 6lvs, seq_align_beg goes 144 to 156, auth_seq goes 219 to 240. I wrote a short script to fix all of the weird skip files listed above. db_align_beg changed to 101.
 - 7dwb has 7 added amino acids, 173 to 180. According to paper, it's an inserted Strep-tag. 
 
 For Espritz, I used the Disprot prediction type and the Best Sw decision threshold.
