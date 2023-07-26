@@ -384,7 +384,7 @@ def domain_neighborsearch(region1, region2, atoms):
       
     # Search for all the interacting residues in the region_1 and in the region_2
     # with atoms that are within a 6.5 A radius 
-    ns_all = ns.search_all(6.5, 'R')
+    ns_all = ns.search_all(5, 'R')
     
     # Make a set to store the residues at the interface
     interface_res = set()
