@@ -38,7 +38,8 @@ rule interface_analysis:
         'data/proteins_pdb_2_80.tsv',
         'data/proteins_pdb_both_60.tsv',
         'data/proteins_interface.tsv',
-        'data/proteins_largest_interface.tsv'
+        'data/proteins_largest_interface.tsv',
+        'data/alphafold_interface.tsv'
 
     script:
         'scripts/interface_analysis.py'

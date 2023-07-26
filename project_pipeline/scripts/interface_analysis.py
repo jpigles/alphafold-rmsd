@@ -11,8 +11,13 @@ gt_in_path = 'data/input/RCSB_cif/'
 gt_trim_path = './data/input/RCSB_cif_trim/'
 pred_in_path = './data/input/Alphafold_cif/'
 pred_trim_path = './data/input/Alphafold_cif_trim/'
-df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
 best_cif_path = 'data/input/RCSB_cif_best/'
+
+# Read in the reference dataframe
+df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
+
+# Create a dataframe for each uniprot accession number for finding the interacting residues in the Alphafold files
+df_af = df_prot[['uniprot', 'region_1', 'region_2', 'chain']].drop_duplicates(keep='first').reset_index(drop = True)
 
 # Trim the files to make sure any mutated residues are not accidentally counted in our domain completeness
 trim_values = main.trim_cifs(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
@@ -61,6 +66,9 @@ df_60_interacting = main.get_interfaces(df_60, best_cif_path)
 print('Finding largest interfaces...')
 df_60_largest_interfaces = main.largest_interface(df_60_interacting)
 
+# Get the Alphafold interfaces
+df_af_interacting = main.get_af_interfaces(df_af, pred_in_path)
+
 # Save the dataframe with all interfaces
 print('Saving all interfaces...')
 df_60_interacting.to_csv(snakemake.output[6], sep = '\t', index = False)
@@ -68,3 +76,7 @@ df_60_interacting.to_csv(snakemake.output[6], sep = '\t', index = False)
 # Save the dataframe with the most interacting residues
 print('Saving interfaces...')
 df_60_largest_interfaces.to_csv(snakemake.output[7], sep = '\t', index = False)
+
+# Save the dataframe with the Alphafold interfaces
+print('Saving AlphaFold interfaces...')
+df_af_interacting.to_csv(snakemake.output[8], sep = '\t', index = False)

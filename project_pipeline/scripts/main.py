@@ -232,6 +232,44 @@ def get_interfaces(df, path):
 
     return df
 
+def get_af_interfaces(df, path):
+    '''
+    Finds the residues involved in the interface between the two domains, 
+    specifically for the AlphaFold files.
+    '''
+
+    # Define columns for new stats
+    df['interacting_residue_pairs'] = ''
+    df['interface_residues'] = ''
+    df['number_interface_residues'] = ''
+
+    df = utils.region_search_range(df)
+
+    for i in range(len(df)):
+
+        # Define values for retrieval 
+        region_1_res = df.loc[i, 'region_1 search']
+        region_2_res = df.loc[i, 'region_2 search']
+        uniprot = df.loc[i, 'uniprot']
+        chain = df.loc[i, 'chain']
+        model = df.loc[i, 'model']
+        fn = f'F-{uniprot}-F1-model_v3.cif'
+
+        # Get structure and dictionary objects
+        structure, mmcif_dict = utils.get_structure_dict(uniprot, fn, path)
+
+        # Get residues in domains for Neighborsearch
+        atoms_ns = utils.get_domain_residues(region_1_res, region_2_res, structure, model, chain)
+
+        # Get interacting residues
+        interacting_pairs, interface_res, len_interface_res = utils.domain_neighborsearch(region_1_res, region_2_res, atoms_ns)
+
+        df.loc[i, 'interacting_residue_pairs'] = interacting_pairs
+        df.loc[i, 'interface_residues'] = interface_res
+        df.loc[i, 'number_interface_residues'] = len_interface_res
+
+    return df
+
 def largest_interface(df):
     ''' 
     Go through all the proteins in df_prot and determine the pdb file with the greatest 

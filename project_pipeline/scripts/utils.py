@@ -260,12 +260,12 @@ def region_search_range(df):
 
     return df
     
-def get_structure_dict(pdb, fn, path):
+def get_structure_dict(name, fn, path):
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)
             
     # Then make a structure object
-    structure = parser.get_structure(pdb, path + fn)
+    structure = parser.get_structure(name, path + fn)
             
     # Make an MMCIFDict object to grab more information form the .cif files
     mmcif_dict = MMCIF2Dict(path + fn)
@@ -382,7 +382,7 @@ def domain_neighborsearch(region1, region2, atoms):
     ns = NeighborSearch(atoms)
       
     # Search for all the interacting residues in the region_1 and in the region_2
-    # with atoms that are within a 6.5 A radius 
+    # with atoms that are within a 5 A radius 
     ns_all = ns.search_all(5, 'R')
     
     # Make a set to store the residues at the interface
