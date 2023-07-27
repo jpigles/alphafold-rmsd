@@ -3,6 +3,7 @@ Analyze the quality of PDB files based on the percentage of residues in the inhi
 '''
 import pandas as pd
 import main
+import utils
 import csv
 
 
@@ -12,6 +13,9 @@ gt_trim_path = './data/input/RCSB_cif_trim/'
 pred_in_path = './data/input/Alphafold_cif/'
 pred_trim_path = './data/input/Alphafold_cif_trim/'
 best_cif_path = 'data/input/RCSB_cif_best/'
+
+# Make the directories
+utils.make_dirs([gt_in_path, gt_trim_path, pred_in_path, pred_trim_path, best_cif_path])
 
 # Read in the reference dataframe
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
