@@ -676,3 +676,18 @@ def calculate_pae_mean(prot_array, reg_a, reg_b):
     mean = np.mean(means)
 
     return (mean)
+
+def uniprot_dirs(path_list, uniprot):
+    "Make subdirectories for the given uniprot id"
+    if type(path_list) == str:
+        try:
+            os.mkdir(path_list + uniprot + '/')
+        except:
+            print('Directory already exists.')
+
+    elif type(path_list) == list:
+        for path in path_list:
+            try:
+                os.mkdir(path + uniprot + '/')
+            except:
+                print('Directory already exists.')

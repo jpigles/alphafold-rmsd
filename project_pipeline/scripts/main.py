@@ -41,14 +41,10 @@ def download_pdb_files(df, path):
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
-        uniprot_path = path + uniprot + '/'
         
         # Try to make a new directory with the gene name. If such a directory
         # already exists then continue
-        try:
-            os.mkdir(uniprot_path)
-        except:
-            print('Directory already exists.')
+        utils.uniprot_dirs(path, uniprot)
 
         pdb_ids_chains = df.loc[i, 'pdb']
         
@@ -349,6 +345,9 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         gt_fn_out = gt_path_out + fn
         pred_fn = pred_path_in + f'F-{uniprot}-F1-model_v3.cif'
         pred_fn_out = pred_path_out + fn
+
+        # Make sure the uniprot directory exists
+        utils.uniprot_dirs([gt_path_out, pred_path_out], uniprot)
 
         # Check if trimmed files already exist to save time
         if os.path.isfile(gt_fn_out) and os.path.isfile(pred_fn_out):
