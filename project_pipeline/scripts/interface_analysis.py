@@ -3,37 +3,19 @@ Analyze the quality of PDB files based on the percentage of residues in the inhi
 '''
 import pandas as pd
 import main
-import utils
-import csv
 
 
 # Define the path of the CIF files and the reference dataframe
-gt_in_path = 'data/input/RCSB_cif/'
 gt_trim_path = './data/input/RCSB_cif_trim/'
 pred_in_path = './data/input/Alphafold_cif/'
-pred_trim_path = './data/input/Alphafold_cif_trim/'
 best_cif_path = 'data/input/RCSB_cif_best/'
 
-# Make the directories
-utils.make_dirs([gt_in_path, gt_trim_path, pred_in_path, pred_trim_path, best_cif_path])
 
 # Read in the reference dataframe
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
 
 # Create a dataframe for each uniprot accession number for finding the interacting residues in the Alphafold files
 df_af = df_prot[['uniprot', 'region_1', 'region_2', 'chain']].drop_duplicates(keep='first').reset_index(drop = True)
-
-# Trim the files to make sure any mutated residues are not accidentally counted in our domain completeness
-trim_values = main.trim_cifs(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
-
-# Save the trim values
-with open(snakemake.output[0], 'w') as file:
-    fields = ['pdb', 'gt_len', 'gt_trim_len', 'pred_len', 'pred_trim_len', 'gt_perc', 'trim_perc']
-    writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
-    
-    writer.writeheader()
-    for item in trim_values:
-        writer.writerow(item)
 
 # Get the percentage of residues in the inhibitory and active domains
 '''
@@ -49,7 +31,7 @@ df_prot = main.find_domain_completeness(df_prot, gt_trim_path)
 # Save several data frames with differentiating quality of domains: both domains with 80% of residues, domain 1 with 80% of residues,
 # domain 2 with 80% of residues, and both domains with 60% of residues
 
-df_list = main.save_domain_quality_files(df_prot, snakemake.output[1], snakemake.output[2], snakemake.output[3], snakemake.output[4], snakemake.output[5])
+df_list = main.save_domain_quality_files(df_prot, snakemake.output[0], snakemake.output[1], snakemake.output[2], snakemake.output[3], snakemake.output[4])
 
 # Merge the dataframes into one and save all files into one folder
 dfs_merged = pd.concat(df_list).drop_duplicates(keep='first').reset_index(drop = True)
@@ -75,12 +57,12 @@ df_af_interacting = main.get_af_interfaces(df_af, pred_in_path)
 
 # Save the dataframe with all interfaces
 print('Saving all interfaces...')
-df_60_interacting.to_csv(snakemake.output[6], sep = '\t', index = False)
+df_60_interacting.to_csv(snakemake.output[5], sep = '\t', index = False)
 
 # Save the dataframe with the most interacting residues
 print('Saving interfaces...')
-df_60_largest_interfaces.to_csv(snakemake.output[7], sep = '\t', index = False)
+df_60_largest_interfaces.to_csv(snakemake.output[6], sep = '\t', index = False)
 
 # Save the dataframe with the Alphafold interfaces
 print('Saving AlphaFold interfaces...')
-df_af_interacting.to_csv(snakemake.output[8], sep = '\t', index = False)
+df_af_interacting.to_csv(snakemake.output[7], sep = '\t', index = False)

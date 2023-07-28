@@ -23,6 +23,16 @@ rule fix_offset:
     script:
         'scripts/fix_offset.py'
 
+rule trim_cifs:
+    input:
+        'data/offset_fixed_proteins_by_pdb.tsv'
+        
+    output:
+        'data/trim_values.tsv'
+        
+    script:
+        'scripts/trim_cifs.py'
+
 # Determine the pdb files where both domains are at least 80% complete, where domain 1 is at least 80% complete, 
 # where domain 2 is at least 80% complete, and where both domains are at least 60% complete. Determine the residues in each interface
 # that are interacting using the 60% complete pdb files.
@@ -31,7 +41,6 @@ rule interface_analysis:
         'data/offset_fixed_proteins_by_pdb.tsv',
 
     output:
-        'data/trim_values.tsv',
         'data/proteins_pdb_summary.tsv',
         'data/proteins_pdb_both_80.tsv',
         'data/proteins_pdb_1_80.tsv',
