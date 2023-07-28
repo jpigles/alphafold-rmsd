@@ -111,13 +111,14 @@ def find_domain_completeness(df, path):
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
+        path_uniprot = path + uniprot + '/'
         chain = df.loc[i, 'chain']
-        fn = f'{pdb}_{uniprot}.cif'
+        fn = f'{pdb}.cif'
 
         print('Analyzing %s' % pdb)
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path_uniprot)
 
         if mmcif_dict['_exptl.method'][0] == 'X-RAY DIFFRACTION':
             resolution = float(mmcif_dict["_refine.ls_d_res_high"][0])
@@ -185,7 +186,7 @@ def copy_best_files(df, inpath, outpath):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
         source_pdbs_path = join(inpath, uniprot, pdb + '.cif')
-        best_pdbs_path = join(outpath, pdb + "_" + uniprot + '.cif')
+        best_pdbs_path = join(outpath, uniprot, pdb + '.cif')
         shutil.copyfile(source_pdbs_path, best_pdbs_path)
 
     return f'Successfully copied files into {outpath}'
@@ -212,7 +213,7 @@ def get_interfaces(df, path):
         uniprot = df.loc[i, 'uniprot']
         chain = df.loc[i, 'chain']
         model = df.loc[i, 'model']
-        fn = pdb + '_' + uniprot + '.cif'
+        fn = f'{pdb}_{uniprot}.cif'
 
         # Get structure and dictionary objects
         structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path)
@@ -343,10 +344,11 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
-        gt_fn = gt_path_in +  f'{uniprot}/{pdb}.cif'
-        gt_fn_out = gt_path_out + f'{pdb}_{uniprot}.cif'
+        fn = f'{uniprot}/{pdb}.cif'
+        gt_fn = gt_path_in + fn
+        gt_fn_out = gt_path_out + fn
         pred_fn = pred_path_in + f'F-{uniprot}-F1-model_v3.cif'
-        pred_fn_out = pred_path_out + f'{pdb}_{uniprot}_AF.cif'
+        pred_fn_out = pred_path_out + fn
 
         # Check if trimmed files already exist to save time
         if os.path.isfile(gt_fn_out) and os.path.isfile(pred_fn_out):
@@ -474,12 +476,13 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
         # Define pdb, filenames, region1, region2
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
+        fn = f'{uniprot}/{pdb}.cif'
         region_1_dict = utils.create_region_dict(df.loc[i, 'region_1'], 1)
         region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
         percent_reg1 = df.loc[i, 'percent_region_1']
         percent_reg2 = df.loc[i, 'percent_region_2']
-        gt_fn = gt_path + f'{pdb}_{uniprot}.cif'
-        pred_fn = pred_path + f'{pdb}_{uniprot}_AF.cif'
+        gt_fn = gt_path + fn
+        pred_fn = pred_path + fn
         complex_fn = complex_path + f'{pdb}_{uniprot}.pdb'
 
         if not os.path.isfile(gt_fn) and not os.path.isfile(pred_fn):
