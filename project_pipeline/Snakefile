@@ -38,7 +38,7 @@ rule trim_cifs:
 # that are interacting using the 60% complete pdb files.
 rule interface_analysis:
     input:
-        'data/offset_fixed_proteins_by_pdb.tsv',
+        'data/trim_values.tsv'
 
     output:
         'data/proteins_pdb_summary.tsv',

@@ -14,6 +14,9 @@ best_cif_path = 'data/input/RCSB_cif_best/'
 # Read in the reference dataframe
 df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
 
+# Get rid of the trim values, they're not needed.
+df_prot = df_prot.drop(['gt_len', 'gt_trim_len', 'pred_len', 'pred_trim_len', 'gt_perc', 'trim_perc'], axis = 1)
+
 # Create a dataframe for each uniprot accession number for finding the interacting residues in the Alphafold files
 df_af = df_prot[['uniprot', 'region_1', 'region_2', 'chain']].drop_duplicates(keep='first').reset_index(drop = True)
 
