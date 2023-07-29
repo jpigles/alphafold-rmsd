@@ -414,18 +414,26 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
             else:
                 break
             
-            print(f'Success! Creating trimmed files for {pdb}...')
-            # Write trimmed files
-            CifFileWriter(gt_fn_out).write(gt_obj)
-            CifFileWriter(pred_fn_out).write(pred_obj)
+            if len(gt_trim) == 0:
+                print(f'No common atoms found for {pdb}. Removing from dataframe...')
+                df.drop(i, inplace=True)
+            else:
+                print(f'Success! Creating trimmed files for {pdb}...')
+                # Write trimmed files
+                CifFileWriter(gt_fn_out).write(gt_obj)
+                CifFileWriter(pred_fn_out).write(pred_obj)
 
 
         # Compile some information on the trimmed files
         trim_values_dict = utils.trim_stats(pdb, gt, gt_trim, pred, pred_trim)
         trim_values.append(trim_values_dict)
+    
+    # Add trim values to dataframe
+    df_trim = pd.DataFrame(trim_values)
+    df = df.merge(df_trim, on = 'pdb')
 
 
-    return trim_values
+    return trim_values, df
 
 def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
     '''Calculate rmsd between gt and pred regions and whole proteins

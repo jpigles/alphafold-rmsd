@@ -16,11 +16,7 @@ df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
 utils.make_dirs([gt_in_path, gt_trim_path, pred_in_path, pred_trim_path, best_cif_path])
 
 # Trim the files to make sure any mutated residues are not accidentally counted in our domain completeness
-trim_values = main.trim_cifs(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
-
-# Merge the trim values into df_prot. We'll drop them immediately on the next step, but we need to maintain continuity of files for Snakemake.
-df_trim = pd.DataFrame(trim_values)
-df_prot = df_prot.merge(df_trim, on = 'pdb')
+trim_values, df_prot = main.trim_cifs(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
 
 # Save the trim values
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)
