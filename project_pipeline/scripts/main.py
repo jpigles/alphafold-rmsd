@@ -181,6 +181,11 @@ def copy_best_files(df, inpath, outpath):
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
+
+        # Make sure the output directory exists
+        utils.uniprot_dirs(outpath, uniprot)
+
+        # Copy the files
         source_pdbs_path = join(inpath, uniprot, pdb + '.cif')
         best_pdbs_path = join(outpath, uniprot, pdb + '.cif')
         shutil.copyfile(source_pdbs_path, best_pdbs_path)
