@@ -421,7 +421,6 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
             
             if len(gt_trim) == 0:
                 print(f'No common atoms found for {pdb}. Removing from dataframe...')
-                df.drop(i, inplace=True)
             else:
                 print(f'Success! Creating trimmed files for {pdb}...')
                 # Write trimmed files
@@ -436,6 +435,9 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
     # Add trim values to dataframe
     df_trim = pd.DataFrame(trim_values)
     df = df.merge(df_trim, on = 'pdb')
+
+    # Drop any files that have no common atoms.
+    df = df[df['gt_len'] != 0].reset_index(drop=True)
 
 
     return trim_values, df
