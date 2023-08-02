@@ -485,10 +485,11 @@ def assert_equal_size(gt_trim_df, pred_trim_df):
         print('AssertionError! Check file')
         return False
     
-def trim_stats(pdb, gt, gt_trim, pred, pred_trim):
+def trim_stats(uniprot, pdb, gt, gt_trim, pred, pred_trim):
     gt_perc = len(gt_trim) / len(gt)
     pred_perc = len(pred_trim) / len(pred)
-    trim_values_dict = {'pdb': pdb,
+    trim_values_dict = {'uniprot': uniprot,
+                        'pdb': pdb,
                         'gt_len': len(gt),
                         'gt_trim_len': len(gt_trim),
                         'pred_len': len(pred),

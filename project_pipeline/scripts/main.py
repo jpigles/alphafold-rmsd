@@ -379,7 +379,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
         else:
             
-            print(f'Trying {pdb}...')
+            print(f'Trying {pdb} for {uniprot}...')
 
             # Initiate reader object
             cfr = CifFileReader()
@@ -429,12 +429,12 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
 
         # Compile some information on the trimmed files
-        trim_values_dict = utils.trim_stats(pdb, gt, gt_trim, pred, pred_trim)
+        trim_values_dict = utils.trim_stats(uniprot, pdb, gt, gt_trim, pred, pred_trim)
         trim_values.append(trim_values_dict)
     
     # Add trim values to dataframe
     df_trim = pd.DataFrame(trim_values)
-    df = df.merge(df_trim, on = 'pdb')
+    df = df.merge(df_trim, on = ['pdb', 'uniprot'])
 
     # Drop any files that have no common atoms.
     df = df[df['gt_len'] != 0].reset_index(drop=True)
