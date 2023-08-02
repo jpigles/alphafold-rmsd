@@ -212,12 +212,13 @@ def get_interfaces(df, path):
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
+        path_uniprot = path + uniprot + '/'
         chain = df.loc[i, 'chain']
         model = df.loc[i, 'model']
-        fn = f'{pdb}_{uniprot}.cif'
+        fn = f'{pdb}.cif'
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path)
+        structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path_uniprot)
 
         # Get mutations
         df.loc[i, 'pdb_mutations'] = mmcif_dict['_entity.pdbx_mutation'][0]
