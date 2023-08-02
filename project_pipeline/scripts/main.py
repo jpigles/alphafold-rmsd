@@ -255,7 +255,8 @@ def get_af_interfaces(df, path):
         region_2_res = df.loc[i, 'region_2 search']
         uniprot = df.loc[i, 'uniprot']
         chain = df.loc[i, 'chain']
-        model = df.loc[i, 'model']
+        # There is only ever one model for the AlphaFold files
+        model = 0
         fn = f'F-{uniprot}-F1-model_v3.cif'
 
         # Get structure and dictionary objects
