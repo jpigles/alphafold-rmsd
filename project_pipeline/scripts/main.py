@@ -437,7 +437,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
     df = df.merge(df_trim, on = ['pdb', 'uniprot'])
 
     # Drop any files that have no common atoms.
-    df = df[df['gt_len'] != 0].reset_index(drop=True)
+    df = df[df['gt_trim_len'] != 0].reset_index(drop=True)
 
 
     return trim_values, df
