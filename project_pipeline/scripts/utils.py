@@ -583,8 +583,18 @@ def get_region_averages(rmsds):
                 item['2_aligned'] = round((item['2.1_aligned'] + item['2.2_aligned']) / 2, 3)
                 item['2_comp'] = round((item['2.1_comp'] + item['2.2_comp']) / 2, 3)
         elif item['2.0_aligned'] == 0 and item['2.3_aligned'] != 0:
-            item['2_aligned'] = round((item['2.1_aligned'] + item['2.2_aligned'] + item['2.3_aligned']) / 3, 3)
-            item['2_comp'] = round((item['2.1_comp'] + item['2.2_comp'] + item['2.3_comp']) / 3, 3)
+            if item['2.1_aligned'] == -1:
+                item['2_aligned'] = round((item['2.2_aligned'] + item['2.3_aligned']) / 2, 3)
+                item['2_comp'] = round((item['2.2_comp'] + item['2.3_comp']) / 2, 3)
+            elif item['2.2_aligned'] == -1:
+                item['2_aligned'] = round((item['2.1_aligned'] + item['2.3_aligned']) / 2, 3)
+                item['2_comp'] = round((item['2.1_comp'] + item['2.3_comp']) / 2, 3)
+            elif item['2.3_aligned'] == -1:
+                item['2_aligned'] = round((item['2.1_aligned'] + item['2.2_aligned']) / 2, 3)
+                item['2_comp'] = round((item['2.1_comp'] + item['2.2_comp']) / 2, 3)
+            else:
+                item['2_aligned'] = round((item['2.1_aligned'] + item['2.2_aligned'] + item['2.3_aligned']) / 3, 3)
+                item['2_comp'] = round((item['2.1_comp'] + item['2.2_comp'] + item['2.3_comp']) / 3, 3)
         else:
             item['2_aligned'] = item['2.0_aligned']
             item['2_comp'] = item['2.0_comp']
