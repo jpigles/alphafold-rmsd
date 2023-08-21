@@ -57,7 +57,7 @@ def download_pdb_files(df, path):
         print('Downloading structures for %s' % uniprot)
 
         # Retrieve the PDB file from the PDB and save to the directory with the gene name
-        pdbl.download_pdb_files(pdb_ids_no_chains, pdir=uniprot_path, file_format='mmCif')
+        pdbl.download_pdb_files(pdb_ids_no_chains, pdir=path, file_format='mmCif')
 
 def correct_offset(df, path):
 
