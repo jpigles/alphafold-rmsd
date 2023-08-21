@@ -540,9 +540,9 @@ def align_and_calculate(align_reg_key, comp_region_key):
     rmsds = []
     try:
         align = cmd.align(f'native_{align_reg_key}', f'pred_{align_reg_key}')
-        rmsd = cmd.rms_cur(f'native_{align_reg_key}', f'pred_{align_reg_key}')
+        rmsd = cmd.rms_cur(f'native_{align_reg_key}', f'pred_{align_reg_key}', matchmaker=4)
         rmsds.append(round(rmsd, 3))
-        rmsd = cmd.rms_cur(f'native_{comp_region_key}', f'pred_{comp_region_key}')
+        rmsd = cmd.rms_cur(f'native_{comp_region_key}', f'pred_{comp_region_key}', matchmaker=4)
         rmsds.append(round(rmsd, 3))
         return rmsds
 
@@ -558,19 +558,33 @@ def get_region_averages(rmsds):
 
     for item in rmsds:
         if item['1.0_aligned'] == 0:
-            item['1_aligned'] = (item['1.1_aligned'] + item['1.2_aligned']) / 2
-            item['1_comp'] = (item['1.1_comp'] + item['1.2_comp']) / 2
+            if item['1.1_aligned'] == -1:
+                item['1_aligned'] = item['1.2_aligned']
+                item['1_comp'] = item['1.2_comp']
+            elif item['1.2_aligned'] == -1:
+                item['1_aligned'] = item['1.1_aligned']
+                item['1_comp'] = item['1.1_comp']
+            else:
+                item['1_aligned'] = round((item['1.1_aligned'] + item['1.2_aligned']) / 2, 3)
+                item['1_comp'] = round((item['1.1_comp'] + item['1.2_comp']) / 2, 3)
         else:
             item['1_aligned'] = item['1.0_aligned']
             item['1_comp'] = item['1.0_comp']
 
     for item in rmsds:
         if item['2.0_aligned'] == 0 and item['2.3_aligned'] == 0:
-            item['2_aligned'] = (item['2.1_aligned'] + item['2.2_aligned']) / 2
-            item['2_comp'] = (item['2.1_comp'] + item['2.2_comp']) / 2
+            if item['2.1_aligned'] == -1:
+                item['2_aligned'] = item['2.2_aligned']
+                item['2_comp'] = item['2.2_comp']
+            elif item['2.2_aligned'] == -1:
+                item['2_aligned'] = item['2.1_aligned']
+                item['2_comp'] = item['2.1_comp']
+            else:
+                item['2_aligned'] = round((item['2.1_aligned'] + item['2.2_aligned']) / 2, 3)
+                item['2_comp'] = round((item['2.1_comp'] + item['2.2_comp']) / 2, 3)
         elif item['2.0_aligned'] == 0 and item['2.3_aligned'] != 0:
-            item['2_aligned'] = (item['2.1_aligned'] + item['2.2_aligned'] + item['2.3_aligned']) / 3
-            item['2_comp'] = (item['2.1_comp'] + item['2.2_comp'] + item['2.3_comp']) / 3
+            item['2_aligned'] = round((item['2.1_aligned'] + item['2.2_aligned'] + item['2.3_aligned']) / 3, 3)
+            item['2_comp'] = round((item['2.1_comp'] + item['2.2_comp'] + item['2.3_comp']) / 3, 3)
         else:
             item['2_aligned'] = item['2.0_aligned']
             item['2_comp'] = item['2.0_comp']
@@ -692,3 +706,12 @@ def uniprot_dirs(path_list, uniprot):
                 os.mkdir(path + uniprot + '/')
             except:
                 print('Directory already exists.')
+
+def cif_to_pdb(gt_fn, pred_fn):
+
+    #Change gt file to pdb
+    cmd.load(gt_fn, 'gt_protein')
+    cmd.save(gt_fn.replace('.cif', '.pdb'), selection='gt_protein')
+
+    cmd.load(pred_fn, 'pred_protein')
+    cmd.save(pred_fn.replace('.cif', '.pdb'), selection='pred_protein')

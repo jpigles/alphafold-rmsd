@@ -461,7 +461,7 @@ def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
         align = cmd.align('native', 'pred')
         cmd.multisave(complex_fn, 'all', format='pdb')
         # Calculate rmsd of whole protein
-        rmsd = cmd.rms_cur('native','pred')
+        rmsd = cmd.rms_cur('native', 'pred', matchmaker=4)
         rmsds['complex_rmsd'] = round(rmsd, 3)
 
         # Superimpose each region and calculate rmsds
@@ -493,6 +493,7 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
         # Define pdb, filenames, region1, region2
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
+        chain = df.loc[i, 'chain']
         fn = f'{uniprot}/{pdb}.cif'
         region_1_dict = utils.create_region_dict(df.loc[i, 'region_1'], 1)
         region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
@@ -529,6 +530,14 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
 
         else:
             print(f'Trying {pdb}...')
+            #Convert files from cif to pdb
+            utils.cif_to_pdb(gt_fn, pred_fn)
+            #Change source file names to .pdb
+            pdb_fn = f'{uniprot}/{pdb}.pdb'
+            gt_fn = gt_path + pdb_fn
+            pred_fn = pred_path + pdb_fn
+
+
             rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
 
             # Define default values for columns to retain number of columns per row
