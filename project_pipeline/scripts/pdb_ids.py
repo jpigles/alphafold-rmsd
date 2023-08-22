@@ -12,8 +12,8 @@ import utils
 import main
 
 # Define the download path for the CIF files
-cif_path = 'data/input/RCSB_cif/'
-df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
+cif_path = snakemake.input[0]
+df_prot = pd.read_csv(snakemake.input[1], sep = '\t')
 # df_prot = pd.read_csv('../data/protein_list.tsv', sep = '\t')
 
 print('Querying RCSB for PDB IDs.')

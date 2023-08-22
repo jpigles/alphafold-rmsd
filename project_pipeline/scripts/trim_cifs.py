@@ -3,14 +3,14 @@ import main
 import utils
 import csv
 
-gt_in_path = 'data/input/RCSB_cif/'
-gt_trim_path = './data/input/RCSB_cif_trim/'
-pred_in_path = './data/input/Alphafold_cif/'
-pred_trim_path = './data/input/Alphafold_cif_trim/'
-best_cif_path = 'data/input/RCSB_cif_best/'
+gt_in_path = snakemake.input[0]
+gt_trim_path = snakemake.input[1]
+pred_in_path = snakemake.input[2]
+pred_trim_path = snakemake.input[3]
+best_cif_path = snakemake.input[4]
 
 # Read in the reference dataframe
-df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
+df_prot = pd.read_csv(snakemake.input[5], sep = '\t')
 
 # Make the directories
 utils.make_dirs([gt_in_path, gt_trim_path, pred_in_path, pred_trim_path, best_cif_path])

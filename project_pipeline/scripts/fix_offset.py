@@ -6,8 +6,8 @@ import pandas as pd
 import main
 
 # Define the download path for the CIF files
-cif_path = 'data/input/RCSB_cif/'
-df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
+cif_path = snakemake.input[0]
+df_prot = pd.read_csv(snakemake.input[1], sep = '\t')
 
 # Fix any offsets between the UniProt sequence and the PDB sequence in the CIF files
 df_offsets = main.correct_offset(df_prot, cif_path)

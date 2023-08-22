@@ -6,13 +6,13 @@ import main
 
 
 # Define the path of the CIF files and the reference dataframe
-gt_trim_path = './data/input/RCSB_cif_trim/'
-pred_in_path = './data/input/Alphafold_cif/'
-best_cif_path = 'data/input/RCSB_cif_best/'
+gt_trim_path = snakemake.input[0]
+pred_in_path = snakemake.input[1]
+best_cif_path = snakeamke.input[2]
 
 
 # Read in the reference dataframe
-df_prot = pd.read_csv(snakemake.input[0], sep = '\t')
+df_prot = pd.read_csv(snakemake.input[3], sep = '\t')
 
 # Get rid of the trim values, they're not needed.
 df_prot = df_prot.drop(['gt_len', 'gt_trim_len', 'pred_len', 'pred_trim_len', 'gt_perc', 'trim_perc'], axis = 1)

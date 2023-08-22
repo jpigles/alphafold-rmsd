@@ -5,6 +5,7 @@ rule all:
 # Determine pdb ids and chains.
 rule pdb_ids:
     input:
+        'data/input/RCSB_cif/',
         'data/proteins.tsv'
         
     output:
@@ -15,6 +16,7 @@ rule pdb_ids:
 
 rule fix_offset:
     input:
+        'data/input/RCSB_cif/',
         'data/proteins_by_pdb.tsv'
         
     output:
@@ -25,6 +27,11 @@ rule fix_offset:
 
 rule trim_cifs:
     input:
+        'data/input/RCSB_cif/',
+        'data/input/RCSB_cif_trim/',
+        'data/input/Alphafold_cif/',
+        'data/input/Alphafold_cif_trim/',
+        'data/input/RCSB_cif_best/',
         'data/offset_fixed_proteins_by_pdb.tsv'
         
     output:
@@ -38,6 +45,9 @@ rule trim_cifs:
 # that are interacting using the 60% complete pdb files.
 rule interface_analysis:
     input:
+        'data/input/RCSB_cif_trim/',
+        'data/input/Alphafold_cif/',
+        'data/input/RCSB_cif_best/',
         'data/trim_values.tsv'
 
     output:
@@ -81,6 +91,9 @@ rule interface_analysis:
 # Will probably have to reconfigure this.
 rule calculate_rmsds:
     input:
+        'data/input/RCSB_cif_best/',
+        'data/input/Alphafold_cif_trim/',
+        'data/output/complexes/',
         'data/proteins_pdb_both_60.tsv'
 
     output:
