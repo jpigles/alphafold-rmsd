@@ -41,11 +41,10 @@ def download_pdb_files(df, path):
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
-        uniprot_path = path + uniprot + '/'
+        uniprot_path = join(path, uniprot)
         
         # Try to make a new directory with the gene name. If such a directory
         # already exists then continue
-        utils.uniprot_dirs(path, uniprot)
 
         pdb_ids_chains = df.loc[i, 'pdb']
         
@@ -71,7 +70,7 @@ def correct_offset(df, path):
         chain = df.loc[i, 'chain']
   
         # Designate file locations. Note that we will be overwriting the CIF files
-        cif_path = path + uniprot + '/' + pdb_id + '.cif'
+        cif_path = join(path, uniprot, pdb_id + '.cif')
 
         # Get the offset
         offset = utils.get_offset(cif_path, pdb_id, uniprot)
@@ -108,7 +107,7 @@ def find_domain_completeness(df, path):
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
-        path_uniprot = path + uniprot + '/'
+        path_uniprot = join(path, uniprot)
         chain = df.loc[i, 'chain']
         fn = f'{pdb}.cif'
 
@@ -213,7 +212,7 @@ def get_interfaces(df, path):
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
-        path_uniprot = path + uniprot + '/'
+        path_uniprot = join(path, uniprot)
         chain = df.loc[i, 'chain']
         model = df.loc[i, 'model']
         fn = f'{pdb}.cif'
@@ -350,10 +349,10 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         pdb = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
         fn = f'{uniprot}/{pdb}.cif'
-        gt_fn = gt_path_in + fn
-        gt_fn_out = gt_path_out + fn
-        pred_fn = pred_path_in + f'F-{uniprot}-F1-model_v3.cif'
-        pred_fn_out = pred_path_out + fn
+        gt_fn = join(gt_path_in, fn)
+        gt_fn_out = join(gt_path_out, fn)
+        pred_fn = join(pred_path_in, f'F-{uniprot}-F1-model_v3.cif')
+        pred_fn_out = join(pred_path_out, fn)
 
         # Make sure the uniprot directory exists
         utils.uniprot_dirs([gt_path_out, pred_path_out], uniprot)
@@ -500,9 +499,9 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
         region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
         percent_reg1 = df.loc[i, 'percent_region_1']
         percent_reg2 = df.loc[i, 'percent_region_2']
-        gt_fn = gt_path + fn
-        pred_fn = pred_path + fn
-        complex_fn = complex_path + f'{pdb}_{uniprot}.pdb'
+        gt_fn = join(gt_path, fn)
+        pred_fn = join(pred_path, fn)
+        complex_fn = join(complex_path, f'{pdb}_{uniprot}.pdb')
 
         if not os.path.isfile(gt_fn) and not os.path.isfile(pred_fn):
             print('No files found for ' + pdb + '. Skipping...')
@@ -535,8 +534,8 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
             utils.cif_to_pdb(gt_fn, pred_fn)
             #Change source file names to .pdb
             pdb_fn = f'{uniprot}/{pdb}.pdb'
-            gt_fn = gt_path + pdb_fn
-            pred_fn = pred_path + pdb_fn
+            gt_fn = join(gt_path, pdb_fn)
+            pred_fn = join(pred_path, pdb_fn)
 
 
             rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
@@ -627,13 +626,13 @@ def mean_plddt(df, path):
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
-        fn = f'F-{uniprot}-F1-model_v3.cif'
+        fn = join(path, f'F-{uniprot}-F1-model_v3.cif')
         region_1_res = df.loc[i, 'region_1 search']
         region_2_res = df.loc[i, 'region_2 search']
 
         # Read in AF cif file
         cfr = CifFileReader()
-        cif_obj = cfr.read(path + fn, output='cif_wrapper')
+        cif_obj = cfr.read(fn, output='cif_wrapper')
         cif_data = list(cif_obj.values())[0]
 
         # Create lists of residue plDDT values.

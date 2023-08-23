@@ -6,6 +6,7 @@ from pymol import cmd
 import pymol
 import pandas as pd
 import numpy as np
+from os.path import join
 import requests
 import os
 import json
@@ -261,14 +262,18 @@ def region_search_range(df):
     return df
     
 def get_structure_dict(name, fn, path):
+
+    # Join the path and the file name
+    full_path = join(path, fn)
+    
     # To load a PDB file make a parser object
     parser = MMCIFParser(QUIET=True)
             
     # Then make a structure object
-    structure = parser.get_structure(name, path + fn)
+    structure = parser.get_structure(name, full_path)
             
     # Make an MMCIFDict object to grab more information form the .cif files
-    mmcif_dict = MMCIF2Dict(path + fn)
+    mmcif_dict = MMCIF2Dict(full_path)
 
     return structure, mmcif_dict
 
