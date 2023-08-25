@@ -8,7 +8,7 @@ import main
 # Define the path of the CIF files and the reference dataframe
 gt_trim_path = snakemake.input[0]
 pred_in_path = snakemake.input[1]
-best_cif_path = snakeamke.input[2]
+best_cif_path = snakemake.input[2]
 
 
 # Read in the reference dataframe

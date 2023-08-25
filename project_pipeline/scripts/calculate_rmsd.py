@@ -5,7 +5,7 @@ import utils
 
 gt_in_path = snakemake.input[0]
 pred_in_path = snakemake.input[1]
-complex_path = snakeamke.input[2]
+complex_path = snakemake.input[2]
 df = pd.read_csv(snakemake.input[3], sep='\t').astype('object')
 
 # Make the directories
