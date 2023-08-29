@@ -44,21 +44,15 @@ Notes for correcting mmcif files.
 - 1hct, db_align_beg = 144.
 - In the case of 7epu, it's using the sequence information for the wrong chain. ~~I'll have to fix my code to account for that. This may fix some other ones.~~ This has been done
 - 2mf9 has sequence Q14318-2.
-- 4u5w has the same issue as 7epu. Should be fixed next run.
 - 7tfc had an issue where the first chain returned in the query was 7tfc.AA, which meant that the chain was selected as 'A' due to slicing [:4]. Resolved by using .split() to select pdb id and chain.
-- 8gae (P53041) has the same issue as 7epu. Should be fixed next run.
-- 8gft (P53041) has the same issue as 7epu. Should be fixed next run.
 - For 2m0v, I discovered that the calculations for percent completeness in each region was counting the region in every entity in the NMR files, thus greatly over-representing the completeness (it was 2000 in some cases). I changed the script to only select model 0 in each file, but I'm not sure if this will cause problems later.
 - 4m8t, the author sequence is correct, the database is off by one. 
 - 4mao, same as 4m8t.
 - 6nr0, author sequence is correct.
 - 6zei _very annoyingly_ has two different proteins under chain A, so even if I use the chain to find the index of the seq_begin, I will _still_ get the wrong seq_begin. So I switched to using the UniProt ID to get the index. Hopefully this is more robust. And actually, besides that fact, we only have 16 amino acids from our protein of interest, so it's pretty useless anyway. It appears to be a chimeric protein. Unfortunately, it will always get past the percent counting step, but what can you do.
-- 6zeg is the same situation as 6zei.
-- 7w3b has the same issue as 7epu. Should be fixed. In addition, changing to UniProt as our index finder is more robust here as well, as the chain is listed as "x" under strand_id but is given as UA in the query and also in the actual data.
 - 3bhh is completely correct, and the full structure is there, so I'm not sure what's going on with the trim_values Looks like it got corrected twice for some reason. 
 - 1na6, author_seq is correct.
 - 2ptk, author_seq is correct.
-- 7wjq, same issue as 7epu.
 - 2xp2, auth_seq is correct. db_align_beg is _way_ off.
 - 2dx1, both db_align_beg and auth_seq are wrong. Difference between db and seq_align_beg is 129.
 - 4ped, auth_seq is correct.
@@ -66,30 +60,20 @@ Notes for correcting mmcif files.
 - 1p14, db_align_beg should start at 1004.
 - 2ojj, db_align_beg should start at 42.
 - 2oji, same as 2ojj.
-- 6u2g, because we have two Uniprot numbers in the same file that we are accessing, the second time we fix the offset for the file, we overwrite the first offset file. Fixed this by making file name "pdb_uniprot.cif". 
-- 3vd8 is the same issue as 6zei.
 - 2ojg, same as 2ojj.
-- 3gjx has the wrong chain listed in pdbx_strand_id (real chain is B and it has C listed), so selecting by Uniprot id as per 6zei fix should correct it.
-- 5xzc is same issue as 6u2g, so it should be corrected.
-- 3nby same issues as 3gjx.
-- 7us1, auth_seq is correct, but I also had to fix pdbx_db_accession to match the Uniprot id.
+- 7us1, auth_seq is correct, but I also had to fix pdbx_db_accession to match the Uniprot id (S4X0T1 to Q9JK66)
 - 1s9j, auth_seq is correct.
-- 2v7o, wrong Uniprot id in pdbx_db_accession (apparently an older entry that was merged into the current entry). 
+- 2v7o, wrong Uniprot id in pdbx_db_accession (apparently an older entry that was merged into the current entry) (Q8N4I3 to Q13555)
 - 2vgq is chimeric, remove. (Could I automate removal of chimeric entries?)
-- 2wel, db_align_beg should start at 13.
-- 2vn9, fixed as per 6zei.
-- 2c0t, fixed as per 6zei. 
+- 2wel, db_align_beg should start at 13 for Q13557. 
 - 2c0i, db_align_beg should be 81.
 - 2c0o, same as 2c0i.
-- 2jam, fixed as per 6zei.
-- 2b4s, same as 6u2g. 
 - 5tj4 is chimeric, remove.
 - Not sure what went wrong with 2w4o. 
 - 1qkr, auth_seq is correct. 
 - 4r7h, auth_seq is correct. 
 - 7m8e, incorrect Uniprot ID. C3TR27 should be P60240.
 - 5tib is chimeric, remove
-- 4s20, fixed as per 6zei.
 - 5tj2 is chimeric, remove.
 - 4d7r is chimeric, remove.
 - 2src, db_align_beg should start on 86.
@@ -97,50 +81,23 @@ Notes for correcting mmcif files.
 - 2h8h, db_align_beg should start on 2.
 - 4wxx, auth_seq is correct.
 - 1jpa, db_align_beg should start on 587. 
-- 8a8m, fixed as per 6zei.
 - 1fmk, db_align_beg should start on 86.
 - 6nif is a fusion protein, remove.
 - 6nbs, seq_align_beg should start on 8.
 - 1opl, db_align_beg should start on -18.
-- 4nif, same problem as 6u2g. Should be fixed this run.
 - 2fo0 has the same issue as 6AMV. On the first row, change db_align_beg to 43 and the Uniprot ID from P00519-2 to P00519.
-- 4zh2, fixed as per 6zei.
-- 4zh3, fixed as per 6zei.
-- 4zh4, fixed as per 6zei.
-- 6nyb, fixed as per 6u2g.
 - 5d7q, auth_seq is correct.
-- 5dlq, fixed as per 6zei.
-- 7w39, fixed as per 6zei. 
-- 6vie, fixed as per 6zei.
-- 7nj0, fixed as per 6zei. It's a fusion protein, but the first protein only makes up 2% of the overall chain. I'll see what the complex looks like and decide from that.
-- 2onl, chains are labeled wrong (P49137 should be chains B and D but is chains C and D) but should be fixed as per 6zei.
-- 8dso, fixed as per 6u2g.
-- 6boj, fixed as per 6u2g.
 - 1tr2, auth_seq is correct.
-- 2rgn, fixed as per 6zei. 
-- 4mne, fixed as per 6u2g.
-- 7w3j, fixed as per 6zei.
 - 1st6, auth_seq is correct.
-- 6q0j, fixed as per 6u2g.
-- 6q0t, fixed as per 6u2g.
 - 1gnv, problem is that auth_seq correctly skips 9 residues, but seq_align_beg does not. Auth_seq goes from 74 to 84, seq_align_beg goes from 74 to 75. Not certain if there's a real fix to that. db_align_beg is also incorrect. I think I'll go with the larger fragment. Fixed db_align_beg on first row to 117.
 - 3h2u, auth_seq is correct. Also fixed B4DTM7 to P18206
 - 6nji, like 1gnv, skips a few residues, but the second fragment is very small. First row db_align_beg starts at 380.
-- 8ej4, fixed as per 6u2g.
 - 6njj fixed as per 6nji.
 - 6njh fixed as per 6nji.
-- 6pp9 fixed as per 6u2g.
-- 7m0x fixed as per 6u2g.
-- 6v2w fixed as per 6u2g.
-- 7m0u fixed as per 6u2g.
-- 7m0z fixed as per 6u2g.
-- 6pst, last row incorrect Uniprot ID fixed.
-- 7m0v fixed as per 6u2g.
-- 7m0y fixed as per 6u2g.
+- 6pst, last row incorrect Uniprot ID fixed (to P00579)
 - 1g83, auth_seq is correct.
 - 2ayo, db_align_beg starts at 91.
 - 2ayn, same as 2ayo.
-- 1k78, fixed as per 6zei.
 - 6t58 is a fusion protein, best to eliminate it.
 - 2xkx is just... one row per amino acid? What? Eliminate it.
 - 3fi7, same issue as 1gnv. Second fragment is larger, keep it. Second row db_align_beg starts at 64.
@@ -167,6 +124,5 @@ Notes for correcting mmcif files.
 For Espritz, I used the Disprot prediction type and the Best Sw decision threshold.
 
 
-
-
-THIS IS IMPORTANT. I realize now that the reason I'm missing so many files is due to the prune_ids step, which simply prunes any files where our protein of interest is present in more than one chain. But that problem would be very simple for us to fix, so I think I'm going to have to go back through and devise a way to include those files while restricting the chains used to just one. It would also give me an opportunity to re-organize my code, because much of it is a mess right now. 
+Uniprot access numbesr to add:
+Q922S4 (PDE2A_MOUSE) (for comparison to O76074)
