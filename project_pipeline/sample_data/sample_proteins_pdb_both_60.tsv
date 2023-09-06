@@ -1,0 +1,4 @@
+gene_name	uniprot	protein_length	region_1	region_2	region_1_len	region_2_len	pdb	pdb_length	resolution	model	chain	label_offset	pdb residues in region_1	pdb residues in region_2	percent_region_1	percent_region_2
+CAMK4	Q16566	473	305-321	46-300	17	255	2w4o	394	2.17	0	A	9	17	229	100.0	89.80392156862746
+CAMK2B	Q13554	666	283-292	14-272	10	259	3bhh	365	2.4	0	A	-8	10	255	100.0	98.45559845559846
+CAMK1G	Q96NX5	476	277-317	23-276	41	254	2jam	447	1.7	0	A	-12	27	247	65.85365853658537	97.24409448818898
