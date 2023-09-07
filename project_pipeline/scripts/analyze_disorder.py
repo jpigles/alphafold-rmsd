@@ -1,16 +1,15 @@
+'''
+This script takes in the file with classified proteins (i.e. proteins with assigned states and conformations), determines which ones
+have both conformations, and then calculates several values. The first is the disorder of region 1, which allows us to classify
+that region as 'structured' or 'disordered'. We then calculate three values: the average predicted aligned error for each region
+compared against itself, and then both regions compared to each other.
+'''
+
 import pandas as pd
 import main
 
-df = pd.read_csv('./data/classified_files.tsv', sep='\t').astype('object')
-df_2 = pd.read_csv('./data/proteins_pdb_both_60.tsv', sep='\t').astype('object')
+df = pd.read_csv('./data/classified_files_3.tsv', sep='\t').astype('object')
 af_path = './data/input/Alphafold_cif/'
-
-# Trim both dataframes down some
-df = df[['uniprot', 'pdb', 'complex_rmsd', '2_aligned', '2_comp', 'state', 'conformation']]
-df_2 = df_2[['uniprot', 'region_1', 'region_2', 'pdb', 'percent_region_1', 'percent_region_2']]
-
-# Merge dataframes
-df= df.merge(df_2, how='left', on=['uniprot', 'pdb']).reset_index(drop=True)
 
 # Categorize proteins that have both open and closed structures
 two_conf = main.two_state_proteins(df)
