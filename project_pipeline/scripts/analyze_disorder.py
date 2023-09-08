@@ -11,14 +11,14 @@ import main
 df = pd.read_csv('./data/classified_files_3.tsv', sep='\t').astype('object')
 af_path = './data/input/Alphafold_cif/'
 
-# Categorize proteins that have both open and closed structures
-two_conf = main.two_state_proteins(df)
+# # Categorize proteins that have both open and closed structures
+# two_conf = main.two_state_proteins(df)
 
-# Filter df to proteins in two_conf
-df_two_conf = df[df['uniprot'].isin(two_conf)].reset_index(drop=True)
+# # Filter df to proteins in two_conf
+# df_two_conf = df[df['uniprot'].isin(two_conf)].reset_index(drop=True)
 
 # Calculate the disorder for region 1 of each protein of interest.
-df_disorder_1 = main.calculate_disorder(df_two_conf)
+df_disorder_1 = main.calculate_disorder(df)
 
 
 # Calculate percent of structures within 2.5A of closed conformation
