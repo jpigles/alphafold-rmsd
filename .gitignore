@@ -4,3 +4,4 @@ project_pipeline/data/input
 project_pipeline/data/output
 project_pipeline/sample_data/input/
 project_pipeline/sample_data/output/
+google_cloud_api/

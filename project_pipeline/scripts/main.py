@@ -601,12 +601,20 @@ def calculate_disorder(df):
         region_1_res = df.loc[i, 'region_1 search']
         disorder_residues = []
 
-        with open(f'./data/disorder_stats/sp{uniprot}.fasta.espritz', 'r') as f:
-            residues = f.readlines()
+        try:
+            with open(f'./data/disorder_stats/sp{uniprot}.fasta.espritz', 'r') as f:
+                residues = f.readlines()
 
-            for residue in residues:
-                if residue[0] == 'D':
-                    disorder_residues.append(residues.index(residue) + 1)
+                for residue in residues:
+                    if residue[0] == 'D':
+                        disorder_residues.append(residues.index(residue) + 1)
+        except FileNotFoundError:
+            with open(f'./data/disorder_stats/tr{uniprot}.fasta.espritz', 'r') as f:
+                residues = f.readlines()
+
+                for residue in residues:
+                    if residue[0] == 'D':
+                        disorder_residues.append(residues.index(residue) + 1)
         
         common_residues = utils.common_member(region_1_res, disorder_residues)
         percent_disorder = (len(common_residues) / len(region_1_res)) * 100
