@@ -698,3 +698,29 @@ def mean_paes(df, path):
         df.loc[i, 'mean_pae_2_2'] = round(mean22, 3)
     
     return df
+
+def mean_pae_single_domain(df, path):
+    '''
+    Calculate the average predicted aligned error for an entire single-domain protein
+    '''
+
+    for i in range(len(df)):
+        uniprot = df.loc[i, 'uniprot']
+        fn = f'AF-{uniprot}-F1-predicted_aligned_error_v4.json'
+
+        # Read in json file. In case the file doesn't exist, continue. 
+        try:
+            prot_array = utils.pae_from_json(path, fn)
+        except FileNotFoundError:
+            continue
+
+        # We don't have the regions defined a priori, so we simply take the entirety of the protein
+        # See mean_paes for region bounds definition
+        region = [[1, len(prot_array) + 1]]
+
+        mean = utils.calculate_pae_mean(prot_array, region, region)
+
+        df.loc[i, 'mean_pae'] = round(mean, 3)
+
+    return df.reset_index(drop=True)
+
