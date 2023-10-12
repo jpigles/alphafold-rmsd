@@ -707,7 +707,12 @@ def mean_pae_single_domain(df, path):
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
         fn = f'AF-{uniprot}-F1-predicted_aligned_error_v4.json'
-        region_1 = df.loc[i, 'region_1']
+        region = df.loc[i, 'region']
+
+        print(f'Trying {uniprot}...')
+        reg_bounds = utils.region_bounds(region)
+
+        reg_array = np.array(reg_bounds)
 
         # Read in json file. In case the file doesn't exist, continue. 
         try:
@@ -718,7 +723,7 @@ def mean_pae_single_domain(df, path):
         # We don't have the regions defined a priori, so we simply take the entirety of the protein
         # See mean_paes for region bounds definition
 
-        mean = utils.calculate_pae_mean(prot_array, region_1, region_1)
+        mean = utils.calculate_pae_mean(prot_array, reg_array, reg_array)
 
         df.loc[i, 'mean_pae'] = round(mean, 3)
 

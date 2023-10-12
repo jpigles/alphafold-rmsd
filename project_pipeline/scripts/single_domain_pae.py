@@ -8,7 +8,7 @@ import pandas as pd
 import main
 
 # Read in the file with the 100 randomly chosen proteins
-df = pd.read_csv('./data/single_domain_uniprots.csv', sep=',').astype('object')
+df = pd.read_csv('./data/single_domain_domains.csv', sep=',').astype('object')
 # Define file path for Alphafold predicted aligned error files
 af_path = './data/input/Alphafold_single_domain/'
 
