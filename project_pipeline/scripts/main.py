@@ -688,7 +688,7 @@ def mean_paes(df, path, affix, suffix):
         We want means of reg1 compared against reg1, reg1 compared against reg2, and reg2 compared against reg2.
         '''
 
-        if prot_array == np.nan:
+        if prot_array.any() == np.nan:
             mean11 = 0
             mean12 = 0
             mean22 = 0

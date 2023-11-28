@@ -676,7 +676,8 @@ def pae_from_json(path, fn):
         array = np.array(pae)
     except FileNotFoundError:
         print(f'File {fn} not found')
-        array = np.nan
+        array = np.empty((1,1,))
+        array[:] = np.nan
 
     return array
 
