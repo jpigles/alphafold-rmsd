@@ -668,11 +668,15 @@ def pae_from_json(path, fn):
     [{"predicted_aligned_error":[[0, 1, 3, 5, 19, ...], [0, 4, 12, 38, ...], ...]}]
     '''
 
-    f = open(path + fn)
-    data = json.load(f)
-    data = data[0]
-    pae = data['predicted_aligned_error']
-    array = np.array(pae)
+    try:
+        f = open(path + fn)
+        data = json.load(f)
+        data = data[0]
+        pae = data['predicted_aligned_error']
+        array = np.array(pae)
+    except FileNotFoundError:
+        print(f'File {fn} not found')
+        array = np.nan
 
     return array
 

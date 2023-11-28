@@ -688,9 +688,15 @@ def mean_paes(df, path, affix, suffix):
         We want means of reg1 compared against reg1, reg1 compared against reg2, and reg2 compared against reg2.
         '''
 
-        mean11 = utils.calculate_pae_mean(prot_array, reg1_array, reg1_array)
-        mean12 = utils.calculate_pae_mean(prot_array, reg1_array, reg2_array)
-        mean22 = utils.calculate_pae_mean(prot_array, reg2_array, reg2_array)
+        if prot_array == np.nan:
+            mean11 = 0
+            mean12 = 0
+            mean22 = 0
+
+        else:
+            mean11 = utils.calculate_pae_mean(prot_array, reg1_array, reg1_array)
+            mean12 = utils.calculate_pae_mean(prot_array, reg1_array, reg2_array)
+            mean22 = utils.calculate_pae_mean(prot_array, reg2_array, reg2_array)
         
 
         df.loc[i, 'mean_pae_1_1'] = round(mean11, 3)
