@@ -663,14 +663,14 @@ def mean_plddt(df, path):
     df.drop(columns=['region_1 search', 'region_2 search'], inplace=True)
     return df
 
-def mean_paes(df, path):
+def mean_paes(df, path, affix, suffix):
     # Calculate the average pae for region 1 to region 1, region 2 to region 2, and region 1 to region 2
 
     print('Calculating mean pae...')
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
-        fn = f'F-{uniprot}-F1-predicted_aligned_error_v3.json'
+        fn = affix + uniprot + suffix
         region_1 = df.loc[i, 'region_1']
         region_2 = df.loc[i, 'region_2']
 
@@ -688,9 +688,15 @@ def mean_paes(df, path):
         We want means of reg1 compared against reg1, reg1 compared against reg2, and reg2 compared against reg2.
         '''
 
-        mean11 = utils.calculate_pae_mean(prot_array, reg1_array, reg1_array)
-        mean12 = utils.calculate_pae_mean(prot_array, reg1_array, reg2_array)
-        mean22 = utils.calculate_pae_mean(prot_array, reg2_array, reg2_array)
+        if prot_array.any() == np.nan:
+            mean11 = 0
+            mean12 = 0
+            mean22 = 0
+
+        else:
+            mean11 = utils.calculate_pae_mean(prot_array, reg1_array, reg1_array)
+            mean12 = utils.calculate_pae_mean(prot_array, reg1_array, reg2_array)
+            mean22 = utils.calculate_pae_mean(prot_array, reg2_array, reg2_array)
         
 
         df.loc[i, 'mean_pae_1_1'] = round(mean11, 3)

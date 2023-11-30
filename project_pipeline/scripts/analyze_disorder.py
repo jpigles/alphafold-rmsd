@@ -10,6 +10,8 @@ import main
 
 df = pd.read_csv('./data/classified_files_3.tsv', sep='\t').astype('object')
 af_path = './data/input/Alphafold_cif/'
+affix = 'F-'
+suffix = '-F1-predicted_aligned_error_v3.json'
 
 # # Categorize proteins that have both open and closed structures
 # two_conf = main.two_state_proteins(df)
@@ -44,7 +46,7 @@ for i in range(len(df_disorder_1)):
 df_mean_plddt = main.mean_plddt(df_disorder_1, af_path)
 
 # Calculate mean predicted aligned error for each region compared against itself and the other region
-df_mean_pae = main.mean_paes(df_mean_plddt, af_path)
+df_mean_pae = main.mean_paes(df_mean_plddt, af_path, affix, suffix)
 
 # Save file
 df_mean_pae.to_csv('./data/disorder.tsv', sep='\t', index=False)
