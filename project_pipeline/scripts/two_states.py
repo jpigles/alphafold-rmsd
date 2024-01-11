@@ -23,7 +23,10 @@ file_dict = {'uniprot': [], 'filename': [], 'region_1': [], 'region_2': []}
 # Create a new dataframe with the file names
 for f in files:
     file_dict = {}
-    uniprot = f.split('_')[0]
+    uniprot = f.split('_')[0] # filename example: P28482_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb
+    model = f.split('_')[9]
+    if model != '1': # We want only the first model
+        continue
     region1 = df[df['uniprot'] == uniprot]['region_1']
     region2 = df[df['uniprot'] == uniprot]['region_2']
 
