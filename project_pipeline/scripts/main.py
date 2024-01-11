@@ -735,3 +735,23 @@ def mean_pae_single_domain(df, path):
 
     return df.reset_index(drop=True)
 
+def complex_rmsd(pdb1, pdb2, complex_fn):
+    '''
+    Superimpose two pdb files and calculate rmsd
+    '''
+
+    # Load the two pdb files
+    cmd.load(pdb1, 'pdb1')
+    cmd.load(pdb2, 'pdb2')
+
+    # Superimpose the two files
+    align = cmd.align('pdb1', 'pdb2')
+
+    # Save the superimposed file
+    cmd.save(complex_fn, 'all', format='pdb')
+
+    # Calculate rmsd
+    rmsd = cmd.rms_cur('native', 'pred', matchmaker=4)
+    rmsd = round(rmsd, 3)
+
+    return rmsd
