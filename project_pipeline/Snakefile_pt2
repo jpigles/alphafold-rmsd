@@ -1,0 +1,31 @@
+
+# This pipeline is for comparing the publicly available AlphaFold2 structures deposited by Google DeepMind with
+# structures generated using ColabFold based on multiple sequence alignment clusters created using AF_Cluster.
+
+# We start with our classified file in which we have annotated the conformation and state of each protein.
+
+
+rule all:
+    input:
+        'data/af_compared.csv'
+
+rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
+    input:
+        'data/classified_files_3.tsv',
+        'data/input/ColabFold_cif/autoinhibited/'
+    output:
+        'data/two_states.tsv'
+    script:
+        'scripts/two_states.py'
+
+
+rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
+    input:
+        'data/two_states.tsv',
+        'data/input/Alphafold_cif/',
+        'data/input/ColabFold_cif/autoinhibited/',
+        'data/output/colabfold_complexes/'
+    output:
+        'data/af_compared.csv'
+    script:
+        'scripts/compare_afs.py'
