@@ -27,12 +27,14 @@ rule fix_offset:
 
 rule trim_cifs:
     input:
-        'data/input/RCSB_cif/',
-        'data/input/RCSB_cif_trim/',
-        'data/input/Alphafold_cif/',
-        'data/input/Alphafold_cif_trim/',
-        'data/input/RCSB_cif_best/',
-        'data/offset_fixed_proteins_by_pdb.tsv'
+        'data/input/RCSB_cif/', # Ground truth input path
+        'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
+        'data/input/Alphafold_cif/', # Alphafold input path
+        'data/input/Alphafold_cif_trim/', # Trimmed Alphafold output path
+        'data/input/RCSB_cif_best/', # Best ground truth input path
+        '{uniprot}/{pdb}.cif', # Ground truth input file
+        'F-{uniprot}-F1-model_v3.cif', # Alphafold input file
+        'data/offset_fixed_proteins_by_pdb.tsv' # PDB ids and chains
         
     output:
         'data/trim_values.tsv'

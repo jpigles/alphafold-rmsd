@@ -339,7 +339,8 @@ def largest_interface(df):
 
     return df_prot_keep_result
 
-def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
+def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out, 
+              gt_format='{uniprot}/{pdb}.cif', pred_format='F-{uniprot}-F1-model_v3.cif'):
 
     trim_values = []
     for i in range(len(df)):
@@ -348,11 +349,12 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
-        fn = f'{uniprot}/{pdb}.cif'
-        gt_fn = join(gt_path_in, fn)
-        gt_fn_out = join(gt_path_out, fn)
-        pred_fn = join(pred_path_in, f'F-{uniprot}-F1-model_v3.cif')
-        pred_fn_out = join(pred_path_out, fn)
+
+# Generate file paths using format templates
+        gt_fn = os.path.join(gt_path_in, gt_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
+        gt_fn_out = os.path.join(gt_path_out, gt_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
+        pred_fn = os.path.join(pred_path_in, pred_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
+        pred_fn_out = os.path.join(pred_path_out, pred_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
 
         # Make sure the uniprot directory exists
         utils.uniprot_dirs(gt_path_out, pred_path_out, uniprot=uniprot)
