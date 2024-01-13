@@ -9,7 +9,7 @@ complex_path = snakemake.input[2]
 df = pd.read_csv(snakemake.input[3], sep='\t').astype('object')
 
 # Make the directories
-utils.make_dirs([gt_in_path, pred_in_path, complex_path])
+utils.make_dirs(gt_in_path, pred_in_path, complex_path)
 
 # Calculate and save the rmsd info
 rmsd_info = main.get_rmsds(df, gt_in_path, pred_in_path, complex_path)

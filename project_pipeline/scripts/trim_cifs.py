@@ -13,7 +13,7 @@ best_cif_path = snakemake.input[4]
 df_prot = pd.read_csv(snakemake.input[5], sep = '\t')
 
 # Make the directories
-utils.make_dirs([gt_in_path, gt_trim_path, pred_in_path, pred_trim_path, best_cif_path])
+utils.make_dirs(gt_in_path, gt_trim_path, pred_in_path, pred_trim_path, best_cif_path)
 
 # Trim the files to make sure any mutated residues are not accidentally counted in our domain completeness
 trim_values, df_prot = main.trim_cifs(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)

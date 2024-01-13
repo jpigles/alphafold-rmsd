@@ -11,7 +11,7 @@ import requests
 import os
 import json
 
-def make_dirs(paths):
+def make_dirs(*paths):
     for path in paths:
         try:
             os.mkdir(path)
@@ -712,20 +712,13 @@ def calculate_pae_mean(prot_array, reg_a, reg_b):
 
     return (mean)
 
-def uniprot_dirs(path_list, uniprot):
+def uniprot_dirs(*path_list, uniprot):
     "Make subdirectories for the given uniprot id"
-    if type(path_list) == str:
+    for path in path_list:
         try:
-            os.mkdir(path_list + '/' + uniprot + '/')
+            os.mkdir(path + '/' + uniprot + '/')
         except:
             print('Directory already exists.')
-
-    elif type(path_list) == list:
-        for path in path_list:
-            try:
-                os.mkdir(path + '/' + uniprot + '/')
-            except:
-                print('Directory already exists.')
 
 def cif_to_pdb(gt_fn, pred_fn):
 
