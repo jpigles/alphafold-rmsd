@@ -18,6 +18,10 @@ rule two_states: # Find proteins with two states. We then also read which colabf
     script:
         'scripts/two_states.py'
 
+rule 10_vs_pdb: # Compare Colabfold structures made from 10-sequence clusters with PDB structures.
+    input:
+        ''
+
 
 rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
     input:
