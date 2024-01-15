@@ -5,3 +5,5 @@ project_pipeline/data/output
 project_pipeline/sample_data/input/
 project_pipeline/sample_data/output/
 google_cloud_api/
+initial_msas/
+multi-domain_msas/

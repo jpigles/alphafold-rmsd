@@ -3,28 +3,25 @@ A script for getting the RMSD between given AlphaFold2 models. In the context of
 and the other is the model from the AlphaFold2 pipeline.
 '''
 
-import os
 import main
+import csv
 import pandas as pd
 
-df = pd.read_csv(snakemake.input[0])
+df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 
 path1 = snakemake.input[1] # Path to public models
 path2 = snakemake.input[2] # Path to models from AlphaFold2 pipeline
 path3 = snakemake.input[3] # Path to save complex structures
 
-for index, row in df.iterrows():
-    uniprot = row['uniprot']
-    region1 = row['region_1']
-    region2 = row['region_2']
-    fn1 = f'F-{uniprot}-F1-model_v3.cif' # The public model
-    fn2 = row['filename'] # The model from the AlphaFold2 pipeline
-    complex_fn = fn2.split('-')[0] + '_comp.pdb' # eg P62826_U10-000_scores_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb -> P62826_U10_comp.pdb
-    fp1 = os.path.join(path1, fn1)
-    fp2 = os.path.join(path2, fn2)
-    complex_out = os.path.join(path3, complex_fn)
+rmsd_info = main.compare_af(df, path1, path2, path3)
 
-    rmsd = main.calculate_rmsd(fp1, fp2, complex_out)
-    df.loc[index, 'rmsd'] = rmsd
-
-df.to_csv(snakemake.output[0], index=False)
+with open(snakemake.output[0], 'w') as file:
+    fields = ['uniprot', 'filename', 'complex_rmsd', '1.0_aligned', '1.0_comp',
+                '1.1_aligned', '1.1_comp', '1.2_aligned', '1.2_comp', '2.0_aligned', '2.0_comp',
+                '2.1_aligned', '2.1_comp', '2.2_aligned', '2.2_comp', '2.3_aligned', '2.3_comp',
+                '1_aligned', '1_comp', '2_aligned', '2_comp']
+    writer = csv.DictWriter(file, fieldnames=fields, delimiter='\t')
+    
+    writer.writeheader()
+    for item in rmsd_info:
+        writer.writerow(item)

@@ -493,7 +493,6 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
         # Define pdb, filenames, region1, region2
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
-        chain = df.loc[i, 'chain']
         fn = f'{uniprot}/{pdb}.cif'
         region_1_dict = utils.create_region_dict(df.loc[i, 'region_1'], 1)
         region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
@@ -734,3 +733,58 @@ def mean_pae_single_domain(df, path):
         df.loc[i, 'mean_pae'] = round(mean, 3)
 
     return df.reset_index(drop=True)
+
+def compare_af(df, path1, path2, path3):
+
+     # Make sure the output path exists
+    utils.make_dirs([path3])
+
+    rmsd_info = []
+    for index, row in df.iterrows():
+        # Get the information for each protein
+        uniprot = row['uniprot']
+        region1 = row['region_1']
+        region2 = row['region_2']
+        fn1 = f'F-{uniprot}-F1-model_v3.cif' # The public model
+        fn2 = row['filename'] # The model from the AlphaFold2 pipeline
+
+        # Define filepaths
+        complex_fn = fn2.split('-')[0] + '_comp.pdb' # eg P62826_U10-000_scores_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb -> P62826_U10_comp.pdb
+        fp1 = os.path.join(path1, fn1)
+        fp2 = os.path.join(path2, fn2)
+        complex_out = os.path.join(path3, complex_fn)
+
+        # Create the region dicts
+        region1_dict = utils.create_region_dict(region1, 1)
+        region2_dict = utils.create_region_dict(region2, 2)
+
+        rmsds = calculate_rmsd(fp1, fp2, complex_out, region1_dict, region2_dict)
+        
+        # Define default values for columns to retain number of columns per row
+        rmsd_dic = {'uniprot': uniprot,
+                    'filename': fn2,
+                    'complex_rmsd': 0,
+                    '1.0_aligned': 0,
+                    '1.0_comp': 0,
+                    '1.1_aligned': 0,
+                    '1.1_comp': 0,
+                    '1.2_aligned': 0,
+                    '1.2_comp': 0,
+                    '2.0_aligned': 0,
+                    '2.0_comp': 0,
+                    '2.1_aligned': 0,
+                    '2.1_comp': 0,
+                    '2.2_aligned': 0,
+                    '2.2_comp': 0,
+                    '2.3_aligned': 0,
+                    '2.3_comp': 0}
+
+        for key in rmsds:
+            if key in rmsd_dic:
+                rmsd_dic[key] = rmsds[key]
+
+        print('Success! Writing rmsds')
+        rmsd_info.append(rmsd_dic)
+
+    final_rmsds = utils.get_region_averages(rmsd_info)
+    return final_rmsds

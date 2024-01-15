@@ -7,12 +7,12 @@
 
 rule all:
     input:
-        'data/af_compared.csv'
+        'data/af_compared.tsv'
 
 rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
     input:
         'data/classified_files_3.tsv',
-        'data/input/ColabFold_cif/autoinhibited/'
+        'data/input/Colabfold_cif/autoinhibited/'
     output:
         'data/two_states.tsv'
     script:
@@ -23,9 +23,9 @@ rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
     input:
         'data/two_states.tsv',
         'data/input/Alphafold_cif/',
-        'data/input/ColabFold_cif/autoinhibited/',
+        'data/input/Colabfold_cif/autoinhibited/',
         'data/output/colabfold_complexes/'
     output:
-        'data/af_compared.csv'
+        'data/af_compared.tsv'
     script:
         'scripts/compare_afs.py'
