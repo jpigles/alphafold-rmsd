@@ -736,10 +736,11 @@ def mean_pae_single_domain(df, path):
 
     return df.reset_index(drop=True)
 
-def compare_af(df, path1, path2, path3):
+def compare_af(df, path1, path2, path3, 
+               af_format='F-{uniprot}-F1-model_v3.cif'):
 
      # Make sure the output path exists
-    utils.make_dirs([path3])
+    utils.make_dirs(path3)
 
     rmsd_info = []
     for index, row in df.iterrows():
@@ -747,7 +748,7 @@ def compare_af(df, path1, path2, path3):
         uniprot = row['uniprot']
         region1 = row['region_1']
         region2 = row['region_2']
-        fn1 = f'F-{uniprot}-F1-model_v3.cif' # The public model
+        fn1 = af_format.format(uniprot=uniprot)
         fn2 = row['filename'] # The model from the AlphaFold2 pipeline
 
         # Define filepaths

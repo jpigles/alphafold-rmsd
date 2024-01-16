@@ -1,0 +1,11 @@
+uniprot	filename	complex_rmsd	1.0_aligned	1.0_comp	1.1_aligned	1.1_comp	1.2_aligned	1.2_comp	2.0_aligned	2.0_comp	2.1_aligned	2.1_comp	2.2_aligned	2.2_comp	2.3_aligned	2.3_comp	1_aligned	1_comp	2_aligned	2_comp
+P59676	P59676_U10-000_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	23.388	2.016	1.158	0	0	0	0	0.795	2.161	0	0	0	0	0	0	2.016	1.158	0.795	2.161
+O16025	O16025_U100-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	30.519	0.966	4.29	0	0	0	0	3.412	1.442	0	0	0	0	0	0	0.966	4.29	3.412	1.442
+P14677	P14677_U100-000_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	3.356	0.521	0.766	0	0	0	0	0.702	0.543	0	0	0	0	0	0	0.521	0.766	0.702	0.543
+O29238	O29238_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	3.981	1.185	3.981	0	0	0	0	3.617	2.502	0	0	0	0	0	0	1.185	3.981	3.617	2.502
+P47736	P47736_U100-000_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb	51.234	1.133	16.615	0	0	0	0	2.293	12.404	0	0	0	0	0	0	1.133	16.615	2.293	12.404
+P14677	P14677_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	23.126	1.847	0.951	0	0	0	0	0.753	1.978	0	0	0	0	0	0	1.847	0.951	0.753	1.978
+O29238	O29238_U100-000_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	4.681	0.802	1.139	0	0	0	0	0.872	1.109	0	0	0	0	0	0	0.802	1.139	0.872	1.109
+O16025	O16025_U10-000_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	27.215	1.527	4.664	0	0	0	0	3.085	2.167	0	0	0	0	0	0	1.527	4.664	3.085	2.167
+P59676	P59676_U100-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	2.944	0.67	0.752	0	0	0	0	0.686	0.702	0	0	0	0	0	0	0.67	0.752	0.686	0.702
+P47736	P47736_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	46.615	5.559	43.71	0	0	0	0	5.134	69.184	0	0	0	0	0	0	5.559	43.71	5.134	69.184
