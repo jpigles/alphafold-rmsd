@@ -10,7 +10,7 @@ import pandas as pd
 df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 
 path1 = snakemake.input[1] # Path to public models
-path2 = snakemake.input[2] # Path to models from AlphaFold2 pipeline
+path2 = snakemake.input[2] # Path to models from ColabFold pipeline
 path3 = snakemake.input[3] # Path to save complex structures
 prefix = snakemake.params[0]
 suffix = snakemake.params[1]
