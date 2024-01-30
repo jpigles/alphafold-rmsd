@@ -7,25 +7,25 @@
 
 rule all:
     input:
-        'data/md_compared.tsv'
+        'data/af_compared.tsv'
 
-# rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
-#     input:
-#         'data/classified_files_3.tsv',
-#         'data/input/Colabfold_cif/autoinhibited/'
-#     output:
-#         'data/two_states.tsv'
-#     script:
-#         'scripts/two_states.py'
-
-rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
+rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
     input:
-        'data/multi_domain_regions.tsv',
-        'data/input/Colabfold_cif/multi_domain/'
+        'data/classified_files_3.tsv',
+        'data/input/Colabfold_cif/autoinhibited/'
     output:
-        'data/md_colabfold.tsv'
+        'data/two_states.tsv'
     script:
-        'scripts/md_colabfold.py'
+        'scripts/two_states.py'
+
+# rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
+#     input:
+#         'data/multi_domain_regions.tsv',
+#         'data/input/Colabfold_cif/multi_domain/'
+#     output:
+#         'data/md_colabfold.tsv'
+#     script:
+#         'scripts/md_colabfold.py'
 
 # rule 10_vs_pdb: # Compare Colabfold structures made from 10-sequence clusters with PDB structures.
 #     input:
@@ -46,16 +46,16 @@ rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
     script:
         'scripts/compare_afs.py'
 
-rule md_compare: # Compare our multi-domain Colabfold structures against the Deepmind public structures.
-    input:
-        'data/md_colabfold.tsv',
-        'data/input/Alphafold_multi_domain/',
-        'data/input/Colabfold_cif/multi_domain/',
-        'data/output/colabfold_complexes/'
-    params:
-        prefix='AF-',
-        suffix='-F1-model_v4.cif' # File name structure
-    output:
-        'data/md_compared.tsv'
-    script:
-        'scripts/compare_afs.py'
+# rule md_compare: # Compare our multi-domain Colabfold structures against the Deepmind public structures.
+#     input:
+#         'data/md_colabfold.tsv',
+#         'data/input/Alphafold_multi_domain/',
+#         'data/input/Colabfold_cif/multi_domain/',
+#         'data/output/colabfold_complexes/'
+#     params:
+#         prefix='AF-',
+#         suffix='-F1-model_v4.cif' # File name structure
+#     output:
+#         'data/md_compared.tsv'
+#     script:
+#         'scripts/compare_afs.py'
