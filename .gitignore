@@ -7,3 +7,5 @@ project_pipeline/sample_data/output/
 google_cloud_api/
 initial_msas/
 multi-domain_msas/
+project_pipeline/scripts/__pycache__/
+project_pipeline/__pycache__/
