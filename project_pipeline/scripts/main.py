@@ -351,10 +351,10 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
         chain = df.loc[i, 'chain']
 
 # Generate file paths using format templates
-        gt_fn = os.path.join(gt_path_in, gt_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
-        gt_fn_out = os.path.join(gt_path_out, gt_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
-        pred_fn = os.path.join(pred_path_in, pred_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
-        pred_fn_out = os.path.join(pred_path_out, pred_format.format(uniprot=uniprot, pdb=pdb, chain=chain))
+        gt_fn = os.path.join(gt_path_in, gt_format.format(uniprot=uniprot, pdb=pdb))
+        gt_fn_out = os.path.join(gt_path_out, gt_format.format(uniprot=uniprot, pdb=pdb))
+        pred_fn = os.path.join(pred_path_in, pred_format.format(uniprot=uniprot, pdb=pdb))
+        pred_fn_out = os.path.join(pred_path_out, gt_format.format(uniprot=uniprot, pdb=pdb))
 
         # Make sure the uniprot directory exists
         utils.uniprot_dirs(gt_path_out, pred_path_out, uniprot=uniprot)
@@ -791,3 +791,113 @@ def compare_af(df, path1, path2, path3,
 
     final_rmsds = utils.get_region_averages(rmsd_info)
     return final_rmsds
+
+def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out, 
+              gt_format='{uniprot}/{pdb}.cif', pred_format='{filename}'):
+
+    trim_values = []
+    for i in range(len(df)):
+        
+        # Define parameters for selecting files
+        uniprot = df.loc[i, 'uniprot']
+        pdb = df.loc[i, 'pdb']
+        cluster = df.loc[i, 'cluster']
+        filename = df.loc[i, 'filename']
+        chain = df.loc[i, 'chain']
+
+# Generate file paths using format templates
+        gt_fn = os.path.join(gt_path_in, gt_format.format(uniprot=uniprot, pdb=pdb))
+        gt_fn_out = os.path.join(gt_path_out, f'{uniprot}/{cluster}_{pdb}.cif')
+        pred_fn = os.path.join(pred_path_in, pred_format.format(filename=filename))
+        pred_fn_out = os.path.join(pred_path_out, f'{uniprot}/{cluster}_{pdb}.cif')
+
+        # Make sure the uniprot directory exists
+        utils.uniprot_dirs(gt_path_out, pred_path_out, uniprot=uniprot)
+
+        # Check if trimmed files already exist to save time
+        if os.path.isfile(gt_fn_out) and os.path.isfile(pred_fn_out):
+            print(f'{pdb} already trimmed')
+
+            cfr = CifFileReader()
+
+            # Get gt dataframe
+            gt_obj = cfr.read(gt_fn, output='cif_dictionary', ignore=['_struct_conn'])
+            gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
+            gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
+
+            # Get gt_trim dataframe
+            gt_trim_obj = cfr.read(gt_fn_out, output='cif_dictionary')
+            gt_trim = pd.DataFrame.from_dict(gt_trim_obj[pdb.upper()]['_atom_site'])
+
+            # Get pred dataframe
+            pred_obj = cfr.read(pred_fn, output='cif_dictionary')
+            pred = pd.DataFrame.from_dict(pred_obj[f'AF-{uniprot}-F1']['_atom_site'])
+
+            # Get pred_trim dataframe
+            pred_trim_obj = cfr.read(pred_fn_out, output='cif_dictionary')
+            pred_trim = pd.DataFrame.from_dict(pred_trim_obj[f'AF-{uniprot}-F1']['_atom_site'])
+
+        else:
+            
+            print(f'Trying {pdb} for {uniprot}...')
+
+            # Initiate reader object
+            cfr = CifFileReader()
+
+            # Create dataframe with gt atoms in desired chain
+            gt_obj = cfr.read(gt_fn, output='cif_dictionary', ignore=['_struct_conn'])
+            gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
+            gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
+
+            # Create dataframe with pred atoms (pred file only contains our desired chain)
+            pred_obj = cfr.read(pred_fn, output='cif_dictionary')
+            pred = pd.DataFrame.from_dict(pred_obj[f'AF-{uniprot}-F1']['_atom_site'])
+
+            print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
+
+            # Find common atoms between files
+            print(f'Comparing files for {pdb}...')
+            atoms_pred, extra_atoms_gt = utils.compare_atoms(gt, pred)
+
+            # Trim the files
+            gt_trim, pred_trim = utils.drop_unshared_atoms(gt, pred, atoms_pred, extra_atoms_gt)
+
+            print('Length of gt_trim: ' + str(len(gt_trim)) + ', Length of pred_trim: ' + str(len(pred_trim)))
+            
+            # Convert back to mmCIF-like dictionary
+            gt_dict = gt_trim.to_dict(orient='list')
+            gt_obj[pdb.upper()]['_atom_site'] = gt_dict
+
+            pred_dict = pred_trim.to_dict(orient='list')
+            pred_obj[f'AF-{uniprot}-F1']['_atom_site'] = pred_dict
+
+            # Check whether the trimmed files are the same length
+            assertion = utils.assert_equal_size(gt_trim, pred_trim)
+
+            if assertion == True:
+                print('Trimmed files are the same length')
+            else:
+                break
+            
+            if len(gt_trim) == 0:
+                print(f'No common atoms found for {pdb}. Removing from dataframe...')
+            else:
+                print(f'Success! Creating trimmed files for {pdb}...')
+                # Write trimmed files
+                CifFileWriter(gt_fn_out).write(gt_obj)
+                CifFileWriter(pred_fn_out).write(pred_obj)
+
+
+        # Compile some information on the trimmed files
+        trim_values_dict = utils.trim_stats(uniprot, pdb, gt, gt_trim, pred, pred_trim)
+        trim_values.append(trim_values_dict)
+    
+    # Add trim values to dataframe
+    df_trim = pd.DataFrame(trim_values)
+    df = df.merge(df_trim, on = ['pdb', 'uniprot'])
+
+    # Drop any files that have no common atoms.
+    df = df[df['gt_trim_len'] != 0].reset_index(drop=True)
+
+
+    return trim_values, df

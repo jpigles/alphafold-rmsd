@@ -14,7 +14,8 @@ rule two_states: # Find proteins with two states. We then also read which colabf
         'data/classified_files_3.tsv',
         'data/input/Colabfold_cif/autoinhibited/'
     output:
-        'data/two_states.tsv'
+        'data/af_cf.tsv',
+        'data/cf_pdb.tsv'
     script:
         'scripts/two_states.py'
 
@@ -26,11 +27,6 @@ rule two_states: # Find proteins with two states. We then also read which colabf
 #         'data/md_colabfold.tsv'
 #     script:
 #         'scripts/md_colabfold.py'
-
-# rule 10_vs_pdb: # Compare Colabfold structures made from 10-sequence clusters with PDB structures.
-#     input:
-#         ''
-
 
 rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
     input:
@@ -59,3 +55,7 @@ rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
 #         'data/md_compared.tsv'
 #     script:
 #         'scripts/compare_afs.py'
+
+# rule cf_vs_pdb: # Compare Colabfold structures made from 10-sequence clusters with PDB structures.
+#     input:
+#         ''
