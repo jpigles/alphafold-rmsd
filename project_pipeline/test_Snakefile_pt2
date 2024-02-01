@@ -1,0 +1,77 @@
+
+# This pipeline is for comparing the publicly available AlphaFold2 structures deposited by Google DeepMind with
+# structures generated using ColabFold based on multiple sequence alignment clusters created using AF_Cluster.
+
+# We start with our classified file in which we have annotated the conformation and state of each protein.
+
+
+rule all:
+    input:
+        'data/af_compared.tsv'
+
+rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
+    input:
+        'data/classified_files_3.tsv',
+        'data/input/Colabfold_cif/autoinhibited/',
+        'data/proteins_by_pdb.tsv' # Chain information
+    output:
+        'test_data/test_af_cf.tsv',
+        'test_data/test_cf_pdb.tsv'
+    script:
+        'test_scripts/test_two_states.py'
+
+# rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
+#     input:
+#         'data/multi_domain_regions.tsv',
+#         'data/input/Colabfold_cif/multi_domain/'
+#     output:
+#         'data/md_colabfold.tsv'
+#     script:
+#         'scripts/md_colabfold.py'
+
+# rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
+#     input:
+#         'data/two_states.tsv',
+#         'data/input/Alphafold_cif/',
+#         'data/input/Colabfold_cif/autoinhibited/',
+#         'data/output/colabfold_complexes/'
+#     params:
+#         prefix='F-', #Alphafold file name structures have variable prefixes and suffixes surrounding the UniProt ID.
+#         suffix='-F1-model_v3.cif'
+#     output:
+#         'data/af_compared.tsv'
+#     script:
+#         'scripts/compare_afs.py'
+
+# rule md_compare: # Compare our multi-domain Colabfold structures against the Deepmind public structures.
+#     input:
+#         'data/md_colabfold.tsv',
+#         'data/input/Alphafold_multi_domain/',
+#         'data/input/Colabfold_cif/multi_domain/',
+#         'data/output/colabfold_complexes/'
+#     params:
+#         prefix='AF-',
+#         suffix='-F1-model_v4.cif' # File name structure
+#     output:
+#         'data/md_compared.tsv'
+#     script:
+#         'scripts/compare_afs.py'
+
+# rule cf_trim: # Trim the ColabFold structures to the same length as the experimental structures.
+#     input:
+#         'test_data/test_cf_pdb.tsv',
+
+
+
+rule cf_vs_pdb: # Compare Colabfold structures made from 10-sequence clusters with PDB structures.
+    input:
+        'data/input/RCSB_cif/', # Ground truth input path
+        'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
+        'data/input/Colabfold_cif/autoinhibited/', # ColabFold input path
+        'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
+        'test_data/test_cf_pdb' # PDB ids and Colabfold file names
+    output:
+        'test_data/test_cf_pdb_trim_values.tsv'
+        
+    script:
+        'test_scripts/test_trim_cf_pdb.py'
