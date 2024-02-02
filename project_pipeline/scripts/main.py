@@ -1,5 +1,6 @@
 from pdbecif.mmcif_io import CifFileReader, CifFileWriter
 from Bio.PDB.PDBList import PDBList
+from biopandas.pdb import PandasPdb
 import pandas as pd
 import numpy as np
 from os.path import join
@@ -940,9 +941,7 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
                     '2.2_aligned': 0,
                     '2.2_comp': 0,
                     '2.3_aligned': 0,
-                    '2.3_comp': 0,
-                    'percent_region_1': percent_reg1,
-                    'percent_region_2': percent_reg2}
+                    '2.3_comp': 0}
             
             rmsd_info.append(rmsd_dic)
 
@@ -976,9 +975,7 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
                         '2.2_aligned': 0,
                         '2.2_comp': 0,
                         '2.3_aligned': 0,
-                        '2.3_comp': 0,
-                        'percent_region_1': percent_reg1,
-                        'percent_region_2': percent_reg2}
+                        '2.3_comp': 0}
 
             for key in rmsds:
                 if key in rmsd_dic:
