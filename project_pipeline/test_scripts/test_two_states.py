@@ -73,8 +73,8 @@ cols = merged.columns.tolist()
 cols = cols[:2] + cols[-2:-1] + cols[2:-2] + cols[-1:]
 merged = merged[cols]
 
-# Select the first 50 for a test set
-merged = merged.head(50)
+# Select the first 250 for a test set
+merged = merged.head(250)
 
 # Save file
 merged.to_csv(snakemake.output[1], sep='\t', index=False)
