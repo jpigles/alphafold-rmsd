@@ -7,7 +7,7 @@
 
 rule all:
     input:
-        'data/af_compared.tsv'
+        'test_data/test_cf_pdb_compared.tsv'
 
 rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
     input:
@@ -69,9 +69,22 @@ rule cf_vs_pdb: # Compare Colabfold structures made from 10-sequence clusters wi
         'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
         'data/input/Colabfold_cif/autoinhibited/', # ColabFold input path
         'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
-        'test_data/test_cf_pdb' # PDB ids and Colabfold file names
+        'test_data/test_cf_pdb.tsv' # PDB ids and Colabfold file names
     output:
         'test_data/test_cf_pdb_trim_values.tsv'
         
     script:
         'test_scripts/test_trim_cf_pdb.py'
+
+rule calculate_rmsds:
+    input:
+        'data/input/RCSB_cif_trim/',
+        'data/input/Colabfold_pdb_trim/',
+        'data/output/cf_pdb_complexes/',
+        'test_data/test_cf_pdb_trim_values.tsv'
+
+    output:
+        'test_data/test_cf_pdb_compared.tsv'
+
+    script:
+        'scripts/calculate_rmsd.py'

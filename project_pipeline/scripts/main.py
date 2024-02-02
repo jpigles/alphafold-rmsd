@@ -901,3 +901,91 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
 
 
     return trim_values, df
+
+def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
+    '''
+    Calculate rmsds for each protein in df, aligning first on the autoinhibitory region (region 1) and then on the active region (region 2). Regions with
+    multiple subregions are aligned and calculated separately, and then the average is taken.
+    '''
+    rmsd_info = []
+    for i in range(len(df)):
+        # Define pdb, filenames, region1, region2
+        pdb = df.loc[i, 'pdb']
+        uniprot = df.loc[i, 'uniprot']
+        cluster = df.loc[i, 'cluster']
+        fn = f'{uniprot}/{cluster}_{pdb}.cif'
+        region_1_dict = utils.create_region_dict(df.loc[i, 'region_1'], 1)
+        region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
+        gt_fn = join(gt_path, fn)
+        pred_fn = join(pred_path, fn)
+        complex_fn = join(complex_path, f'{pdb}_{uniprot}_{cluster}.pdb')
+
+        if not os.path.isfile(gt_fn) and not os.path.isfile(pred_fn):
+            print('No files found for ' + pdb + '. Skipping...')
+
+            rmsd_dic = {'uniprot': uniprot,
+                    'pdb': pdb,
+                    'cluster': cluster,
+                    'complex_rmsd': 0,
+                    '1.0_aligned': 0,
+                    '1.0_comp': 0,
+                    '1.1_aligned': 0,
+                    '1.1_comp': 0,
+                    '1.2_aligned': 0,
+                    '1.2_comp': 0,
+                    '2.0_aligned': 0,
+                    '2.0_comp': 0,
+                    '2.1_aligned': 0,
+                    '2.1_comp': 0,
+                    '2.2_aligned': 0,
+                    '2.2_comp': 0,
+                    '2.3_aligned': 0,
+                    '2.3_comp': 0,
+                    'percent_region_1': percent_reg1,
+                    'percent_region_2': percent_reg2}
+            
+            rmsd_info.append(rmsd_dic)
+
+        else:
+            print(f'Trying {pdb}...')
+            #Convert files from cif to pdb
+            utils.cif_to_pdb(gt_fn, pred_fn)
+            #Change source file names to .pdb
+            pdb_fn = f'{uniprot}/{pdb}.pdb'
+            gt_fn = join(gt_path, pdb_fn)
+            pred_fn = join(pred_path, pdb_fn)
+
+
+            rmsds = calculate_rmsd(gt_fn, pred_fn, complex_fn, region_1_dict, region_2_dict)
+
+            # Define default values for columns to retain number of columns per row
+            rmsd_dic = {'uniprot': uniprot,
+                        'pdb': pdb,
+                        'cluster': cluster,
+                        'complex_rmsd': 0,
+                        '1.0_aligned': 0,
+                        '1.0_comp': 0,
+                        '1.1_aligned': 0,
+                        '1.1_comp': 0,
+                        '1.2_aligned': 0,
+                        '1.2_comp': 0,
+                        '2.0_aligned': 0,
+                        '2.0_comp': 0,
+                        '2.1_aligned': 0,
+                        '2.1_comp': 0,
+                        '2.2_aligned': 0,
+                        '2.2_comp': 0,
+                        '2.3_aligned': 0,
+                        '2.3_comp': 0,
+                        'percent_region_1': percent_reg1,
+                        'percent_region_2': percent_reg2}
+
+            for key in rmsds:
+                if key in rmsd_dic:
+                    rmsd_dic[key] = rmsds[key]
+
+            print('Success! Writing rmsds')
+            rmsd_info.append(rmsd_dic)
+
+    final_rmsds = utils.get_region_averages(rmsd_info)
+    return final_rmsds
