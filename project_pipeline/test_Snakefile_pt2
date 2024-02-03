@@ -7,27 +7,28 @@
 
 rule all:
     input:
-        'test_data/test_cf_pdb_compared.tsv'
+        'sample_data/test_cf_pdb_compared.tsv',
+        'data/md_compared.tsv'
 
 rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
     input:
         'data/classified_files_3.tsv',
         'data/input/Colabfold_cif/autoinhibited/',
-        'data/proteins_by_pdb.tsv' # Chain information
+        'data/proteins_pdb_both_60.tsv' # Chain information
     output:
-        'test_data/test_af_cf.tsv',
-        'test_data/test_cf_pdb.tsv'
+        'sample_data/test_af_cf.tsv',
+        'sample_data/test_cf_pdb.tsv'
     script:
         'test_scripts/test_two_states.py'
 
-# rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
-#     input:
-#         'data/multi_domain_regions.tsv',
-#         'data/input/Colabfold_cif/multi_domain/'
-#     output:
-#         'data/md_colabfold.tsv'
-#     script:
-#         'scripts/md_colabfold.py'
+rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
+    input:
+        'data/multi_domain_regions.tsv',
+        'data/input/Colabfold_cif/multi_domain/'
+    output:
+        'data/md_colabfold.tsv'
+    script:
+        'scripts/md_colabfold.py'
 
 # rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
 #     input:
@@ -43,48 +44,40 @@ rule two_states: # Find proteins with two states. We then also read which colabf
 #     script:
 #         'scripts/compare_afs.py'
 
-# rule md_compare: # Compare our multi-domain Colabfold structures against the Deepmind public structures.
-#     input:
-#         'data/md_colabfold.tsv',
-#         'data/input/Alphafold_multi_domain/',
-#         'data/input/Colabfold_cif/multi_domain/',
-#         'data/output/colabfold_complexes/'
-#     params:
-#         prefix='AF-',
-#         suffix='-F1-model_v4.cif' # File name structure
-#     output:
-#         'data/md_compared.tsv'
-#     script:
-#         'scripts/compare_afs.py'
-
-# rule cf_trim: # Trim the ColabFold structures to the same length as the experimental structures.
-#     input:
-#         'test_data/test_cf_pdb.tsv',
+rule md_compare: # Compare our multi-domain Colabfold structures against the Deepmind public structures.
+    input:
+        'data/md_colabfold.tsv',
+        'data/input/Alphafold_multi_domain/',
+        'data/input/Colabfold_cif/multi_domain/',
+        'data/output/colabfold_complexes/'
+    params:
+        prefix='AF-',
+        suffix='-F1-model_v4.cif' # File name structure
+    output:
+        'data/md_compared.tsv'
+    script:
+        'scripts/compare_afs.py'
 
 
-
-rule cf_vs_pdb: # Compare Colabfold structures made from 10-sequence clusters with PDB structures.
+rule cf_pdb_trim: # Trim the ColabFold structures to the same length as the experimental structures.
     input:
         'data/input/RCSB_cif/', # Ground truth input path
         'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
         'data/input/Colabfold_cif/autoinhibited/', # ColabFold input path
         'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
-        'test_data/test_cf_pdb.tsv' # PDB ids and Colabfold file names
+        'sample_data/test_cf_pdb.tsv' # PDB ids and Colabfold file names
     output:
-        'test_data/test_cf_pdb_trim_values.tsv'
-        
+        'sample_data/test_cf_pdb_trim_values.tsv'
     script:
         'test_scripts/test_trim_cf_pdb.py'
 
-rule calculate_rmsds:
+rule compare_cf_pdb: # Compare Colabfold structures with PDB structures.
     input:
         'data/input/RCSB_cif_trim/',
         'data/input/Colabfold_pdb_trim/',
         'data/output/cf_pdb_complexes/',
-        'test_data/test_cf_pdb_trim_values.tsv'
-
+        'sample_data/test_cf_pdb_trim_values.tsv'
     output:
-        'test_data/test_cf_pdb_compared.tsv'
-
+        'sample_data/test_cf_pdb_compared.tsv'
     script:
-        'scripts/calculate_rmsd.py'
+        'scripts/calculate_cf_pdb_rmsd.py'

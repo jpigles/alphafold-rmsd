@@ -953,14 +953,10 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
         cluster = df.loc[i, 'cluster']
-        state = df.loc[i, 'state']
-        conformation = df.loc[i, 'conformation']
-        region_1 = df.loc[i, 'region_1']
-        region_2 = df.loc[i, 'region_2']
         cif_fn = f'{uniprot}/{cluster}_{pdb}.cif'
         pdb_fn = f'{uniprot}/{cluster}_{pdb}.pdb'
-        region_1_dict = utils.create_region_dict(region_1, 1)
-        region_2_dict = utils.create_region_dict(region_2, 2)
+        region_1_dict = utils.create_region_dict(df.loc[i, 'region_1'], 1)
+        region_2_dict = utils.create_region_dict(df.loc[i, 'region_2'], 2)
         gt_fn = join(gt_path, cif_fn)
         pred_fn = join(pred_path, pdb_fn)
         complex_fn = join(complex_path, f'{pdb}_{uniprot}_{cluster}.pdb')
@@ -971,8 +967,6 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
             rmsd_dic = {'uniprot': uniprot,
                     'pdb': pdb,
                     'cluster': cluster,
-                    'region_1': region_1,
-                    'region_2': region_2,
                     'complex_rmsd': 0,
                     '1.0_aligned': 0,
                     '1.0_comp': 0,
@@ -987,9 +981,7 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
                     '2.2_aligned': 0,
                     '2.2_comp': 0,
                     '2.3_aligned': 0,
-                    '2.3_comp': 0,
-                    'state': state,
-                    'conformation': conformation}
+                    '2.3_comp': 0}
             
             rmsd_info.append(rmsd_dic)
 
@@ -1007,8 +999,6 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
             rmsd_dic = {'uniprot': uniprot,
                         'pdb': pdb,
                         'cluster': cluster,
-                        'region_1': region_1,
-                        'region_2': region_2,
                         'complex_rmsd': 0,
                         '1.0_aligned': 0,
                         '1.0_comp': 0,
@@ -1023,9 +1013,7 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
                         '2.2_aligned': 0,
                         '2.2_comp': 0,
                         '2.3_aligned': 0,
-                        '2.3_comp': 0,
-                        'state': state,
-                        'conformation': conformation}
+                        '2.3_comp': 0}
 
             for key in rmsds:
                 if key in rmsd_dic:

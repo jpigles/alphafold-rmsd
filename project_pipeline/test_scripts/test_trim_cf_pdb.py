@@ -1,5 +1,5 @@
 import pandas as pd
-import project_pipeline.test_scripts.test_main as test_main
+import main
 import utils
 import csv
 
@@ -18,7 +18,7 @@ df_prot = pd.read_csv(snakemake.input[4], sep = '\t')
 utils.make_dirs(gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
 
 # Trim the files to make sure any mutated residues are not accidentally counted in our domain completeness
-trim_values, df_prot = test_main.trim_cf_pdb(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path,
+trim_values, df_prot = main.trim_cf_pdb(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path,
                                         gt_format = '{uniprot}/{pdb}.cif', pred_format = '{filename}')
 
 # Save the trim values
