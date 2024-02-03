@@ -48,6 +48,8 @@ for f in files:
     file_dict['filename'].append(f)
     file_dict['region_1'].append(region1)
     file_dict['region_2'].append(region2)
+    file_dict['conformation'].append(conformation)
+    file_dict['state'].append(state)
 
 # Create a new dataframe from the dictionary
 cf_af_df = pd.DataFrame(file_dict)
