@@ -1,51 +1,251 @@
-uniprot	cluster	pdb	region_1	region_2	conformation	state	organism	date
-O08967	002	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	006	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	U10-000	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	U100-000	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	000	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	008	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	004	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	007	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	003	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	001	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	009	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	005	2r09	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-17']
-O08967	002	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	006	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	U10-000	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	U100-000	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	000	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	008	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	004	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	007	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	003	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	001	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	009	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	005	2r0d	251-265,383-395	77-206	Closed	Autoinhibited	Mus musculus	['2007-08-18']
-O08967	002	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	006	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	U10-000	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	U100-000	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	000	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	008	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	004	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	007	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	003	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	001	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	009	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	005	6bbp	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	002	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	006	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	U10-000	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	U100-000	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	000	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	008	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	004	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	007	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	003	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	001	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	009	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O08967	005	6bbq	251-265,383-395	77-206	Open	Active	Mus musculus	['2017-10-19']
-O60741	U100-000	5u6p	401-479	480-604	Closed	Active	Homo sapiens	['2016-12-08']
-O60741	U10-000	5u6p	401-479	480-604	Closed	Active	Homo sapiens	['2016-12-08']
+uniprot	cluster	pdb	filename	region_1	region_2	conformation	state	chain
+P53042	U10-000	4ja7	P53042_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	U10-000	4ja9	P53042_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	003	4ja7	P53042_003_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	003	4ja9	P53042_003_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	000	4ja7	P53042_000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	000	4ja9	P53042_000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	004	4ja7	P53042_004_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	004	4ja9	P53042_004_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	001	4ja7	P53042_001_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	001	4ja9	P53042_001_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	002	4ja7	P53042_002_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	002	4ja9	P53042_002_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	005	4ja7	P53042_005_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	005	4ja9	P53042_005_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	008	4ja7	P53042_008_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	008	4ja9	P53042_008_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	U100-000	4ja7	P53042_U100-000_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	U100-000	4ja9	P53042_U100-000_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	009	4ja7	P53042_009_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	009	4ja9	P53042_009_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	006	4ja7	P53042_006_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	006	4ja9	P53042_006_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	007	4ja7	P53042_007_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P53042	007	4ja9	P53042_007_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	28-129	495-499,200-494	Closed	Active	A
+P29350	009	2b3o	P29350_009_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	009	3ps5	P29350_009_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	005	2b3o	P29350_005_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	005	3ps5	P29350_005_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	U10-000	2b3o	P29350_U10-000_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	U10-000	3ps5	P29350_U10-000_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	U100-000	2b3o	P29350_U100-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	U100-000	3ps5	P29350_U100-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	002	2b3o	P29350_002_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	002	3ps5	P29350_002_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	001	2b3o	P29350_001_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	001	3ps5	P29350_001_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	007	2b3o	P29350_007_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	007	3ps5	P29350_007_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	004	2b3o	P29350_004_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	004	3ps5	P29350_004_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	006	2b3o	P29350_006_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	006	3ps5	P29350_006_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	008	2b3o	P29350_008_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	008	3ps5	P29350_008_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	010	2b3o	P29350_010_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	010	3ps5	P29350_010_unrelaxed_rank_005_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	003	2b3o	P29350_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	003	3ps5	P29350_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	000	2b3o	P29350_000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P29350	000	3ps5	P29350_000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	1-105	244-515	Open	Active	A
+P62826	008	1k5d	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	1k5g	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	1rrp	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	2mmc	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	2mmg	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	2n1b	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3ch5	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3gj0	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3gj3	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3gj4	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3gj5	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3gj6	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3gj7	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	3gj8	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4gmx	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4gpt	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hat	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hau	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hav	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4haw	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hay	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4haz	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hb0	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hb2	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hb3	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4hb4	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	4wvf	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5ciq	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5cit	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5ciw	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5cj2	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5clq	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5dh9	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5dha	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5dhf	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5di9	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5dif	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5jlj	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwh	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwi	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwj	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwo	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwp	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwq	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwr	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uws	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwt	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uwu	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5uww	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5yro	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5yst	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5ysu	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5ytb	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	5zpu	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6a38	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6a3a	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6a3b	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6a3c	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6a3e	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6cit	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6kft	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6lq9	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6m60	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6m6x	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2m	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2o	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2p	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2r	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2s	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2u	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2v	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2w	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2x	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6x2y	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6xjp	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6xjr	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6xjs	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6xjt	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	6xju	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7cnd	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7dbg	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7l5e	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnp	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnq	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnr	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mns	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnt	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnu	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnv	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnw	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnx	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mny	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mnz	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mo0	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mo1	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mo2	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mo3	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mo4	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7mo5	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	008	7ypz	P62826_008_unrelaxed_rank_004_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	1k5d	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	1k5g	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	1rrp	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	2mmc	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	2mmg	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	2n1b	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3ch5	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3gj0	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3gj3	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3gj4	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3gj5	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3gj6	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3gj7	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	3gj8	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4gmx	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4gpt	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hat	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hau	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hav	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4haw	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hay	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4haz	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hb0	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hb2	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hb3	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4hb4	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	4wvf	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5ciq	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5cit	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5ciw	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5cj2	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5clq	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5dh9	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5dha	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5dhf	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5di9	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5dif	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5jlj	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwh	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwi	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwj	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwo	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwp	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwq	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwr	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uws	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwt	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uwu	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5uww	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5yro	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5yst	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5ysu	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5ytb	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	5zpu	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6a38	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6a3a	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6a3b	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6a3c	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6a3e	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6cit	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6kft	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6lq9	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6m60	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6m6x	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2m	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2o	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2p	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2r	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2s	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2u	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2v	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2w	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2x	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6x2y	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6xjp	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6xjr	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6xjs	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6xjt	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	6xju	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7cnd	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7dbg	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7l5e	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnp	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnq	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnr	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mns	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnt	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnu	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnv	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnw	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnx	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mny	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mnz	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mo0	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mo1	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mo2	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mo3	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mo4	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7mo5	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
+P62826	003	7ypz	P62826_003_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb	179-216	10-169	Open		A
