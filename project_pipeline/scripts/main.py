@@ -934,7 +934,7 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
     
     # Add trim values to dataframe
     df_trim = pd.DataFrame(trim_values)
-    df = df.merge(df_trim, on = ['pdb', 'uniprot'])
+    df = df.merge(df_trim, on = ['pdb', 'uniprot']).drop_duplicates().reset_index(drop=True)
 
     # Drop any files that have no common atoms.
     df = df[df['gt_trim_len'] != 0].reset_index(drop=True)

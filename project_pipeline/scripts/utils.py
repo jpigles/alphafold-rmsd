@@ -501,7 +501,7 @@ def trim_stats(uniprot, pdb, gt, gt_trim, pred, pred_trim):
                         'pred_len': len(pred),
                         'pred_trim_len': len(pred_trim),
                         'gt_perc': gt_perc,
-                        'trim_perc': pred_perc}
+                        'trim_perc': round(pred_perc, 3)}
     
     return trim_values_dict
     
