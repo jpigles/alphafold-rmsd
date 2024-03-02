@@ -631,14 +631,22 @@ def mean_plddt(df, path):
 
     print('Calculating mean plDDT...')
 
+    # TODO we need to make our region conversion more flexible to
+    # handle varying numbers of regions
+
     # Turn region ranges into list of residues
     df = utils.region_search_range(df).reset_index(drop=True)
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
+
+        # TODO has to hanedle different file names
         fn = join(path, f'F-{uniprot}-F1-model_v3.cif')
-        region_1_res = df.loc[i, 'region_1 search']
-        region_2_res = df.loc[i, 'region_2 search']
+        region_1 = df.loc[i, 'region_1']
+        region_2 = df.loc[i, 'region_2']
+
+        # TODO has to take different file formats but return
+        # the same data structure
 
         # Read in AF cif file
         cfr = CifFileReader()
@@ -711,6 +719,9 @@ def mean_pae_single_domain(df, path):
     '''
     Calculate the average predicted aligned error for an entire single-domain protein
     '''
+
+    # TODO: this doesn't actually do that, it calculates the mean pae for all the given annotated regions but those aren't the entire protein.
+    # We need to get the length of the protein sequence and use that.
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
