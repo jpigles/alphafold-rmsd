@@ -722,8 +722,12 @@ def uniprot_dirs(*path_list, uniprot):
             print('Directory already exists.')
 
 def cif_to_pdb(*fns):
+    # Change a file from .cif to .pdb and return the new file name
 
     for f in fns:
     #Change gt file to pdb
         cmd.load(f, 'protein')
         cmd.save(f.replace('.cif', '.pdb'), selection='protein')
+        cmd.delete('all')
+
+    return f.replace('.cif', '.pdb')

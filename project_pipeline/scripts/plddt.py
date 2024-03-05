@@ -6,25 +6,25 @@ import pandas as pd
 import main
 
 # Define file paths
-df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
-af_auto = snakemake.input[1]
-af_multi = snakemake.input[2]
-af_single = snakemake.input[3]
-cf_auto = snakemake.input[4]
-cf_multi = snakemake.input[5]
+df_af_auto = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
+df_af_multi = pd.read_csv(snakemake.input[1], sep='\t').astype('object')
+df_cf_auto = pd.read_csv(snakemake.input[2], sep='\t').astype('object')
+df_cf_multi = pd.read_csv(snakemake.input[3], sep='\t').astype('object')
+af_auto = snakemake.input[4]
+af_multi = snakemake.input[5]
+cf_auto = snakemake.input[6]
+cf_multi = snakemake.input[7]
 
 # Calculate average pLDDT scores for AlphaFold2 models
-af_auto_scores = main.calculate_pLDDT(df, af_auto)
-af_multi_scores = main.calculate_pLDDT(df, af_multi)
-af_single_scores = main.calculate_pLDDT(df, af_single)
+af_auto_scores = main.mean_plddt(df_af_auto, af_auto)
+af_multi_scores = main.mean_plddt(df_af_multi, af_multi)
 
 # Calculate average pLDDT scores for ColabFold models
-cf_auto_scores = main.calculate_pLDDT(df, cf_auto)
-cf_multi_scores = main.calculate_pLDDT(df, cf_multi)
+cf_auto_scores = main.mean_plddt(df_cf_auto, cf_auto)
+cf_multi_scores = main.mean_plddt(df_cf_multi, cf_multi)
 
 # Write results to file
 af_auto_scores.to_csv(snakemake.output[0], sep='\t', index=False)
 af_multi_scores.to_csv(snakemake.output[1], sep='\t', index=False)
-af_single_scores.to_csv(snakemake.output[2], sep='\t', index=False)
-cf_auto_scores.to_csv(snakemake.output[3], sep='\t', index=False)
-cf_multi_scores.to_csv(snakemake.output[4], sep='\t', index=False)
+cf_auto_scores.to_csv(snakemake.output[2], sep='\t', index=False)
+cf_multi_scores.to_csv(snakemake.output[3], sep='\t', index=False)

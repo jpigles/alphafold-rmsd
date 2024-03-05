@@ -631,44 +631,35 @@ def mean_plddt(df, path):
 
     print('Calculating mean plDDT...')
 
-    # TODO we need to make our region conversion more flexible to
-    # handle varying numbers of regions
-
     # Turn region ranges into list of residues
     df = utils.region_search_range(df).reset_index(drop=True)
 
     for i in range(len(df)):
-        uniprot = df.loc[i, 'uniprot']
+        fn = df.loc[i, 'filename']
+        fp = join(path, fn)
 
-        # TODO has to hanedle different file names
-        fn = join(path, f'F-{uniprot}-F1-model_v3.cif')
-        region_1 = df.loc[i, 'region_1']
-        region_2 = df.loc[i, 'region_2']
+        region_1_range = df.loc[i, 'region_1 search']
+        region_2_range = df.loc[i, 'region_2 search']
 
-        # TODO has to take different file formats but return
-        # the same data structure
+        if '.cif' in fn:
+            fp = utils.cif_to_pdb(fp)
 
-        # Read in AF cif file
-        cfr = CifFileReader()
-        cif_obj = cfr.read(fn, output='cif_wrapper')
-        cif_data = list(cif_obj.values())[0]
+        # Convert to pandas pdb object
+        ppdb = PandasPdb().read_pdb(fp)
+        protein = ppdb.df['ATOM']
 
-        # Create lists of residue plDDT values.
-        region_1_plddt = []
-        region_2_plddt = []
+        # Get average pLDDT for entire protein
+        complex_mean = protein['b_factor'].mean()
 
-        for n in range(len(cif_data._ma_qa_metric_local.label_seq_id)):
-            if int(cif_data._ma_qa_metric_local.label_seq_id[n]) in region_1_res:
-                region_1_plddt.append(float(cif_data._ma_qa_metric_local.metric_value[n]))
-            elif int(cif_data._ma_qa_metric_local.label_seq_id[n]) in region_2_res:
-                region_2_plddt.append(float(cif_data._ma_qa_metric_local.metric_value[n]))
+        # Get average pLDDT for regions 1 and 2
+        r1 = protein[protein['residue_number'].isin(region_1_range)]
+        r2 = protein[protein['residue_number'].isin(region_2_range)]
+        r1_mean = r1['b_factor'].mean()
+        r2_mean = r2['b_factor'].mean()
 
-        # Calculate mean plDDT for each region
-        region_1_mean = np.mean(region_1_plddt)
-        region_2_mean = np.mean(region_2_plddt)
-
-        df.loc[i, 'region_1_mean_plddt'] = round(region_1_mean, 3)
-        df.loc[i, 'region_2_mean_plddt'] = round(region_2_mean, 3)
+        df.loc[i, 'complex_mean_plddt'] = round(complex_mean, 3)
+        df.loc[i, 'r1_mean_plddt'] = round(r1_mean, 3)
+        df.loc[i, 'r2_mean_plddt'] = round(r2_mean, 3)
 
     df.drop(columns=['region_1 search', 'region_2 search'], inplace=True)
     return df
