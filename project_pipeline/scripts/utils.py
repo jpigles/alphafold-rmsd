@@ -731,3 +731,31 @@ def cif_to_pdb(*fns):
         cmd.delete('all')
 
     return f.replace('.cif', '.pdb')
+
+def add_pred_filename(df, fp):
+    # Specifically for AlphaFold files because CF have clusters
+
+    # Get list of filenames from the file path
+    filenames = os.listdir(fp)
+
+    # Keep only the .cif files
+    filenames = [f for f in filenames if f.endswith('.cif')]
+
+    # Determine which files are in the dataframe
+    df_proteins = df['uniprot'].tolist()
+
+    # Create a dictionary of the filenames and the corresponding uniprot
+    filename_dict = {}
+    for filename in filenames:
+        uniprot = filename.split('-')[1]
+        filename_dict[uniprot] = filename
+
+    # Create a list of the filenames in the order of the dataframe
+    AF_filenames = []
+    for protein in df_proteins:
+        AF_filenames.append(filename_dict[protein])
+
+    # Add the list to the dataframe
+    df['pred_fn'] = AF_filenames
+
+    return df

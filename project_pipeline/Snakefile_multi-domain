@@ -1,6 +1,6 @@
 rule all:
     input:
-        'data/figures/rmsd_plot.png'
+        'data/figures/md_rmsd_plot.png'
 
 # Determine pdb ids and chains.
 rule pdb_ids:
@@ -32,8 +32,6 @@ rule trim_cifs:
         'data/input/Alphafold_multi_domain/', # Alphafold input path
         'data/input/Alphafold_multi_domain_trim/', # Trimmed Alphafold output path
         'data/input/RCSB_cif_best/', # Best ground truth input path
-        '{uniprot}/{pdb}.cif', # Ground truth input file
-        'AF-{uniprot}-F1-model_v4.cif', # Alphafold input file
         'data/md_pdb_offset_fixed.tsv' # PDB ids and chains
         
     output:
@@ -65,7 +63,7 @@ rule interface_analysis:
     script:
         'scripts/interface_analysis.py'
 
-# Will probably have to reconfigure this.
+# Calculate various RMSDs (complex, domain 1 to domain 1, domain 1 to domain 2, domain 2 to domain 2)
 rule calculate_rmsds:
     input:
         'data/input/RCSB_cif_best/',

@@ -27,6 +27,10 @@ main.download_pdb_files(df_prot, cif_path)
 # Make a new dataframe with each PDB ID in a separate row and chains in their own column
 df_pdb = utils.expand_on_pdbs(df_prot)
 
+# Add filenames
+df_pdb = utils.add_pred_filename(df_pdb, cif_path)
+df_pdb['gt_fn'] = df_pdb['pdb_id'] + '.cif'
+
 # Save the dataframe as a tsv file
 df_pdb.to_csv(snakemake.output[0], sep = '\t', index = False)
 

@@ -69,9 +69,10 @@ def correct_offset(df, path):
         uniprot = df.loc[i, 'uniprot']
         pdb_id = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
+        fn = df.loc[i, 'gt_fn']
   
         # Designate file locations. Note that we will be overwriting the CIF files
-        cif_path = join(path, uniprot, pdb_id + '.cif')
+        cif_path = join(path, uniprot, fn)
 
         # Get the offset
         offset = utils.get_offset(cif_path, pdb_id, uniprot)
@@ -110,7 +111,7 @@ def find_domain_completeness(df, path):
         uniprot = df.loc[i, 'uniprot']
         path_uniprot = join(path, uniprot)
         chain = df.loc[i, 'chain']
-        fn = f'{pdb}.cif'
+        fn = df.loc[i, 'gt_fn']
 
         print('Analyzing %s' % pdb)
 
@@ -144,7 +145,9 @@ def find_domain_completeness(df, path):
                                 'pdb residues in region_1': count_res_reg_1,
                                 'pdb residues in region_2': count_res_reg_2,
                                 'percent_region_1': percent_reg_1,
-                                'percent_region_2': percent_reg_2}, index=[0])
+                                'percent_region_2': percent_reg_2,
+                                'gt_fn': fn,
+                                'pred_fn': df.loc[i, 'pred_fn']}, index=[0])
         
         df_domain = pd.concat([df_domain, df_domain_part_1], axis=0, ignore_index=True)
 
@@ -182,13 +185,14 @@ def copy_best_files(df, inpath, outpath):
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
+        gt_fn = df.loc[i, 'gt_fn']
 
         # Make sure the output directory exists
         utils.uniprot_dirs(outpath, uniprot=uniprot)
 
         # Copy the files
-        source_pdbs_path = join(inpath, uniprot, pdb + '.cif')
-        best_pdbs_path = join(outpath, uniprot, pdb + '.cif')
+        source_pdbs_path = join(inpath, uniprot, gt_fn)
+        best_pdbs_path = join(outpath, uniprot, gt_fn)
         shutil.copyfile(source_pdbs_path, best_pdbs_path)
 
     return f'Successfully copied files into {outpath}'
@@ -216,7 +220,7 @@ def get_interfaces(df, path):
         path_uniprot = join(path, uniprot)
         chain = df.loc[i, 'chain']
         model = df.loc[i, 'model']
-        fn = f'{pdb}.cif'
+        fn = df.loc[i, 'gt_fn']
 
         # Get structure and dictionary objects
         structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path_uniprot)
@@ -258,7 +262,7 @@ def get_af_interfaces(df, path):
         # There is only ever one model and chain for the AlphaFold files
         chain = 'A'
         model = 0
-        fn = f'F-{uniprot}-F1-model_v3.cif'
+        fn = df.loc[i, 'pred_fn']
         print(f'Getting interface for AF {uniprot}')
 
         # Get structure and dictionary objects
@@ -340,8 +344,7 @@ def largest_interface(df):
 
     return df_prot_keep_result
 
-def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out, 
-              gt_format='{uniprot}/{pdb}.cif', pred_format='F-{uniprot}-F1-model_v3.cif'):
+def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
     trim_values = []
     for i in range(len(df)):
@@ -350,37 +353,39 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
+        gt_fn = df.loc[i, 'gt_fn']
+        pred_fn = df.loc[i, 'pred_fn']
 
 # Generate file paths using format templates
-        gt_fn = os.path.join(gt_path_in, gt_format.format(uniprot=uniprot, pdb=pdb))
-        gt_fn_out = os.path.join(gt_path_out, gt_format.format(uniprot=uniprot, pdb=pdb))
-        pred_fn = os.path.join(pred_path_in, pred_format.format(uniprot=uniprot, pdb=pdb))
-        pred_fn_out = os.path.join(pred_path_out, gt_format.format(uniprot=uniprot, pdb=pdb))
+        gt_fp = os.path.join(gt_path_in, gt_fn)
+        gt_fp_out = os.path.join(gt_path_out, gt_fn)
+        pred_fp = os.path.join(pred_path_in, pred_fn)
+        pred_fp_out = os.path.join(pred_path_out, pred_fn)
 
         # Make sure the uniprot directory exists
         utils.uniprot_dirs(gt_path_out, pred_path_out, uniprot=uniprot)
 
         # Check if trimmed files already exist to save time
-        if os.path.isfile(gt_fn_out) and os.path.isfile(pred_fn_out):
+        if os.path.isfile(gt_fp_out) and os.path.isfile(pred_fp_out):
             print(f'{pdb} already trimmed')
 
             cfr = CifFileReader()
 
             # Get gt dataframe
-            gt_obj = cfr.read(gt_fn, output='cif_dictionary', ignore=['_struct_conn'])
+            gt_obj = cfr.read(gt_fp, output='cif_dictionary', ignore=['_struct_conn'])
             gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
             gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
 
             # Get gt_trim dataframe
-            gt_trim_obj = cfr.read(gt_fn_out, output='cif_dictionary')
+            gt_trim_obj = cfr.read(gt_fp_out, output='cif_dictionary')
             gt_trim = pd.DataFrame.from_dict(gt_trim_obj[pdb.upper()]['_atom_site'])
 
             # Get pred dataframe
-            pred_obj = cfr.read(pred_fn, output='cif_dictionary')
+            pred_obj = cfr.read(pred_fp, output='cif_dictionary')
             pred = pd.DataFrame.from_dict(pred_obj[f'AF-{uniprot}-F1']['_atom_site'])
 
             # Get pred_trim dataframe
-            pred_trim_obj = cfr.read(pred_fn_out, output='cif_dictionary')
+            pred_trim_obj = cfr.read(pred_fp_out, output='cif_dictionary')
             pred_trim = pd.DataFrame.from_dict(pred_trim_obj[f'AF-{uniprot}-F1']['_atom_site'])
 
         else:
@@ -391,12 +396,12 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
             cfr = CifFileReader()
 
             # Create dataframe with gt atoms in desired chain
-            gt_obj = cfr.read(gt_fn, output='cif_dictionary', ignore=['_struct_conn'])
+            gt_obj = cfr.read(gt_fp, output='cif_dictionary', ignore=['_struct_conn'])
             gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
             gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
 
             # Create dataframe with pred atoms (pred file only contains our desired chain)
-            pred_obj = cfr.read(pred_fn, output='cif_dictionary')
+            pred_obj = cfr.read(pred_fp, output='cif_dictionary')
             pred = pd.DataFrame.from_dict(pred_obj[f'AF-{uniprot}-F1']['_atom_site'])
 
             print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
@@ -430,8 +435,8 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
             else:
                 print(f'Success! Creating trimmed files for {pdb}...')
                 # Write trimmed files
-                CifFileWriter(gt_fn_out).write(gt_obj)
-                CifFileWriter(pred_fn_out).write(pred_obj)
+                CifFileWriter(gt_fp_out).write(gt_obj)
+                CifFileWriter(pred_fp_out).write(pred_obj)
 
 
         # Compile some information on the trimmed files
@@ -526,7 +531,9 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                     '2.3_aligned': 0,
                     '2.3_comp': 0,
                     'percent_region_1': percent_reg1,
-                    'percent_region_2': percent_reg2}
+                    'percent_region_2': percent_reg2,
+                    'gt_fn': df.loc[i, 'gt_fn'],
+                    'pred_fn': df.loc[i, 'pred_fn']}
             
             rmsd_info.append(rmsd_dic)
 
@@ -561,7 +568,9 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                         '2.3_aligned': 0,
                         '2.3_comp': 0,
                         'percent_region_1': percent_reg1,
-                        'percent_region_2': percent_reg2}
+                        'percent_region_2': percent_reg2,
+                        'gt_fn': df.loc[i, 'gt_fn'],
+                        'pred_fn': df.loc[i, 'pred_fn']}
 
             for key in rmsds:
                 if key in rmsd_dic:
