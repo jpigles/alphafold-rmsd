@@ -94,7 +94,7 @@ def correct_offset(df, path):
 def find_domain_completeness(df, path):
 
     # Create a new empty dataframe to store the results
-    df_domain = pd.DataFrame(columns = ['gene_name', 'uniprot', 'protein_length', 'region_1', 'region_2', 'region_1_len', 
+    df_domain = pd.DataFrame(columns = ['uniprot', 'region_1', 'region_2', 'region_1_len', 
                                  'region_2_len', 'pdb', 'pdb_length', 'resolution',
                                  'model', 'chain', 'label_offset', 'pdb residues in region_1', 'pdb residues in region_2', 
                                  'percent_region_1', 'percent_region_2'])
@@ -129,9 +129,7 @@ def find_domain_completeness(df, path):
         # Calculate the percentage of residues in each region
         percent_reg_1, percent_reg_2 = utils.calculate_domain_completeness(region_1_res, region_2_res, count_res_reg_1, count_res_reg_2)
 
-        df_domain_part_1 = pd.DataFrame({'gene_name': df.loc[i, 'gene_name'],
-                                'uniprot': df.loc[i, 'uniprot'],
-                                'protein_length': df.loc[i, 'protein_length'],
+        df_domain_part_1 = pd.DataFrame({'uniprot': df.loc[i, 'uniprot'],
                                 'region_1': df.loc[i, 'region_1'],
                                 'region_2': df.loc[i, 'region_2'],
                                 'region_1_len': len(region_1_res),
@@ -354,13 +352,14 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         pdb = df.loc[i, 'pdb']
         chain = df.loc[i, 'chain']
         gt_fn = df.loc[i, 'gt_fn']
+        uniprot_path = f'{uniprot}/'
         pred_fn = df.loc[i, 'pred_fn']
 
 # Generate file paths using format templates
-        gt_fp = os.path.join(gt_path_in, gt_fn)
-        gt_fp_out = os.path.join(gt_path_out, gt_fn)
+        gt_fp = os.path.join(gt_path_in, uniprot_path, gt_fn)
+        gt_fp_out = os.path.join(gt_path_out, uniprot_path, gt_fn)
         pred_fp = os.path.join(pred_path_in, pred_fn)
-        pred_fp_out = os.path.join(pred_path_out, pred_fn)
+        pred_fp_out = os.path.join(pred_path_out, uniprot_path, gt_fn)
 
         # Make sure the uniprot directory exists
         utils.uniprot_dirs(gt_path_out, pred_path_out, uniprot=uniprot)

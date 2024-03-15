@@ -18,11 +18,11 @@ df_prot = pd.read_csv(snakemake.input[3], sep = '\t')
 df_prot = df_prot.drop(['gt_len', 'gt_trim_len', 'pred_len', 'pred_trim_len', 'gt_perc', 'trim_perc'], axis = 1)
 
 # Create a dataframe for each uniprot accession number for finding the interacting residues in the Alphafold files
-df_af = df_prot[['uniprot', 'region_1', 'region_2']].drop_duplicates(keep='first').reset_index(drop = True)
+df_af = df_prot[['uniprot', 'region_1', 'region_2', 'pred_fn']].drop_duplicates(keep='first').reset_index(drop = True)
 
 # Get the percentage of residues in the inhibitory and active domains
 '''
-Columns of data frame after this step: ['gene_name', 'uniprot', 'protein_length', 'region_1', 'region_2', 'region_1_len', 
+Columns of data frame after this step: ['uniprot', 'region_1', 'region_2', 'region_1_len', 
                                  'region_2_len', 'pdb', 'pdb_length', 'resolution',
                                  'model', 'chain', 'auth_offset', 'pdb residues in region_1', 'pdb residues in region_2', 
                                  'percent_region_1', 'percent_region_2']

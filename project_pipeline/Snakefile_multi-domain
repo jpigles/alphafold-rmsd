@@ -6,7 +6,8 @@ rule all:
 rule pdb_ids:
     input:
         'data/input/RCSB_cif/',
-        'data/multi_domain_regions.tsv'
+        'data/input/Alphafold_multi_domain/',
+        'data/multi_domain.tsv'
         
     output:
         'data/md_pdbs.tsv'
@@ -46,7 +47,7 @@ rule trim_cifs:
 rule interface_analysis:
     input:
         'data/input/RCSB_cif_trim/',
-        'data/input/Alphafold_cif/',
+        'data/input/Alphafold_multi_domain/',
         'data/input/RCSB_cif_best/',
         'data/md_trim_values.tsv'
 
@@ -64,10 +65,10 @@ rule interface_analysis:
         'scripts/interface_analysis.py'
 
 # Calculate various RMSDs (complex, domain 1 to domain 1, domain 1 to domain 2, domain 2 to domain 2)
-rule calculate_rmsds:
+rule calculate_rmsds: # TODO add complex filename to final file
     input:
         'data/input/RCSB_cif_best/',
-        'data/input/Alphafold_cif_trim/',
+        'data/input/Alphafold_multi_domain_trim/',
         'data/output/complexes/',
         'data/md_proteins_pdb_both_60.tsv'
 
