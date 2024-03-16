@@ -5,10 +5,28 @@
 # We start with our classified file in which we have annotated the conformation and state of each protein.
 
 
-rule all:
+# rule all:
+#     input:
+#         'data/cf_pdb_compared.tsv',
+#         'data/md_compared.tsv'
+
+rule plddt: # Calculate average pLDDT for whole structure and each domain for AlphaFold2 and ColabFold structures.
     input:
-        'data/cf_pdb_compared.tsv',
-        'data/md_compared.tsv'
+        'data/af_autoinhibited_best.tsv',
+        'data/af_multi_domain.tsv',
+        'data/cf_autoinhibited.tsv',
+        'data/cf_multi_domain.tsv',
+        'data/input/Alphafold_cif/',
+        'data/input/Alphafold_multi_domain/',
+        'data/input/Colabfold_cif/autoinhibited/',
+        'data/input/Colabfold_cif/multi_domain/'
+    output:
+        'data/af_autoinhibited_pLDDT.tsv',
+        'data/af_multi_domain_pLDDT.tsv',
+        'data/cf_autoinhibited_pLDDT.tsv',
+        'data/cf_multi_domain_pLDDT.tsv'
+    script:
+        'scripts/plddt.py'
 
 rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
     input:
