@@ -65,31 +65,6 @@ rule interface_analysis:
     script:
         'scripts/interface_analysis.py'
 
-
-# May not need this. If needed, could bundle into above step.
-# rule convert_RCSB_cif_to_pdb:
-#     input:
-#         'data/proteins_pdb_best.tsv',
-#         'data/input/RCSB_cif_best/'
-
-#     output:
-#         directory('data/input/RCSB/pdbs/')
-
-#     script:
-#         "scripts/rcsb_cif_to_pdb.py"
-
-# Again, same as above.
-# rule convert_AF_cif_to_pdb:
-#     input:
-#         'data/proteins_pdb_best.tsv',
-#         'data/input/Alphafold_cif/'
-
-#     output:
-#         directory('data/output/RCSB_af_full/poly_g_6/')
-
-#     script:
-#         'scripts/af_cif_to_pdb.py'
-
 # Will probably have to reconfigure this.
 rule calculate_rmsds:
     input:

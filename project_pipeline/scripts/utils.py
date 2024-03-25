@@ -759,3 +759,32 @@ def add_pred_filename(df, fp):
     df['pred_fn'] = AF_filenames
 
     return df
+
+def select_regions(gt_fn, pred_fn, region_1, region_2):
+    cmd.delete('all')
+    cmd.load(gt_fn, 'native')
+    cmd.load(pred_fn, 'pred')
+
+    # Region format is currently "123-456,789-1111". We need to
+    # change it to "123-456+789-1111" to select both regions at once.
+    region_1 = region_1.replace(',', '+')
+    region_2 = region_2.replace(',', '+')
+
+    # Make a dict to iterate through
+    regions = {'1': region_1, '2': region_2}
+
+    for obj in ['native','pred']:
+        for key in regions:
+            resi_range = regions[key]
+            cmd.select(f'{obj}_{key}', f'{obj} and resi {resi_range}')
+
+def alter_chain(gt_fn, pred_fn, chain="B"):
+    # With the native and pred regions selected, change
+    # the chain to B for native_1 and pred_1.
+
+    cmd.alter('native_1', f'chain="B"')
+    cmd.alter('pred_1', f'chain="B"')
+
+    # Save the files
+    cmd.save(gt_fn, 'native')
+    cmd.save(pred_fn, 'pred')

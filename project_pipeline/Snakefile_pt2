@@ -4,11 +4,11 @@
 
 # We start with our classified file in which we have annotated the conformation and state of each protein.
 
-
-# rule all:
-#     input:
-#         'data/cf_pdb_compared.tsv',
-#         'data/md_compared.tsv'
+rule all:
+    input:
+        'data/output/dockq/'
+        'data/cf_pdb_compared.tsv',
+        'data/md_compared.tsv'
 
 rule plddt: # Calculate average pLDDT for whole structure and each domain for AlphaFold2 and ColabFold structures.
     input:
@@ -99,3 +99,14 @@ rule compare_cf_pdb: # Compare Colabfold structures with PDB structures.
         'data/cf_pdb_compared.tsv'
     script:
         'scripts/calculate_cf_pdb_rmsd.py'
+
+rule split_chains: # Prepare files for DockQ
+    input:
+        'data/classified_files_3.tsv',
+        'data/input/Alphafold_cif_trim/',
+        'data/input/RCSB_cif_trim/'
+    output:
+        directory('data/input/dockq/model/'),
+        directory('data/input/dockq/native/')
+    script:
+        'scripts/split_chains.py'

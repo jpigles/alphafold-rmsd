@@ -1046,3 +1046,31 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
 
     final_rmsds = utils.get_region_averages(rmsd_info)
     return final_rmsds
+
+def split_chains(df, gt_in_path, pred_in_path, gt_out_path, pred_out_path):
+    '''
+    Split the main chain of each file into two chains. The original chain
+    is chain A, so we just re-assign the autoinhibitory region to chain B.
+    Save as new files.
+    '''
+
+    for i in range(len(df)):
+        uniprot = df.loc[i, 'uniprot']
+        pdb = df.loc[i, 'pdb']
+        region_1 = df.loc[i, 'region_1']
+        region_2 = df.loc[i, 'region_2']
+        in_fn = f'{uniprot}/{pdb}.cif'
+        out_fn = f'{uniprot}_{pdb}.pdb'
+        chain = "B" # chain we would like to change region autoinihibitory region to
+
+        # Define filepaths
+        gt_fn_in = os.path.join(gt_in_path, in_fn)
+        pred_fn_in = os.path.join(pred_in_path, in_fn)
+        gt_fn_out = os.path.join(gt_out_path, out_fn)
+        pred_fn_out = os.path.join(pred_out_path, out_fn)
+
+        # Select the regions
+        utils.select_regions(gt_fn_in, pred_fn_in, region_1, region_2)
+
+        # Split the chains
+        utils.alter_chain(gt_fn_out, pred_fn_out, chain)
