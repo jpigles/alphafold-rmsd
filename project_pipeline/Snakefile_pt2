@@ -4,109 +4,119 @@
 
 # We start with our classified file in which we have annotated the conformation and state of each protein.
 
-rule all:
-    input:
-        'data/output/dockq/'
-        'data/cf_pdb_compared.tsv',
-        'data/md_compared.tsv'
-
-rule plddt: # Calculate average pLDDT for whole structure and each domain for AlphaFold2 and ColabFold structures.
-    input:
-        'data/af_autoinhibited_best.tsv',
-        'data/af_multi_domain.tsv',
-        'data/cf_autoinhibited.tsv',
-        'data/cf_multi_domain.tsv',
-        'data/input/Alphafold_cif/',
-        'data/input/Alphafold_multi_domain/',
-        'data/input/Colabfold_cif/autoinhibited/',
-        'data/input/Colabfold_cif/multi_domain/'
-    output:
-        'data/af_autoinhibited_pLDDT.tsv',
-        'data/af_multi_domain_pLDDT.tsv',
-        'data/cf_autoinhibited_pLDDT.tsv',
-        'data/cf_multi_domain_pLDDT.tsv'
-    script:
-        'scripts/plddt.py'
-
-rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
-    input:
-        'data/classified_files_3.tsv',
-        'data/input/Colabfold_cif/autoinhibited/',
-        'data/proteins_pdb_both_60.tsv' # Chain information
-    output:
-        'data/af_cf.tsv',
-        'data/cf_pdb.tsv'
-    script:
-        'scripts/two_states.py'
-
-rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
-    input:
-        'data/multi_domain_regions.tsv',
-        'data/input/Colabfold_cif/multi_domain/'
-    output:
-        'data/md_colabfold.tsv'
-    script:
-        'scripts/md_colabfold.py'
-
-# rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
+# rule all:
 #     input:
-#         'data/two_states.tsv',
+#         directory('data/input/multi_domain/dockq/model/'),
+#         directory('data/input/multi_domain/dockq/native/')
+
+# rule plddt: # Calculate average pLDDT for whole structure and each domain for AlphaFold2 and ColabFold structures.
+#     input:
+#         'data/af_autoinhibited_best.tsv',
+#         'data/af_multi_domain.tsv',
+#         'data/cf_autoinhibited.tsv',
+#         'data/cf_multi_domain.tsv',
 #         'data/input/Alphafold_cif/',
+#         'data/input/Alphafold_multi_domain/',
 #         'data/input/Colabfold_cif/autoinhibited/',
+#         'data/input/Colabfold_cif/multi_domain/'
+#     output:
+#         'data/af_autoinhibited_pLDDT.tsv',
+#         'data/af_multi_domain_pLDDT.tsv',
+#         'data/cf_autoinhibited_pLDDT.tsv',
+#         'data/cf_multi_domain_pLDDT.tsv'
+#     script:
+#         'scripts/plddt.py'
+
+# rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
+#     input:
+#         'data/classified_files_3.tsv',
+#         'data/input/Colabfold_cif/autoinhibited/',
+#         'data/proteins_pdb_both_60.tsv' # Chain information
+#     output:
+#         'data/af_cf.tsv',
+#         'data/cf_pdb.tsv'
+#     script:
+#         'scripts/two_states.py'
+
+# rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
+#     input:
+#         'data/multi_domain_regions.tsv',
+#         'data/input/Colabfold_cif/multi_domain/'
+#     output:
+#         'data/md_colabfold.tsv'
+#     script:
+#         'scripts/md_colabfold.py'
+
+# # rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
+# #     input:
+# #         'data/two_states.tsv',
+# #         'data/input/Alphafold_cif/',
+# #         'data/input/Colabfold_cif/autoinhibited/',
+# #         'data/output/colabfold_complexes/'
+# #     params:
+# #         prefix='F-', #Alphafold file name structures have variable prefixes and suffixes surrounding the UniProt ID.
+# #         suffix='-F1-model_v3.cif'
+# #     output:
+# #         'data/af_compared.tsv'
+# #     script:
+# #         'scripts/compare_afs.py'
+
+# rule md_compare: # Compare our multi-domain Colabfold structures against the Deepmind public structures.
+#     input:
+#         'data/md_colabfold.tsv',
+#         'data/input/Alphafold_multi_domain/',
+#         'data/input/Colabfold_cif/multi_domain/',
 #         'data/output/colabfold_complexes/'
 #     params:
-#         prefix='F-', #Alphafold file name structures have variable prefixes and suffixes surrounding the UniProt ID.
-#         suffix='-F1-model_v3.cif'
+#         prefix='AF-',
+#         suffix='-F1-model_v4.cif' # File name structure
 #     output:
-#         'data/af_compared.tsv'
+#         'data/md_compared.tsv'
 #     script:
 #         'scripts/compare_afs.py'
 
-rule md_compare: # Compare our multi-domain Colabfold structures against the Deepmind public structures.
-    input:
-        'data/md_colabfold.tsv',
-        'data/input/Alphafold_multi_domain/',
-        'data/input/Colabfold_cif/multi_domain/',
-        'data/output/colabfold_complexes/'
-    params:
-        prefix='AF-',
-        suffix='-F1-model_v4.cif' # File name structure
-    output:
-        'data/md_compared.tsv'
-    script:
-        'scripts/compare_afs.py'
 
+# rule cf_pdb_trim: # Trim the ColabFold structures to the same length as the experimental structures.
+#     input:
+#         'data/input/RCSB_cif/', # Ground truth input path
+#         'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
+#         'data/input/Colabfold_cif/autoinhibited/', # ColabFold input path
+#         'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
+#         'data/cf_pdb.tsv' # PDB ids and Colabfold file names
+#     output:
+#         'data/cf_pdb_trim_values.tsv'
+#     script:
+#         'scripts/trim_cf_pdb.py'
 
-rule cf_pdb_trim: # Trim the ColabFold structures to the same length as the experimental structures.
-    input:
-        'data/input/RCSB_cif/', # Ground truth input path
-        'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
-        'data/input/Colabfold_cif/autoinhibited/', # ColabFold input path
-        'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
-        'data/cf_pdb.tsv' # PDB ids and Colabfold file names
-    output:
-        'data/cf_pdb_trim_values.tsv'
-    script:
-        'scripts/trim_cf_pdb.py'
+# rule compare_cf_pdb: # Compare Colabfold structures with PDB structures.
+#     input:
+#         'data/input/RCSB_cif_trim/',
+#         'data/input/Colabfold_pdb_trim/',
+#         'data/output/cf_pdb_complexes/',
+#         'data/cf_pdb_trim_values.tsv'
+#     output:
+#         'data/cf_pdb_compared.tsv'
+#     script:
+#         'scripts/calculate_cf_pdb_rmsd.py'
 
-rule compare_cf_pdb: # Compare Colabfold structures with PDB structures.
-    input:
-        'data/input/RCSB_cif_trim/',
-        'data/input/Colabfold_pdb_trim/',
-        'data/output/cf_pdb_complexes/',
-        'data/cf_pdb_trim_values.tsv'
-    output:
-        'data/cf_pdb_compared.tsv'
-    script:
-        'scripts/calculate_cf_pdb_rmsd.py'
+# rule au_split_chains: # Prepare autoinhibitory files for DockQ
+#     input:
+#         'data/classified_files_3.tsv',
+#         'data/input/Alphafold_cif_trim/',
+#         'data/input/RCSB_cif_trim/'
+#     output:
+#         directory('data/input/dockq/autoinhibitory/model/'),
+#         directory('data/input/dockq/autoinhibitory/native/')
+#     script:
+#         'scripts/split_chains.py'
 
-rule split_chains: # Prepare files for DockQ
+rule md_split_chains: # Prepare multi-domain files for DockQ
     input:
-        'data/classified_files_3.tsv',
-        'data/input/Alphafold_cif_trim/',
+        'data/md_proteins_pdb_both_60.tsv',
+        'data/input/Alphafold_multi_domain_trim/',
         'data/input/RCSB_cif_trim/'
     output:
-        directory('data/input/dockq/model/'),
-        directory('data/input/dockq/native/')
+        directory('data/input/dockq/multi_domain/model/'),
+        directory('data/input/dockq/multi_domain/native/')
     script:
         'scripts/split_chains.py'
