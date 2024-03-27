@@ -782,8 +782,13 @@ def alter_chain(gt_fn, pred_fn, chain="B"):
     # With the native and pred regions selected, change
     # the chain to B for native_1 and pred_1.
 
-    cmd.alter('native_1', f'chain="B"')
-    cmd.alter('pred_1', f'chain="B"')
+    # First set the native and pred chains to A
+    cmd.alter('native', 'chain="A"')
+    cmd.alter('pred', 'chain="A"')
+
+    # Then change the selected regions to chain B
+    cmd.alter('native_1', 'chain="B"')
+    cmd.alter('pred_1', 'chain="B"')
 
     # Save the files
     cmd.save(gt_fn, 'native')
