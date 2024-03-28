@@ -99,16 +99,16 @@
 #     script:
 #         'scripts/calculate_cf_pdb_rmsd.py'
 
-# rule au_split_chains: # Prepare autoinhibitory files for DockQ
-#     input:
-#         'data/classified_files_3.tsv',
-#         'data/input/Alphafold_cif_trim/',
-#         'data/input/RCSB_cif_trim/'
-#     output:
-#         directory('data/input/dockq/autoinhibitory/model/'),
-#         directory('data/input/dockq/autoinhibitory/native/')
-#     script:
-#         'scripts/split_chains.py'
+rule au_split_chains: # Prepare autoinhibitory files for DockQ
+    input:
+        'data/classified_files_3.tsv',
+        'data/input/Alphafold_cif_trim/',
+        'data/input/RCSB_cif_trim/'
+    output:
+        directory('data/input/dockq/autoinhibitory/model/'),
+        directory('data/input/dockq/autoinhibitory/native/')
+    script:
+        'scripts/split_chains.py'
 
 rule md_split_chains: # Prepare multi-domain files for DockQ
     input:
