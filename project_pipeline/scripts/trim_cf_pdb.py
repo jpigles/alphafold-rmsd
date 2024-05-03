@@ -19,7 +19,7 @@ utils.make_dirs(gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
 
 # Trim the files to make sure any mutated residues are not accidentally counted in our domain completeness
 trim_values, df_prot = main.trim_cf_pdb(df_prot, gt_in_path, gt_trim_path, pred_in_path, pred_trim_path,
-                                        gt_format = '{uniprot}/{pdb}.cif', pred_format = '{filename}')
+                                        gt_format = '{uniprot}/{pdb}.cif', pred_format = '{uniprot}/{filename}')
 
 # Save the trim values
 df_prot.to_csv(snakemake.output[0], sep = '\t', index = False)

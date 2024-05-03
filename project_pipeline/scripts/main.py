@@ -643,8 +643,9 @@ def mean_plddt(df, path):
     df = utils.region_search_range(df).reset_index(drop=True)
 
     for i in range(len(df)):
+        uniprot = df.loc[i, 'uniprot']
         fn = df.loc[i, 'filename']
-        fp = join(path, fn)
+        fp = join(path, uniprot, fn)
 
         region_1_range = df.loc[i, 'region_1 search']
         region_2_range = df.loc[i, 'region_2 search']
@@ -765,8 +766,9 @@ def compare_af(df, path1, path2, path3,
         # Define filepaths
         complex_fn = fn2.split('_')[0] + '_' + fn2.split('_')[1] + '_comp.pdb' # eg P62826_U10-000_scores_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb -> P62826_U10-100_comp.pdb
         fp1 = os.path.join(path1, fn1)
-        fp2 = os.path.join(path2, fn2)
-        complex_out = os.path.join(path3, complex_fn)
+        # Colabfold files are segmented by uniprot
+        fp2 = os.path.join(path2, uniprot, fn2)
+        complex_out = os.path.join(path3, uniprot, complex_fn)
 
         # Create the region dicts
         region1_dict = utils.create_region_dict(region1, 1)
@@ -804,7 +806,7 @@ def compare_af(df, path1, path2, path3,
     return final_rmsds
 
 def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out, 
-              gt_format='{uniprot}/{pdb}.cif', pred_format='{filename}'):
+              gt_format='{uniprot}/{pdb}.cif', pred_format='{uniprot}/{filename}'):
 
     trim_values = []
     for i in range(len(df)):
@@ -819,7 +821,7 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
 # Generate file paths using format templates
         gt_fn = os.path.join(gt_path_in, gt_format.format(uniprot=uniprot, pdb=pdb))
         gt_fn_out = os.path.join(gt_path_out, f'{uniprot}/{cluster}_{pdb}.cif')
-        pred_fn = os.path.join(pred_path_in, pred_format.format(filename=filename))
+        pred_fn = os.path.join(pred_path_in, pred_format.format(uniprot=uniprot, filename=filename))
         pred_fn_out = os.path.join(pred_path_out, f'{uniprot}/{cluster}_{pdb}.pdb')
 
         # Make sure the uniprot directory exists
