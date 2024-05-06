@@ -33,26 +33,27 @@ dirs = os.listdir(path)
 file_dict = {'uniprot': [], 'cluster': [], 'filename': [], 'region_1': [], 'region_2': [], 'conformation': [], 'state': []}
 # Create a new dataframe with the file names
 for d in dirs:
-    files = os.listdir(path + d)
+    files = os.listdir(os.path.join(path, d))
     for f in files:
-        uniprot = f.split('_')[0] # filename example: P28482_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb
-        cluster = f.split('_')[1]
-        model = f.split('_')[9]
-        if model != '1': # We want only the first model
-            continue
-        region1 = af.loc[af['uniprot'] == uniprot, 'region_1'].iloc[0]
-        region2 = af.loc[af['uniprot'] == uniprot, 'region_2'].iloc[0]
-        conformation = af.loc[af['uniprot'] == uniprot, 'conformation'].iloc[0]
-        state = af.loc[af['uniprot'] == uniprot, 'state'].iloc[0]
+        if 'pdb' in f:
+            uniprot = f.split('_')[0] # filename example: P28482_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb
+            cluster = f.split('_')[1]
+            model = f.split('_')[9]
+            if model != '1': # We want only the first model
+                continue
+            region1 = af.loc[af['uniprot'] == uniprot, 'region_1'].iloc[0]
+            region2 = af.loc[af['uniprot'] == uniprot, 'region_2'].iloc[0]
+            conformation = af.loc[af['uniprot'] == uniprot, 'conformation'].iloc[0]
+            state = af.loc[af['uniprot'] == uniprot, 'state'].iloc[0]
 
-        # Populate the dictionary
-        file_dict['uniprot'].append(uniprot)
-        file_dict['cluster'].append(cluster)
-        file_dict['filename'].append(f)
-        file_dict['region_1'].append(region1)
-        file_dict['region_2'].append(region2)
-        file_dict['conformation'].append(conformation)
-        file_dict['state'].append(state)
+            # Populate the dictionary
+            file_dict['uniprot'].append(uniprot)
+            file_dict['cluster'].append(cluster)
+            file_dict['filename'].append(f)
+            file_dict['region_1'].append(region1)
+            file_dict['region_2'].append(region2)
+            file_dict['conformation'].append(conformation)
+            file_dict['state'].append(state)
 
 # Create a new dataframe from the dictionary
 cf_af_df = pd.DataFrame(file_dict)
