@@ -16,12 +16,12 @@ cf_auto = snakemake.input[6]
 cf_multi = snakemake.input[7]
 
 # Calculate average pLDDT scores for AlphaFold2 models
-af_auto_scores = main.mean_plddt(df_af_auto, af_auto)
-af_multi_scores = main.mean_plddt(df_af_multi, af_multi)
+af_auto_scores = main.mean_plddt(df_af_auto, af_auto, unip_sub=False)
+af_multi_scores = main.mean_plddt(df_af_multi, af_multi, unip_sub=False)
 
 # Calculate average pLDDT scores for ColabFold models
-cf_auto_scores = main.mean_plddt(df_cf_auto, cf_auto)
-cf_multi_scores = main.mean_plddt(df_cf_multi, cf_multi)
+cf_auto_scores = main.mean_plddt(df_cf_auto, cf_auto, unip_sub=True)
+cf_multi_scores = main.mean_plddt(df_cf_multi, cf_multi, unip_sub=True)
 
 # Write results to file
 af_auto_scores.to_csv(snakemake.output[0], sep='\t', index=False)

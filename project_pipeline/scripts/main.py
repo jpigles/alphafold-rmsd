@@ -634,7 +634,7 @@ def calculate_disorder(df):
     df.drop(columns=['region_1 search'], inplace=True)
     return df
 
-def mean_plddt(df, path):
+def mean_plddt(df, path, unip_sub=False):
     # Calculate mean plDDT for our region of interest.
 
     print('Calculating mean plDDT...')
@@ -643,9 +643,12 @@ def mean_plddt(df, path):
     df = utils.region_search_range(df).reset_index(drop=True)
 
     for i in range(len(df)):
-        uniprot = df.loc[i, 'uniprot']
         fn = df.loc[i, 'filename']
-        fp = join(path, uniprot, fn)
+        if unip_sub:
+            uniprot = df.loc[i, 'uniprot']
+            fp = join(path, uniprot, fn)
+        else:
+            fp = join(path, fn)
 
         region_1_range = df.loc[i, 'region_1 search']
         region_2_range = df.loc[i, 'region_2 search']
