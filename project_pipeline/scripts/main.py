@@ -766,6 +766,9 @@ def compare_af(df, path1, path2, path3,
         fn1 = af_format.format(uniprot=uniprot)
         fn2 = row['filename'] # The model from the AlphaFold2 pipeline
 
+        # Make the output UniProt directory
+        utils.uniprot_dirs(path3, uniprot=uniprot)
+
         # Define filepaths
         complex_fn = fn2.split('_')[0] + '_' + fn2.split('_')[1] + '_comp.pdb' # eg P62826_U10-000_scores_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb -> P62826_U10-100_comp.pdb
         fp1 = os.path.join(path1, fn1)

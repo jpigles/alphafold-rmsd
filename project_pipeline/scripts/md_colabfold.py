@@ -15,7 +15,7 @@ dirs = os.listdir(path)
 file_dict = {'uniprot': [], 'filename': [], 'region_1': [], 'region_2': []}
 # Create a new dataframe with the file names
 for d in dirs:
-    files = os.listdir(path + d)
+    files = os.listdir(os.path.join(path, d))
     for f in files:
         uniprot = f.split('_')[0] # filename example: P28482_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb
         model = f.split('_')[9]
