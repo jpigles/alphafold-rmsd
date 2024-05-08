@@ -33,16 +33,16 @@ rule plddt: # Calculate average pLDDT for whole structure and each domain for Al
         'scripts/plddt.py'
         
 # TODO: This should really be its own separate script because you need to run this, then single_filename.ipynb, before you can run rule plddt.
-# rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
-#     input:
-#         'data/classified_files_3.tsv',
-#         'data/input/Colabfold_cif/autoinhibited/',
-#         'data/proteins_pdb_both_60.tsv' # Chain information
-#     output:
-#         'data/af_cf.tsv',
-#         'data/cf_pdb.tsv'
-#     script:
-#         'scripts/two_states.py'
+rule two_states: # Find proteins with two states. We then also read which colabfold files we have and save them to a file.
+    input:
+        'data/classified_files_3.tsv',
+        'data/input/Colabfold_cif/autoinhibited/',
+        'data/proteins_pdb_both_60.tsv' # Chain information
+    output:
+        'data/af_cf.tsv',
+        'data/cf_pdb.tsv'
+    script:
+        'scripts/two_states.py'
 
 rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain proteins.
     input:
@@ -55,7 +55,7 @@ rule md_colabfold: # Make a list of the Colabfold files we have for multi-domain
 
 rule af_compare: # Compare AlphaFold2 structures with ColabFold structures
     input:
-        'data/two_states.tsv',
+        'data/af_cf.tsv',
         'data/input/Alphafold_cif/',
         'data/input/Colabfold_cif/autoinhibited/',
         'data/output/colabfold_complexes/'

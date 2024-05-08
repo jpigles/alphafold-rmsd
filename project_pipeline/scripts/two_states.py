@@ -35,7 +35,7 @@ file_dict = {'uniprot': [], 'cluster': [], 'filename': [], 'region_1': [], 'regi
 for d in dirs:
     files = os.listdir(os.path.join(path, d))
     for f in files:
-        if 'pdb' in f:
+        if '.pdb' in f:
             uniprot = f.split('_')[0] # filename example: P28482_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb
             cluster = f.split('_')[1]
             model = f.split('_')[9]
