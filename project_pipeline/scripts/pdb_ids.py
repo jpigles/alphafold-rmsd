@@ -29,7 +29,7 @@ main.download_pdb_files(df_prot, pdb_path)
 df_pdb = utils.expand_on_pdbs(df_prot)
 
 # Add filenames
-df_pdb = utils.add_pred_filename(df_pdb, af_path)
+df_pdb = utils.add_AF_filename(df_pdb, af_path)
 df_pdb['gt_fn'] = df_pdb['pdb'] + '.cif'
 
 # Save the dataframe as a tsv file

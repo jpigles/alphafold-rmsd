@@ -634,7 +634,7 @@ def calculate_disorder(df):
     df.drop(columns=['region_1 search'], inplace=True)
     return df
 
-def mean_plddt(df, path, unip_sub=False):
+def mean_plddt(df, path, unip_sub=False, fnt='af_filename'):
     # Calculate mean plDDT for our region of interest.
 
     print('Calculating mean plDDT...')
@@ -643,7 +643,7 @@ def mean_plddt(df, path, unip_sub=False):
     df = utils.region_search_range(df).reset_index(drop=True)
 
     for i in range(len(df)):
-        fn = df.loc[i, 'filename']
+        fn = df.loc[i, fnt] # Either af_filename or cf_filename
         if unip_sub:
             uniprot = df.loc[i, 'uniprot']
             fp = join(path, uniprot, fn)
@@ -764,7 +764,7 @@ def compare_af(df, path1, path2, path3,
         region1 = row['region_1']
         region2 = row['region_2']
         fn1 = af_format.format(uniprot=uniprot)
-        fn2 = row['filename'] # The model from the AlphaFold2 pipeline
+        fn2 = row['cf_filename'] # The model from the ColbFold pipeline
 
         # Make the output UniProt directory
         utils.uniprot_dirs(path3, uniprot=uniprot)
@@ -784,7 +784,7 @@ def compare_af(df, path1, path2, path3,
         
         # Define default values for columns to retain number of columns per row
         rmsd_dic = {'uniprot': uniprot,
-                    'filename': fn2,
+                    'cf_filename': fn2,
                     'complex_rmsd': 0,
                     '1.0_aligned': 0,
                     '1.0_comp': 0,
@@ -821,7 +821,7 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
         cluster = df.loc[i, 'cluster']
-        filename = df.loc[i, 'filename']
+        filename = df.loc[i, 'cf_filename']
         chain = df.loc[i, 'chain']
 
 # Generate file paths using format templates

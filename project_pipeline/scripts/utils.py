@@ -732,7 +732,7 @@ def cif_to_pdb(*fns):
 
     return f.replace('.cif', '.pdb')
 
-def add_pred_filename(df, fp):
+def add_AF_filename(df, fp):
     # Specifically for AlphaFold files because CF have clusters
 
     # Get list of filenames from the file path
@@ -756,7 +756,7 @@ def add_pred_filename(df, fp):
         AF_filenames.append(filename_dict[protein])
 
     # Add the list to the dataframe
-    df['pred_fn'] = AF_filenames
+    df['af_filename'] = AF_filenames
 
     return df
 
@@ -793,3 +793,52 @@ def alter_chain(gt_fn, pred_fn, chain="B"):
     # Save the files
     cmd.save(gt_fn, 'native')
     cmd.save(pred_fn, 'pred')
+
+def add_CF_filename(df, path, state=False):
+
+    dirs = os.listdir(path)
+
+    if not state:
+        file_dict = {'uniprot': [], 'cluster': [], 'cf_filename': [], 'region_1': [], 'region_2': []}
+    elif state:
+        file_dict = {'uniprot': [], 'cluster': [], 'cf_filename': [], 'region_1': [], 'region_2': [], 'conformation': [], 'state': []}
+    # Create a new dataframe with the file names 
+    for d in dirs:
+        files = os.listdir(os.path.join(path, d))
+        for f in files:
+            if '.pdb' in f:
+                uniprot = f.split('_')[0] # filename example: P28482_U10-000_unrelaxed_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb
+                cluster = f.split('_')[1]
+                rank = f.split('_')[4]
+                if rank != '001': # We want the best structure
+                    continue
+                if not state:
+                    region1 = df.loc[df['uniprot'] == uniprot, 'region_1'].iloc[0]
+                    region2 = df.loc[df['uniprot'] == uniprot, 'region_2'].iloc[0]
+
+                    # Populate the dictionary
+                    file_dict['uniprot'].append(uniprot)
+                    file_dict['cluster'].append(cluster)
+                    file_dict['cf_filename'].append(f)
+                    file_dict['region_1'].append(region1)
+                    file_dict['region_2'].append(region2)
+
+                elif state:
+                    region1 = df.loc[df['uniprot'] == uniprot, 'region_1'].iloc[0]
+                    region2 = df.loc[df['uniprot'] == uniprot, 'region_2'].iloc[0]
+                    conformation = df.loc[df['uniprot'] == uniprot, 'conformation'].iloc[0]
+                    state = df.loc[df['uniprot'] == uniprot, 'state'].iloc[0]
+
+                    # Populate the dictionary
+                    file_dict['uniprot'].append(uniprot)
+                    file_dict['cluster'].append(cluster)
+                    file_dict['cf_filename'].append(f)
+                    file_dict['region_1'].append(region1)
+                    file_dict['region_2'].append(region2)
+                    file_dict['conformation'].append(conformation)
+                    file_dict['state'].append(state)
+
+    # Create a new dataframe from the dictionary
+    file_df = pd.DataFrame(file_dict)
+
+    return file_df
