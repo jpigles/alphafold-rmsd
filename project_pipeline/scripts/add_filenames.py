@@ -29,6 +29,7 @@ df['distinct_count'] = df.groupby('uniprot')['state'].transform('nunique')
 # Dataframe with only proteins with both states
 both_states = df[df['distinct_count'] == 2]
 
+# Assign state & conformation to the AlphaFold2 structure
 # Find the lowest 2_comp per protein
 lowest_2_comp = both_states.groupby('uniprot')['2_comp'].min().reset_index()
 
@@ -60,15 +61,18 @@ pdb = pd.read_csv(snakemake.input[2], sep='\t').astype('object')
 pdb = pdb[['uniprot', 'pdb', 'chain']]
 
 # Merge the dataframes so that we have rows for every cluster-pdb pair within the same uniprot
-merged = pd.merge(cf_af_df, pdb, on='uniprot')
+merged = pd.merge(both_states, pdb, on=['uniprot', 'pdb'])
 
 # Put pdb in the third column
 cols = merged.columns.tolist()
 cols = cols[:2] + cols[-2:-1] + cols[2:-2] + cols[-1:]
 merged = merged[cols]
 
+# Add filenames
+merged_fn = utils.add_CF_filename(merged, autoinhibited_cf_path, state=True)
+
 # Save file
-merged.to_csv(snakemake.output[2], sep='\t', index=False)
+merged_fn.to_csv(snakemake.output[2], sep='\t', index=False)
 
 '''
 Next, we add the AlphaFold2 filenames for our multi-domain proteins.'''
