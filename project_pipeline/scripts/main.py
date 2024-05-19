@@ -763,6 +763,7 @@ def compare_af(df, path1, path2, path3,
         uniprot = row['uniprot']
         region1 = row['region_1']
         region2 = row['region_2']
+        cluster = row['cluster']
         fn1 = af_format.format(uniprot=uniprot)
         fn2 = row['cf_filename'] # The model from the ColbFold pipeline
 
@@ -770,7 +771,7 @@ def compare_af(df, path1, path2, path3,
         utils.uniprot_dirs(path3, uniprot=uniprot)
 
         # Define filepaths
-        complex_fn = fn2.split('_')[0] + '_' + fn2.split('_')[1] + '_comp.pdb' # eg P62826_U10-000_scores_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb -> P62826_U10-100_comp.pdb
+        complex_fn = uniprot + '_' + cluster + '_comp.pdb' # eg P62826_U10-000_scores_rank_001_alphafold2_multimer_v2_model_1_seed_000.pdb -> P62826_U10-100_comp.pdb
         fp1 = os.path.join(path1, fn1)
         # Colabfold files are segmented by uniprot
         fp2 = os.path.join(path2, uniprot, fn2)

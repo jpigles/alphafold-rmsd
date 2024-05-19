@@ -14,10 +14,10 @@ autoinhibited_af_path = snakemake.input[4]
 df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 
 # Add the filenames
-df = utils.add_AF_filename(df, autoinhibited_af_path)
+df_af_fn = utils.add_AF_filename(df, autoinhibited_af_path)
 
 # Save file
-df.to_csv(snakemake.output[0], sep='\t', index=False)
+df_af_fn.to_csv(snakemake.output[0], sep='\t', index=False)
 
 '''
 Then we take the proteins with two states and add the ColabFold filenames.
@@ -36,16 +36,12 @@ lowest_2_comp = both_states.groupby('uniprot')['2_comp'].min().reset_index()
 # Get the state, conformation, and regions for the lowest 2_comp
 lowest_2_comp = pd.merge(lowest_2_comp, both_states, on=['uniprot', '2_comp'])
 
-cols = lowest_2_comp.columns.tolist()
-cols = cols[:1] + cols[2:9] + cols[1:2] + cols[9:]
-lowest_2_comp = lowest_2_comp[cols]
-
 # To make our af to cf comparison file, keep only the uniprot, region_1, region_2, conformation, and state
 af = lowest_2_comp[['uniprot', 'region_1', 'region_2', 'conformation', 'state']].drop_duplicates().reset_index(drop=True)
 
 # Read which colabfold files we have
 
-cf_af_df = utils.add_CF_filename(af, autoinhibited_cf_path, state=True)
+cf_af_df = utils.add_CF_filename(af, autoinhibited_cf_path)
 
 # Save file
 cf_af_df.to_csv(snakemake.output[1], sep='\t', index=False)
@@ -60,19 +56,14 @@ pdb = pd.read_csv(snakemake.input[2], sep='\t').astype('object')
 # For pdb, keep only uniprot, pdb, and chain
 pdb = pdb[['uniprot', 'pdb', 'chain']]
 
-# Merge the dataframes so that we have rows for every cluster-pdb pair within the same uniprot
-merged = pd.merge(both_states, pdb, on=['uniprot', 'pdb'])
+# Get ColabFold filenames and clusters
+df_cf_fn = utils.add_CF_filename(both_states, autoinhibited_cf_path)
 
-# Put pdb in the third column
-cols = merged.columns.tolist()
-cols = cols[:2] + cols[-2:-1] + cols[2:-2] + cols[-1:]
-merged = merged[cols]
-
-# Add filenames
-merged_fn = utils.add_CF_filename(merged, autoinhibited_cf_path, state=True)
+# Add chain info
+merged = pd.merge(df_cf_fn, pdb, on=['uniprot', 'pdb'], how='left')
 
 # Save file
-merged_fn.to_csv(snakemake.output[2], sep='\t', index=False)
+merged.to_csv(snakemake.output[2], sep='\t', index=False)
 
 '''
 Next, we add the AlphaFold2 filenames for our multi-domain proteins.'''
@@ -103,12 +94,10 @@ single.to_csv(snakemake.output[4], sep='\t', index=False)
 Lastly, we get the Colabfold filenames for our multi-domain proteins.
 '''
 
-df = pd.read_csv(snakemake.input[1], sep='\t').astype('object')
-
 # Read which colabfold files we have
 md_cf_path = snakemake.input[8]
 
-file_df = utils.add_CF_filename(df, md_cf_path)
+file_df = utils.add_CF_filename(multi, md_cf_path)
 
 # Save file
 file_df.to_csv(snakemake.output[5], sep='\t', index=False)

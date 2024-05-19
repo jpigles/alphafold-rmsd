@@ -12,8 +12,6 @@ pred_trim_path = snakemake.input[3]
 # Read in the reference dataframe
 df_prot = pd.read_csv(snakemake.input[4], sep = '\t')
 
-# We need to add chain information to the dataframe
-
 # Make the directories
 utils.make_dirs(gt_in_path, gt_trim_path, pred_in_path, pred_trim_path)
 

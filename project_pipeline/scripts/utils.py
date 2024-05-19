@@ -794,14 +794,12 @@ def alter_chain(gt_fn, pred_fn, chain="B"):
     cmd.save(gt_fn, 'native')
     cmd.save(pred_fn, 'pred')
 
-def add_CF_filename(df, path, state=False):
+def add_CF_filename(df, path):
 
     dirs = os.listdir(path)
 
-    if not state:
-        file_dict = {'uniprot': [], 'cluster': [], 'cf_filename': [], 'region_1': [], 'region_2': []}
-    elif state:
-        file_dict = {'uniprot': [], 'cluster': [], 'cf_filename': [], 'region_1': [], 'region_2': [], 'conformation': [], 'state': []}
+    file_dict = {'uniprot': [], 'cluster': [], 'cf_filename': []}
+
     # Create a new dataframe with the file names 
     for d in dirs:
         files = os.listdir(os.path.join(path, d))
@@ -812,33 +810,18 @@ def add_CF_filename(df, path, state=False):
                 rank = f.split('_')[4]
                 if rank != '001': # We want the best structure
                     continue
-                if not state:
-                    region1 = df.loc[df['uniprot'] == uniprot, 'region_1'].iloc[0]
-                    region2 = df.loc[df['uniprot'] == uniprot, 'region_2'].iloc[0]
 
-                    # Populate the dictionary
-                    file_dict['uniprot'].append(uniprot)
-                    file_dict['cluster'].append(cluster)
-                    file_dict['cf_filename'].append(f)
-                    file_dict['region_1'].append(region1)
-                    file_dict['region_2'].append(region2)
-
-                elif state:
-                    region1 = df.loc[df['uniprot'] == uniprot, 'region_1'].iloc[0]
-                    region2 = df.loc[df['uniprot'] == uniprot, 'region_2'].iloc[0]
-                    conformation = df.loc[df['uniprot'] == uniprot, 'conformation'].iloc[0]
-                    state = df.loc[df['uniprot'] == uniprot, 'state'].iloc[0]
-
-                    # Populate the dictionary
-                    file_dict['uniprot'].append(uniprot)
-                    file_dict['cluster'].append(cluster)
-                    file_dict['cf_filename'].append(f)
-                    file_dict['region_1'].append(region1)
-                    file_dict['region_2'].append(region2)
-                    file_dict['conformation'].append(conformation)
-                    file_dict['state'].append(state)
+                # Populate the dictionary
+                file_dict['uniprot'].append(uniprot)
+                file_dict['cluster'].append(cluster)
+                file_dict['cf_filename'].append(f)
 
     # Create a new dataframe from the dictionary
     file_df = pd.DataFrame(file_dict)
 
-    return file_df
+    # Merge the new dataframe with the old one
+    fn_df = pd.merge(df, file_df, on=['uniprot'], how='left')
+
+    fn_df = fn_df.dropna(subset=['cf_filename'])
+
+    return fn_df
