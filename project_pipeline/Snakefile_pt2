@@ -106,25 +106,3 @@ rule compare_cf_pdb: # Compare two-state autoinhibited Colabfold structures with
         'data/two-state_cf_pdb_compared.tsv'
     script:
         'scripts/calculate_cf_pdb_rmsd.py'
-
-# rule au_split_chains: # Prepare autoinhibitory files for DockQ
-#     input:
-#         'data/classified_files_3.tsv',
-#         'data/input/Alphafold_cif_trim/',
-#         'data/input/RCSB_cif_trim/'
-#     output:
-#         directory('data/input/dockq/autoinhibitory/model/'),
-#         directory('data/input/dockq/autoinhibitory/native/')
-#     script:
-#         'scripts/split_chains.py'
-
-# rule md_split_chains: # Prepare multi-domain files for DockQ
-#     input:
-#         'data/md_proteins_pdb_both_60.tsv',
-#         'data/input/Alphafold_multi_domain_trim/',
-#         'data/input/RCSB_cif_trim/'
-#     output:
-#         directory('data/input/dockq/multi_domain/model/'),
-#         directory('data/input/dockq/multi_domain/native/')
-#     script:
-#         'scripts/split_chains.py'

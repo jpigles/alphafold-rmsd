@@ -1,0 +1,24 @@
+# This file is for rules that prepare input files for DockQ. The rules must be run individually because the outputs are directories,
+# which Snakemake doesn't like in rule all.
+
+rule au_split_chains: # Prepare autoinhibitory files for DockQ
+    input:
+        'data/classified_files_3.tsv',
+        'data/input/Alphafold_cif_trim/',
+        'data/input/RCSB_cif_trim/'
+    output:
+        directory('data/input/dockq/autoinhibitory/model/'),
+        directory('data/input/dockq/autoinhibitory/native/')
+    script:
+        'scripts/split_chains.py'
+
+rule md_split_chains: # Prepare multi-domain files for DockQ
+    input:
+        'data/md_proteins_pdb_both_60.tsv',
+        'data/input/Alphafold_multi_domain_trim/',
+        'data/input/RCSB_cif_trim/'
+    output:
+        directory('data/input/dockq/multi_domain/model/'),
+        directory('data/input/dockq/multi_domain/native/')
+    script:
+        'scripts/split_chains.py'
