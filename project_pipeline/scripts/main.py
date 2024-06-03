@@ -136,7 +136,7 @@ def find_domain_completeness(df, path):
                                 'region_2_len': len(region_2_res),
                                 'pdb': pdb, 
                                 'pdb_length': count_res, 
-                                'resolution': resolution, 
+                                'resolution': resolution,
                                 'model': model_id, 
                                 'chain': chain,
                                 'label_offset': df.loc[i, 'label_offset'],
@@ -145,7 +145,7 @@ def find_domain_completeness(df, path):
                                 'percent_region_1': percent_reg_1,
                                 'percent_region_2': percent_reg_2,
                                 'gt_fn': fn,
-                                'pred_fn': df.loc[i, 'pred_fn']}, index=[0])
+                                'af_filename': df.loc[i, 'af_filename']}, index=[0])
         
         df_domain = pd.concat([df_domain, df_domain_part_1], axis=0, ignore_index=True)
 
@@ -260,7 +260,7 @@ def get_af_interfaces(df, path):
         # There is only ever one model and chain for the AlphaFold files
         chain = 'A'
         model = 0
-        fn = df.loc[i, 'pred_fn']
+        fn = df.loc[i, 'af_filename']
         print(f'Getting interface for AF {uniprot}')
 
         # Get structure and dictionary objects
@@ -353,7 +353,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         chain = df.loc[i, 'chain']
         gt_fn = df.loc[i, 'gt_fn']
         uniprot_path = f'{uniprot}/'
-        pred_fn = df.loc[i, 'pred_fn']
+        pred_fn = df.loc[i, 'af_filename']
 
 # Generate file paths using format templates
         gt_fp = os.path.join(gt_path_in, uniprot_path, gt_fn)
@@ -532,7 +532,7 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                     'percent_region_1': percent_reg1,
                     'percent_region_2': percent_reg2,
                     'gt_fn': df.loc[i, 'gt_fn'],
-                    'pred_fn': df.loc[i, 'pred_fn']}
+                    'pred_fn': df.loc[i, 'af_filename']}
             
             rmsd_info.append(rmsd_dic)
 
@@ -569,7 +569,7 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                         'percent_region_1': percent_reg1,
                         'percent_region_2': percent_reg2,
                         'gt_fn': df.loc[i, 'gt_fn'],
-                        'pred_fn': df.loc[i, 'pred_fn']}
+                        'af_filename': df.loc[i, 'af_filename']}
 
             for key in rmsds:
                 if key in rmsd_dic:

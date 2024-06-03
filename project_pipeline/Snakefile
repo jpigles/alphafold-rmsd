@@ -6,6 +6,7 @@ rule all:
 rule pdb_ids:
     input:
         'data/input/RCSB_cif/',
+        'data/input/Alphafold_cif/',
         'data/proteins.tsv'
         
     output:
@@ -32,8 +33,6 @@ rule trim_cifs:
         'data/input/Alphafold_cif/', # Alphafold input path
         'data/input/Alphafold_cif_trim/', # Trimmed Alphafold output path
         'data/input/RCSB_cif_best/', # Best ground truth input path
-        '{uniprot}/{pdb}.cif', # Ground truth input file
-        'F-{uniprot}-F1-model_v3.cif', # Alphafold input file
         'data/offset_fixed_proteins_by_pdb.tsv' # PDB ids and chains
         
     output:
@@ -50,7 +49,8 @@ rule interface_analysis:
         'data/input/RCSB_cif_trim/',
         'data/input/Alphafold_cif/',
         'data/input/RCSB_cif_best/',
-        'data/trim_values.tsv'
+        'data/trim_values.tsv',
+        'data/autoinhibited_proteins_no_structures_dokyun.csv'
 
     output:
         'data/proteins_pdb_summary.tsv',
@@ -60,7 +60,8 @@ rule interface_analysis:
         'data/proteins_pdb_both_60.tsv',
         'data/proteins_interface.tsv',
         'data/proteins_largest_interface.tsv',
-        'data/alphafold_interface.tsv'
+        'data/alphafold_interface.tsv',
+        'data/dokyun_no_structures_interface.tsv'
 
     script:
         'scripts/interface_analysis.py'
