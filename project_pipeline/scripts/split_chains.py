@@ -13,8 +13,11 @@ pred_path_in = snakemake.input[2]
 gt_path_out = snakemake.output[0]
 pred_path_out = snakemake.output[1]
 
+# If the source files are from Colabfold clusters, then we need "cluster=True" in main.split_chains
+result = 'Colabfold' in pred_path_in
+
 # Make directories
 utils.make_dirs(gt_path_in, pred_path_in, gt_path_out, pred_path_out)
 
 # Split chains
-main.split_chains(df, gt_path_in, pred_path_in, gt_path_out, pred_path_out)
+main.split_chains(df, gt_path_in, pred_path_in, gt_path_out, pred_path_out, cluster=result)
