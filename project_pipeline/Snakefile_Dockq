@@ -3,7 +3,7 @@
 
 rule au_split_chains: # Prepare autoinhibitory files for DockQ
     input:
-        'data/classified_files_3.tsv',
+        'data/classified_files.tsv',
         'data/input/RCSB_cif_trim/',
         'data/input/Alphafold_cif_trim/'
     output:
