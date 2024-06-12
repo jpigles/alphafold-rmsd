@@ -96,6 +96,18 @@ rule cf_pdb_trim: # Trim the two-state autoinhibited ColabFold structures to the
     script:
         'scripts/trim_cf_pdb.py'
 
+# Determine the interfaces of the autoinhibitory cluster structures
+rule interface_analysis:
+    input:
+        'data/input/Colabfold_cif/autoinhibited/',
+        'data/cf_autoinhibited.tsv'
+
+    output:
+        'data/colabfold_interface.tsv
+
+    script:
+        'scripts/interface_analysis.py' # TODO: This script needs to be changed.
+
 rule compare_cf_pdb: # Compare two-state autoinhibited Colabfold structures with PDB structures.
     input:
         'data/input/RCSB_cif_trim/',
