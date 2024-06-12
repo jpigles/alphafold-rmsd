@@ -13,27 +13,33 @@ rule all:
         'data/cf_autoinhibited_pLDDT.tsv',
         'data/cf_multi_domain_pLDDT.tsv',
         'data/two-state_af_cf_compared.tsv',
-        'data/md_af_cf_compared.tsv'
+        'data/md_af_cf_compared.tsv',
+        'data/obligate_af_cf_compared'
         
 
 rule add_filenames: # Add filenames for various AlphaFold2 and ColabFold files. These will be used in the next steps.
     input:
-        'data/classified_files_3.tsv', # For autoinhibited proteins
+        'data/classified_files.tsv', # For autoinhibited proteins
         'data/multi_domain_pae.tsv', # For multi-domain proteins. Use PAE file b/c it has already dropped any proteins that we couldn't get AF files for.
         'data/proteins_pdb_both_60.tsv', # Chain information
         'data/single_domain_pae.tsv', # For single-domain proteins
+        'data/obligate.tsv', # For obligate multi-domain proteins.
         'data/input/Alphafold_cif/',
         'data/input/Colabfold_cif/autoinhibited/',
         'data/input/Alphafold_multi_domain/',
         'data/input/Alphafold_single_domain/',
-        'data/input/Colabfold_cif/multi_domain/'
+        'data/input/Colabfold_cif/multi_domain/',
+        'data/input/Colabfold_cif/obligate/'
     output:
         'data/autoinhibited_af_best.tsv', # Based on PDB structures with >= 60% domain completeness. For pLDDT.
         'data/two-state_af_cf.tsv', # For autoinhibited proteins with two states, comparing AlphaFold2 to ColabFold structures, as well as pLDDT.
         'data/two-state_cf_pdb.tsv', # For autoinhibited proteins with two states, comparing ColabFold to PDB structures
         'data/multi_domain_af.tsv', # For multi-domain proteins, comparing AlphaFold2 to ColabFold structures, as well as pLDDT.
         'data/single_domain_af.tsv', # For single-domain proteins, to be used for pLDDT.
-        'data/multi_domain_cf.tsv' # For multi-domain proteins, for comparing ColabFold to PDB structures, as well as pLDDT.
+        'data/multi_domain_cf.tsv', # For multi-domain proteins, for comparing ColabFold to PDB structures, as well as pLDDT.
+        'data/obligate_af.tsv', # For obligate multi-domain proteins, comparing AlphaFold2 to ColabFold structures, as well as pLDDT
+        'data/obligate_cf.tsv' # For obligate multi-domain proteins, for comparing ColabFold to PDB structures, as well as pLDDT.
+
     script:
         'scripts/add_filenames.py'
 
@@ -43,15 +49,20 @@ rule plddt: # Calculate average pLDDT for whole structure and each domain for Al
         'data/multi_domain_af.tsv',
         'data/two-state_af_cf.tsv',
         'data/multi_domain_cf.tsv',
+        'data/obligate_af.tsv',
+        'data/obligate_cf.tsv',
         'data/input/Alphafold_cif/',
         'data/input/Alphafold_multi_domain/',
         'data/input/Colabfold_cif/autoinhibited/',
-        'data/input/Colabfold_cif/multi_domain/'
+        'data/input/Colabfold_cif/multi_domain/',
+        'data/input/Colabfold_cif/obli'
     output:
         'data/af_autoinhibited_pLDDT.tsv',
         'data/af_multi_domain_pLDDT.tsv',
         'data/cf_autoinhibited_pLDDT.tsv',
-        'data/cf_multi_domain_pLDDT.tsv'
+        'data/cf_multi_domain_pLDDT.tsv',
+        'data/af_obligate_pLDDT.tsv',
+        'data/cf_obligate_pLDDT.tsv'
     script:
         'scripts/plddt.py'
 
@@ -82,6 +93,21 @@ rule md_compare: # Compare our multi-domain Colabfold structures against the Alp
         'data/md_af_cf_compared.tsv'
     script:
         'scripts/compare_afs.py'
+
+rule obligate_compare: # Compare our obligate ColabFold structures against the AlphaFold2 public structures
+    input:
+        'data/obligate_cf.tsv',
+        'data/input/Alphafold_multi_domain/',
+        'data/input/Colabfold_cif/obligate/',
+        'data/output/colabfold_complexes'
+    params:
+        prefix='AF-',
+        suffix='-F1-model_v4.cif'
+    output:
+        'data/obligate_af_cf_compared.tsv'
+    script:
+        'scripts/compare_afs.py'
+
 
 
 rule cf_pdb_trim: # Trim the two-state autoinhibited ColabFold structures to the same length as the experimental structures.
