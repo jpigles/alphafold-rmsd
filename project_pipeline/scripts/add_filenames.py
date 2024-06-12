@@ -9,7 +9,7 @@ import pandas as pd
 '''
 First we add AlphaFold2 filenames for our autoinhibited AlphaFold2 files.
 '''
-autoinhibited_af_path = snakemake.input[4]
+autoinhibited_af_path = snakemake.input[5]
 
 df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 
@@ -22,7 +22,7 @@ df_af_fn.to_csv(snakemake.output[0], sep='\t', index=False)
 '''
 Then we take the proteins with two states and add the ColabFold filenames.
 '''
-autoinhibited_cf_path = snakemake.input[5]
+autoinhibited_cf_path = snakemake.input[6]
 
 df['distinct_count'] = df.groupby('uniprot')['state'].transform('nunique')
 
@@ -66,9 +66,10 @@ merged = pd.merge(df_cf_fn, pdb, on=['uniprot', 'pdb'], how='left')
 merged.to_csv(snakemake.output[2], sep='\t', index=False)
 
 '''
-Next, we add the AlphaFold2 filenames for our multi-domain proteins.'''
+Next, we add the AlphaFold2 filenames for our multi-domain proteins.
+'''
 
-md_af_path = snakemake.input[6]
+md_af_path = snakemake.input[7]
 
 multi = pd.read_csv(snakemake.input[1], sep='\t').astype('object')
 
@@ -78,9 +79,19 @@ multi_af = utils.add_AF_filename(multi, md_af_path)
 multi_af.to_csv(snakemake.output[3], sep='\t', index=False)
 
 '''
+Then we add the AlphaFold2 filenames for our obligate multi-domain proteins.
+'''
+obli = pd.read_csv(snakemake.input[4], sep='\t').astype('object')
+
+obli_af = utils.add_AF_filename(obli, md_af_path)
+
+# Save file
+obli_af.to_csv(snakemake.output[6], sep='\t', index=False)
+
+'''
 Then we add filenames to our single-domain proteins.
 '''
-single_path = snakemake.input[7]
+single_path = snakemake.input[8]
 single = pd.read_csv(snakemake.input[3], sep='\t').astype('object')
 
 single = single.dropna(subset=['mean_pae'])
@@ -91,13 +102,25 @@ single = utils.add_AF_filename(single, single_path)
 single.to_csv(snakemake.output[4], sep='\t', index=False)
 
 '''
-Lastly, we get the Colabfold filenames for our multi-domain proteins.
+Next, we get the Colabfold filenames for our multi-domain proteins.
 '''
 
 # Read which colabfold files we have
-md_cf_path = snakemake.input[8]
+md_cf_path = snakemake.input[9]
 
 file_df = utils.add_CF_filename(multi, md_cf_path)
 
 # Save file
 file_df.to_csv(snakemake.output[5], sep='\t', index=False)
+
+'''
+Lastly, we get the Colabfold filenames for our 
+obligate multi-domain proteins.
+'''
+
+obli_cf_path = snakemake.input[10]
+
+obli_cf = utils.add_CF_filename(obli, obli_cf_path)
+
+# Save file
+obli_cf.to_csv(snakemake.output[7], sep='\t', index=False)
