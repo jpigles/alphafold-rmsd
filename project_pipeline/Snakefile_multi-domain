@@ -62,7 +62,7 @@ rule interface_analysis:
         'data/md_alphafold_interface.tsv'
 
     script:
-        'scripts/interface_analysis.py'
+        'scripts/md_interface_analysis.py'
 
 # Calculate various RMSDs (complex, domain 1 to domain 1, domain 1 to domain 2, domain 2 to domain 2)
 rule calculate_rmsds: # TODO add complex filename to final file
