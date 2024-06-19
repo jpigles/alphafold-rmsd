@@ -14,7 +14,9 @@ rule all:
         'data/cf_multi_domain_pLDDT.tsv',
         'data/two-state_af_cf_compared.tsv',
         'data/md_af_cf_compared.tsv',
-        'data/obligate_af_cf_compared'
+        'data/obligate_af_cf_compared',
+        'data/autoinhibited_cf_interface.tsv',
+        'data/obligate_cf_interface.tsv'
         
 
 rule add_filenames: # Add filenames for various AlphaFold2 and ColabFold files. These will be used in the next steps.
@@ -122,17 +124,20 @@ rule cf_pdb_trim: # Trim the two-state autoinhibited ColabFold structures to the
     script:
         'scripts/trim_cf_pdb.py'
 
-# Determine the interfaces of the autoinhibitory cluster structures
+# Determine the interfaces of the autoinhibitory cluster structures and the obligate cluster structures
 rule interface_analysis:
     input:
         'data/input/Colabfold_cif/autoinhibited/',
-        'data/cf_autoinhibited.tsv'
+        'data/input/Colabfold_cif/obligate/',
+        'data/cf_autoinhibited.tsv',
+        'data/obligate_cf.tsv'
 
     output:
-        'data/colabfold_interface.tsv
+        'data/autoinhibited_cf_interface.tsv',
+        'data/obligate_cf_interface.tsv'
 
     script:
-        'scripts/interface_analysis.py' # TODO: This script needs to be changed.
+        'scripts/cf_interface_analysis.py' # TODO: This script needs to be changed.
 
 rule compare_cf_pdb: # Compare two-state autoinhibited Colabfold structures with PDB structures.
     input:

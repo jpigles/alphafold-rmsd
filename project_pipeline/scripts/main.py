@@ -238,7 +238,7 @@ def get_interfaces(df, path):
 
     return df
 
-def get_af_interfaces(df, path):
+def get_af_interfaces(df, path, cluster=False):
     '''
     Finds the residues involved in the interface between the two domains, 
     specifically for the AlphaFold files.
@@ -260,8 +260,13 @@ def get_af_interfaces(df, path):
         # There is only ever one model and chain for the AlphaFold files
         chain = 'A'
         model = 0
-        fn = df.loc[i, 'af_filename']
-        print(f'Getting interface for AF {uniprot}')
+
+        if cluster:
+            fn = uniprot + '/' + df.loc[i, 'cf_filename']
+            print(f'Getting interface for CF {uniprot}')
+        else:
+            fn = df.loc[i, 'af_filename']
+            print(f'Getting interface for AF {uniprot}')
 
         # Get structure and dictionary objects
         structure, mmcif_dict = utils.get_structure_dict(uniprot, fn, path)
