@@ -269,7 +269,7 @@ def get_af_interfaces(df, path, cluster=False):
             print(f'Getting interface for AF {uniprot}')
 
         # Get structure and dictionary objects
-        structure, mmcif_dict = utils.get_structure_dict(uniprot, fn, path)
+        structure = utils.get_pdb_struct_dict(uniprot, fn, path)
 
         # Get residues in domains for Neighborsearch
         atoms_ns = utils.get_domain_residues(region_1_res, region_2_res, structure, model, chain)

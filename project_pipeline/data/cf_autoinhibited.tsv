@@ -1,4 +1,4 @@
-uniprot	cluster	region_1	region_2	filename
+uniprot	cluster	region_1	region_2	cf_filename
 Q96BN8	004	330-340	129-341	Q96BN8_004_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb
 Q96BN8	020	330-340	129-341	Q96BN8_020_unrelaxed_rank_002_alphafold2_multimer_v2_model_1_seed_000.pdb
 Q96BN8	019	330-340	129-341	Q96BN8_019_unrelaxed_rank_003_alphafold2_multimer_v2_model_1_seed_000.pdb

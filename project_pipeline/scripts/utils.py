@@ -1,6 +1,7 @@
 from pdbecif.mmcif_io import CifFileReader, CifFileWriter
 from Bio.PDB.MMCIFParser import MMCIFParser
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+from Bio.PDB.PDBParser import PDBParser
 from Bio.PDB import MMCIFParser, NeighborSearch, Selection
 from pymol import cmd
 import pymol
@@ -825,3 +826,15 @@ def add_CF_filename(df, path):
     fn_df = fn_df.dropna(subset=['cf_filename'])
 
     return fn_df
+
+def get_pdb_struct_dict(name, fn, path):
+    # Join the path and the file name
+    full_path = join(path, fn)
+
+    # To load a PDB file make a parser object
+    parser = PDBParser(QUIET=True)
+            
+    # Then make a structure object
+    structure = parser.get_structure(name, full_path)
+
+    return structure

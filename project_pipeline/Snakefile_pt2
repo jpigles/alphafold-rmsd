@@ -14,7 +14,7 @@ rule all:
         'data/cf_multi_domain_pLDDT.tsv',
         'data/two-state_af_cf_compared.tsv',
         'data/md_af_cf_compared.tsv',
-        'data/obligate_af_cf_compared',
+        'data/obligate_af_cf_compared.tsv',
         'data/autoinhibited_cf_interface.tsv',
         'data/obligate_cf_interface.tsv'
         
