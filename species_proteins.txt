@@ -1,0 +1,25 @@
+Higher order
+P04637 - Homo Sapiens
+Q02750 - Homo sapiens
+O76074 - Homo sapiens
+P00523 - Gallus gallus
+Q04929 - Gallus gallus
+P00520 - Mus musculus
+P13864 - Mus musculus
+P31016 - Rattus norvegicus 
+Q63450 - Rattus norvegicus <- This one next
+B5XAZ0 - Salmo salar
+
+Lower order
+P00579 - Escherichia coli
+P53686 - Saccharomyces cerevisiae
+P32527 - Saccharomyces cerevisiae
+Q3KK31 - Pseudomonas fluorescens
+D2AJU0 - Shigella flexneri
+Q83RJ4 - Shigella flexneri
+Q95PM0 - Trypanosoma brucei rhodesiense
+Q8RT31 - Legionella pneumophila
+Q58719 - Methanocaldococcus jannaschii
+P14633 - Escherichia coli
+
+sequences gathered with ColabFold v1.5.5
