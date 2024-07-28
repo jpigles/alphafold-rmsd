@@ -27,7 +27,9 @@ autoinhibited_cf_path = snakemake.input[6]
 df['distinct_count'] = df.groupby('uniprot')['state'].transform('nunique')
 
 # Dataframe with only proteins with both states
-both_states = df[df['distinct_count'] == 2]
+both_states = df[df['distinct_count'] == 2].reset_index(drop=True)
+# Drop the distinct count column
+both_states = both_states.drop(columns=['distinct_count'])
 
 # Assign state & conformation to the AlphaFold2 structure
 # Find the lowest 2_comp per protein
@@ -42,6 +44,11 @@ af = lowest_2_comp[['uniprot', 'region_1', 'region_2', 'conformation', 'state']]
 # Read which colabfold files we have
 
 cf_af_df = utils.add_CF_filename(af, autoinhibited_cf_path)
+
+# Add AlphaFold2 filenames
+df_af_fn = df_af_fn[['uniprot', 'af_filename']]
+
+cf_af_df = pd.merge(cf_af_df, df_af_fn, on='uniprot', how='left').reset_index()
 
 # Save file
 cf_af_df.to_csv(snakemake.output[1], sep='\t', index=False)
@@ -108,13 +115,18 @@ Next, we get the Colabfold filenames for our multi-domain proteins.
 # Read which colabfold files we have
 md_cf_path = snakemake.input[9]
 
-file_df = utils.add_CF_filename(multi, md_cf_path)
+multi_cf_df = utils.add_CF_filename(multi, md_cf_path)
+
+# Add AlphaFold2 filenames
+multi_af = multi_af[['uniprot', 'af_filename']].drop_duplicates()
+
+multi_cf_df = pd.merge(multi_cf_df, multi_af, on='uniprot', how='left').reset_index(drop=True)
 
 # Save file
-file_df.to_csv(snakemake.output[5], sep='\t', index=False)
+multi_cf_df.to_csv(snakemake.output[5], sep='\t', index=False)
 
 '''
-Lastly, we get the Colabfold filenames for our 
+Get the Colabfold filenames for our 
 obligate multi-domain proteins.
 '''
 
@@ -122,5 +134,47 @@ obli_cf_path = snakemake.input[10]
 
 obli_cf = utils.add_CF_filename(obli, obli_cf_path)
 
+# Add AlphaFold2 filenames
+obli_af = obli_af[['uniprot', 'af_filename']].drop_duplicates()
+
+obli_cf = pd.merge(obli_cf, obli_af, on='uniprot', how='left').reset_index(drop=True)
+
 # Save file
 obli_cf.to_csv(snakemake.output[7], sep='\t', index=False)
+
+'''
+The ColabFold filenames for our 20 exemplary low-complexity and high-complexity species.
+'''
+
+species_cf_path = snakemake.input[11]
+
+# Get rid of the distinct_counts column
+df = df.drop(columns=['distinct_counts'])
+
+species_cf_df = utils.add_CF_filename(df, species_cf_path)
+
+species_cf_df.to_csv(snakemake.output[8], sep='\t', index=False)
+
+'''
+Make a file for AlphaFold to ColabFold comparison of species
+'''
+
+# Assign state & conformation to the AlphaFold2 structure
+# Drop clusters for now
+no_clust = species_cf_df.drop(columns=['cluster', 'cf_filename'])
+
+# Find the lowest 2_comp per protein
+min_2_comp = no_clust.groupby('uniprot')['2_comp'].min().reset_index()
+
+# Take the selected state and conformation for each protein
+st_conf = min_2_comp[['uniprot', 'state', 'conformation']]
+
+# Merge them back together with main dataframe and drop unneeded info
+species_cf_df = species_cf_df[['uniprot', 'region_1', 'region_2', 'cluster', 'cf_filename']].drop_duplicates().reset_index(drop=True)
+
+species_af_df = pd.merge(species_cf_df, st_conf, on='uniprot', how='left')
+
+# Add AlphaFold2 filenames
+species_af_df = pd.merge(species_af_df, df_af_fn, on='uniprot', how='left')
+
+species_af_df.to_csv(snakemake.output[9], sep='\t', index=False)

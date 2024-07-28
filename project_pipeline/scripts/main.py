@@ -756,8 +756,7 @@ def mean_pae_single_domain(df, path):
 
     return df.reset_index(drop=True)
 
-def compare_af(df, path1, path2, path3, 
-               af_format='F-{uniprot}-F1-model_v3.cif'):
+def compare_af(df, path1, path2, path3):
 
      # Make sure the output path exists
     utils.make_dirs(path3)
@@ -769,7 +768,7 @@ def compare_af(df, path1, path2, path3,
         region1 = row['region_1']
         region2 = row['region_2']
         cluster = row['cluster']
-        fn1 = af_format.format(uniprot=uniprot)
+        fn1 = row['af_filename']
         fn2 = row['cf_filename'] # The model from the ColbFold pipeline
 
         # Make the output UniProt directory

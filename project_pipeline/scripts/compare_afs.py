@@ -12,11 +12,8 @@ df = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
 path1 = snakemake.input[1] # Path to public models
 path2 = snakemake.input[2] # Path to models from ColabFold pipeline
 path3 = snakemake.input[3] # Path to save complex structures
-prefix = snakemake.params[0]
-suffix = snakemake.params[1]
-af_format = prefix + '{uniprot}' + suffix # File name structure
 
-rmsd_info = main.compare_af(df, path1, path2, path3, af_format=af_format)
+rmsd_info = main.compare_af(df, path1, path2, path3)
 
 with open(snakemake.output[0], 'w') as file:
     fields = ['uniprot', 'cf_filename', 'complex_rmsd', '1.0_aligned', '1.0_comp',
