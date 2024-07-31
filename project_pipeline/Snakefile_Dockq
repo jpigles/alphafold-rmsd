@@ -25,11 +25,11 @@ rule md_split_chains: # Prepare multi-domain files for DockQ
 
 rule cf_split_chains: # Prepare colabfold cluster files for DockQ
     input:
-        'data/two-state_cf_pdb.tsv' # some file here, need to make it
+        'data/two-state_cf_pdb.tsv', # some file here, need to make it
         'data/input/RCSB_cif_trim/',
         'data/input/Colabfold_pdb_trim/'
     output:
-        directory('data/input/dockq/colabfold/model/'),
-        directory('data/input/dockq/colabfold/native/')
+        directory('data/input/dockq/colabfold/model'),
+        directory('data/input/dockq/colabfold/native')
     script:
         'scripts/split_chains.py'

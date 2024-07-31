@@ -1073,12 +1073,14 @@ def split_chains(df, gt_in_path, pred_in_path, gt_out_path, pred_out_path, clust
         region_1 = df.loc[i, 'region_1']
         region_2 = df.loc[i, 'region_2']
         if cluster:
-            cluster = df.loc[i, 'cluster']
-            in_fn = f'{uniprot}/{cluster}_{pdb}.cif'
-            out_fn = f'{cluster}_{pdb}.pdb'
+            cluster_n = df.loc[i, 'cluster']
+            in_fn = f'{uniprot}/{cluster_n}_{pdb}.pdb'
+            out_fn = f'{cluster_n}_{pdb}.pdb'
+            print(f'Doing {uniprot}/{cluster_n}_{pdb}.pdb!')
         else:
             in_fn = f'{uniprot}/{pdb}.cif'
             out_fn = f'{uniprot}_{pdb}.pdb'
+            print(f'Doing {uniprot}/{pdb}.cif!')
         chain = "B" # chain we would like to change region autoinihibitory region to
 
         # Define filepaths
