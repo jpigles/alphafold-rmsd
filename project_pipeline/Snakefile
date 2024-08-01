@@ -67,7 +67,7 @@ rule interface_analysis:
         'scripts/interface_analysis.py'
 
 # Will probably have to reconfigure this.
-rule calculate_rmsds:
+rule calculate_rmsds: # TODO: Chain needs to included in the final output, as well as af_filename (which I think is)
     input:
         'data/input/RCSB_cif_best/',
         'data/input/Alphafold_cif_trim/',
