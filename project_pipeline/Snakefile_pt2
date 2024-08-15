@@ -100,9 +100,9 @@ rule md_cluster_interface_analysis:
 rule ai_pdb_cluster_trim: # Trim the two-state autoinhibited ColabFold structures to the same length as the experimental structures.
     input:
         'data/input/RCSB_cif_best/', # Ground truth input path
-        '/share/scratch/bjechow/data/input/RCSB_cif_trim/', # Trimmed ground truth output path
+        'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
         'data/input/Colabfold_cif/autoinhibited/', # ColabFold input path
-        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
+        'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
         'data/ai_pdb_clusters.tsv' # PDB ids and Colabfold file names
     output:
         'data/ai_pdb_cluster_trim_values.tsv'
@@ -112,9 +112,9 @@ rule ai_pdb_cluster_trim: # Trim the two-state autoinhibited ColabFold structure
 rule md_pdb_cluster_trim:
     input:
         'data/input/RCSB_cif_best/', # Ground truth input path
-        '/share/scratch/bjechow/data/input/RCSB_cif_trim/', # Trimmed ground truth output path
+        'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
         'data/input/Colabfold_cif/multi_domain/', # ColabFold input path
-        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path # TODO: Change this back
+        'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path # TODO: Change this back
         'data/md_pdb_clusters.tsv' # PDB ids and Colabfold file names
     output:
         'data/md_pdb_cluster_trim_values.tsv'
@@ -123,9 +123,9 @@ rule md_pdb_cluster_trim:
 
 rule compare_ai_pdb_clusters: # Compare two-state autoinhibited Colabfold structures with PDB structures.
     input:
-        '/share/scratch/bjechow/data/input/RCSB_cif_trim/',
-        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim/',
-        '/share/scratch/bjechow/data/output/cf_pdb_complexes/',
+        'data/input/RCSB_cif_trim/',
+        'data/input/Colabfold_pdb_trim/',
+        'data/output/cf_pdb_complexes/',
         'data/ai_pdb_cluster_trim_values.tsv'
     output:
         'data/ai_pdb_cluster_compared.tsv'
@@ -134,9 +134,9 @@ rule compare_ai_pdb_clusters: # Compare two-state autoinhibited Colabfold struct
 
 rule compare_md_pdb_clusters:
     input:
-        '/share/scratch/bjechow/data/input/RCSB_cif_trim/',
-        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim',
-        '/share/scratch/bjechow/data/output/cf_pdb_complexes',
+        'data/input/RCSB_cif_trim/',
+        'data/input/Colabfold_pdb_trim',
+        'data/output/cf_pdb_complexes',
         'data/md_pdb_cluster_trim_values.tsv'
     output:
         'data/md_pdb_cluster_compared.tsv'
