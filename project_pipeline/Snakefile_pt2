@@ -7,191 +7,138 @@
 
 rule all:
     input:
-        'data/two-state_cf_pdb_compared.tsv',
-        'data/af_autoinhibited_pLDDT.tsv',
-        'data/af_multi_domain_pLDDT.tsv',
-        'data/af_obligate_pLDDT.tsv',
-        'data/cf_autoinhibited_pLDDT.tsv',
-        'data/cf_multi_domain_pLDDT.tsv',
-        'data/cf_obligate_pLDDT.tsv',
-        'data/cf_species_pLDDT.tsv',
-        'data/two-state_af_cf_compared.tsv',
-        'data/md_af_cf_compared.tsv',
-        'data/obligate_af_cf_compared.tsv',
-        'data/species_af_cf_compared.tsv',
-        'data/autoinhibited_cf_interface.tsv',
-        'data/obligate_cf_interface.tsv',
-        'data/species_cf_interface.tsv',
-        'data/species_cf_pdb_compared'
-        
+        'data/ai_full-depth_pLDDT.tsv',
+        'data/md_full-depth_pLDDT.tsv',
+        'data/sd_full-depth_pLDDT.tsv',
+        'data/ai_cluster_pLDDT.tsv',
+        'data/md_cluster_pLDDT.tsv',
+        'data/ai_full-depth_cluster_compared.tsv',
+        'data/md_full-depth_cluster_compared.tsv',
+        'data/ai_cluster_interface.tsv',
+        'data/md_cluster_interface.tsv',
+        'data/ai_pdb_cluster_compared.tsv',
+        'data/md_pdb_cluster_compared.tsv'
 
-rule add_filenames: # Add filenames for various AlphaFold2 and ColabFold files. These will be used in the next steps.
+rule add_ai_clusters: # Add cluster information 
     input:
         'data/classified_files.tsv', # For autoinhibited proteins
-        'data/multi_domain_pae.tsv', # For multi-domain proteins. Use PAE file b/c it has already dropped any proteins that we couldn't get AF files for.
-        'data/proteins_pdb_both_60.tsv', # Chain information
-        'data/single_domain_pae.tsv', # For single-domain proteins
-        'data/obligate.tsv', # For obligate multi-domain proteins.
-        'data/input/Alphafold_cif/',
-        'data/input/Colabfold_cif/autoinhibited/',
-        'data/input/Alphafold_multi_domain/',
-        'data/input/Alphafold_single_domain/',
-        'data/input/Colabfold_cif/multi_domain/',
-        'data/input/Colabfold_cif/obligate/',
-        'data/input/Colabfold_cif/species/'
+        'data/input/Colabfold_cif/autoinhibited/'
     output:
-        'data/autoinhibited_af_best.tsv', # Based on PDB structures with >= 60% domain completeness. For pLDDT.
-        'data/two-state_af_cf.tsv', # For autoinhibited proteins with two states, comparing AlphaFold2 to ColabFold structures, as well as pLDDT.
-        'data/two-state_cf_pdb.tsv', # For autoinhibited proteins with two states, comparing ColabFold to PDB structures
-        'data/multi_domain_af.tsv', # For multi-domain proteins, comparing AlphaFold2 to ColabFold structures, as well as pLDDT.
-        'data/single_domain_af.tsv', # For single-domain proteins, to be used for pLDDT.
-        'data/multi_domain_cf.tsv', # For multi-domain proteins, for comparing ColabFold to PDB structures, as well as pLDDT.
-        'data/obligate_af.tsv', # For obligate multi-domain proteins, comparing AlphaFold2 to ColabFold structures, as well as pLDDT
-        'data/obligate_cf.tsv', # For obligate multi-domain proteins, for comparing ColabFold to PDB structures, as well as pLDDT.
-        'data/species_cf_pdb.tsv', # For our exemplary low-complexity and high-complexity species, for comparing ColabFold to PDB structures, as well as pLDDT.
-        'data/species_af_cf.tsv' # For our exemplary low-complexity and high-complexity species, for comparing AlphaFold2 to ColabFold structures.
+        'data/ai_pdb_clusters.tsv', # Contains UniProt IDs, PDB IDs, and Clusters for autoinhibitory proteins
     script:
-        'scripts/add_filenames.py'
+        'scripts/clusters.py'
+
+rule add_md_clusters: # Add cluster information
+    input:
+        'data/md_rmsds.tsv',
+        'data/input/Colabfold_cif/multi_domain'
+    output:
+        'data/md_pdb_clusters.tsv' # Contains UniProt IDs, PDB IDs, and Clusters for multi-domain proteins
+    script:
+        'scripts/clusters.py'
 
 rule plddt: # Calculate average pLDDT for whole structure and each domain for AlphaFold2 and ColabFold structures.
     input:
-        'data/autoinhibited_af_best.tsv',
-        'data/multi_domain_af.tsv',
-        'data/two-state_af_cf.tsv',
-        'data/multi_domain_cf.tsv',
-        'data/obligate_af.tsv',
-        'data/obligate_cf.tsv',
-        'data/species_cf_pdb.tsv'
+        'data/ai_pdb_clusters.tsv',
+        'data/md_pdb_clusters.tsv',
+        'data/single_domain_full-depth.tsv',
         'data/input/Alphafold_cif/',
         'data/input/Alphafold_multi_domain/',
+        'data/input/Alphafold_single_domain/',
         'data/input/Colabfold_cif/autoinhibited/',
-        'data/input/Colabfold_cif/multi_domain/',
-        'data/input/Colabfold_cif/obligate/'
+        'data/input/Colabfold_cif/multi_domain/'
     output:
-        'data/af_autoinhibited_pLDDT.tsv',
-        'data/af_multi_domain_pLDDT.tsv',
-        'data/cf_autoinhibited_pLDDT.tsv',
-        'data/cf_multi_domain_pLDDT.tsv',
-        'data/af_obligate_pLDDT.tsv',
-        'data/cf_obligate_pLDDT.tsv',
-        'data/cf_species_pLDDT.tsv'
+        'data/ai_full-depth_pLDDT.tsv',
+        'data/md_full-depth_pLDDT.tsv',
+        'data/sd_full-depth_pLDDT.tsv',
+        'data/ai_cluster_pLDDT.tsv',
+        'data/md_cluster_pLDDT.tsv'
     script:
         'scripts/plddt.py'
 
 rule ai_compare: # Compare two-state autoinhibited AlphaFold2 structures with ColabFold structures
     input:
-        'data/two-state_af_cf.tsv',
+        'data/ai_pdb_clusters.tsv',
         'data/input/Alphafold_cif/',
         'data/input/Colabfold_cif/autoinhibited/',
         'data/output/colabfold_complexes/'
     output:
-        'data/two-state_af_cf_compared.tsv'
+        'data/ai_full-depth_cluster_compared.tsv'
     script:
-        'scripts/compare_afs.py'
-
-rule spec_compare: # Compare our exemplary autoinhibitory species AlphaFold2 structures with ColabFold structures
-    input:
-        'data/species_af_cf.tsv',
-        'data/input/Alphafold_cif/',
-        'data/input/Colabfold_cif/species/',
-        'data/output/colabfold_complexes/'
-    output:
-        'data/species_af_cf_compared.tsv'
-    scripts:
         'scripts/compare_afs.py'
 
 rule md_compare: # Compare our multi-domain Colabfold structures against the AlphaFold2 public structures.
     input:
-        'data/multi_domain_cf.tsv',
+        'data/md_pdb_clusters.tsv',
         'data/input/Alphafold_multi_domain/',
         'data/input/Colabfold_cif/multi_domain/',
         'data/output/colabfold_complexes/'
     output:
-        'data/md_af_cf_compared.tsv'
-    script:
-        'scripts/compare_afs.py'
-
-rule obligate_compare: # Compare our obligate ColabFold structures against the AlphaFold2 public structures
-    input:
-        'data/obligate_cf.tsv',
-        'data/input/Alphafold_multi_domain/',
-        'data/input/Colabfold_cif/obligate/',
-        'data/output/colabfold_complexes'
-    output:
-        'data/obligate_af_cf_compared.tsv'
+        'data/md_full-depth_cluster_compared.tsv'
     script:
         'scripts/compare_afs.py'
 
 # Determine the interfaces of the autoinhibitory cluster structures and the obligate cluster structures
-rule auto_interface_analysis:
+rule ai_cluster_interface_analysis:
     input:
-        'data/input/Colabfold_cif/autoinhibited/',
-        'data/two-state_af_cf.tsv',
+        'data/ai_pdb_clusters.tsv',
+        'data/input/Colabfold_cif/autoinhibited/'
     output:
-        'data/two-state_cf_interface.tsv',
+        'data/ai_cluster_interface.tsv',
     script:
         'scripts/cf_interface_analysis.py'
 
-rule obli_interface_analysis:
+rule md_cluster_interface_analysis:
     input:
-        'data/input/Colabfold_cif/obligate/',
-        'data/obligate_cf.tsv'
+        'data/md_pdb_clusters.tsv',
+        'data/input/Colabfold_cif/multi_domain/'
     output:
-        'data/obligate_cf_interface.tsv'
+        'data/md_cluster_interface.tsv'
     script:
         'scripts/cf_interface_analysis.py'
 
-rule spec_interface_analysis:
-    input:
-        'data/input/Colabfold_cif/species/',
-        'data/species_af_cf.tsv'
-    output:
-        'data/species_cf_interface.tsv'
-    scripts:
-        'scripts/cf_interface_analysis.py'
-
-rule two_cf_pdb_trim: # Trim the two-state autoinhibited ColabFold structures to the same length as the experimental structures.
+rule ai_pdb_cluster_trim: # Trim the two-state autoinhibited ColabFold structures to the same length as the experimental structures.
     input:
         'data/input/RCSB_cif_best/', # Ground truth input path
-        'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
+        '/share/scratch/bjechow/data/input/RCSB_cif_trim/', # Trimmed ground truth output path
         'data/input/Colabfold_cif/autoinhibited/', # ColabFold input path
-        'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
-        'data/two-state_cf_pdb.tsv' # PDB ids and Colabfold file names
+        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
+        'data/ai_pdb_clusters.tsv' # PDB ids and Colabfold file names
     output:
-        'data/cf_pdb_trim_values.tsv'
+        'data/ai_pdb_cluster_trim_values.tsv'
     script:
         'scripts/trim_cf_pdb.py'
 
-rule spec_cf_pdb_trim:
+rule md_pdb_cluster_trim:
     input:
         'data/input/RCSB_cif_best/', # Ground truth input path
-        'data/input/RCSB_cif_trim/', # Trimmed ground truth output path
-        'data/input/Colabfold_cif/species/', # ColabFold input path
-        'data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path
-        'data/species_cf_pdb.tsv' # PDB ids and Colabfold file names
+        '/share/scratch/bjechow/data/input/RCSB_cif_trim/', # Trimmed ground truth output path
+        'data/input/Colabfold_cif/multi_domain/', # ColabFold input path
+        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim/', # Trimmed Colabfold output path # TODO: Change this back
+        'data/md_pdb_clusters.tsv' # PDB ids and Colabfold file names
     output:
-        'data/species_cf_pdb_trim_values.tsv'
+        'data/md_pdb_cluster_trim_values.tsv'
     script:
         'scripts/trim_cf_pdb.py'
 
-rule compare_cf_pdb: # Compare two-state autoinhibited Colabfold structures with PDB structures.
+rule compare_ai_pdb_clusters: # Compare two-state autoinhibited Colabfold structures with PDB structures.
     input:
-        'data/input/RCSB_cif_trim/',
-        'data/input/Colabfold_pdb_trim/',
-        'data/output/cf_pdb_complexes/',
-        'data/cf_pdb_trim_values.tsv'
+        '/share/scratch/bjechow/data/input/RCSB_cif_trim/',
+        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim/',
+        '/share/scratch/bjechow/data/output/cf_pdb_complexes/',
+        'data/ai_pdb_cluster_trim_values.tsv'
     output:
-        'data/two-state_cf_pdb_compared.tsv'
+        'data/ai_pdb_cluster_compared.tsv'
     script:
         'scripts/calculate_cf_pdb_rmsd.py'
 
-rule compare_spec_cf_pdb:
+rule compare_md_pdb_clusters:
     input:
-        'data/input/RCSB_cif_trim/',
-        'data/input/Colabfold_pdb_trim',
-        'data/output/cf_pdb_complexes',
-        'data/species_cf_pdb_trim_values.tsv'
+        '/share/scratch/bjechow/data/input/RCSB_cif_trim/',
+        '/share/scratch/bjechow/data/input/Colabfold_pdb_trim',
+        '/share/scratch/bjechow/data/output/cf_pdb_complexes',
+        'data/md_pdb_cluster_trim_values.tsv'
     output:
-        'data/species_cf_pdb_compared.tsv'
+        'data/md_pdb_cluster_compared.tsv'
     script:
         'scripts/calculate_cf_pdb_rmsd.py'

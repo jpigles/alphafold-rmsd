@@ -65,7 +65,7 @@ rule interface_analysis:
         'scripts/md_interface_analysis.py'
 
 # Calculate various RMSDs (complex, domain 1 to domain 1, domain 1 to domain 2, domain 2 to domain 2)
-rule calculate_rmsds: # TODO add complex filename to final file
+rule calculate_rmsds:
     input:
         'data/input/RCSB_cif_best/',
         'data/input/Alphafold_multi_domain_trim/',

@@ -384,7 +384,7 @@ def get_domain_residues(region1, region2, structure, label_model, label_chain):
                     return atoms_ns
                 
 def domain_neighborsearch(region1, region2, atoms):
-    # Make an NeighborSearch object with all the atoms inside the region_1 and the region_2        
+    # Make an NeighborSearch object with all the atoms inside the region_1 and the region_2
     ns = NeighborSearch(atoms)
       
     # Search for all the interacting residues in the region_1 and in the region_2
@@ -720,7 +720,7 @@ def uniprot_dirs(*path_list, uniprot):
         try:
             os.mkdir(path + '/' + uniprot + '/')
         except:
-            print('Directory already exists.')
+            pass
 
 def cif_to_pdb(*fns):
     # Change a file from .cif to .pdb and return the new file name
@@ -829,7 +829,7 @@ def add_CF_filename(df, path):
 
 def get_pdb_struct_dict(name, fn, path):
     # Join the path and the file name
-    full_path = join(path, fn)
+    full_path = os.path.join(path, fn)
 
     # To load a PDB file make a parser object
     parser = PDBParser(QUIET=True)

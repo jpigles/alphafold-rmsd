@@ -6,36 +6,31 @@ import pandas as pd
 import main
 
 # Define file paths
-df_af_auto = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
-df_af_multi = pd.read_csv(snakemake.input[1], sep='\t').astype('object')
-df_cf_auto = pd.read_csv(snakemake.input[2], sep='\t').astype('object')
-df_cf_multi = pd.read_csv(snakemake.input[3], sep='\t').astype('object')
-df_af_obli = pd.read_csv(snakemake.input[4], sep='\t').astype('object')
-df_cf_obli = pd.read_csv(snakemake.input[5], sep='\t').astype('object')
-df_cf_spec = pd.read_csv(snakemake.input[6], sep='\t').astype('object')
-af_auto = snakemake.input[7]
-af_multi = snakemake.input[8]
-cf_auto = snakemake.input[9]
-cf_multi = snakemake.input[10]
-cf_obli = snakemake.input[11]
-cf_spec = snakemake.input[12]
+df_ai = pd.read_csv(snakemake.input[0], sep='\t').astype('object')
+df_md = pd.read_csv(snakemake.input[1], sep='\t').astype('object')  # TODO: Pass mean_plddt one dataframe containing only uniprots and af_filenames,
+df_sd = pd.read_csv(snakemake.input[2], sep='\t').astype('object')   # and another (unchanged) dataframe containing cf_filenames. 
+ai_fd_fp = snakemake.input[3]
+md_fd_fp = snakemake.input[4]
+sd_fd_fp = snakemake.input[5]
+ai_c_fp = snakemake.input[6]
+md_c_fp = snakemake.input[7]
+
+# Collapse autoinhibitory and multi-domain dataframes by dropping clusters and pdb info
+df_ai_fd = df_ai[['uniprot', 'region_1', 'region_2', 'af_filename', 'cf_filename']].drop_duplicates().reset_index(drop=True)
+df_md_fd = df_md[['uniprot', 'region_1', 'region_2', 'af_filename', 'cf_filename']].drop_duplicates().reset_index(drop=True)
 
 # Calculate average pLDDT scores for AlphaFold2 models
-af_auto_scores = main.mean_plddt(df_af_auto, af_auto, unip_sub=False)
-af_multi_scores = main.mean_plddt(df_af_multi, af_multi, unip_sub=False)
-af_obli_scores = main.mean_plddt(df_af_obli, af_multi, unip_sub=False)
+ai_fd_scores = main.mean_plddt(df_ai_fd, ai_fd_fp)
+md_fd_scores = main.mean_plddt(df_md_fd, md_fd_fp)
+sd_fd_scores = main.mean_plddt_single_domain(df_sd, sd_fd_fp)
 
 # Calculate average pLDDT scores for ColabFold models
-cf_auto_scores = main.mean_plddt(df_cf_auto, cf_auto, unip_sub=True, fnt='cf_filename')
-cf_multi_scores = main.mean_plddt(df_cf_multi, cf_multi, unip_sub=True, fnt='cf_filename')
-cf_obli_scores = main.mean_plddt(df_cf_obli, cf_obli, unip_sub=True, fnt='cf_filename')
-cf_spec_scores = main.mean_plddt(df_cf_spec, cf_spec, unip_sub=True, fnt='cf_filename')
+ai_c_scores = main.mean_plddt(df_ai, ai_c_fp, fnt='cf_filename')
+md_c_scores = main.mean_plddt(df_md_fd, md_c_fp, fnt='cf_filename')
 
 # Write results to file
-af_auto_scores.to_csv(snakemake.output[0], sep='\t', index=False)
-af_multi_scores.to_csv(snakemake.output[1], sep='\t', index=False)
-cf_auto_scores.to_csv(snakemake.output[2], sep='\t', index=False)
-cf_multi_scores.to_csv(snakemake.output[3], sep='\t', index=False)
-af_obli_scores.to_csv(snakemake.output[4], sep='\t', index=False)
-cf_obli_scores.to_csv(snakemake.output[5], sep='\t', index=False)
-cf_spec_scores.to_csv(snakemake.output[6], sep='\t', index=False)
+ai_fd_scores.to_csv(snakemake.output[0], sep='\t', index=False)
+md_fd_scores.to_csv(snakemake.output[1], sep='\t', index=False)
+sd_fd_scores.to_csv(snakemake.output[2], sep='\t', index=False)
+ai_c_scores.to_csv(snakemake.output[3], sep='\t', index=False)
+md_c_scores.to_csv(snakemake.output[4], sep='\t', index=False)

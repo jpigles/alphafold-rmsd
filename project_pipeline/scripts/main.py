@@ -264,12 +264,17 @@ def get_af_interfaces(df, path, cluster=False):
         if cluster:
             fn = uniprot + '/' + df.loc[i, 'cf_filename']
             print(f'Getting interface for CF {uniprot}')
+
+            structure = utils.get_pdb_struct_dict(uniprot, fn, path)
+
         else:
             fn = df.loc[i, 'af_filename']
             print(f'Getting interface for AF {uniprot}')
 
+            structure, mmcif_dict = utils.get_structure_dict(uniprot, fn, path)
+
         # Get structure and dictionary objects
-        structure = utils.get_pdb_struct_dict(uniprot, fn, path)
+
 
         # Get residues in domains for Neighborsearch
         atoms_ns = utils.get_domain_residues(region_1_res, region_2_res, structure, model, chain)
@@ -371,7 +376,6 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
         # Check if trimmed files already exist to save time
         if os.path.isfile(gt_fp_out) and os.path.isfile(pred_fp_out):
-            print(f'{pdb} already trimmed')
 
             cfr = CifFileReader()
 
@@ -534,10 +538,14 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                     '2.2_comp': 0,
                     '2.3_aligned': 0,
                     '2.3_comp': 0,
+                    'region_1': df.loc[i, 'region_1'],
+                    'region_2': df.loc[i, 'region_2'],
                     'percent_region_1': percent_reg1,
                     'percent_region_2': percent_reg2,
+                    'chain': df.loc[i, 'chain'],
                     'gt_fn': df.loc[i, 'gt_fn'],
-                    'pred_fn': df.loc[i, 'af_filename']}
+                    'af_filename': df.loc[i, 'af_filename'],
+                    'complex_fn': complex_fn}
             
             rmsd_info.append(rmsd_dic)
 
@@ -571,10 +579,14 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                         '2.2_comp': 0,
                         '2.3_aligned': 0,
                         '2.3_comp': 0,
+                        'region_1': df.loc[i, 'region_1'],
+                        'region_2': df.loc[i, 'region_2'],
                         'percent_region_1': percent_reg1,
                         'percent_region_2': percent_reg2,
+                        'chain': df.loc[i, 'chain'],
                         'gt_fn': df.loc[i, 'gt_fn'],
-                        'af_filename': df.loc[i, 'af_filename']}
+                        'af_filename': df.loc[i, 'af_filename'],
+                        'complex_fn': complex_fn}
 
             for key in rmsds:
                 if key in rmsd_dic:
@@ -639,7 +651,7 @@ def calculate_disorder(df):
     df.drop(columns=['region_1 search'], inplace=True)
     return df
 
-def mean_plddt(df, path, unip_sub=False, fnt='af_filename'):
+def mean_plddt(df, path, fnt='af_filename'):
     # Calculate mean plDDT for our region of interest.
 
     print('Calculating mean plDDT...')
@@ -649,7 +661,7 @@ def mean_plddt(df, path, unip_sub=False, fnt='af_filename'):
 
     for i in range(len(df)):
         fn = df.loc[i, fnt] # Either af_filename or cf_filename
-        if unip_sub:
+        if fnt == 'cf_filename':
             uniprot = df.loc[i, 'uniprot']
             fp = join(path, uniprot, fn)
         else:
@@ -679,6 +691,39 @@ def mean_plddt(df, path, unip_sub=False, fnt='af_filename'):
         df.loc[i, 'r2_mean_plddt'] = round(r2_mean, 3)
 
     df.drop(columns=['region_1 search', 'region_2 search'], inplace=True)
+    return df
+
+def mean_plddt_single_domain(df, path):
+    # Calculate mean plDDT for our region of interest.
+
+    print('Calculating mean plDDT...')
+    df['region search'] = df['region'].apply(lambda x: utils.string2range(x))
+
+    for i in range(len(df)):
+        fn = df.loc[i, 'af_filename']
+        uniprot = df.loc[i, 'uniprot']
+        fp = join(path, fn)
+
+        region_range = df.loc[i, 'region search']
+
+        if '.cif' in fn:
+            fp = utils.cif_to_pdb(fp)
+
+        # Convert to pandas pdb object
+        ppdb = PandasPdb().read_pdb(fp)
+        protein = ppdb.df['ATOM']
+
+        # Get average pLDDT for entire protein
+        complex_mean = protein['b_factor'].mean()
+
+        # Get average pLDDT for regions 1 and 2
+        r1 = protein[protein['residue_number'].isin(region_range)]
+        r1_mean = r1['b_factor'].mean()
+
+        df.loc[i, 'complex_mean_plddt'] = round(complex_mean, 3)
+        df.loc[i, 'region_mean_plddt'] = round(r1_mean, 3)
+
+    df.drop(columns=['region search'], inplace=True)
     return df
 
 def mean_paes(df, path, affix, suffix):
@@ -789,6 +834,7 @@ def compare_af(df, path1, path2, path3):
         
         # Define default values for columns to retain number of columns per row
         rmsd_dic = {'uniprot': uniprot,
+                    'cluster': cluster,
                     'cf_filename': fn2,
                     'complex_rmsd': 0,
                     '1.0_aligned': 0,
@@ -840,7 +886,8 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
 
         # Check if trimmed files already exist to save time
         if os.path.isfile(gt_fn_out) and os.path.isfile(pred_fn_out):
-            print(f'{pdb} already trimmed')
+
+            print(f'{pdb} - {cluster} for {uniprot} already trimmed!')
 
             cfr = CifFileReader()
             ppdb = PandasPdb()
@@ -870,7 +917,7 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
 
         else:
             
-            print(f'Trying {pdb} for {uniprot}...')
+            print(f'Trying {pdb} - {cluster} for {uniprot}...')
 
             # Have to convert pdb column names to cif column names
             mapper = {'record_name': 'group_PDB',
@@ -910,7 +957,7 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
             print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
 
             # Find common atoms between files
-            print(f'Comparing files for {pdb}...')
+            print(f'Comparing files for {pdb} - {cluster}...')
             atoms_pred, extra_atoms_gt = utils.compare_atoms(gt, pred)
 
             # Trim the files
@@ -945,7 +992,7 @@ def trim_cf_pdb(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out,
             if len(gt_trim) == 0:
                 print(f'No common atoms found for {pdb}. Removing from dataframe...')
             else:
-                print(f'Success! Creating trimmed files for {pdb}...')
+                print(f'Success! Creating trimmed files for {pdb} - {cluster}...')
                 # Write trimmed files
                 CifFileWriter(gt_fn_out).write(gt_obj)
                 pred_obj.to_pdb(path=pred_fn_out, records=None)
@@ -976,8 +1023,6 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
         pdb = df.loc[i, 'pdb']
         uniprot = df.loc[i, 'uniprot']
         cluster = df.loc[i, 'cluster']
-        state = df.loc[i, 'state']
-        conformation = df.loc[i, 'conformation']
         region_1 = df.loc[i, 'region_1']
         region_2 = df.loc[i, 'region_2']
         cif_fn = f'{uniprot}/{cluster}_{pdb}.cif'
@@ -1010,9 +1055,7 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
                     '2.2_aligned': 0,
                     '2.2_comp': 0,
                     '2.3_aligned': 0,
-                    '2.3_comp': 0,
-                    'state': state,
-                    'conformation': conformation}
+                    '2.3_comp': 0}
             
             rmsd_info.append(rmsd_dic)
 
@@ -1046,9 +1089,7 @@ def get_cf_pdb_rmsds(df, gt_path, pred_path, complex_path):
                         '2.2_aligned': 0,
                         '2.2_comp': 0,
                         '2.3_aligned': 0,
-                        '2.3_comp': 0,
-                        'state': state,
-                        'conformation': conformation}
+                        '2.3_comp': 0}
 
             for key in rmsds:
                 if key in rmsd_dic:

@@ -260,6 +260,10 @@ P0AG30	1-47	48-123	8e5l	B	AF-P0AG30-F1-model_v4.cif	8e5l.cif	0
 P0AG30	1-47	48-123	8e5p	B	AF-P0AG30-F1-model_v4.cif	8e5p.cif	0
 P0AG30	1-47	48-123	8e6w	B	AF-P0AG30-F1-model_v4.cif	8e6w.cif	0
 P0AG30	1-47	48-123	8e70	B	AF-P0AG30-F1-model_v4.cif	8e70.cif	0
+P0AG30	1-47	48-123	8peu	A	AF-P0AG30-F1-model_v4.cif	8peu.cif	0
+P0AG30	1-47	48-123	8pew	A	AF-P0AG30-F1-model_v4.cif	8pew.cif	0
+P0AG30	1-47	48-123	8pex	A	AF-P0AG30-F1-model_v4.cif	8pex.cif	0
+P0AG30	1-47	48-123	8pey	A	AF-P0AG30-F1-model_v4.cif	8pey.cif	0
 P0AG30	1-47	48-123	8ptg	A	AF-P0AG30-F1-model_v4.cif	8ptg.cif	0
 P0AG30	1-47	48-123	8ptm	A	AF-P0AG30-F1-model_v4.cif	8ptm.cif	0
 P0AG30	1-47	48-123	8ptn	A	AF-P0AG30-F1-model_v4.cif	8ptn.cif	0
@@ -267,8 +271,8 @@ P0AG30	1-47	48-123	8pto	A	AF-P0AG30-F1-model_v4.cif	8pto.cif	0
 P0AG30	1-47	48-123	8ptp	A	AF-P0AG30-F1-model_v4.cif	8ptp.cif	0
 P0AG30	1-47	48-123	8q3n	A	AF-P0AG30-F1-model_v4.cif	8q3n.cif	0
 P0AG30	1-47	48-123	8q3o	A	AF-P0AG30-F1-model_v4.cif	8q3o.cif	0
-P0AG30	1-47	48-123	8q3p	A	AF-P0AG30-F1-model_v4.cif	8q3p.cif	0
-P0AG30	1-47	48-123	8q3q	A	AF-P0AG30-F1-model_v4.cif	8q3q.cif	0
+P0AG30	1-47	48-123	8q3p	A	AF-P0AG30-F1-model_v4.cif	8q3p.cif	3
+P0AG30	1-47	48-123	8q3q	A	AF-P0AG30-F1-model_v4.cif	8q3q.cif	3
 P0AG30	1-47	48-123	8w8d	A	AF-P0AG30-F1-model_v4.cif	8w8d.cif	0
 P23687	1-426	427-710	1e5t	A	AF-P23687-F1-model_v4.cif	1e5t.cif	0
 P23687	1-426	427-710	1e8m	A	AF-P23687-F1-model_v4.cif	1e8m.cif	0

@@ -19,5 +19,13 @@ alphafold = 'Alphafold' in gt_path_in
 # Make directories
 utils.make_dirs(gt_path_in, pred_path_in, gt_path_out, pred_path_out)
 
+# If we are comparing the full-depth structures to the cluster structures, then we need to add the full-depth filenames (af_filename)
+if alphafold:
+    uniprots = df[['uniprot']].drop_duplicates().reset_index(drop=True)
+
+    af_fn = utils.add_AF_filename(uniprots, gt_path_in)
+
+    df = pd.merge(df, af_fn, on='uniprot', how='left')
+
 # Split chains
 main.split_chains(df, gt_path_in, pred_path_in, gt_path_out, pred_path_out, cluster=result, pred_only=alphafold)
