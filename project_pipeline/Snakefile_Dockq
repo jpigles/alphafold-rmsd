@@ -7,8 +7,8 @@ rule ai_pdb_full_split: # Prepare autoinhibitory files of experimental and full-
         'data/input/RCSB_cif_trim/',
         'data/input/Alphafold_cif_trim/'
     output:
-        directory('data/output/dockq/ai_pdb_full-depth/model/'),
-        directory('data/output/dockq/ai_pdb_full-depth/native/')
+        directory('data/output/dockq/ai_pdb_full_depth/native/'),
+        directory('data/output/dockq/ai_pdb_full_depth/model/')
     script:
         'scripts/split_chains.py'
 
@@ -18,19 +18,19 @@ rule md_pdb_full_split: # Prepare multi-domain files, same as above, for DockQ
         'data/input/RCSB_cif_trim/',
         'data/input/Alphafold_multi_domain_trim/'
     output:
-        directory('data/output/dockq/md_pdb_full-depth/model/'),
-        directory('data/output/dockq/md_pdb_full-depth/native/')
+        directory('data/output/dockq/md_pdb_full_depth/native/'),
+        directory('data/output/dockq/md_pdb_full_depth/model/')
     script:
         'scripts/split_chains.py'
 
 rule ai_pdb_cluster_split: # Prepare autoinhibitory files of experimental and cluster structures for DockQ
     input:
-        'data/ai_pdb_cluster_compared.tsv', # some file here, need to make it
+        'data/ai_pdb_cluster_compared.tsv',
         'data/input/RCSB_cif_trim/',
         'data/input/Colabfold_pdb_trim/'
     output:
-        directory('data/output/dockq/ai_pdb_cluster/model/'),
-        directory('data/output/dockq/ai_pdb_cluster/native/')
+        directory('data/output/dockq/ai_pdb_cluster/native/'),
+        directory('data/output/dockq/ai_pdb_cluster/model/')
     script:
         'scripts/split_chains.py'
 
@@ -40,8 +40,8 @@ rule md_pdb_cluster_split:
         'data/input/RCSB_cif_trim/',
         'data/input/Colabfold_pdb_trim/'
     output:
-        directory('data/output/dockq/md_pdb_cluster/model/'),
-        directory('data/output/dockq/md_pdb_cluster/native/')
+        directory('data/output/dockq/md_pdb_cluster/native/'),
+        directory('data/output/dockq/md_pdb_cluster/model/')
     script:
         'scripts/split_chains.py'
 
@@ -51,8 +51,8 @@ rule ai_full_depth_cluster_split:
         'data/input/Alphafold_cif/',
         'data/input/Colabfold_cif/autoinhibited/'
     output:
-        directory('data/output/dockq/ai_full_depth_cluster/model/'),
-        directory('data/output/dockq/ai_full_depth_cluster/native/')
+        directory('data/output/dockq/ai_full_depth_cluster/native/'),
+        directory('data/output/dockq/ai_full_depth_cluster/model/')
     script:
         'scripts/split_chains.py'
 
@@ -62,7 +62,7 @@ rule md_full_depth_cluster_split:
         'data/input/Alphafold_multi_domain/',
         'data/input/Colabfold_cif/multi_domain/'
     output:
-        directory('data/output/dockq/md_full_depth_cluster/model/'),
-        directory('data/output/dockq/md_full_depth_cluster/native/')
+        directory('data/output/dockq/md_full_depth_cluster/native/'),
+        directory('data/output/dockq/md_full_depth_cluster/model/')
     script:
         'scripts/split_chains.py'
