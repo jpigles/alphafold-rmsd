@@ -586,7 +586,7 @@ def get_rmsds(df, gt_path, pred_path, complex_path):
                         'chain': df.loc[i, 'chain'],
                         'gt_fn': df.loc[i, 'gt_fn'],
                         'af_filename': df.loc[i, 'af_filename'],
-                        'complex_fn': complex_fn}
+                        'complex_fn': f'{pdb}_{uniprot}.pdb'}
 
             for key in rmsds:
                 if key in rmsd_dic:
