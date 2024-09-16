@@ -1,4 +1,0 @@
-uniprot	pdb	complex_rmsd	1.0_aligned	1.0_comp	1.1_aligned	1.1_comp	1.2_aligned	1.2_comp	2.0_aligned	2.0_comp	2.1_aligned	2.1_comp	2.2_aligned	2.2_comp	2.3_aligned	2.3_comp	percent_region_1	percent_region_2	1_aligned	1_comp	2_aligned	2_comp
-Q16566	2w4o	1.569	1.184	1.845	0	0	0	0	1.574	1.198	0	0	0	0	0	0	100.0	89.80392156862746	1.184	1.845	1.574	1.198
-Q13554	3bhh	1.705	0.74	2.661	0	0	0	0	1.737	0.742	0	0	0	0	0	0	100.0	98.45559845559846	0.74	2.661	1.737	0.742
-Q96NX5	2jam	3.973	0.0	5.039	0	0	0	0	3.934	3.934	0	0	0	0	0	0	65.85365853658537	97.24409448818898	0.0	0.0	3.934	3.934
