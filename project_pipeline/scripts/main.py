@@ -1130,7 +1130,7 @@ def split_chains(df, gt_in_path, pred_in_path, gt_out_path, pred_out_path, clust
             in_fn = f'{uniprot}/{pdb}.cif'
             out_fn = f'{uniprot}_{pdb}.pdb'
             print(f'Doing {uniprot}/{pdb}.cif!')
-        chain = "B" # chain we would like to change region autoinihibitory region to
+        chain = "C" # chain we would like to change region autoinihibitory region to
 
         # Define filepaths
         if pred_only:
