@@ -7,7 +7,7 @@ rule pdb_ids:
     input:
         'data/input/RCSB_cif/',
         'data/input/Alphafold_cif/',
-        'data/proteins.tsv'
+        'data/protein_partners_af3.tsv'
         
     output:
         'data/proteins_by_pdb.tsv'
@@ -50,7 +50,7 @@ rule interface_analysis:
         'data/input/Alphafold_cif/',
         'data/input/RCSB_cif_best/',
         'data/trim_values.tsv',
-        'data/autoinhibited_proteins_no_structures_dokyun.csv'
+        'data/proteins_by_pdb.csv'
 
     output:
         'data/proteins_pdb_summary.tsv',
@@ -61,7 +61,7 @@ rule interface_analysis:
         'data/proteins_interface.tsv',
         'data/proteins_largest_interface.tsv',
         'data/alphafold_interface.tsv',
-        'data/dokyun_no_structures_interface.tsv'
+        'data/proteins_interfaces.tsv'
 
     script:
         'scripts/interface_analysis.py'

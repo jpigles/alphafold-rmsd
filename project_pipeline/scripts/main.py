@@ -42,24 +42,33 @@ def download_pdb_files(df, path):
 
     for i in range(len(df)):
         uniprot = df.loc[i, 'uniprot']
-        uniprot_path = join(path, uniprot)
+        uniprot_path = os.path.join(path, uniprot)
         
-        # Try to make a new directory with the gene name. If such a directory
-        # already exists then continue
+        # Ensure the directory exists
+        if not os.path.exists(uniprot_path):
+            os.makedirs(uniprot_path)
 
         pdb_ids_chains = df.loc[i, 'pdb']
         
         # Remove chains from the PDB IDs
         pdb_ids_no_chains = utils.remove_chains(pdb_ids_chains)
 
+        # Print the PDB IDs after removing chains
+        print(f"PDB IDs to download: {pdb_ids_no_chains}")
+
         # A PDB list object that allows to download PDB files
-        pdbl = PDBList(verbose=False)
+        pdbl = PDBList(verbose=True)
 
-        print('Downloading structures for %s' % uniprot)
+        print(f'Downloading structures for {uniprot}')
 
-        # Retrieve the PDB file from the PDB and save to the directory with the gene name
-        pdbl.download_pdb_files(pdb_ids_no_chains, pdir=uniprot_path, file_format='mmCif')
-
+        try:
+            # Retrieve the PDB file from the PDB and save to the directory with the gene name
+            pdbl.download_pdb_files(pdb_ids_no_chains, pdir=uniprot_path, file_format='mmCif')
+            print(f"Successfully downloaded PDB files for {uniprot}")
+        except Exception as e:
+            print(f"Error downloading PDB files for {uniprot}: {e}")
+            
+            
 def correct_offset(df, path):
 
     offsets = []
@@ -95,16 +104,16 @@ def find_domain_completeness(df, path):
 
     # Create a new empty dataframe to store the results
     df_domain = pd.DataFrame(columns = ['uniprot', 'region_1', 'region_2', 'region_1_len', 
-                                 'region_2_len', 'pdb', 'pdb_length', 'resolution',
-                                 'model', 'chain', 'label_offset', 'pdb residues in region_1', 'pdb residues in region_2', 
-                                 'percent_region_1', 'percent_region_2'])
+                                        'region_2_len', 'pdb', 'pdb_length', 'resolution',
+                                        'model', 'chain', 'label_offset', 'pdb residues in region_1', 
+                                        'pdb residues in region_2', 'percent_region_1', 'percent_region_2'])
     
     # Convert the domain region strings to ranges or lists of ranges
     df = utils.region_search_range(df)
 
     for i in range(len(df)):
     
-        # Define values for retrieval
+        # Define values for retrieval (ensure that each row is treated independently)
         region_1_res = df.loc[i, 'region_1 search']
         region_2_res = df.loc[i, 'region_2 search']
         pdb = df.loc[i, 'pdb']
@@ -113,11 +122,12 @@ def find_domain_completeness(df, path):
         chain = df.loc[i, 'chain']
         fn = df.loc[i, 'gt_fn']
 
-        print('Analyzing %s' % pdb)
+        print(f'Analyzing {pdb} for UniProt {uniprot}')  # Changed to include UniProt ID in the print statement
 
         # Get structure and dictionary objects
         structure, mmcif_dict = utils.get_structure_dict(pdb, fn, path_uniprot)
 
+        # Determine resolution
         if mmcif_dict['_exptl.method'][0] == 'X-RAY DIFFRACTION':
             resolution = float(mmcif_dict["_refine.ls_d_res_high"][0])
         elif mmcif_dict['_exptl.method'][0] == 'SOLUTION NMR':
@@ -129,27 +139,30 @@ def find_domain_completeness(df, path):
         # Calculate the percentage of residues in each region
         percent_reg_1, percent_reg_2 = utils.calculate_domain_completeness(region_1_res, region_2_res, count_res_reg_1, count_res_reg_2)
 
+        # Create a new dataframe part for the current row
         df_domain_part_1 = pd.DataFrame({'uniprot': df.loc[i, 'uniprot'],
-                                'region_1': df.loc[i, 'region_1'],
-                                'region_2': df.loc[i, 'region_2'],
-                                'region_1_len': len(region_1_res),
-                                'region_2_len': len(region_2_res),
-                                'pdb': pdb, 
-                                'pdb_length': count_res, 
-                                'resolution': resolution,
-                                'model': model_id, 
-                                'chain': chain,
-                                'label_offset': df.loc[i, 'label_offset'],
-                                'pdb residues in region_1': count_res_reg_1,
-                                'pdb residues in region_2': count_res_reg_2,
-                                'percent_region_1': percent_reg_1,
-                                'percent_region_2': percent_reg_2,
-                                'gt_fn': fn,
-                                'af_filename': df.loc[i, 'af_filename']}, index=[0])
+                                         'region_1': df.loc[i, 'region_1'],
+                                         'region_2': df.loc[i, 'region_2'],
+                                         'region_1_len': len(region_1_res),
+                                         'region_2_len': len(region_2_res),
+                                         'pdb': pdb, 
+                                         'pdb_length': count_res, 
+                                         'resolution': resolution,
+                                         'model': model_id, 
+                                         'chain': chain,
+                                         'label_offset': df.loc[i, 'label_offset'],
+                                         'pdb residues in region_1': count_res_reg_1,
+                                         'pdb residues in region_2': count_res_reg_2,
+                                         'percent_region_1': percent_reg_1,
+                                         'percent_region_2': percent_reg_2,
+                                         'gt_fn': fn,
+                                         'af_filename': df.loc[i, 'af_filename']}, index=[0])
         
-        df_domain = pd.concat([df_domain, df_domain_part_1], axis=0, ignore_index=True)
+        # Append the current part to the main dataframe
+        df_domain = pd.concat([df_domain, df_domain_part_1], axis=0, ignore_index=True)  # Ensure no overwriting
 
     return df_domain
+
 
 def save_domain_quality_files(df, path1, path2, path3, path4, path5):
     '''
@@ -244,6 +257,8 @@ def get_af_interfaces(df, path, cluster=False):
     specifically for the AlphaFold files.
     '''
 
+    print("Input DataFrame columns:", df.columns)
+    
     # Define columns for new stats
     df['interacting_residue_pairs'] = ''
     df['interface_residues'] = ''
@@ -278,9 +293,16 @@ def get_af_interfaces(df, path, cluster=False):
 
         # Get residues in domains for Neighborsearch
         atoms_ns = utils.get_domain_residues(region_1_res, region_2_res, structure, model, chain)
+        if not atoms_ns:
+        	print(f"Error: No atoms found for regions {region_1_res} and {region_2_res} in chain {chain}.")
+        	continue
 
         # Get interacting residues
-        interacting_pairs, interface_res, len_interface_res = utils.domain_neighborsearch(region_1_res, region_2_res, atoms_ns)
+        try:
+        	interacting_pairs, interface_res, len_interface_res = utils.domain_neighborsearch(region_1_res, region_2_res, atoms_ns)
+        except AssertionError as e:
+        	print(f"NeighborSearch failed: {e}")
+        	continue
 
         df.loc[i, 'interacting_residue_pairs'] = interacting_pairs
         df.loc[i, 'interface_residues'] = interface_res
@@ -352,11 +374,28 @@ def largest_interface(df):
 
     return df_prot_keep_result
 
-def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
+def inspect_and_extract(pred_obj, file_label):
+    """Helper function to inspect the dictionary and extract '_atom_site'."""
+    if isinstance(pred_obj, dict):
+        print(f"Inspecting top-level keys for {file_label}:")
+        print(pred_obj.keys())
 
+        for key in pred_obj:
+            print(f"Inspecting key: {key}")
+            if '_atom_site' in pred_obj[key]:
+                print(f"Found '_atom_site' in {key}")
+                return pd.DataFrame.from_dict(pred_obj[key]['_atom_site']), key
+            else:
+                print(f"No '_atom_site' found in {key}.")
+    else:
+        print(f"The {file_label} is not a dictionary. It's of type:", type(pred_obj))
+    
+    return None, None  # If no '_atom_site' found or invalid type
+
+def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
     trim_values = []
+    
     for i in range(len(df)):
-        
         # Define parameters for selecting files
         uniprot = df.loc[i, 'uniprot']
         pdb = df.loc[i, 'pdb']
@@ -365,7 +404,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
         uniprot_path = f'{uniprot}/'
         pred_fn = df.loc[i, 'af_filename']
 
-# Generate file paths using format templates
+        # Generate file paths using format templates
         gt_fp = os.path.join(gt_path_in, uniprot_path, gt_fn)
         gt_fp_out = os.path.join(gt_path_out, uniprot_path, gt_fn)
         pred_fp = os.path.join(pred_path_in, pred_fn)
@@ -376,7 +415,6 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
         # Check if trimmed files already exist to save time
         if os.path.isfile(gt_fp_out) and os.path.isfile(pred_fp_out):
-
             cfr = CifFileReader()
 
             # Get gt dataframe
@@ -390,14 +428,13 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
             # Get pred dataframe
             pred_obj = cfr.read(pred_fp, output='cif_dictionary')
-            pred = pd.DataFrame.from_dict(pred_obj[f'AF-{uniprot}-F1']['_atom_site'])
+            pred, _ = inspect_and_extract(pred_obj, 'pred')
 
             # Get pred_trim dataframe
             pred_trim_obj = cfr.read(pred_fp_out, output='cif_dictionary')
-            pred_trim = pd.DataFrame.from_dict(pred_trim_obj[f'AF-{uniprot}-F1']['_atom_site'])
+            pred_trim, _ = inspect_and_extract(pred_trim_obj, 'pred_trim')
 
         else:
-            
             print(f'Trying {pdb} for {uniprot}...')
 
             # Initiate reader object
@@ -405,12 +442,33 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
 
             # Create dataframe with gt atoms in desired chain
             gt_obj = cfr.read(gt_fp, output='cif_dictionary', ignore=['_struct_conn'])
+            if pdb.upper() not in gt_obj:
+            	print(f"Key '{pdb.upper()}' not found in gt_obj. Available keys: {gt_obj.keys()}")
+            	continue
+            if '_atom_site' not in gt_obj[pdb.upper()]:
+            	print(f"Key '_atom_site' not found in '{pdb.upper()}'. Available keys: {gt_obj[pdb.upper()].keys()}")
+            	continue
+            
             gt_all_chains = pd.DataFrame.from_dict(gt_obj[pdb.upper()]['_atom_site'])
-            gt = gt_all_chains[gt_all_chains['label_asym_id'] == chain].reset_index(drop=True)
+            
+            
+            if 'label_asym_id' not in gt_all_chains.columns:
+            	print(f"'label_asym_id' column not found in gt_all_chains. Available columns: {gt_all_chains.columns}")
+            	continue
+            
+            if 'label_asym_id' in gt_all_chains.columns:
+            	chain_column = 'label_asym_id'
+            elif 'auth_asym_id' in gt_all_chains.columns:
+            	chain_column = 'auth_asym_id'
+            else:
+            	print(f"No suitable chain identifier found in columns: {gt_all_chains.columns}")
+            	continue
+            
+            gt = gt_all_chains[gt_all_chains[chain_column] == chain].reset_index(drop=True)
 
             # Create dataframe with pred atoms (pred file only contains our desired chain)
             pred_obj = cfr.read(pred_fp, output='cif_dictionary')
-            pred = pd.DataFrame.from_dict(pred_obj[f'AF-{uniprot}-F1']['_atom_site'])
+            pred, _ = inspect_and_extract(pred_obj, 'pred')
 
             print('Length of gt: ' + str(len(gt)) + ', Length of pred:' + str(len(pred)))
 
@@ -427,9 +485,22 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
             gt_dict = gt_trim.to_dict(orient='list')
             gt_obj[pdb.upper()]['_atom_site'] = gt_dict
 
+            # Convert pred_trim dataframe to dictionary and update
             pred_dict = pred_trim.to_dict(orient='list')
-            pred_obj[f'AF-{uniprot}-F1']['_atom_site'] = pred_dict
-
+            if isinstance(pred_obj, dict):
+                print("Inspecting top-level keys for pred:")
+                print(pred_obj.keys())
+                for key in pred_obj:
+                    print(f"Inspecting key: {key}")
+                    if '_atom_site' in pred_obj[key]:
+                        print(f"Found '_atom_site' in {key}")
+                        pred_obj[key]['_atom_site'] = pred_dict
+                        break
+                    else:
+                        print(f"No '_atom_site' found in {key}.")
+            else:
+                print(f"The pred_obj is not a dictionary. It's of type: {type(pred_obj)}")
+            
             # Check whether the trimmed files are the same length
             assertion = utils.assert_equal_size(gt_trim, pred_trim)
 
@@ -437,7 +508,7 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
                 print('Trimmed files are the same length')
             else:
                 break
-            
+
             if len(gt_trim) == 0:
                 print(f'No common atoms found for {pdb}. Removing from dataframe...')
             else:
@@ -446,20 +517,19 @@ def trim_cifs(df, gt_path_in, gt_path_out, pred_path_in, pred_path_out):
                 CifFileWriter(gt_fp_out).write(gt_obj)
                 CifFileWriter(pred_fp_out).write(pred_obj)
 
-
         # Compile some information on the trimmed files
         trim_values_dict = utils.trim_stats(uniprot, pdb, gt, gt_trim, pred, pred_trim)
         trim_values.append(trim_values_dict)
-    
+
     # Add trim values to dataframe
     df_trim = pd.DataFrame(trim_values)
-    df = df.merge(df_trim, on = ['pdb', 'uniprot'])
+    df = df.merge(df_trim, on=['pdb', 'uniprot'])
 
     # Drop any files that have no common atoms.
     df = df[df['gt_trim_len'] != 0].reset_index(drop=True)
 
-
     return trim_values, df
+
 
 def calculate_rmsd(gt_pdb_fn, pred_pdb_fn, complex_fn, region_1, region_2):
     '''Calculate rmsd between gt and pred regions and whole proteins

@@ -185,6 +185,7 @@ def fix_offset(pdb, fp, chain, offset):
     cif_obj = cfr.read(fp, output='cif_dictionary')
     # Convert to a Pandas DataFrame
     df = pd.DataFrame.from_dict(cif_obj[pdb.upper()]['_atom_site'])
+       
     # Replace residue numbers
     for i in range(len(df)):
         if df.loc[i, 'label_asym_id']==chain:
@@ -196,6 +197,7 @@ def fix_offset(pdb, fp, chain, offset):
             continue
     # Convert back to mmCIF-like dictionary
     cif_dict = df.to_dict(orient='list')
+      	
     cif_obj[pdb.upper()]['_atom_site'] = cif_dict
 
     # Write to file
@@ -345,6 +347,7 @@ def calculate_domain_completeness(region1, region2, count_in_region1, count_in_r
     return percent_in_region_1, percent_in_region_2
 
 def get_domain_residues(region1, region2, structure, label_model, label_chain):
+    atoms_ns = []
     # Iterate through all the models in the structure
     for model in structure:
         
@@ -369,22 +372,27 @@ def get_domain_residues(region1, region2, structure, label_model, label_chain):
                         
                         # Get the parent residue for the atom
                         res = atom.get_parent()
-                        
+                        print(f"Residue ID: {res.get_id()}")
                         # Make sure the residue is an amino acid
                         if res.get_id()[0] == ' ':
                             
                             # Check whether the residue lies inside the region_1 or the region_2 and append
                             # the atoms of these residues into a list
                             if res.get_id()[1] in region1:
+                                print(f"Residue {res.get_id()[1]} matches region1 or region2.")
                                 atoms_ns.append(atom)
                                 
                             elif res.get_id()[1] in region2:
+                                print(f"Residue {res.get_id()[1]} matches region1 or region2.")
                                 atoms_ns.append(atom)
 
                     return atoms_ns
                 
 def domain_neighborsearch(region1, region2, atoms):
     # Make an NeighborSearch object with all the atoms inside the region_1 and the region_2
+    print(f"Extracted atoms: {atoms}")
+    print(f"Number of atoms in atoms: {len(atoms)}")
+    
     ns = NeighborSearch(atoms)
       
     # Search for all the interacting residues in the region_1 and in the region_2
@@ -461,7 +469,7 @@ def compare_atoms(gt_df, pred_df):
                                & (pred_df['label_seq_id'] == gt_residue_number) 
                                & (pred_df['label_comp_id'] == gt_residue_name)]
         if pred_row.empty != True:
-            present_atoms_pred.append(pred_row.index)
+            present_atoms_pred.extend(pred_row.index.tolist())
         else:
             extra_atoms_gt.append(atom)
 
@@ -470,6 +478,15 @@ def compare_atoms(gt_df, pred_df):
 def drop_unshared_atoms(gt_df, pred_df, present_atoms_pred, extra_atoms_gt):
     # Select all rows in pred not present in gt
     total_atoms = list(pred_df.index)
+    
+    
+    print(f"total_atoms: length: {len(total_atoms)}")
+    print(f"present_atoms_pred: length: {len(present_atoms_pred)}")
+    
+    total_atoms = np.asarray(total_atoms, dtype=object)
+    present_atoms_pred = np.asarray(present_atoms_pred, dtype=object)
+    
+    
     na_atoms_array = np.setdiff1d(total_atoms, present_atoms_pred)
     na_atoms = sorted(na_atoms_array)
 
@@ -481,16 +498,25 @@ def drop_unshared_atoms(gt_df, pred_df, present_atoms_pred, extra_atoms_gt):
 
 def assert_equal_size(gt_trim_df, pred_trim_df):
     try:
+        gt_trim_df.drop(['pdbx_formal_charge'], axis=1)
         assert len(pred_trim_df) == len(gt_trim_df)
         return True
     except AssertionError:
-        gt_sim = gt_trim_df.drop(['id', 'Cartn_x', 'Cartn_y', 'Cartn_z', 'occupancy', 'B_iso_or_equiv', 'type_symbol', 'pdbx_formal_charge'], axis=1)
-        pred_sim = pred_trim_df.drop(['id', 'Cartn_x', 'Cartn_y', 'Cartn_z', 'occupancy', 'B_iso_or_equiv', 'type_symbol', 'pdbx_formal_charge'], axis=1)
-        diff = pd.concat([gt_sim, pred_sim]).drop_duplicates(keep=False)
-        diff.to_csv('./data/AssertionError.tsv', sep='\t')
-        print(diff)
-        print('AssertionError! Check file')
-        return False
+    
+    	columns_to_drop = ['id', 'Cartn_x', 'Cartn_y', 'Cartn_z', 'occupancy', 'B_iso_or_equiv', 'type_symbol', 'pdbx_formal_charge']
+    	print("GT DataFrame columns:", gt_trim_df.columns)
+    	print("Prediction DataFrame columns:", pred_trim_df.columns)
+    	
+    	
+    	gt_sim = gt_trim_df.drop(columns=[col for col in columns_to_drop if col in gt_trim_df.columns], axis=1)
+    	pred_sim = pred_trim_df.drop(columns=[col for col in columns_to_drop if col in pred_trim_df.columns], axis=1)
+    	
+    	
+    	diff = pd.concat([gt_sim, pred_sim]).drop_duplicates(keep=False)
+    	diff.to_csv('./data/AssertionError.tsv', sep='\t')
+    	print(diff)
+    	print('AssertionError! Check file')
+    	return False
     
 def trim_stats(uniprot, pdb, gt, gt_trim, pred, pred_trim):
     gt_perc = len(gt_trim) / len(gt)
@@ -734,8 +760,6 @@ def cif_to_pdb(*fns):
     return f.replace('.cif', '.pdb')
 
 def add_AF_filename(df, fp):
-    # Specifically for AlphaFold files because CF have clusters
-
     # Get list of filenames from the file path
     filenames = os.listdir(fp)
 
@@ -745,22 +769,31 @@ def add_AF_filename(df, fp):
     # Determine which files are in the dataframe
     df_proteins = df['uniprot'].tolist()
 
-    # Create a dictionary of the filenames and the corresponding uniprot
+    # Create a dictionary to store multiple filenames per uniprot
     filename_dict = {}
     for filename in filenames:
-        uniprot = filename.split('-')[1]
-        filename_dict[uniprot] = filename
+        uniprot = filename.split('_')[1]
+        if uniprot not in filename_dict:
+            filename_dict[uniprot] = []
+        filename_dict[uniprot].append(filename)
 
-    # Create a list of the filenames in the order of the dataframe
-    AF_filenames = []
-    for protein in df_proteins:
-        AF_filenames.append(filename_dict[protein])
+    # Create a list to hold the new data for the dataframe
+    new_data = []
 
-    # Add the list to the dataframe
-    df['af_filename'] = AF_filenames
+    # For each row in the original dataframe, add a row for each corresponding file
+    for idx, row in df.iterrows():
+        uniprot = row['uniprot']
+        if uniprot in filename_dict:
+            # For each file associated with this UniProt ID, create a new row
+            for filename in filename_dict[uniprot]:
+                new_row = row.copy()  # Copy the original row
+                new_row['af_filename'] = filename  # Add the filename for this model
+                new_data.append(new_row)
+
+    # Replace the original df with the new data
+    df = pd.DataFrame(new_data)
 
     return df
-
 def select_regions(gt_fn, pred_fn, region_1, region_2):
     cmd.delete('all')
     cmd.load(gt_fn, 'native')
